@@ -8,7 +8,7 @@ import Select from "@/shared/Select/Select";
 import Calendar from "react-calendar";
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
-
+import Checkbox from "@/shared/Checkbox/Checkbox";
 interface Props {
   isActive: boolean;
   orderType: string;
@@ -70,6 +70,7 @@ const AdressForm: FC<Props> = ({
     setShowClender(false);
   };
 
+  const [selectAdress, setSelectAdress] = useState<boolean>(true);
   return (
     <div
       className={`border border-slate-200 dark:border-slate-700 rounded-xl ${
@@ -240,19 +241,27 @@ const AdressForm: FC<Props> = ({
             </div>
           </div>
         )}
-        <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
-          <div className="flex-1">
-            <Label className="text-sm">العنوان</Label>
-            <Input
-              className="mt-1.5"
-              placeholder=""
-              name="address"
-              onChange={(e) => handleChange(e)}
-              value={formValue.address}
-              type={"text"}
-            />
+        <Checkbox
+          className="!text-sm address-box"
+          name="uudai"
+          label="لا اريد نحديد العنوان (فريق الدعم سيتواصل معك) "
+          onChange={(e) => setSelectAdress(!e)}
+        />
+        {selectAdress && (
+          <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3 ">
+            <div className="flex-1 justify-between">
+              <Label className="text-sm">العنوان</Label>
+              <Input
+                className="mt-1.5"
+                placeholder=""
+                name="address"
+                onChange={(e) => handleChange(e)}
+                value={formValue.address}
+                type={"text"}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
           <div className="flex-1">
             <Label>اضافات الورود</Label>

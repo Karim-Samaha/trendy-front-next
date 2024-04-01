@@ -197,7 +197,7 @@ const CheckoutPage = () => {
           />
         </div>
 
-        <div id="ShippingAddress" className="scroll-mt-24">
+        {/* <div id="ShippingAddress" className="scroll-mt-24">
           <ShippingAddress
             isActive={tabActive === "ShippingAddress"}
             onOpenActive={() => {
@@ -209,7 +209,7 @@ const CheckoutPage = () => {
               handleScrollToEl("PaymentMethod");
             }}
           />
-        </div>
+        </div> */}
 
         <div id="PaymentMethod" className="scroll-mt-24">
           <PaymentMethod

@@ -85,7 +85,7 @@ const NotifyAddTocart: FC<Props> = ({
       leaveTo="opacity-0 translate-x-20"
     >
       <p className="block text-base font-semibold leading-none">
-        Added to cart!
+      تم اضافة المنتج الي السلة
       </p>
       <hr className=" border-slate-200 dark:border-slate-700 my-4" />
       {renderProductCartOnNotify()}

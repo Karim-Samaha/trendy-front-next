@@ -8,6 +8,7 @@ import { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
 import { Key } from "react";
+import { adjustNames } from "@/utils/adjustNames";
 
 const CartPage = () => {
   const { items, removeItem } = useCart();
@@ -80,10 +81,10 @@ const CartPage = () => {
             <div className="flex justify-between ">
               <div className="flex-[1.5] ">
                 <h3 className="text-base font-semibold">
-                  <Link href={`/product-detail/${_id}`}>{name}</Link>
+                  <Link href={`/product-detail/${_id}`}>{adjustNames(name)}</Link>
                 </h3>
                 {formInfo?.cardText.length > 0 ? (
-                  <div className="text-sm text-slate-600 dark:text-slate-300">
+                  <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
                     <div className="order-info flex-1">
                       <p> نص البطاقة - اكتب إهدائك هنا ( + 6.00 ر.س )</p>
                     </div>
@@ -106,7 +107,7 @@ const CartPage = () => {
                   <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
                     <div className="order-info flex-1 font-bold">
                       كرت اهداء{" "}
-                      <span className="font-bold">{selectedCard.name}</span>
+                      <span className="font-bold">{adjustNames(selectedCard.name)}</span>
                       <span className="font-bold" style={{ margin: "0 10px" }}>
                         {selectedCard.price} ر.س
                       </span>

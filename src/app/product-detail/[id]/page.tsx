@@ -60,7 +60,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     axios
       .get(`http://localhost:5000/api/products/${params.id}`)
       // .then((res) => res.data.data)
-      .then((res) => setProductData(res.data))
+      .then((res) => setProductData({...res.data}))
       .catch((err) => console.log(err));
   }, []);
 
