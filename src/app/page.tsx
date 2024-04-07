@@ -21,10 +21,11 @@ import axios from "axios";
 import ReviewItem from "@/components/ReviewItem";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { getServerAuthSession } from "../server/auth";
+import Partners from "@/components/Partners";
 
 async function getCategories() {
   const res = axios
-    .get("http://localhost:5000/api/category?isHomeCategory=true")
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category?isHomeCategory=true`)
     .then((res) => res.data.data)
     .then((data) => {
       return (
@@ -37,7 +38,7 @@ async function getCategories() {
             // featuredImage: CATS_DISCOVER[0].featuredImage,
             color: "bg-yellow-50",
             featuredImage: {
-              src: item?.image && `http://localhost:5000${item.image}`,
+              src: item?.image && `${process.env.NEXT_PUBLIC_BACKEND_URL}${item.image}`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,
@@ -55,7 +56,7 @@ async function getCategories() {
 
 async function getBanners() {
   const res = await axios
-    .get("http://localhost:5000/api/banners")
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/banners`)
     .then((res) => res.data.data)
     .then((data) => {
       return data.reverse().map((item: any) => ({
@@ -64,7 +65,7 @@ async function getBanners() {
         heading: item?.name,
         type: item.type,
         image: {
-          src: `http://localhost:5000${item.imageSrc}`,
+          src: `${process.env.NEXT_PUBLIC_BACKEND_URL}${item.imageSrc}`,
           height: 1001,
           width: 1000,
           blurDataURL:
@@ -186,6 +187,7 @@ async function PageHome() {
           </div>
         </div> */}
         {/* <SectionClientSay /> */}
+        <Partners />
         <div className="" style={{ direction: "rtl" }}>
           {/* HEADING */}
           <h2 className="text-2xl font-semibold flex items-center">
@@ -199,32 +201,32 @@ async function PageHome() {
               <ReviewItem
                 data={{
                   comment: `منتج رائع`,
-                  date: "December 22, 2021",
-                  name: "David  ",
+                  date: "08/03/2023",
+                  name: "احمد محمد",
                   starPoint: 5,
                 }}
               />
               <ReviewItem
                 data={{
                   comment: `منتج رائع`,
-                  date: "December 22, 2021",
-                  name: "Stiven Hokinhs",
+                  date: "08/03/2023",
+                  name: "احمد محمد",
                   starPoint: 5,
                 }}
               />
               <ReviewItem
                 data={{
                   comment: `منتج رائع`,
-                  date: "August 15, 2022",
-                  name: "Gropishta keo",
+                  date: "08/03/2023",
+                  name: "احمد محمد",
                   starPoint: 5,
                 }}
               />
               <ReviewItem
                 data={{
                   comment: `منتج رائع`,
-                  date: "December 12, 2022",
-                  name: "Dahon Stiven",
+                  date: "08/03/2023",
+                  name: "احمد محمد",
                   starPoint: 5,
                 }}
               />

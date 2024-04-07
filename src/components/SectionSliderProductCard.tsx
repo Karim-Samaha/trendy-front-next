@@ -43,7 +43,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   const [category, setCategory] = useState<any>({});
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/subcategory?isHomeSection=${order}`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subcategory?isHomeSection=${order}`)
       .then((res) => res.data.data)
       .then((data) => {
         setCategory({ ...data[0], productList: [] });
@@ -57,7 +57,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             featuredImage: {
               id: item?._id,
               category: 1,
-              src: "http://localhost:5000/public/imgs/Ramdan Gifts.jpeg",
+              src: `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/Ramdan Gifts.jpeg`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,

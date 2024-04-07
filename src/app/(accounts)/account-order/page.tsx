@@ -9,7 +9,7 @@ const AccountOrder = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/subcategory/66019c0c1586ac17fd7c8917/`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subcategory/66019c0c1586ac17fd7c8917/`)
       .then((res) => res.data.data)
       .then((data) => {
         setData(
@@ -18,7 +18,7 @@ const AccountOrder = () => {
             color: "bg-yellow-50",
             featuredImage: {
               category: 1,
-              src: "http://localhost:5000/public/imgs/Ramdan Gifts.jpeg",
+              src: `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/Ramdan Gifts.jpeg`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,
@@ -50,7 +50,7 @@ const AccountOrder = () => {
           <Image
             fill
             sizes="100px"
-            src={"http://localhost:5000/public/imgs/defualt.jpg"}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`}
             alt={name}
             className="h-full w-full object-cover object-center"
           />

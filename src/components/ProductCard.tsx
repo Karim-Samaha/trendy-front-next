@@ -291,7 +291,7 @@ const ProductCard: FC<ProductCardProps> = ({
               containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
               src={
                 modal
-                  ? "http://localhost:5000/public/imgs/card.jpg"
+                  ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/card.jpg`
                   : featuredImage
               }
               className="object-cover w-full h-full drop-shadow-xl"

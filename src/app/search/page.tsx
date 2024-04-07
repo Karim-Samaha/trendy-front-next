@@ -64,11 +64,10 @@ const PageSearch = ({}) => {
 
         {/* === SECTION 5 === */}
         <hr className="border-slate-200 dark:border-slate-700" />
-        <SectionSliderCollections />
-        <hr className="border-slate-200 dark:border-slate-700" />
+        {/* <SectionSliderCollections />
+        <hr className="border-slate-200 dark:border-slate-700" /> */}
 
         {/* SUBCRIBES */}
-        <SectionPromo1 />
       </div>
     </div>
   );

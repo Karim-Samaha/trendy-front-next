@@ -370,7 +370,27 @@ footer {
 .address-box {
   margin: 0 20px;
   input {
-    border: 1px solid black;
-    margin-left:  10px;
+    margin-left: 10px;
   }
 }
+
+@media (max-width: 968px) {
+  .title {
+    font-size: 26px;
+  }
+  .partners-container {
+    flex-direction: column;
+    img {
+      margin: 30px 0;
+      &:nth-child(1) {
+        margin-top: 80px;
+      }
+    }
+  }
+}
+#mysr-form-form-el#mysr-form-form-el#mysr-form-form-el.mysr-form-moyasarForm.mysr-form-fixedWidth {
+  margin-left:auto !important;
+  margin-right: auto !important;
+  max-width: 515px !important
+}
+

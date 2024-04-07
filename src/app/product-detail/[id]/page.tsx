@@ -58,7 +58,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/products/${params.id}`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/${params.id}`)
       // .then((res) => res.data.data)
       .then((res) => setProductData({...res.data}))
       .catch((err) => console.log(err));
@@ -68,7 +68,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     toast.custom(
       (t) => (
         <NotifyAddTocart
-          productImage={"http://localhost:5000/public/imgs/defualt.jpg"}
+          productImage={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`}
           qualitySelected={qualitySelected}
           show={t.visible}
           sizeSelected={sizeSelected}
@@ -413,7 +413,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                     // productData?.image
                     //   ? `http://localhost:5000${productData?.image}`
                     //   :
-                    `http://localhost:5000/public/imgs/defualt.jpg`
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`
                   }
                   className=" rounded-2xl object-cover product-img"
                   alt="product detail 1"

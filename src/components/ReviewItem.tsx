@@ -34,12 +34,12 @@ const ReviewItem: FC<ReviewItemProps> = ({
     >
       <div className=" flex space-x-4 ">
         <div className="flex-shrink-0 pt-0.5">
-          <Avatar
+          {/* <Avatar
             sizeClass="h-10 w-10 text-lg"
             radius="rounded-full"
             userName={data.name}
-            imgUrl={data.avatar}
-          />
+            imgUrl={data.avatar}ss
+          /> */}
         </div>
 
         <div className="flex-1 flex justify-between">

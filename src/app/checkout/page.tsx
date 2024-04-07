@@ -1,10 +1,9 @@
 "use client";
-
 import Label from "@/components/Label/Label";
 import NcInputNumber from "@/components/NcInputNumber";
 import Prices from "@/components/Prices";
 import { Product, PRODUCTS } from "@/data/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import ContactInfo from "./ContactInfo";
@@ -13,7 +12,11 @@ import ShippingAddress from "./ShippingAddress";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
-
+import Head from "next/head";
+import { Metadata } from "next";
+import Moysar from "@/components/payment/Moysar";
+import Tabby from "./tabby";
+import TabbyIcon from "@/images/icons/Tabby.png";
 const CheckoutPage = () => {
   const { items } = useCart();
   const [tabActive, setTabActive] = useState<
@@ -26,7 +29,26 @@ const CheckoutPage = () => {
       element?.scrollIntoView({ behavior: "smooth" });
     }, 80);
   };
+  const [paymentMethod, setPaymentMethod] = useState("");
+  useEffect(() => {
+    // Moyasar
+    const styleScript = document.createElement("link");
+    styleScript.rel = "stylesheet";
+    styleScript.href = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.css";
+    const jsScript = document.createElement("script");
+    jsScript.src = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.js";
+    const jsPayScript = document.createElement("script");
+    jsPayScript.type = "application/javascript";
+    jsPayScript.className = "pay";
+    // tabby
+    const tabbyScript = document.createElement("script");
+    tabbyScript.async = true;
+    tabbyScript.src = "https://checkout.tabby.ai/tabby-card.js";
 
+    document.head.appendChild(styleScript);
+    document.head.appendChild(jsScript);
+    document.head.appendChild(tabbyScript);
+  }, []);
   const renderProduct = (item: Product, index: number) => {
     const { image, price, name, featuredImage } = item;
 
@@ -196,153 +218,179 @@ const CheckoutPage = () => {
             }}
           />
         </div>
-
-        {/* <div id="ShippingAddress" className="scroll-mt-24">
-          <ShippingAddress
-            isActive={tabActive === "ShippingAddress"}
-            onOpenActive={() => {
-              setTabActive("ShippingAddress");
-              handleScrollToEl("ShippingAddress");
-            }}
-            onCloseActive={() => {
-              setTabActive("PaymentMethod");
-              handleScrollToEl("PaymentMethod");
-            }}
-          />
-        </div> */}
-
-        <div id="PaymentMethod" className="scroll-mt-24">
-          <PaymentMethod
-            isActive={tabActive === "PaymentMethod"}
-            onOpenActive={() => {
-              setTabActive("PaymentMethod");
-              handleScrollToEl("PaymentMethod");
-            }}
-            onCloseActive={() => setTabActive("PaymentMethod")}
-          />
+        <div id="PaymentMethod" className="scroll-mt-24 ">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+            <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
+              <span className="hidden sm:block" style={{ margin: "0 20px" }}>
+                <Image style={{borderRadius: "10px"}} src={TabbyIcon} width={40} height={40} />
+              </span>
+              <div className="sm:ml-8">
+                <div className="font-semibold mt-1 text-sm">
+                  <button
+                    onClick={() =>
+                      setPaymentMethod((prev) =>
+                        prev === "tabby" ? "" : "tabby"
+                      )
+                    }
+                  >
+                    تابي
+                  </button>{" "}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        {paymentMethod === "tabby" && <Tabby />}
+
+        <div id="PaymentMethod" className="scroll-mt-24 ">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+            <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
+              <span className="hidden sm:block" style={{ margin: "0 20px" }}>
+                <svg
+                  className="w-6 h-6 text-slate-700 dark:text-slate-400 mt-0.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.92969 15.8792L15.8797 3.9292"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M11.1013 18.2791L12.3013 17.0791"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M13.793 15.5887L16.183 13.1987"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M3.60127 10.239L10.2413 3.599C12.3613 1.479 13.4213 1.469 15.5213 3.569L20.4313 8.479C22.5313 10.579 22.5213 11.639 20.4013 13.759L13.7613 20.399C11.6413 22.519 10.5813 22.529 8.48127 20.429L3.57127 15.519C1.47127 13.419 1.47127 12.369 3.60127 10.239Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2 21.9985H22"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <div className="sm:ml-8">
+                <div className="font-semibold mt-1 text-sm">
+                  <button
+                    onClick={() =>
+                      setPaymentMethod((prev) =>
+                        prev === "card" ? "" : "card"
+                      )
+                    }
+                  >
+                    بطافة بنكية
+                  </button>{" "}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {paymentMethod === "card" && (
+          <div
+            id="PaymentMethod"
+            className="scroll-mt-24"
+            style={{ minHeight: "200px" }}
+          >
+            <Moysar />
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <div className="nc-CheckoutPage">
-      <main className="container py-16 lg:pb-28 lg:pt-20 ">
-        <div className="mb-16" style={{ direction: "rtl" }}>
-          <h2 className="block text-2xl sm:text-3xl lg:text-4xl font-semibold ">
-            اتمام عملية الدفع
-          </h2>
-          <div className="block mt-3 sm:mt-5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-400">
-            <Link href={"/"} className="">
-              الرئيسية
-            </Link>
+    <>
+      <div className="nc-CheckoutPage">
+        <main className="container py-16 lg:pb-28 lg:pt-20 ">
+          <div className="mb-16" style={{ direction: "rtl" }}>
+            <h2 className="block text-2xl sm:text-3xl lg:text-4xl font-semibold ">
+              اتمام عملية الدفع
+            </h2>
+            <div className="block mt-3 sm:mt-5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-400">
+              <Link href={"/"} className="">
+                الرئيسية
+              </Link>
 
-            <span className="text-xs mx-1 sm:mx-1.5">/</span>
-            <span className="underline"> اتمام عملية الدفع</span>
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row">
-          <div className="w-full lg:w-[36%] " style={{ direction: "rtl" }}>
-            <h3 className="text-lg font-semibold">سلة الشراء</h3>
-            <div className="mt-8 divide-y divide-slate-200/70 dark:divide-slate-700 ">
-              {items.length > 0 ? items.map(renderProduct) : null}
+              <span className="text-xs mx-1 sm:mx-1.5">/</span>
+              <span className="underline"> اتمام عملية الدفع</span>
             </div>
+          </div>
 
-            <div className="mt-10 pt-6 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200/70 dark:border-slate-700 ">
-              <div>
-                <Label className="text-sm">كود خصم</Label>
-                <div className="flex mt-1.5">
-                  <Input sizeClass="h-10 px-4 py-3" className="flex-1" />
-                  <button className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors">
-                    تفعيل
-                  </button>
+          <div className="flex flex-col lg:flex-row">
+            <div className="w-full lg:w-[36%] " style={{ direction: "rtl" }}>
+              <h3 className="text-lg font-semibold">سلة الشراء</h3>
+              <div className="mt-8 divide-y divide-slate-200/70 dark:divide-slate-700 ">
+                {items.length > 0 ? items.map(renderProduct) : null}
+              </div>
+
+              <div className="mt-10 pt-6 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200/70 dark:border-slate-700 ">
+                <div>
+                  <Label className="text-sm">كود خصم</Label>
+                  <div className="flex mt-1.5">
+                    <Input sizeClass="h-10 px-4 py-3" className="flex-1" />
+                    <button className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors">
+                      تفعيل
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex justify-between py-2.5">
+                  <span>المجموع</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                    $249.00
+                  </span>
+                </div>
+                <div className="flex justify-between py-2.5">
+                  <span>تكاليف الشحن</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                    $5.00
+                  </span>
+                </div>
+                <div className="flex justify-between py-2.5">
+                  <span>الضريبة</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                    $24.90
+                  </span>
+                </div>
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span>مجموع الفاتورة</span>
+                  <span>$276.00</span>
                 </div>
               </div>
+              <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary>
+              <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center"></div>
+            </div>
+            <div className="flex-shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 my-10 lg:my-0 lg:mx-10 xl:lg:mx-14 2xl:mx-16 "></div>
 
-              <div className="mt-4 flex justify-between py-2.5">
-                <span>المجموع</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-200">
-                  $249.00
-                </span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span>تكاليف الشحن</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-200">
-                  $5.00
-                </span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span>الضريبة</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-200">
-                  $24.90
-                </span>
-              </div>
-              <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                <span>مجموع الفاتورة</span>
-                <span>$276.00</span>
-              </div>
-            </div>
-            <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary>
-            <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center">
-              {/* <p className="block relative pl-5">
-                <svg
-                  className="w-4 h-4 absolute -left-1 top-0.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 8V13"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11.9945 16H12.0035"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Learn more{` `}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="##"
-                  className="text-slate-900 dark:text-slate-200 underline font-medium"
-                >
-                  Taxes
-                </a>
-                <span>
-                  {` `}and{` `}
-                </span>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="##"
-                  className="text-slate-900 dark:text-slate-200 underline font-medium"
-                >
-                  Shipping
-                </a>
-                {` `} infomation
-              </p> */}
-            </div>
+            <div className="flex-1">{renderLeft()}</div>
           </div>
-          <div className="flex-shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 my-10 lg:my-0 lg:mx-10 xl:lg:mx-14 2xl:mx-16 "></div>
-
-          <div className="flex-1">{renderLeft()}</div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 };
 

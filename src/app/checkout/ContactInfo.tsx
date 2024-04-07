@@ -15,8 +15,8 @@ const ContactInfo: FC<Props> = ({ isActive, onCloseActive, onOpenActive }) => {
   const renderAccount = () => {
     return (
       <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden z-0">
-        <div className="flex flex-col sm:flex-row items-start p-6 ">
-          <span className="hidden sm:block">
+        <div className="flex flex-col sm:flex-row items-start p-6 dir-rtl">
+          <span className="hidden sm:block" style={{margin: '0 20px'}}>
             <svg
               className="w-6 h-6 text-slate-700 dark:text-slate-400 mt-0.5"
               viewBox="0 0 24 24"
@@ -63,8 +63,8 @@ const ContactInfo: FC<Props> = ({ isActive, onCloseActive, onOpenActive }) => {
                 />
               </svg>
             </h3>
-            <div  className="font-semibold mt-1 text-sm">
-              <span   className="ml-3 tracking-tighter">+966-666-7744 </span>
+            <div  className="font-semibold mt-1 text-sm" style={{direction: "ltr"}}>
+              <span   className="ml-3 tracking-tighter" >+966-666-7744 </span>
               <span style={{margin: "0 10px"}}>احمد خالد </span>
 
             </div>

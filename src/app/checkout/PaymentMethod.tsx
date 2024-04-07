@@ -328,7 +328,7 @@ const PaymentMethod: FC<Props> = ({
     return (
       <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
         <div className="p-6 flex flex-col sm:flex-row items-start">
-          <span className="hidden sm:block">
+          <span className="hidden sm:block">  
             <svg
               className="w-6 h-6 text-slate-700 dark:text-slate-400 mt-0.5"
               viewBox="0 0 24 24"
