@@ -5,7 +5,7 @@ import SectionPromo1 from "@/components/SectionPromo1";
 import SectionHero2 from "@/components/SectionHero/SectionHero2";
 import SectionSliderLargeProduct from "@/components/SectionSliderLargeProduct";
 import SectionSliderProductCard from "@/components/SectionSliderProductCard";
-import DiscoverMoreSlider from "@/components/DiscoverMoreSlider";
+// import DiscoverMoreSlider from "@/components/DiscoverMoreSlider";
 import SectionGridMoreExplore from "@/components/SectionGridMoreExplore/SectionGridMoreExplore";
 import SectionPromo2 from "@/components/SectionPromo2";
 import SectionSliderCategories from "@/components/SectionSliderCategories/SectionSliderCategories";
@@ -22,6 +22,8 @@ import ReviewItem from "@/components/ReviewItem";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { getServerAuthSession } from "../server/auth";
 import Partners from "@/components/Partners";
+import dynamic from 'next/dynamic'
+const DiscoverMoreSlider = dynamic(() => import('@/components/DiscoverMoreSlider'), { ssr: false })
 
 async function getCategories() {
   const res = axios

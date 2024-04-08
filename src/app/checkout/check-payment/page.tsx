@@ -13,17 +13,40 @@ const CheckoutCheck = () => {
   const searchParams = useSearchParams();
 
   const id = searchParams.get("id");
+  const gateway = searchParams.get("gateway");
+
   const [status, setStatus] = useState<any>({});
+  const handleTabby = async () => {
+    let tabbyId = await sessionStorage.getItem("tabbyId");
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/check-tabby-status/${tabbyId}`
+      )
+      .then((response) => setStatus(response.data))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
-    if (id) {
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/check-payment-status/${id}`
-        )
-        .then((response) => setStatus(response.data))
-        .catch((err) => console.log(err));
+    if (gateway === "tabby") {
+      handleTabby();
+    } else {
+      if (id) {
+        axios
+          .get(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/check-payment-status/${id}`
+          )
+          .then((response) => setStatus(response.data))
+          .catch((err) => console.log(err));
+      }
     }
   }, [id]);
+  useEffect(() => {
+    if (status?.data?.status === "paid") {
+      setTimeout(
+        () => router.replace(`/account-order`),
+        3000
+      );
+    }
+  }, [status]);
   return (
     <div className="nc-Page404">
       <div className="container relative pt-5 pb-16 lg:pb-20 lg:pt-5">

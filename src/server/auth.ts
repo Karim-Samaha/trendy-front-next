@@ -1,6 +1,5 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import Credentials from "node_modules/next-auth/providers/credentials";
-import { userService } from "./services/userService";
 import axios from "axios";
 import { use } from "react";
 
@@ -41,21 +40,19 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, {
-          method: "POST",
-          body: JSON.stringify({
-            email: credentials.username,
-            password: credentials.password,
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: credentials.username,
+              password: credentials.password,
+            }),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
         const user = await res.json();
-        if (res.ok && user) {
-          console.log({ user });
-          return user;
-        } else {
-          return null;
-        }
+        return user;
       },
     }),
   ],
@@ -69,7 +66,8 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      let user = token.user;
+      let user = await token.user;
+      console.log({ user1: user });
       session.user = {
         ...user,
       };

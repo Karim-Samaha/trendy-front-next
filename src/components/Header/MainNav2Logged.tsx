@@ -5,12 +5,14 @@ import Logo from "@/shared/Logo/Logo";
 import MenuBar from "@/shared/MenuBar/MenuBar";
 import AvatarDropdown from "./AvatarDropdown";
 import Navigation from "@/shared/Navigation/Navigation";
-import CartDropdown from "./CartDropdown";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Session } from "inspector";
+import dynamic from 'next/dynamic'
+
+const CartDropdown = dynamic(() => import('./CartDropdown'), { ssr: false })
 
 export interface MainNav2LoggedProps {}
 
@@ -18,6 +20,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const inputRef = createRef<HTMLInputElement>();
   const [showSearchForm, setShowSearchForm] = useState(false);
   const router = useRouter();
+  const [search, setSearch] = useState("");
   const { data } = useSession();
   const userLogo = () => {
     if (!data) return;
@@ -61,7 +64,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
         className="flex-1 py-2 text-slate-900 dark:text-slate-100"
         onSubmit={(e) => {
           e.preventDefault();
-          router.push("/search");
+          router.push(`/search/${search}`);
           inputRef.current?.blur();
         }}
       >
@@ -70,9 +73,12 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type and press enter"
-            className="border-none bg-transparent focus:outline-none focus:ring-0 w-full text-base"
+            placeholder="ابحث عن المنتج"
+            className="border-none bg-transparent focus:outline-none focus:ring-0 w-full text-base dir-rtl"
             autoFocus
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+
           />
           <button type="button" onClick={() => setShowSearchForm(false)}>
             <XMarkIcon className="w-5 h-5" />

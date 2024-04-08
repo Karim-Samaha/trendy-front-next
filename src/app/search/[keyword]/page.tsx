@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+"use client";
+import React, { FC, useState, useEffect } from "react";
 import Pagination from "@/shared/Pagination/Pagination";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import SectionSliderCollections from "@/components/SectionSliderLargeProduct";
@@ -8,8 +9,42 @@ import Input from "@/shared/Input/Input";
 import ButtonCircle from "@/shared/Button/ButtonCircle";
 import ProductCard from "@/components/ProductCard";
 import { PRODUCTS } from "@/data/data";
-
-const PageSearch = ({}) => {
+import axios from "axios";
+const PageSearch = ({ params }) => {
+  const [data, setData] = useState([]);
+  console.log({ params });
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/search/${params.keyword}`
+      )
+      .then((res) => res.data.data)
+      .then((data) => {
+        setData(
+          data.map((item: any) => ({
+            name: item.name,
+            id: item?._id,
+            _id: item?._id,
+            color: "bg-yellow-50",
+            featuredImage: {
+              id: item?._id,
+              category: 1,
+              src: `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/Ramdan Gifts.jpeg`,
+              blurHeight: 8,
+              blurWidth: 7,
+              height: 200,
+              width: 362,
+              allOfSizes: ["XS", "S"],
+              link: "product-detail",
+              numberOfReviews: 50,
+              rating: "4.9",
+            },
+            price: item.price,
+            description: item.nameAr,
+          }))
+        );
+      });
+  }, []);
   return (
     <div className={`nc-PageSearch`} data-nc-id="PageSearch">
       <div
@@ -17,18 +52,12 @@ const PageSearch = ({}) => {
       />
       <div className="container">
         <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
-          <form className="relative w-full " method="post">
+          {/* <form className="relative w-full " method="post">
             <label
               htmlFor="search-input"
               className="text-neutral-500 dark:text-neutral-300 dir-rtl"
-            >  
-            {/* <ButtonCircle
-            className="absolute right-2.5 top-1/2 transform -translate-y-1/2"
-            size=" w-11 h-11"
-            type="submit"
-          >
-            <i className="las la-arrow-right text-xl"></i>
-          </ButtonCircle> */}
+            >
+         
               <Input
                 className="shadow-lg border-0 dark:border"
                 id="search-input"
@@ -37,10 +66,8 @@ const PageSearch = ({}) => {
                 sizeClass="pl-14 py-5 pr-5 md:pl-16"
                 rounded="rounded-full"
               />
-             
-           
             </label>
-          </form>
+          </form> */}
         </header>
       </div>
 
@@ -49,10 +76,19 @@ const PageSearch = ({}) => {
           {/* FILTER */}
 
           {/* LOOP ITEMS */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {PRODUCTS.map((item, index) => (
-              <ProductCard data={item} key={index} />
-            ))}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10 dir-rtl">
+            {data.length > 0
+              ? data.map((item, index) => (
+                  <ProductCard
+                    data={item}
+                    key={index}
+                    featuredImage={undefined}
+                    _id={""}
+                    modal={false}
+                    selectCard={undefined}
+                  />
+                ))
+              : null}
           </div>
 
           {/* PAGINATION */}

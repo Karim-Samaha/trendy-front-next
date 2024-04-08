@@ -8,6 +8,7 @@ import SwitchDarkMode2 from "@/shared/SwitchDarkMode/SwitchDarkMode2";
 import Link from "next/link";
 import AvatarImg from "@/images/avatars/defaul-avatar.jpg";
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 interface Props {
   logo: string;
@@ -329,7 +330,7 @@ const AvatarDropdown: FC<Props> = ({ logo }) => {
                           />
                         </svg>
                       </div>
-                      <div className="ml-4">
+                      <div className="ml-4" onClick={() => signOut()}>
                         <p className="text-sm font-medium ">{"تسجيل الخروج"}</p>
                       </div>
                     </Link>
