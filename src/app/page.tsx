@@ -87,8 +87,6 @@ async function getBanners() {
 }
 
 async function PageHome() {
-  const session = await getServerAuthSession(); //(1)
-  console.log({ session });
   const categories = await getCategories();
   const banners: [{ type: string }] = await getBanners();
   // const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
