@@ -53,8 +53,8 @@ export const authOptions: NextAuthOptions = {
         );
         const user = await res.json();
         if (user?.error === "wrongCredintials") {
-          console.log("!!!!!!!!!!!!!")
-          throw new Error(JSON.stringify({user, status: false}))
+          console.log("!!!!!!!!!!!!!");
+          throw new Error(JSON.stringify({ user, status: false }));
         } else {
           return user;
         }
@@ -78,12 +78,13 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async jwt({ token, user }) {
-      if (user) { 
+      if (user) {
         token.user = user;
       }
       return token;
     },
   },
+  secret: process.env.JWT_SIGNING_PRIVATE_KEY,
 };
 
 export const getServerAuthSession = () => getServerSession(authOptions); //(6)
