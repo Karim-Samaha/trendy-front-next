@@ -8,7 +8,6 @@ import Radio from "@/shared/Radio/Radio";
 import MySwitch from "@/components/MySwitch";
 import { Disclosure } from "@/app/headlessui";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 
 import { FC } from "react";
@@ -73,6 +72,7 @@ const SidebarFilters = (
   const [colorsState, setColorsState] = useState<string[]>([]);
   const [sizesState, setSizesState] = useState<string[]>([]);
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
+  const { id } = useParams();
 
   //
   const handleChangeCategories = (checked: boolean, name: string) => {
@@ -252,12 +252,8 @@ const SidebarFilters = (
 
   const renderTabsLinks = () => {
     // const [currentCtg, setCurrentCtg] = useState<String>("");
-    const router = useRouter();
-    const searchParams = useSearchParams();
 
     // const id = searchParams.getAll('_id');
-    const { id } = useParams();
-    console.log({ params: id });
 
     return (
       <div

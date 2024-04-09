@@ -1,6 +1,5 @@
 "use client";
 import Prices from "@/components/Prices";
-import { PRODUCTS } from "@/data/data";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -9,6 +8,8 @@ import _axios from "@/contains/api/axios";
 import { useSession } from "next-auth/react";
 import { adjustNames } from "@/utils/adjustNames";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+
+
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();

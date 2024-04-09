@@ -57,7 +57,7 @@ const Moysar = () => {
           // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
           amount: ${getTotalPrice() * 100},
           currency: 'SAR',
-          language: "AR",   
+          language: "ar",   
           description: '${JSON.stringify(items)}',
           userId: '${session?.user?._id}',
           publishable_api_key: 'pk_test_A4Ae74mFrkjuhhzovBc3KrYVE6Nc9u8YEryNe6dv',
@@ -97,7 +97,7 @@ const Moysar = () => {
   // if (!init) return null
   return (
     <>
-      <div className="mysr-form" style={{ maxWidth: "515px !important" }}></div>
+      <div className="mysr-form" style={{ maxWidth: "515px !important", direction: "rtl" }}></div>
       <script type="application/javascript" className="pay"></script>
     </>
   );

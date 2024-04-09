@@ -31,7 +31,6 @@ const loginSocials = [
 
 const PageLogin = () => {
   const { data } = useSession();
-  console.log({ session: data });
   const [loginForm, setLoginInForm] = useState<{
     username: string;
     password: string;
@@ -39,14 +38,21 @@ const PageLogin = () => {
     username: "",
     password: "",
   });
+  const [error, setError] = useState("");
   const handleSignIn = (e: any) => {
     e.preventDefault();
     let credentials = loginForm;
-    signIn("credentials", {...credentials, redirect: false})
-      .then((res) => {
+    signIn("credentials", { ...credentials, redirect: false })
+      .then(async (res: any) => {
         if (res?.ok) {
           window.location.assign("/");
+        } else {
+          let apiResults = await JSON.parse(res?.error);
+          if (apiResults.user?.error === "wrongCredintials") {
+            setError("البيانات غير صحيحه");
+          }
         }
+        console.log({ res });
       })
       .catch((err) => console.log(err));
   };
@@ -129,6 +135,7 @@ const PageLogin = () => {
                 onChange={(e) => handleChange(e)}
               />
             </label>
+            {error.length > 0 ? <span style={{color: "red"}}>{error}</span> : null}
             <ButtonPrimary type="submit">تسجيل الدخول</ButtonPrimary>
           </form>
 

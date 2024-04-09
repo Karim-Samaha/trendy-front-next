@@ -52,7 +52,12 @@ export const authOptions: NextAuthOptions = {
           }
         );
         const user = await res.json();
-        return user;
+        if (user?.error === "wrongCredintials") {
+          console.log("!!!!!!!!!!!!!")
+          throw new Error(JSON.stringify({user, status: false}))
+        } else {
+          return user;
+        }
       },
     }),
   ],
@@ -67,7 +72,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
       let user = await token.user;
-      console.log({ user1: user });
       session.user = {
         ...user,
       };

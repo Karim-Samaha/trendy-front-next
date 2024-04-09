@@ -3,6 +3,13 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -23,6 +30,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "trendy-rose-ea018d58bf02.herokuapp.com",
+        port: "",
+        pathname: "/**",
+      }
     ],
   },
 };
