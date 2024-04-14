@@ -26,13 +26,13 @@ const AccountOrder = () => {
     if (session?.user?.accessToken) {
       _axios
         .post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders?page=${pagination.page}&limit=${pagination.limit}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/orders?page=${pagination.page}&limit=${pagination.limit}`,
           { test: "!" },
           { session }
         )
         .then((res) => res.data.data)
         .then((data) => {
-          setData(data.reverse());
+          setData(data);
         });
     }
   }, [session, pagination]);
@@ -52,13 +52,13 @@ const AccountOrder = () => {
           <Image
             fill
             sizes="100px"
-            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
             alt={name}
             className="h-full w-full object-cover object-center"
           />
         </div>
 
-        <div className="ml-4 flex flex-1 flex-col">
+        <div className="ml-4 flex flex-1 flex-col" style={{minWidth: "205px"}}>
           <div>
             <div className="flex justify-between ">
               <div>
@@ -99,13 +99,13 @@ const AccountOrder = () => {
             </div>
           ) : null}
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
-            <div className="order-info flex-1">
+            <div className="order-info flex-1" style={{minWidth: "205px"}}>
               تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
               <span className="font-bold">( + 0.00 ر.س ) </span>
             </div>
           </div>
           {order?.selectedCard?._id && (
-            <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
+            <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300" style={{minWidth: "205px"}}>
               <div className="order-info flex-1">
                 كرت اهداء :
                 <span className="font-bold">
@@ -118,7 +118,7 @@ const AccountOrder = () => {
             </div>
           )}
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
-            <div className="order-info flex-1">
+            <div className="order-info flex-1" style={{minWidth: "205px"}}>
               وسيله الدفع :{" "}
               <span className="font-bold">{`${method.toUpperCase()}`}</span>
             </div>

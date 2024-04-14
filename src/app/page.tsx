@@ -22,12 +22,20 @@ import ReviewItem from "@/components/ReviewItem";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { getServerAuthSession } from "../server/auth";
 import Partners from "@/components/Partners";
-import dynamic from 'next/dynamic'
-const DiscoverMoreSlider = dynamic(() => import('@/components/DiscoverMoreSlider'), { ssr: false })
+import dynamic from "next/dynamic";
+// import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
+const DiscoverMoreSlider = dynamic(
+  () => import("@/components/DiscoverMoreSlider"),
+  { ssr: false }
+);
+const DiscoverMoreReviews = dynamic(
+  () => import("@/components/DiscoverMoreReviews"),
+  { ssr: false }
+);
 
 async function getCategories() {
   const res = axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category?isHomeCategory=true`)
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?isHomeCategory=true`)
     .then((res) => res.data.data)
     .then((data) => {
       return (
@@ -40,7 +48,9 @@ async function getCategories() {
             // featuredImage: CATS_DISCOVER[0].featuredImage,
             color: "bg-yellow-50",
             featuredImage: {
-              src: item?.image && `${process.env.NEXT_PUBLIC_BACKEND_URL}${item.image}`,
+              src:
+                item?.image &&
+                `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.image}`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,
@@ -58,7 +68,7 @@ async function getCategories() {
 
 async function getBanners() {
   const res = await axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/banners`)
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/banners`)
     .then((res) => res.data.data)
     .then((data) => {
       return data.reverse().map((item: any) => ({
@@ -66,8 +76,9 @@ async function getBanners() {
         btnText: item?.name,
         heading: item?.name,
         type: item.type,
+        what: item.imageSrc,
         image: {
-          src: `${process.env.NEXT_PUBLIC_BACKEND_URL}${item.imageSrc}`,
+          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.imageSrc}`,
           height: 1001,
           width: 1000,
           blurDataURL:
@@ -85,13 +96,24 @@ async function getBanners() {
 
   return res;
 }
+async function getReviews() {
+  const res = await axios
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews`)
+    .then((res) => res.data.data)
+    .catch((err) => console.log(err));
+  if (!res) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res;
+}
 
 async function PageHome() {
   const categories = await getCategories();
+  const reviews = await getReviews();
   const banners: [{ type: string }] = await getBanners();
   // const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
   //   useState(false);
-
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <SectionHero2
@@ -189,14 +211,17 @@ async function PageHome() {
         {/* <SectionClientSay /> */}
         <Partners />
         <div className="" style={{ direction: "rtl" }}>
-          {/* HEADING */}
           <h2 className="text-2xl font-semibold flex items-center">
             <StarIcon style={{ color: "#EAB308" }} className="w-7 h-7 mb-0.5" />
             <span className="ml-1.5"> تقييمات عملاؤنا</span>
           </h2>
+        </div>
 
-          {/* comment */}
-          <div className="mt-10">
+        {/* comment */}
+        <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
+          <DiscoverMoreReviews reviews={reviews} />
+        </div>
+        {/* <div className="mt-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
               <ReviewItem
                 data={{
@@ -231,8 +256,8 @@ async function PageHome() {
                 }}
               />
             </div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
 
         {/* <ModalViewAllReviews
         // show={isOpenModalViewAllReviews}

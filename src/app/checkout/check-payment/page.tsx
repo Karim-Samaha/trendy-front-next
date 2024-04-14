@@ -20,7 +20,7 @@ const CheckoutCheck = () => {
     let tabbyId = await sessionStorage.getItem("tabbyId");
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/check-tabby-status/${tabbyId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyId}`
       )
       .then((response) => setStatus(response.data))
       .catch((err) => console.log(err));
@@ -32,7 +32,7 @@ const CheckoutCheck = () => {
       if (id) {
         axios
           .get(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/check-payment-status/${id}`
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-payment-status/${id}`
           )
           .then((response) => setStatus(response.data))
           .catch((err) => console.log(err));

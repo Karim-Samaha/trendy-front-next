@@ -226,7 +226,7 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
               <Image
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`}
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
                 className="w-full rounded-xl object-cover"
                 alt="product detail 1"
               />

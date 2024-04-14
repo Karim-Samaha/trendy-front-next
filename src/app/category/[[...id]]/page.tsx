@@ -10,7 +10,7 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 async function getCategories() {
   const res = axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category?subCtg=true&products=true`)
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&products=true`)
     .then((res) => res.data.data)
     .then((data) => {
       return (
@@ -25,7 +25,7 @@ async function getCategories() {
             productList: item.productList,
             subCategories: item.subCategories,
             featuredImage: {
-              src: item?.image && `${process.env.NEXT_PUBLIC_BACKEND_URL}${item.image}`,
+              src: item?.image && `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item.image}`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,
@@ -42,7 +42,7 @@ async function getCategories() {
 }
 async function getSubCategoriesProducts(subCtgId) {
   const res = axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subcategory/${subCtgId}/`)
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}/`)
     .then((res) => res.data.data)
     .then((data) => {
       return data.productList?.map((item: any) => ({
@@ -50,7 +50,7 @@ async function getSubCategoriesProducts(subCtgId) {
         color: "bg-yellow-50",
         featuredImage: {
           category: 1,
-          src: `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/Ramdan Gifts.jpeg`,
+          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
           blurHeight: 8,
           blurWidth: 7,
           height: 200,
@@ -91,7 +91,7 @@ const PageCollection2 = async ({ params }) => {
         color: "bg-yellow-50",
         featuredImage: {
           category: 1,
-          src: `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/Ramdan Gifts.jpeg`,
+          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
           blurHeight: 8,
           blurWidth: 7,
           height: 200,

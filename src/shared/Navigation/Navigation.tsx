@@ -13,7 +13,7 @@ function Navigation() {
   ];
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category?subCtg=true`)
+    axios(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true`)
       .then((res) => res.data.data)
       .then((items) => {
         setData(

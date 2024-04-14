@@ -31,7 +31,7 @@ import AdressForm from "@/app/product-detail/AdressForm";
 import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 import { useCart } from "react-use-cart";
 import ModalCards from "@/components/ModalCards";
-
+import Script from "next/script";
 const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
 
 const ProductDetailPage: FC<any> = ({ params }) => {
@@ -39,6 +39,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
   const { addItem } = useCart();
   //
   const [productData, setProductData] = useState<any>([]);
+  const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
   const [shopingCards, setShopingCards] = useState(false);
@@ -46,6 +47,9 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     null
   );
   const [qualitySelected, setQualitySelected] = useState(1);
+  const [tammaraReady, setTamarraReady] = useState(false);
+  const [tabbyReady, setTabbyReady] = useState(false);
+
   const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
     useState(false);
   const [formType, setFormType] = useState("");
@@ -57,18 +61,64 @@ const ProductDetailPage: FC<any> = ({ params }) => {
   }, [selectedCard]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/${params.id}`)
-      // .then((res) => res.data.data)
-      .then((res) => setProductData({...res.data}))
-      .catch((err) => console.log(err));
+    Promise.all([
+      axios
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${params.id}`)
+        .then((res) => setProductData({ ...res.data }))
+        .catch((err) => console.log(err)),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${params.id}`)
+        .then((res) => setReviews(res.data.data))
+        .catch((err) => console.log(err)),
+    ]);
   }, []);
+  useEffect(() => {
+    console.log("ss");
+
+    let root = document.querySelector(".nc-ProductDetailPage ");
+    const tabbyCard = document.createElement("script");
+    const tammaraCard = document.createElement("script");
+    if (productData?.price) {
+      tabbyCard.innerHTML = `
+      new TabbyPromo({
+        selector: '#TabbyPromo', // required, content of tabby Promo Snippet will be placed in element with that selector.
+        currency: 'SAR', // required, currency of your product. AED|SAR|KWD|BHD|QAR only supported, with no spaces or lowercase.
+        price: '${productData.price}', // required, price or the product. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+        installmentsCount: 4, // Optional, for non-standard plans.
+        lang: 'ar', // Optional, language of snippet and popups, if the property is not set, then it is based on the attribute 'lang' of your html tag.
+        source: 'product', // Optional, snippet placement; \`product\` for product page and \`cart\` for cart page.
+        publicKey: 'PUBLIC_API_KEY', // required, store Public Key which identifies your account when communicating with tabby.
+        merchantCode: 'zid_sa'  // required
+      });`;
+      tammaraCard.innerHTML = `
+      var tamaraWidgetConfig = {
+        lang: ['ar'], // Language. Default is Arabic. We support [ar|en]
+        country: ['SA'], // The ISO country code. Ex: SA 
+        publicKey: ['sadsadsadsa'], // The public key is provided by Tamara
+        css: [], // Optional field, It should be a string of CSS that you want to customize
+        style: { // Optional to define CSS variable
+            fontSize: '16px',
+            borderRaduis: '7px',
+            badgeRatio: 1, // The radio of logo, we can make it big or small by changing the radio.
+        }
+    }
+      `;
+
+      if (tabbyReady && root) {
+        root.appendChild(tabbyCard);
+      }
+
+      if (tammaraReady && root) {
+        root.appendChild(tabbyCard);
+      }
+    }
+  }, [productData, tabbyReady, tammaraReady]);
 
   const notifyAddTocart = () => {
     toast.custom(
       (t) => (
         <NotifyAddTocart
-          productImage={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`}
+          productImage={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
           qualitySelected={qualitySelected}
           show={t.visible}
           sizeSelected={sizeSelected}
@@ -263,7 +313,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                   <span>4.9</span>
                   <span className="block mx-2">·</span>
                   <span className="text-slate-600 dark:text-slate-400 underline">
-                    142 تقيم
+                    {reviews.length} تقيم
                   </span>
                 </div>
               </a>
@@ -275,6 +325,27 @@ const ProductDetailPage: FC<any> = ({ params }) => {
             </div>
           </div>
         </div>
+        <Script
+          src="https://cdn.tamara.co/widget-v2/tamara-widget.js"
+          onReady={() => setTamarraReady(true)}
+        />
+        <Script
+          src="https://checkout.tabby.ai/tabby-promo.js"
+          onReady={() => setTabbyReady(true)}
+        />
+        {/* <Script src="https://example.com/script.js" /> */}
+
+        <div style={{ marginBottom: "30px" }} id="TabbyPromo"></div>
+        {/* // @ts-ignore */}
+        {tammaraReady && productData?.price && (
+          <tamara-widget
+            type="tamara-summary"
+            amount={`${productData?.price}`}
+            inline-type="2"
+            inline-variant="outlined"
+            config='{"badgePosition":"right","showExtraContent":""}'
+          ></tamara-widget>
+        )}
 
         {/* ---------- 3 VARIANTS AND SIZE LIST ----------  */}
         {/* <div className="">{renderVariants()}</div> */}
@@ -340,49 +411,31 @@ const ProductDetailPage: FC<any> = ({ params }) => {
   };
 
   const renderReviews = () => {
+    if (reviews.length <= 0) return;
     return (
       <div className="" style={{ direction: "rtl" }}>
         {/* HEADING */}
         <h2 className="text-2xl font-semibold flex items-center">
           <StarIcon className="w-7 h-7 mb-0.5" />
-          <span className="ml-1.5"> 142 تقيم</span>
+          <span className="ml-1.5"> {reviews.length} تقيم</span>
         </h2>
 
         {/* comment */}
         <div className="mt-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
-            <ReviewItem
-              data={{
-                comment: `منتج رائع`,
-                date: "December 22, 2021",
-                name: "David  ",
-                starPoint: 5,
-              }}
-            />
-            <ReviewItem
-              data={{
-                comment: `منتج رائع`,
-                date: "December 22, 2021",
-                name: "Stiven Hokinhs",
-                starPoint: 5,
-              }}
-            />
-            <ReviewItem
-              data={{
-                comment: `منتج رائع`,
-                date: "August 15, 2022",
-                name: "Gropishta keo",
-                starPoint: 5,
-              }}
-            />
-            <ReviewItem
-              data={{
-                comment: `منتج رائع`,
-                date: "December 12, 2022",
-                name: "Dahon Stiven",
-                starPoint: 5,
-              }}
-            />
+            {reviews.map((item, i) => {
+              return (
+                <ReviewItem
+                  key={i}
+                  data={{
+                    comment: item.productReview,
+                    date: item?.createdAt?.split("T")[0],
+                    name: item.name,
+                    starPoint: item.productRating,
+                  }}
+                />
+              );
+            })}
           </div>
 
           <ButtonSecondary
@@ -413,7 +466,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                     // productData?.image
                     //   ? `http://localhost:5000${productData?.image}`
                     //   :
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/defualt.jpg`
+                    `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`
                   }
                   className=" rounded-2xl object-cover product-img"
                   alt="product detail 1"
@@ -483,6 +536,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
       {/* MODAL VIEW ALL REVIEW */}
       <ModalViewAllReviews
         show={isOpenModalViewAllReviews}
+        reviews={reviews}
         onCloseModalViewAllReviews={() => setIsOpenModalViewAllReviews(false)}
       />
     </div>

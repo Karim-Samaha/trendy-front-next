@@ -42,10 +42,10 @@ const ReviewItem: FC<ReviewItemProps> = ({
           /> */}
         </div>
 
-        <div className="flex-1 flex justify-between">
+        <div className="flex-1 flex justify-between dir-rtl">
           <div className="text-sm sm:text-base">
             <span className="block font-semibold">{data.name}</span>
-            <span className="block mt-0.5 text-slate-500 dark:text-slate-400 text-sm">
+            <span className="block mt-0.5 text-slate-500 dark:text-slate-400 text-sm" style={{textAlign: "right"}}>
               {data.date}
             </span>
           </div>
@@ -60,7 +60,7 @@ const ReviewItem: FC<ReviewItemProps> = ({
         </div>
       </div>
       <div className="mt-4 prose prose-sm sm:prose dark:prose-invert sm:max-w-2xl">
-        <p className="text-slate-600 dark:text-slate-300">{data.comment}</p>
+        <p className="text-slate-600 dark:text-slate-300" style={{textAlign: "right"}}>{data.comment}</p>
       </div>
     </div>
   );

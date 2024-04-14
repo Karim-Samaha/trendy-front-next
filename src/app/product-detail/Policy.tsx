@@ -78,8 +78,6 @@ const Policy = () => {
         );
       })}
 
-      {/* <div className="absolute inset-x-0 border-t top-1/2 -translate-y-1/2 border-slate-300"></div>
-      <div className="absolute inset-y-0 border-l left-1/2 -translate-x-1/2 border-slate-300"></div> */}
     </div>
   );
 };

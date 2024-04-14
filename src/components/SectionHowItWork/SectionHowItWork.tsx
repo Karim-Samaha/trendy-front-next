@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
-import HIW1img from "@/images/HIW1img.png";
-import HIW2img from "@/images/HIW2img.png";
-import HIW3img from "@/images/HIW3img.png";
-import HIW4img from "@/images/HIW4img.png";
+import HIW1img from "@/images/products/market.jpeg";
+import HIW2img from "@/images/products/market.jpeg";
+import HIW3img from "@/images/products/market.jpeg";
+import HIW4img from "@/images/products/market.jpeg";
 import VectorImg from "@/images/VectorHIW.svg";
 import Badge from "@/shared/Badge/Badge";
 import Image from "next/image";
@@ -70,7 +70,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
             />
             <div className="text-center mt-auto space-y-5">
               <Badge
-                name={`Step ${index + 1}`}
+                name={`Trendy Rose`}
                 color={
                   !index
                     ? "red"

@@ -12,7 +12,7 @@ const Moysar = () => {
   const savePayment: any = async (payloda: any) => {
     if (!session) return;
     _axios
-      .post(`/api/create-checkout-session`, { ...payloda }, { session })
+      .post(`/create-checkout-session`, { ...payloda }, { session })
       .then((res) => res);
   };
   let getTotalPrice = () => {
@@ -69,7 +69,7 @@ const Moysar = () => {
             return new Promise(async function (resolve, reject) {
                let saved = await fetch("${
                  process.env.NEXT_PUBLIC_BACKEND_URL
-               }/api/create-checkout-session",
+               }/create-checkout-session",
                {
                    headers: {
                      'Accept': 'application/json',

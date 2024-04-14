@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useCart } from "react-use-cart";
 import { Key } from "react";
 import { adjustNames } from "@/utils/adjustNames";
-
+import { renderTotalPrice_ } from "@/utils/adjustNames";
 const CartPage = () => {
   const { items, removeItem } = useCart();
   const renderStatusSoldout = () => {
@@ -21,26 +21,8 @@ const CartPage = () => {
     );
   };
 
-  const renderTotalPrice = () => {
-    let total: number = 0;
-    let cards: number = 0;
-    let giftCards: number = 0;
-    items.map((item: any) => {
-      total += item.price;
-      if (item.formInfo.cardText.length > 1) {
-        cards += 6;
-      }
-      if (item?.selectedCard?._id) {
-        giftCards += item?.selectedCard?.price
-      }
-    });
-    return {
-      total: total.toFixed(2),
-      cards: cards.toFixed(2),
-      giftCards: giftCards.toFixed(2),
-      fintalTotal: (total + cards + giftCards).toFixed(2),
-    };
-  };
+  const renderTotalPrice = renderTotalPrice_(items);
+
   const renderStatusInstock = () => {
     return (
       <div className="rounded-full flex items-center justify-center px-2.5 py-1.5 text-xs text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
@@ -81,7 +63,9 @@ const CartPage = () => {
             <div className="flex justify-between ">
               <div className="flex-[1.5] ">
                 <h3 className="text-base font-semibold">
-                  <Link href={`/product-detail/${_id}`}>{adjustNames(name)}</Link>
+                  <Link href={`/product-detail/${_id}`}>
+                    {adjustNames(name)}
+                  </Link>
                 </h3>
                 {formInfo?.cardText.length > 0 ? (
                   <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
@@ -107,96 +91,15 @@ const CartPage = () => {
                   <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
                     <div className="order-info flex-1 font-bold">
                       كرت اهداء{" "}
-                      <span className="font-bold">{adjustNames(selectedCard.name)}</span>
+                      <span className="font-bold">
+                        {adjustNames(selectedCard.name)}
+                      </span>
                       <span className="font-bold" style={{ margin: "0 10px" }}>
                         {selectedCard.price} ر.س
                       </span>
                     </div>
                   </div>
                 )}
-                {/* <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
-                  <div className="flex items-center space-x-1.5">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M7.01 18.0001L3 13.9901C1.66 12.6501 1.66 11.32 3 9.98004L9.68 3.30005L17.03 10.6501C17.4 11.0201 17.4 11.6201 17.03 11.9901L11.01 18.0101C9.69 19.3301 8.35 19.3301 7.01 18.0001Z"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M8.35 1.94995L9.69 3.28992"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M2.07 11.92L17.19 11.26"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3 22H16"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M18.85 15C18.85 15 17 17.01 17 18.24C17 19.26 17.83 20.09 18.85 20.09C19.87 20.09 20.7 19.26 20.7 18.24C20.7 17.01 18.85 15 18.85 15Z"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-
-                    <span>{`Black`}</span>
-                  </div>
-                  <span className="mx-4 border-l border-slate-200 dark:border-slate-700 "></span>
-                  <div className="flex items-center space-x-1.5">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M21 9V3H15"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3 15V21H9"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M21 3L13.5 10.5"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M10.5 13.5L3 21"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-
-                    <span>{`2XL`}</span>
-                  </div>
-                </div> */}
-
                 <div className="mt-3 flex justify-between w-full sm:hidden relative">
                   <select
                     name="qty"
@@ -279,7 +182,7 @@ const CartPage = () => {
                 <div className="flex justify-between pb-4">
                   <span>المجموع</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-200">
-                    {renderTotalPrice().total} ر.س
+                    {renderTotalPrice.total} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
@@ -291,13 +194,13 @@ const CartPage = () => {
                 <div className="flex justify-between py-4">
                   <span>نص بطاقه</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-200">
-                    {renderTotalPrice().cards} ر.س
+                    {renderTotalPrice.cards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>كروت اهداء</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-200">
-                    {renderTotalPrice().giftCards} ر.س
+                    {renderTotalPrice.giftCards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
@@ -308,7 +211,7 @@ const CartPage = () => {
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                   <span>مجموع الفاتورة</span>
-                  <span> {renderTotalPrice().fintalTotal} ر.س</span>
+                  <span> {renderTotalPrice.fintalTotal} ر.س</span>
                 </div>
               </div>
               <ButtonPrimary href="/checkout" className="mt-8 w-full">

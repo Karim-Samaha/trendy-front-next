@@ -16,7 +16,7 @@ const PageSearch = ({ params }) => {
   useEffect(() => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/search/${params.keyword}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/search/${params.keyword}`
       )
       .then((res) => res.data.data)
       .then((data) => {
@@ -29,7 +29,7 @@ const PageSearch = ({ params }) => {
             featuredImage: {
               id: item?._id,
               category: 1,
-              src: `${process.env.NEXT_PUBLIC_BACKEND_URL}/public/imgs/Ramdan Gifts.jpeg`,
+              src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,

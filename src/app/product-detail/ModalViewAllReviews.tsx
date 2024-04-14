@@ -8,11 +8,13 @@ import ButtonClose from "@/shared/ButtonClose/ButtonClose";
 export interface ModalViewAllReviewsProps {
   show: boolean;
   onCloseModalViewAllReviews: () => void;
+  reviews: [any];
 }
 
 const ModalViewAllReviews: FC<ModalViewAllReviewsProps> = ({
   show,
   onCloseModalViewAllReviews,
+  reviews,
 }) => {
   return (
     <Transition appear show={show} as={Fragment}>
@@ -57,18 +59,18 @@ const ModalViewAllReviews: FC<ModalViewAllReviewsProps> = ({
                     className="text-lg font-medium leading-6 text-gray-900"
                     id="headlessui-dialog-title-70"
                   >
-                    View all reviews
+                    عرض كل التقيمات
                   </h3>
                   <span className="absolute left-3 top-3">
                     <ButtonClose onClick={onCloseModalViewAllReviews} />
                   </span>
                 </div>
-                <div className="px-8 my-5 flex justify-between flex-wrap">
-                  <h2 className="text-xl sm:text-2xl font-semibold flex items-center">
+                <div className="px-8 my-5 flex justify-between flex-wrap dir-rtl">
+                  <h2 className="text-xl sm:text-2xl font-semibold flex items-center ">
                     <StarIcon className="w-7 h-7 mb-0.5" />
-                    <span className="ml-1.5"> 4,87 · 142 Reviews</span>
+                    <span className="ml-1.5"> {reviews.length} تقيم</span>
                   </h2>
-                  <SortOrderFilter
+                  {/* <SortOrderFilter
                     className="my-2"
                     data={[
                       { name: "Sort order" },
@@ -76,19 +78,22 @@ const ModalViewAllReviews: FC<ModalViewAllReviewsProps> = ({
                       { name: "Highest rating" },
                       { name: "Lowest rating" },
                     ]}
-                  />
+                  /> */}
                 </div>
-                <div className="px-8 py-8 border-t border-slate-200 dark:border-slate-700 overflow-auto grid grid-cols-1 md:grid-cols-2 gap-x-14 gap-y-10">
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
-                  <ReviewItem />
+                <div className="px-8 py-8 border-t border-slate-200 dark:border-slate-700 overflow-auto grid grid-cols-1 md:grid-cols-2 gap-x-14 gap-y-10 dir-rtl">
+                  {reviews.map((item, i) => {
+                    return (
+                      <ReviewItem
+                        key={i}
+                        data={{
+                          comment: item.productReview,
+                          date: item?.createdAt?.split("T")[0],
+                          name: item.name,
+                          starPoint: item.productRating,
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>

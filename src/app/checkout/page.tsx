@@ -17,8 +17,11 @@ import { Metadata } from "next";
 import Moysar from "@/components/payment/Moysar";
 import Tabby from "./tabby";
 import TabbyIcon from "@/images/icons/Tabby.png";
+import { renderTotalPrice_ } from "@/utils/adjustNames";
 const CheckoutPage = () => {
   const { items } = useCart();
+  const renderTotalPrice = renderTotalPrice_(items);
+
   const [tabActive, setTabActive] = useState<
     "ContactInfo" | "ShippingAddress" | "PaymentMethod"
   >("ShippingAddress");
@@ -222,7 +225,12 @@ const CheckoutPage = () => {
           <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
             <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
               <span className="hidden sm:block" style={{ margin: "0 20px" }}>
-                <Image style={{borderRadius: "10px"}} src={TabbyIcon} width={40} height={40} />
+                <Image
+                  style={{ borderRadius: "10px" }}
+                  src={TabbyIcon}
+                  width={40}
+                  height={40}
+                />
               </span>
               <div className="sm:ml-8">
                 <div className="font-semibold mt-1 text-sm">
@@ -361,24 +369,36 @@ const CheckoutPage = () => {
                 <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-200">
-                    $249.00
+                    {renderTotalPrice.total} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>تكاليف الشحن</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-200">
-                    $5.00
+                    0 ر.س
+                  </span>
+                </div>
+                <div className="flex justify-between py-2.5">
+                  <span>نص بطاقه</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                    {renderTotalPrice.cards} ر.س
+                  </span>
+                </div>
+                <div className="flex justify-between py-2.5">
+                  <span>كروت اهداء</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                    {renderTotalPrice.giftCards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>الضريبة</span>
                   <span className="font-semibold text-slate-900 dark:text-slate-200">
-                    $24.90
+                    0 ر.س
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                   <span>مجموع الفاتورة</span>
-                  <span>$276.00</span>
+                  <span> {renderTotalPrice.fintalTotal} ر.س</span>
                 </div>
               </div>
               <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary>

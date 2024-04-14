@@ -24,7 +24,7 @@ const Tabby = () => {
     if (!session?.user?.accessToken) return null;
     _axios
       .post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/create-tabby-session`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/create-tabby-session`,
         {
           payment: {
             amount: "100",
