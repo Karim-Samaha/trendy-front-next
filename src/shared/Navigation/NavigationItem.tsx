@@ -77,6 +77,7 @@ const NavigationItem: FC<NavigationItemProps> = ({ menuItem }) => {
                     }}
                     desc={menu.desc}
                     id={""}
+                    href={menu.children[0]?.href}
                   />
                 </div>
               </div>

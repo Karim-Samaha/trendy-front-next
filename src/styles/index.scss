@@ -163,7 +163,6 @@ footer {
   padding: 10px 30px;
   border-radius: 13px;
   font-weight: bold;
-  
 }
 .footer-container {
   width: 100%;
@@ -390,13 +389,45 @@ footer {
   }
 }
 #mysr-form-form-el#mysr-form-form-el#mysr-form-form-el.mysr-form-moyasarForm.mysr-form-fixedWidth {
-  margin-left:auto !important;
+  margin-left: auto !important;
   margin-right: auto !important;
-  max-width: 515px !important
+  max-width: 515px !important;
 }
-
 
 tamara-widget {
   position: relative;
   right: 5px;
+}
+.no-product {
+  text-align: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: bold;
+  width: 100%;
+  padding-top: 50px;
+}
+.nc-ReviewItem {
+  border: 3px solid #55a8b9;
+  padding: 10px;
+  min-height: 120px;
+  border-radius: 16px;
+}
+.no-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  h3 {
+    font-size: 23px;
+    font-weight: bold;
+  }
+}
+.hint-err {
+  font-size: 23px;
+  font-weight: bold;
+  width: 100%;
+  span {
+    font-weight: 500;
+  }
 }

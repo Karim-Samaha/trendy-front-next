@@ -58,14 +58,14 @@ const NotifyAddTocart: FC<Props> = ({
           <div className="flex flex-1 items-end justify-between text-sm">
             <p className="text-gray-500 dark:text-slate-400">{`الكميه ${qualitySelected}`}</p>
 
-            <div className="flex">
+            {/* <div className="flex">
               <button
                 type="button"
                 className="font-medium text-primary-6000 dark:text-primary-500 "
               >
                 عرض السلة
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

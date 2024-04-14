@@ -1,8 +1,6 @@
 "use client";
 
 import React, { FC, useEffect, useState } from "react";
-import backgroundLineSvg from "@/images/Moon.svg";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Next from "@/shared/NextPrev/Next";
 import Prev from "@/shared/NextPrev/Prev";
 import useInterval from "react-use/lib/useInterval";
@@ -153,15 +151,7 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", data_ }) => {
 
         {/* BG */}
         {/* <div className="absolute inset-0 bg-[#E3FFE6]"> */}
-        <div className="absolute inset-0">
-          <Image
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="absolute w-full h-full object-contain"
-            src={backgroundLineSvg}
-            alt="hero"
-          />
-        </div>
+      
 
         <div className="relative container pb-0 pt-14 sm:pt-20 lg:py-44">
           <Image

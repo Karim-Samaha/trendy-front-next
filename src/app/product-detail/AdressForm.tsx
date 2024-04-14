@@ -52,11 +52,19 @@ const AdressForm: FC<Props> = ({
     }));
   }, [orderType]);
   useEffect(() => {
-    console.log(formValue);
-  }, [formValue]);
+    console.log('ssad');
+  }, [formValue.deliveryDate]);
 
+
+  const [errors, setErrors] = useState<any>({
+    deliveryDate: false,
+    address: false,
+  });
   const handleChange = (e: any) => {
     setFormValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (e.target.name === 'address') {
+      setErrors((prev: any) => ({ ...prev, address: false }));
+    }
   };
   const handleDateSelect = (e: Date) => {
     let timeToConverte: Date;
@@ -67,10 +75,31 @@ const AdressForm: FC<Props> = ({
       ...prev,
       deliveryDate: timeToConverte.toISOString().split("T")[0],
     }));
+    setErrors((prev: any) => ({ ...prev, deliveryDate: false }));
     setShowClender(false);
   };
-
   const [selectAdress, setSelectAdress] = useState<boolean>(true);
+
+  const validate = () => {
+    let deliveryDate = true;
+    let address = true;
+    if (formValue.deliveryDate.length <= 0) {
+      setErrors((prev: any) => ({ ...prev, deliveryDate: true }));
+      deliveryDate = false;
+    }
+    if (selectAdress && formValue.address.length <= 0) {
+      setErrors((prev: any) => ({ ...prev, address: true }));
+      address = false;
+    }
+    return deliveryDate && address;
+  };
+  const validateAndAddToCart = async (formValue: any) => {
+    let isValid = validate();
+    if (isValid) handleAddToCart(formValue);
+  };
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
   return (
     <div
       className={`border border-slate-200 dark:border-slate-700 rounded-xl ${
@@ -212,7 +241,12 @@ const AdressForm: FC<Props> = ({
               type={"text"}
               value={value}
               onFocus={() => setShowClender(true)}
+              style={{ border: errors.deliveryDate && "1px solid red" }}
             />
+            {errors.deliveryDate && (
+              <span style={{ color: "red" }}>يجب تحديد تاريخ التوصيل</span>
+            )}
+
             {showClender && (
               <Calendar
                 locale="ar"
@@ -258,7 +292,13 @@ const AdressForm: FC<Props> = ({
                 onChange={(e) => handleChange(e)}
                 value={formValue.address}
                 type={"text"}
+                style={{border: errors.address && "1px solid red"}}
               />
+              {errors.address && (
+                <span style={{ color: "red" }}>
+                  يجب تحديد العنوان او اختيار عدم تحديد العنوان وسنتواصل معك
+                </span>
+              )}
             </div>
           </div>
         )}
@@ -326,7 +366,7 @@ const AdressForm: FC<Props> = ({
             <div className="flex flex-col sm:flex-row pt-6">
               <ButtonPrimary
                 className="flex-1 flex-shrink-0"
-                onClick={() => handleAddToCart(formValue)}
+                onClick={() => validateAndAddToCart(formValue)}
               >
                 ارسال هديتك
               </ButtonPrimary>
@@ -336,7 +376,7 @@ const AdressForm: FC<Props> = ({
           <div className="flex flex-col sm:flex-row pt-6">
             <ButtonPrimary
               className="flex-1 flex-shrink-0"
-              onClick={() => handleAddToCart(formValue)}
+              onClick={() => validateAndAddToCart(formValue)}
             >
               اضف الي السلة
             </ButtonPrimary>

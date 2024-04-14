@@ -20,6 +20,7 @@ const CardCategory3: FC<CardCategory3Props> = ({
   desc = CATS_DISCOVER[2].desc,
   color = CATS_DISCOVER[2].color,
   id,
+  href,
 }) => {
   return (
     <Link
@@ -34,7 +35,6 @@ const CardCategory3: FC<CardCategory3Props> = ({
           <div className="absolute inset-5 sm:inset-8">
             {featuredImage?.src && (
               <Image
-                
                 alt=""
                 src={featuredImage || ""}
                 className="absolute end-0 w-1/2 max-w-[260px] h-full object-contain drop-shadow-xl"
@@ -63,6 +63,7 @@ const CardCategory3: FC<CardCategory3Props> = ({
                 sizeClass="py-3 px-4 sm:py-3.5 sm:px-6"
                 fontSize="text-sm font-medium"
                 className="nc-shadow-lg"
+                href={id.length > 1 ? `/category/${id}` : href}
               >
                 عرض التفاصيل
               </ButtonSecondary>

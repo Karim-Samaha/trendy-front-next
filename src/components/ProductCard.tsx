@@ -288,7 +288,7 @@ const ProductCard: FC<ProductCardProps> = ({
         <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
           <Link href={`/product-detail/${_id}`} className="block">
             <NcImage
-              containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
+                containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
               src={
                 modal
                   ? `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/card.jpg`
@@ -301,7 +301,7 @@ const ProductCard: FC<ProductCardProps> = ({
             />
           </Link>
           <ProductStatus status={status} />
-          <LikeButton liked={isLiked} className="absolute top-3 end-3 z-10" />
+          {/*  liked={isLiked} className="absolute top-3 end-3 z-10" /> */}
           {/* {sizes ? renderSizeList() : renderGroupButtons()} */}
           {renderGroupButtons()}
         </div>

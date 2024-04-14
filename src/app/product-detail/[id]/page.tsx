@@ -423,7 +423,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
         {/* comment */}
         <div className="mt-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
-            {reviews.map((item, i) => {
+            {reviews.slice(0, 4).map((item, i) => {
               return (
                 <ReviewItem
                   key={i}
@@ -474,7 +474,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
               </div>
               {renderStatus()}
               {/* META FAVORITES */}
-              <LikeButton className="absolute right-3 top-3 " />
+              {/* <LikeButton className="absolute right-3 top-3 " /> */}
             </div>
             <div className="grid grid-cols-2 gap-3 mt-3 sm:gap-6 sm:mt-6 xl:gap-8 xl:mt-8">
               {/* {[LIST_IMAGES_DEMO[1], LIST_IMAGES_DEMO[2]].map((item, index) => {

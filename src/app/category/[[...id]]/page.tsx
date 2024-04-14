@@ -10,7 +10,9 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 async function getCategories() {
   const res = axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&products=true`)
+    .get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&products=true`
+    )
     .then((res) => res.data.data)
     .then((data) => {
       return (
@@ -25,7 +27,9 @@ async function getCategories() {
             productList: item.productList,
             subCategories: item.subCategories,
             featuredImage: {
-              src: item?.image && `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item.image}`,
+              src:
+                item?.image &&
+                `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item.image}`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,
@@ -61,6 +65,7 @@ async function getSubCategoriesProducts(subCtgId) {
           rating: "4.9",
         },
         id: item?._id,
+        _id: item?._id,
         price: item.price,
         description: item.nameAr,
       }));
@@ -73,16 +78,12 @@ async function getSubCategoriesProducts(subCtgId) {
 }
 const PageCollection2 = async ({ params }) => {
   const categories = await getCategories();
-  console.log({ params });
   const currentCategory = await categories.find(
     (ctg) => ctg._id === params?.id[0]
   );
   let products;
 
-  console.log(params.id.length);
-
   if (params.id.length > 1) {
-
     products = await getSubCategoriesProducts(params?.id[1]);
   } else {
     products = await currentCategory.productList?.map((item) => {
@@ -102,11 +103,15 @@ const PageCollection2 = async ({ params }) => {
           rating: "4.9",
         },
         id: item?._id,
+        _id: item?._id,
+
         price: item.price,
         description: item.nameAr,
       };
     });
   }
+
+  console.log(products);
   return (
     <div className={`nc-PageCollection2`}>
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 sm:space-y-20 lg:space-y-28">
@@ -131,11 +136,13 @@ const PageCollection2 = async ({ params }) => {
                     ? products.map((item, index) => (
                         <ProductCard data={item} key={index} />
                       ))
-                    : PRODUCTS.map((item, index) => (
-                        <ProductCard data={item} key={index} />
-                      ))}
+                    : null}
                 </div>
               </div>
+              {products?.length <= 0 ? (
+                <h4 className="no-product">لا يوجد منتجات حاليا</h4>
+              ) : null}
+
               <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0"></div>
               <div className="lg:w-1/3 xl:w-1/4 pr-4">
                 <SidebarFilters categories={categories} />

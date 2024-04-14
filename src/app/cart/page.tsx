@@ -147,7 +147,39 @@ const CartPage = () => {
       </div>
     );
   };
-
+  if (items.length === 0)
+    return (
+      <div className="nc-CartPage" style={{ direction: "rtl" }}>
+        <main className="container py-16 lg:pb-28 lg:pt-20 ">
+          <div className="mb-12 sm:mb-16">
+            <h2 className="block text-2xl sm:text-3xl lg:text-4xl font-semibold ">
+              عربة التسوق
+            </h2>
+            <div className="block mt-3 sm:mt-5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-400">
+              <Link href={"/"} className="">
+                الرئيسية
+              </Link>
+              <span className="text-xs mx-1 sm:mx-1.5">/</span>
+              {/* <Link href={"/collection"} className="">
+              Clothing Categories
+            </Link> */}
+              <span className="text-xs mx-1 sm:mx-1.5">/</span>
+              <span className="underline">عربة التسوق</span>
+            </div>
+          </div>
+        </main>
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-[100%] xl:w-[100%] divide-y divide-slate-200 dark:divide-slate-700 ">
+            <div className="no-cart">
+              <h3>لا يوجد منتجات في عربة التسوق</h3>
+              <ButtonPrimary href="/" className="mt-8">
+                التسوق{" "}
+              </ButtonPrimary>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   return (
     <div className="nc-CartPage" style={{ direction: "rtl" }}>
       <main className="container py-16 lg:pb-28 lg:pt-20 ">

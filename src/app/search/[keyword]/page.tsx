@@ -12,7 +12,7 @@ import { PRODUCTS } from "@/data/data";
 import axios from "axios";
 const PageSearch = ({ params }) => {
   const [data, setData] = useState([]);
-  console.log({ params });
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     axios
       .get(
@@ -43,6 +43,7 @@ const PageSearch = ({ params }) => {
             description: item.nameAr,
           }))
         );
+        setLoaded(true);
       });
   }, []);
   return (
@@ -51,24 +52,7 @@ const PageSearch = ({ params }) => {
         className={`nc-HeadBackgroundCommon h-24 2xl:h-28 top-0 left-0 right-0 w-full bg-primary-50 dark:bg-neutral-800/20 `}
       />
       <div className="container">
-        <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
-          {/* <form className="relative w-full " method="post">
-            <label
-              htmlFor="search-input"
-              className="text-neutral-500 dark:text-neutral-300 dir-rtl"
-            >
-         
-              <Input
-                className="shadow-lg border-0 dark:border"
-                id="search-input"
-                type="search"
-                placeholder="ابحث عن المنتج هنا"
-                sizeClass="pl-14 py-5 pr-5 md:pl-16"
-                rounded="rounded-full"
-              />
-            </label>
-          </form> */}
-        </header>
+        <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7"></header>
       </div>
 
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
@@ -76,9 +60,19 @@ const PageSearch = ({ params }) => {
           {/* FILTER */}
 
           {/* LOOP ITEMS */}
+          {data.length <= 0 && loaded && (
+            <div className="flex-1 dir-rtl">
+              <h3 className="hint-err">
+                لا يوجد نتائج للبحث : <span>{params.keyword}</span>
+              </h3>{" "}
+            </div>
+          )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10 dir-rtl">
-            {data.length > 0
-              ? data.map((item, index) => (
+            {data.length > 0 && loaded ? (
+              <>
+                {" "}
+                
+                {data.map((item, index) => (
                   <ProductCard
                     data={item}
                     key={index}
@@ -87,15 +81,18 @@ const PageSearch = ({ params }) => {
                     modal={false}
                     selectCard={undefined}
                   />
-                ))
-              : null}
+                ))}{" "}
+              </>
+            ) : null}
           </div>
 
           {/* PAGINATION */}
-          <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary loading>اعرض المزيد</ButtonPrimary>
-          </div>
+          {data.length > 10 && loaded ? (
+            <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+              <Pagination />
+              <ButtonPrimary loading>اعرض المزيد</ButtonPrimary>
+            </div>
+          ) : null}
         </main>
 
         {/* === SECTION 5 === */}
