@@ -10,8 +10,10 @@ import { useCart } from "react-use-cart";
 import { Key } from "react";
 import { adjustNames } from "@/utils/adjustNames";
 import { renderTotalPrice_ } from "@/utils/adjustNames";
+import { useSession } from "next-auth/react";
 const CartPage = () => {
   const { items, removeItem } = useCart();
+  const { data: session } = useSession();
   const renderStatusSoldout = () => {
     return (
       <div className="rounded-full flex items-center justify-center px-2.5 py-1.5 text-xs text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
@@ -246,7 +248,7 @@ const CartPage = () => {
                   <span> {renderTotalPrice.fintalTotal} ر.س</span>
                 </div>
               </div>
-              <ButtonPrimary href="/checkout" className="mt-8 w-full">
+              <ButtonPrimary href={session?.user?.accessToken ? "/checkout" : "/login"} className="mt-8 w-full">
                 إتمام عملية الشراء{" "}
               </ButtonPrimary>
               <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center">

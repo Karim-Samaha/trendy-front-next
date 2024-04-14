@@ -9,9 +9,11 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
+import { useSession } from "next-auth/react";
 
 export default function CartDropdown() {
   const { items, removeItem } = useCart();
+  const { data: session } = useSession();
   const totalPrice = () => {
     let total = 0;
     items.map((item: { price: number }) => (total += +item.price));
@@ -172,11 +174,17 @@ export default function CartDropdown() {
                         عربة التسوق
                       </ButtonSecondary>
                       <ButtonPrimary
-                        href="/checkout"
+                        href={
+                          items.length === 0
+                            ? "/cart"
+                              : !session?.user?.accessToken
+                              ? "/login"
+                            : "/checkout"
+                        }
                         onClick={close}
                         className="flex-1"
                       >
-                        اتمام عمليه الدقع
+                        اتمام عمليه الدفع
                       </ButtonPrimary>
                     </div>
                   </div>
