@@ -2,6 +2,7 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { useCart } from "react-use-cart";
 
 export interface NcInputNumberProps {
   className?: string;
@@ -11,6 +12,7 @@ export interface NcInputNumberProps {
   onChange?: (value: number) => void;
   label?: string;
   desc?: string;
+  item: any;
 }
 
 const NcInputNumber: FC<NcInputNumberProps> = ({
@@ -21,9 +23,9 @@ const NcInputNumber: FC<NcInputNumberProps> = ({
   onChange,
   label,
   desc,
+  item,
 }) => {
   const [value, setValue] = useState(defaultValue);
-
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
@@ -42,7 +44,15 @@ const NcInputNumber: FC<NcInputNumberProps> = ({
     });
     onChange && onChange(value + 1);
   };
+  const { items, updateItemQuantity } = useCart();
+  const handleClick = (type: string) => {
+    if (type === 'increase'){
+      updateItemQuantity(item?.id, item?.quantity + 1)
+    } else if (type === 'decrease') {
+      updateItemQuantity(item?.id, item?.quantity - 1)
 
+    }
+  };
   const renderLabel = () => {
     return (
       <div className="flex flex-col">
@@ -71,20 +81,20 @@ const NcInputNumber: FC<NcInputNumberProps> = ({
         <button
           className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
           type="button"
-          onClick={handleClickIncrement}
-          disabled={max ? max <= value : false}
+          onClick={() => handleClick("increase")}
+          disabled={max ? max <= item?.quantity : false}
         >
           <PlusIcon className="w-4 h-4" />
         </button>
-       
+
         <span className="select-none block flex-1 text-center leading-none">
-          {value}
+          {item?.quantity}
         </span>
         <button
           className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
           type="button"
-          onClick={handleClickDecrement}
-          disabled={min >= value}
+          onClick={() => handleClick('decrease')}
+          disabled={min >= item?.quantity}
         >
           <MinusIcon className="w-4 h-4" />
         </button>

@@ -56,6 +56,7 @@ const ProductCard: FC<ProductCardProps> = ({
   const [showModalQuickView, setShowModalQuickView] = useState(false);
   const router = useRouter();
   const addGiftCard = (id: string, data: any) => {};
+  console.log({ data });
   const notifyAddTocart = ({ size }: { size?: string }) => {
     toast.custom(
       (t) => (
@@ -288,7 +289,7 @@ const ProductCard: FC<ProductCardProps> = ({
         <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
           <Link href={`/product-detail/${_id}`} className="block">
             <NcImage
-                containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
+              containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
               src={
                 modal
                   ? `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/card.jpg`
@@ -322,15 +323,24 @@ const ProductCard: FC<ProductCardProps> = ({
 
           <div className="flex justify-between items-end product-footer">
             <Prices price={price} />
-            <div className="flex items-center mb-0.5">
-              <StarIcon className="w-5 h-5 pb-[1px] text-amber-400" />
-              <span
-                className="text-sm ms-1 text-slate-500 dark:text-slate-400"
-                style={{ direction: "rtl" }}
-              >
-                {rating || ""} ({numberOfReviews || 0} تقيم)
-              </span>
-            </div>
+            <Link
+              href={
+                data?.rates > 0
+                  ? `/product-detail/${_id}?rate=true`
+                  : `/product-detail/${_id}`
+              }
+              style={{ zIndex: "9999" }}
+            >
+              <div className="flex items-center mb-0.5">
+                <StarIcon className="w-5 h-5 pb-[1px] text-amber-400" />
+                <span
+                  className="text-sm ms-1 text-slate-500 dark:text-slate-400"
+                  style={{ direction: "rtl" }}
+                >
+                  {rating || ""}({data.rates || 0} تقيم)
+                </span>
+              </div>
+            </Link>
             <ButtonPrimary
               className="shadow-lg buy-responsive"
               fontSize="text-xs"

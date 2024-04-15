@@ -210,15 +210,15 @@ async function PageHome() {
         </div> */}
         {/* <SectionClientSay /> */}
         <Partners />
-        <div className="" style={{ direction: "rtl" }}>
+        {/* <div className="" style={{ direction: "rtl" }}>
           <h2 className="text-2xl font-semibold flex items-center">
             <StarIcon style={{ color: "#EAB308" }} className="w-7 h-7 mb-0.5" />
-            <span className="ml-1.5"> تقييمات عملاؤنا</span>
+            <span className="title ml-1.5"> تقييمات عملاؤنا</span>
           </h2>
-        </div>
+        </div> */}
 
         {/* comment */}
-        <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
+        <div className="web-rates container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
           <DiscoverMoreReviews reviews={reviews} />
         </div>
         {/* <div className="mt-10">

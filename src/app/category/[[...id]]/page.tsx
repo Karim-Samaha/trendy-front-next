@@ -1,3 +1,4 @@
+"use client";
 import React, { FC } from "react";
 import SectionSliderCollections from "@/components/SectionSliderLargeProduct";
 import SectionPromo1 from "@/components/SectionPromo1";
@@ -7,7 +8,8 @@ import SidebarFilters from "@/components/SidebarFilters";
 import axios from "axios";
 import { Disclosure } from "@/app/headlessui";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-
+import { useSearchParams } from "next/navigation";
+import ProductSection from "../ProductsSection";
 async function getCategories() {
   const res = axios
     .get(
@@ -73,21 +75,16 @@ async function getSubCategoriesProducts(subCtgId) {
   if (!res) {
     throw new Error("Failed to fetch data");
   }
-
   return res;
 }
-const PageCollection2 = async ({ params }) => {
-  const categories = await getCategories();
-  const currentCategory = await categories.find(
-    (ctg) => ctg._id === params?.id[0]
-  );
-  let products;
-
-  if (params.id.length > 1) {
-    products = await getSubCategoriesProducts(params?.id[1]);
-  } else {
-    products = await currentCategory.productList?.map((item) => {
-      return {
+async function getCategoryAllProducts(ctgId) {
+  const res = axios
+    .get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products`
+    )
+    .then((res) => res.data.data)
+    .then((data) => {
+      return data.map((item: any) => ({
         name: item.name,
         color: "bg-yellow-50",
         featuredImage: {
@@ -104,11 +101,27 @@ const PageCollection2 = async ({ params }) => {
         },
         id: item?._id,
         _id: item?._id,
-
         price: item.price,
         description: item.nameAr,
-      };
+      }));
     });
+  if (!res) {
+    throw new Error("Failed to fetch data");
+  }
+  return res;
+}
+const PageCollection2 = async ({ params }) => {
+  const categories = await getCategories();
+  const currentCategory = await categories.find(
+    (ctg) => ctg._id === params?.id[0]
+  );
+  let products;
+
+    
+  if (params.id.length > 1) {
+    products = await getSubCategoriesProducts(params?.id[1]);
+  } else {
+    products = await getCategoryAllProducts(params?.id[0]);
   }
 
   console.log(products);
@@ -130,22 +143,11 @@ const PageCollection2 = async ({ params }) => {
           <main>
             {/* LOOP ITEMS */}
             <div className="flex flex-col lg:flex-row">
-              <div className="flex-1 ">
-                <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 ">
-                  {products?.length > 0
-                    ? products.map((item, index) => (
-                        <ProductCard data={item} key={index} />
-                      ))
-                    : null}
-                </div>
-              </div>
-              {products?.length <= 0 ? (
-                <h4 className="no-product">لا يوجد منتجات حاليا</h4>
-              ) : null}
-
+              
+              <ProductSection products={products} />
               <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0"></div>
               <div className="lg:w-1/3 xl:w-1/4 pr-4">
-                <SidebarFilters categories={categories} />
+                <SidebarFilters categories={categories} params={params} />
               </div>
             </div>
           </main>

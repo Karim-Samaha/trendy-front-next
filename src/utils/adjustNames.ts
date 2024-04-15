@@ -20,7 +20,7 @@ export const renderTotalPrice_ = (items: any) => {
   let cards: number = 0;
   let giftCards: number = 0;
   items.map((item: any) => {
-    total += item.price;
+    total += item.price * item.quantity;
     if (item.formInfo.cardText.length > 1) {
       cards += 6;
     }

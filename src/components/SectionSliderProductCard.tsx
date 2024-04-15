@@ -34,7 +34,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   themeData = PRODUCTS.filter((_, i) => i < 8 && i > 2),
   order = 1,
   modal = false,
-  selectCard
+  selectCard,
 }) => {
   const sliderRef = useRef(null);
   //
@@ -43,7 +43,9 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   const [category, setCategory] = useState<any>({});
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`)
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`
+      )
       .then((res) => res.data.data)
       .then((data) => {
         setCategory({ ...data[0], productList: [] });
@@ -69,6 +71,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             },
             price: item.price,
             description: item.nameAr,
+            rates: item.rates,
           }))
         );
       });
@@ -116,7 +119,11 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   }, [sliderRef]);
 
   return (
-    <div className={`nc-SectionSliderProductCard ${className} ${modal && 'modalSlider'}`} >
+    <div
+      className={`nc-SectionSliderProductCard ${className} ${
+        modal && "modalSlider"
+      }`}
+    >
       <div
         ref={sliderRef}
         className={`flow-root ${isShow ? "" : "invisible"}`}
@@ -127,8 +134,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           fontClass={headingFontClassName}
           rightDescText={category?.nameAr}
           hasNextPrev
-        >
-        </Heading>
+        ></Heading>
         <div
           style={{ direction: "rtl" }}
           className="glide__track"
@@ -143,20 +149,35 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           >
             {data_.map((item, index) => (
               <li key={index} className={`glide__slide ${itemClassName}`}>
-                <ProductCard data={item} featuredImage={undefined} _id={""} modal={modal} selectCard={selectCard} />
+                <ProductCard
+                  data={item}
+                  featuredImage={undefined}
+                  _id={""}
+                  modal={modal}
+                  selectCard={selectCard}
+                />
               </li>
             ))}
             {data_.map((item, index) => (
               <li key={index} className={`glide__slide ${itemClassName}`}>
-                <ProductCard data={item} featuredImage={undefined} _id={""} modal={modal} selectCard={selectCard} />
+                <ProductCard
+                  data={item}
+                  featuredImage={undefined}
+                  _id={""}
+                  modal={modal}
+                  selectCard={selectCard}
+                />
               </li>
             ))}
           </ul>
         </div>
       </div>
+      {console.log(category)}
       {!modal && (
         <div className="show-more">
-          <Link href="/">عرض المزيد</Link>
+          <Link href={`/category/${category?._id}/${category?._id}`}>
+            عرض المزيد
+          </Link>
         </div>
       )}
     </div>

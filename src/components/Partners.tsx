@@ -18,7 +18,7 @@ const Partners = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-evenly",
-          minHeight: '200px',
+          minHeight: '150px',
         }}
       >
         <Image width={150} height={50} src={VisaImg} />

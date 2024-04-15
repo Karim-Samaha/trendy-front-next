@@ -16,11 +16,11 @@ export default function CartDropdown() {
   const { data: session } = useSession();
   const totalPrice = () => {
     let total = 0;
-    items.map((item: { price: number }) => (total += +item.price));
+    items.map((item: { price: number }) => (total += +item.price * +item.quantity));
     return total.toFixed(2);
   };
   const renderProduct = (item: any, index: number, close: () => void) => {
-    const { image, price, name, featuredImage, id, _id } = item;
+    const { image, price, name, featuredImage, id, _id, quantity } = item;
     return (
       <div key={index} className="flex py-5 last:pb-0">
         <div
@@ -59,7 +59,7 @@ export default function CartDropdown() {
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
-            <p className="text-gray-500 dark:text-slate-400">{`الكمية 1`}</p>
+            <p className="text-gray-500 dark:text-slate-400">{`الكمية ${quantity}`}</p>
 
             <div className="flex">
               <button
@@ -139,7 +139,7 @@ export default function CartDropdown() {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="hidden md:block absolute z-10 w-screen max-w-xs sm:max-w-md px-4 mt-3.5 -right-28 sm:right-0 sm:px-0">
+            <Popover.Panel className="cart-dropdown hidden md:block absolute z-10 w-screen max-w-xs sm:max-w-md px-4 mt-3.5 -right-28 sm:right-0 sm:px-0">
               <div
                 style={{ direction: "rtl" }}
                 className="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10"

@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export interface SectionHowItWorkProps {
   className?: string;
-  data?: typeof DEMO_DATA[0][];
+  data?: (typeof DEMO_DATA)[0][];
 }
 
 const DEMO_DATA = [
@@ -49,14 +49,21 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
   data = DEMO_DATA,
 }) => {
   return (
-    <div className={`nc-SectionHowItWork ${className}`} style={{direction: "rtl"}}>
+    <div
+      className={`nc-SectionHowItWork ${className}`}
+      style={{ direction: "rtl" }}
+    >
+      {" "}
+      <h2 className="title text-3xl md:text-4xl font-semibold" style={{marginBottom: "60px"}}>
+      لماذا متجر ترندي؟
+      </h2>
       <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
         <Image
           className="hidden md:block absolute inset-x-0 top-5"
           src={VectorImg}
           alt="vector"
         />
-        {data.map((item: typeof DEMO_DATA[number], index: number) => (
+        {data.map((item: (typeof DEMO_DATA)[number], index: number) => (
           <div
             key={item.id}
             className="relative flex flex-col items-center max-w-xs mx-auto"

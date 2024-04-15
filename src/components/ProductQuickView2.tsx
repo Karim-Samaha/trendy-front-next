@@ -36,10 +36,6 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
 
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
 
-
-
- 
-
   const renderSizeList = () => {
     if (!allOfSizes || !sizes || !sizes.length) {
       return null;
@@ -140,8 +136,11 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
     return (
       <div className="space-y-8">
         {/* ---------- 1 HEADING ----------  */}
-        <div>
-          <h2 className="text-2xl 2xl:text-3xl font-semibold">
+        <div className="dir-rtl">
+          <h2
+            className="text-2xl 2xl:text-3xl font-semibold dir-rtl"
+            style={{ textAlign: "right" }}
+          >
             <Link href={`/product-detail/${data?._id}`}>{data.name}</Link>
           </h2>
 
@@ -160,19 +159,31 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
                 className="flex items-center text-sm font-medium"
               >
                 <StarIcon className="w-5 h-5 pb-[1px] text-yellow-400" />
-                <div className="ml-1.5 flex">
-                  <span>4.9</span>
-                  <span className="block mx-2">·</span>
-                  <span className="text-slate-600 dark:text-slate-400 underline">
-                    142 تقيم
-                  </span>
-                </div>
+                {data?.rates > 0 ? (
+                  <Link href={`/product-detail/${data?._id}?rate=true`}>
+                    <div className="ml-1.5 flex">
+                      <span>4.9</span>
+                      <span className="block mx-2">·</span>
+                      <span className="text-slate-600 dark:text-slate-400 underline">
+                        {data?.rates} تقيم
+                      </span>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="ml-1.5 flex">
+                    <span>4.9</span>
+                    <span className="block mx-2">·</span>
+                    <span className="text-slate-600 dark:text-slate-400 underline">
+                      {data?.rates} تقيم
+                    </span>
+                  </div>
+                )}
               </a>
               <span className="hidden sm:block mx-2.5">·</span>
-              <div className="hidden sm:flex items-center text-sm">
+              {/* <div className="hidden sm:flex items-center text-sm">
                 <SparklesIcon className="w-3.5 h-3.5" />
                 <span className="ml-1 leading-none">{status}</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -186,11 +197,12 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
 
         {/*  ---------- 4  QTY AND ADD TO CART BUTTON */}
         <div className="flex space-x-3.5">
-          <ButtonPrimary className="flex-1 flex-shrink-0">
+          <ButtonPrimary
+            className="flex-1 flex-shrink-0"
+            href={`/product-detail/${data?._id}`}
+          >
             <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
-            <Link href={`/product-detail/${data?._id}`}>
-              <span className="ml-3">اضف الي السلة</span>
-            </Link>
+            <span className="ml-3">اضف الي السلة</span>
           </ButtonPrimary>
         </div>
 
@@ -214,8 +226,8 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
     <div className={`nc-ProductQuickView2 ${className}`}>
       {/* MAIn */}
       <div className="lg:flex justify-between">
-         {/* SIDEBAR */}
-         <div className="w-full lg:w-[45%] pt-6 lg:pt-0 lg:pl-7 xl:pl-10">
+        {/* SIDEBAR */}
+        <div className="w-full lg:w-[45%] pt-6 lg:pt-0 lg:pl-7 xl:pl-10">
           {renderSectionContent()}
         </div>
         {/* CONTENT */}
@@ -238,8 +250,6 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
             {/* <LikeButton className="absolute right-3 top-3 " /> */}
           </div>
         </div>
-
-       
       </div>
     </div>
   );

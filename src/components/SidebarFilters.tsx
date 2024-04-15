@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "@/shared/Checkbox/Checkbox";
 import Slider from "rc-slider";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import MySwitch from "@/components/MySwitch";
 import { Disclosure } from "@/app/headlessui";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useParams } from "next/navigation";
-
+import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import { FC } from "react";
 import { useRouter } from "next/navigation";
 
@@ -162,7 +162,7 @@ const SidebarFilters = (
   const renderTabsPriceRage = () => {
     return (
       <div className="relative flex flex-col py-8 space-y-5 pr-3">
-        <div className="space-y-5" style={{direction: "rtl"}}>
+        <div className="space-y-5" style={{ direction: "rtl" }}>
           <span className="font-semibold">السعر</span>
           <Slider
             range
@@ -178,12 +178,15 @@ const SidebarFilters = (
           />
         </div>
 
-        <div className="flex justify-between space-x-5" style={{direction: "rtl"}}>
+        <div
+          className="flex justify-between space-x-5"
+          style={{ direction: "rtl" }}
+        >
           <div>
             <label
               htmlFor="minPrice"
               className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
-              style={{textAlign: "center"}}
+              style={{ textAlign: "center" }}
             >
               السعر من
             </label>
@@ -205,8 +208,7 @@ const SidebarFilters = (
             <label
               htmlFor="maxPrice"
               className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
-              style={{textAlign: "center"}}
-
+              style={{ textAlign: "center" }}
             >
               السعر الي
             </label>
@@ -224,6 +226,13 @@ const SidebarFilters = (
               />
             </div>
           </div>
+        </div>
+        <div className="filter-btn block lg:w-1/3 xl:w-1/4 pr-4">
+          <ButtonPrimary
+            href={id.length > 1 ? `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}` : `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}`}
+          >
+            تصفيه
+          </ButtonPrimary>
         </div>
       </div>
     );

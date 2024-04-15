@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Session } from "inspector";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const CartDropdown = dynamic(() => import('./CartDropdown'), { ssr: false })
+const CartDropdown = dynamic(() => import("./CartDropdown"), { ssr: false });
 
 export interface MainNav2LoggedProps {}
 
@@ -78,7 +78,6 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             autoFocus
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-
           />
           <button type="button" onClick={() => setShowSearchForm(false)}>
             <XMarkIcon className="w-5 h-5" />
@@ -100,7 +99,10 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
           <Logo className="flex-shrink-0" />
         </div>
 
-        <div className="flex-[7] hidden lg:flex justify-center mx-4">
+        <div
+          className="flex-[7] hidden lg:flex justify-center mx-4"
+          style={{ direction: "ltr" }}
+        >
           {showSearchForm ? renderSearchForm() : <Navigation />}
         </div>
 

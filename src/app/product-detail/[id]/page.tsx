@@ -32,12 +32,16 @@ import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 import { useCart } from "react-use-cart";
 import ModalCards from "@/components/ModalCards";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
 
 const ProductDetailPage: FC<any> = ({ params }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
-  const { addItem } = useCart();
+  const { addItem, updateItemQuantity, items } = useCart();
   //
+  console.log({ cart: items });
   const [productData, setProductData] = useState<any>([]);
   const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
@@ -53,6 +57,16 @@ const ProductDetailPage: FC<any> = ({ params }) => {
   const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
     useState(false);
   const [formType, setFormType] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const isRateModalQuery = searchParams.get("rate");
+
+  useEffect(() => {
+    if (isRateModalQuery) {
+      setIsOpenModalViewAllReviews(true);
+    }
+  }, []);
   //
   useEffect(() => {
     if (selectedCard?._id) {
@@ -73,8 +87,6 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     ]);
   }, []);
   useEffect(() => {
-    console.log("ss");
-
     let root = document.querySelector(".nc-ProductDetailPage ");
     const tabbyCard = document.createElement("script");
     const tammaraCard = document.createElement("script");
@@ -114,17 +126,19 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     }
   }, [productData, tabbyReady, tammaraReady]);
 
-  const notifyAddTocart = () => {
+  const notifyAddTocart = (item: any) => {
     toast.custom(
       (t) => (
-        <NotifyAddTocart
-          productImage={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
-          qualitySelected={qualitySelected}
-          show={t.visible}
-          sizeSelected={sizeSelected}
-          variantActive={variantActive}
-          product={{ name: productData.name, price: productData.price }}
-        />
+        <Link href={"/cart"}>
+          <NotifyAddTocart
+            productImage={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
+            qualitySelected={item.quantity}
+            show={t.visible}
+            sizeSelected={sizeSelected}
+            variantActive={variantActive}
+            product={{ name: item.name, price: item.price }}
+          />
+        </Link>
       ),
       { position: "top-right", id: "nc-product-notify", duration: 3000 }
     );
@@ -133,14 +147,27 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     setSelectedCard(item);
   };
   const handleAddToCart = (formInfo: Object) => {
-    const itemToBeAdded: any = {
+    let itemToBeAdded: any = {
       ...productData,
       id: productData?._id,
+      quantity: 1,
       formInfo: { ...formInfo },
       selectedCard: { ...selectedCard },
     };
-    addItem(itemToBeAdded);
-    notifyAddTocart();
+    if (items.some((item) => item.id === itemToBeAdded.id)) {
+      console.log("whaaaaaaaaaaaaaaaaaat");
+      let item = items.find((item) => item.id === itemToBeAdded.id);
+      if (!item) return;
+      console.log(`!!!!!!!!${item.quantity}!!!!!!!!!`);
+      updateItemQuantity(item.id, item?.quantity + 1);
+      itemToBeAdded = {
+        ...item,
+        quantity: item.quantity + 1,
+      };
+    } else {
+      addItem(itemToBeAdded);
+    }
+    notifyAddTocart(itemToBeAdded);
   };
   // const renderVariants = () => {
   //   if (!variants || !variants.length) {

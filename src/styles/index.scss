@@ -431,3 +431,28 @@ tamara-widget {
     font-weight: 500;
   }
 }
+
+.filter-btn {
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a {
+    min-width: 180px;
+  }
+}
+.web-rates {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #55a8b9;
+  border-radius: 20px;
+  .title {
+    color: #fff;
+  }
+  .nc-ReviewItem {
+    background-color: #fff;
+  }
+}
+.cart-dropdown {
+  right: -105px !important;
+}

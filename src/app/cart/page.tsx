@@ -37,7 +37,6 @@ const CartPage = () => {
   const renderProduct = (item: any, index: Key | null | undefined) => {
     const { image, price, name, featuredImage, _id, formInfo, selectedCard } =
       item;
-    console.log({ item });
     return (
       <div
         key={index}
@@ -124,7 +123,7 @@ const CartPage = () => {
               </div>
 
               <div className="hidden sm:block text-center relative">
-                <NcInputNumber className="relative z-10" />
+                <NcInputNumber className="relative z-10" item={item} />
               </div>
 
               <div className="hidden flex-1 sm:flex justify-end">
@@ -134,9 +133,9 @@ const CartPage = () => {
           </div>
 
           <div className="flex mt-auto pt-4 items-end justify-between text-sm">
-            {Math.random() > 0.6
+            {/* {Math.random() > 0.6
               ? renderStatusSoldout()
-              : renderStatusInstock()}
+              : renderStatusInstock()} */}
 
             <a
               href="##"
@@ -252,56 +251,6 @@ const CartPage = () => {
                 إتمام عملية الشراء{" "}
               </ButtonPrimary>
               <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center">
-                {/* <p className="block relative pl-5">
-                  <svg
-                    className="w-4 h-4 absolute -left-1 top-0.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12 8V13"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M11.9945 16H12.0035"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Learn more{` `}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="##"
-                    className="text-slate-900 dark:text-slate-200 underline font-medium"
-                  >
-                    Taxes
-                  </a>
-                  <span>
-                    {` `}and{` `}
-                  </span>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="##"
-                    className="text-slate-900 dark:text-slate-200 underline font-medium"
-                  >
-                    Shipping
-                  </a>
-                  {` `} infomation
-                </p> */}
               </div>
             </div>
           </div>
