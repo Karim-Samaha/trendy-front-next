@@ -1,4 +1,3 @@
-"use client";
 import React, { FC } from "react";
 import SectionSliderCollections from "@/components/SectionSliderLargeProduct";
 import SectionPromo1 from "@/components/SectionPromo1";
@@ -11,7 +10,7 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
 import ProductSection from "../ProductsSection";
 async function getCategories() {
-  const res = axios
+  const res = await axios
     .get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&products=true`
     )
@@ -47,7 +46,7 @@ async function getCategories() {
   return res;
 }
 async function getSubCategoriesProducts(subCtgId) {
-  const res = axios
+  const res = await axios
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}/`)
     .then((res) => res.data.data)
     .then((data) => {
@@ -78,7 +77,7 @@ async function getSubCategoriesProducts(subCtgId) {
   return res;
 }
 async function getCategoryAllProducts(ctgId) {
-  const res = axios
+  const res = await axios
     .get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products`
     )
@@ -124,7 +123,6 @@ const PageCollection2 = async ({ params }) => {
     products = await getCategoryAllProducts(params?.id[0]);
   }
 
-  console.log(products);
   return (
     <div className={`nc-PageCollection2`}>
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 sm:space-y-20 lg:space-y-28">
