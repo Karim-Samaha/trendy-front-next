@@ -1,7 +1,7 @@
 export const adjustNames = (text: string) => {
   let outPutText: string = "";
-  if (text.length > 35) {
-    outPutText = text.substring(0, 35) + "...";
+  if (text.length > 60) {
+    outPutText = text.substring(0, 60) + "...";
   } else {
     outPutText = text;
   }

@@ -110,9 +110,9 @@ const CheckoutPage = () => {
           </div>
 
           <div className="flex mt-auto pt-4 items-end justify-between text-sm">
-            <div className="hidden sm:block text-center relative">
+            {/* <div className="hidden sm:block text-center relative">
               <NcInputNumber className="relative z-10" />
-            </div>
+            </div> */}
 
             {/* <a
               href="##"

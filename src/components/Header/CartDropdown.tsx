@@ -59,6 +59,7 @@ export default function CartDropdown() {
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
+            
             <p className="text-gray-500 dark:text-slate-400">{`الكمية ${quantity}`}</p>
 
             <div className="flex">
@@ -148,6 +149,7 @@ export default function CartDropdown() {
                   <div className="max-h-[60vh] p-5 overflow-y-auto hiddenScrollbar">
                     <h3 className="text-xl font-semibold">عربه التسوق</h3>
                     <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                      {console.log({items})}
                       {items.length > 0
                         ? items.map((item, index) =>
                             renderProduct(item, index, close)

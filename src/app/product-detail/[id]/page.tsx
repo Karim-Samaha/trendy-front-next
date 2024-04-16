@@ -35,13 +35,14 @@ import Script from "next/script";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import ProductNcNumber from "@/components/productNcNumber";
 const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
 
 const ProductDetailPage: FC<any> = ({ params }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
-  const { addItem, updateItemQuantity, items } = useCart();
+  const { addItem, updateItemQuantity, items, setItems } = useCart();
   //
-  console.log({ cart: items });
+  const [qty, setQty] = useState(1);
   const [productData, setProductData] = useState<any>([]);
   const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
@@ -150,7 +151,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     let itemToBeAdded: any = {
       ...productData,
       id: productData?._id,
-      quantity: 1,
+      quantity: qty,
       formInfo: { ...formInfo },
       selectedCard: { ...selectedCard },
     };
@@ -159,13 +160,13 @@ const ProductDetailPage: FC<any> = ({ params }) => {
       let item = items.find((item) => item.id === itemToBeAdded.id);
       if (!item) return;
       console.log(`!!!!!!!!${item.quantity}!!!!!!!!!`);
-      updateItemQuantity(item.id, item?.quantity + 1);
+      updateItemQuantity(item.id, item?.quantity + qty);
       itemToBeAdded = {
         ...item,
-        quantity: item.quantity + 1,
+        quantity: item.quantity + qty,
       };
     } else {
-      addItem(itemToBeAdded);
+      addItem(itemToBeAdded, qty);
     }
     notifyAddTocart(itemToBeAdded);
   };
@@ -381,9 +382,11 @@ const ProductDetailPage: FC<any> = ({ params }) => {
         {/*  ---------- 4  QTY AND ADD TO CART BUTTON */}
         <div className="flex space-x-3.5">
           <div className="flex items-center justify-center bg-slate-100/70 dark:bg-slate-800/70 px-2 py-3 sm:p-3.5 rounded-full">
-            <NcInputNumber
+            <ProductNcNumber
               defaultValue={qualitySelected}
               onChange={setQualitySelected}
+              qty={qty}
+              setQty={setQty}
             />
           </div>
           {formType !== "NORMAL_ORDER" && (
@@ -499,7 +502,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                   alt="product detail 1"
                 />
               </div>
-              {renderStatus()}
+              {/* {renderStatus()} */}
               {/* META FAVORITES */}
               {/* <LikeButton className="absolute right-3 top-3 " /> */}
             </div>

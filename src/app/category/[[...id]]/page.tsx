@@ -129,7 +129,7 @@ const PageCollection2 = async ({ params }) => {
         <div className="space-y-10 lg:space-y-14">
           {/* HEADING */}
           <div className="" style={{ width: "100%", direction: "rtl" }}>
-            <h2 className="block text-2xl sm:text-3xl lg:text-4xl font-semibold">
+            <h2 style={{marginTop: "-25px"}} className="block text-2xl sm:text-3xl lg:text-4xl font-semibold">
               {currentCategory?.name}
             </h2>
             <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base">
