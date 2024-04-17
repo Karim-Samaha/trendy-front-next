@@ -127,7 +127,7 @@ async function PageHome() {
       </div>
 
       <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
-        <SectionSliderProductCard
+      <SectionSliderProductCard
           data={[
             PRODUCTS[4],
             SPORT_PRODUCTS[5],
@@ -135,7 +135,7 @@ async function PageHome() {
             SPORT_PRODUCTS[1],
             PRODUCTS[6],
           ]}
-          order={1}
+          order={2}
           selectCard={undefined}
         />
         <SectionPromo2

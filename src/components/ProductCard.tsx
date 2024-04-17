@@ -19,6 +19,7 @@ import Link from "next/link";
 import NcImage from "@/shared/NcImage/NcImage";
 import { useCart } from "react-use-cart";
 import { adjustNames } from "@/utils/adjustNames";
+import { useSession } from "next-auth/react";
 
 export interface ProductCardProps {
   className?: string;
@@ -55,6 +56,7 @@ const ProductCard: FC<ProductCardProps> = ({
   const [variantActive, setVariantActive] = useState(0);
   const [showModalQuickView, setShowModalQuickView] = useState(false);
   const router = useRouter();
+ 
   const addGiftCard = (id: string, data: any) => {};
   console.log({ data });
   const notifyAddTocart = ({ size }: { size?: string }) => {
@@ -302,7 +304,10 @@ const ProductCard: FC<ProductCardProps> = ({
             />
           </Link>
           <ProductStatus status={status} />
-          {/*  liked={isLiked} className="absolute top-3 end-3 z-10" /> */}
+          <LikeButton
+            id={_id}
+            className="absolute top-3 end-3 z-10"
+          />
           {/* {sizes ? renderSizeList() : renderGroupButtons()} */}
           {renderGroupButtons()}
         </div>

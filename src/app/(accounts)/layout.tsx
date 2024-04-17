@@ -15,16 +15,16 @@ const pages: {
   link: Route;
 }[] = [
   {
-    name: "بينات حسابي",
-    link: "/account",
+    name: " طلباتي",
+    link: "/account-order",
   },
   {
     name: "قائمتي",
     link: "/account-savelists",
   },
   {
-    name: " طلباتي",
-    link: "/account-order",
+    name: "بينات حسابي",
+    link: "/account",
   },
   // {
   //   name: "Change password",

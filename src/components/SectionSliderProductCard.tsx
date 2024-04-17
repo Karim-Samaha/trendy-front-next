@@ -83,20 +83,19 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
       perView: 4,
       gap: 32,
       bound: true,
-      direction: "rtl",
-
+      direction: "rtl", 
       // diirection: "rtl",
       breakpoints: {
         1280: {
-          perView: 4 - 1,
+          perView: 4,
         },
         1024: {
           gap: 20,
-          perView: 4 - 1,
+          perView: 4,
         },
         768: {
           gap: 20,
-          perView: 4 - 2,
+          perView: 4,
         },
         640: {
           gap: 20,
@@ -143,7 +142,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           <ul
             style={{
               direction: "ltr",
-              marginRight: modal ? "-514px " : "-688px",
+              marginRight: modal ? "-54% " : "-3%",
             }}
             className="glide__slides prouct-slide"
           >

@@ -453,7 +453,27 @@ tamara-widget {
     background-color: #fff;
   }
 }
-.cart-dropdown {
+.cart-dropdown,
+.profile-menu {
   right: auto;
   left: 0% !important;
+}
+
+.fav.grid {
+  .fav-icon {
+    // path {
+    //   fill: #ef4444;
+    // }
+  }
+}
+.nc-Navigation li a {
+  @media (min-width: 1280px) {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  // margin-right: 6%;
+}
+.nc-Footer {
+  padding-top: 1rem;
 }
