@@ -51,14 +51,13 @@ const ProductCard: FC<ProductCardProps> = ({
     _id,
     numberOfReviews,
     featuredImage,
+    fav,
   } = data;
   const { updateItem, items } = useCart();
   const [variantActive, setVariantActive] = useState(0);
   const [showModalQuickView, setShowModalQuickView] = useState(false);
   const router = useRouter();
- 
   const addGiftCard = (id: string, data: any) => {};
-  console.log({ data });
   const notifyAddTocart = ({ size }: { size?: string }) => {
     toast.custom(
       (t) => (
@@ -304,10 +303,8 @@ const ProductCard: FC<ProductCardProps> = ({
             />
           </Link>
           <ProductStatus status={status} />
-          <LikeButton
-            id={_id}
-            className="absolute top-3 end-3 z-10"
-          />
+
+          <LikeButton fav={fav} id={_id} className="absolute top-3 end-3 z-10" />
           {/* {sizes ? renderSizeList() : renderGroupButtons()} */}
           {renderGroupButtons()}
         </div>

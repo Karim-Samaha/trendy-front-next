@@ -8,20 +8,23 @@ export interface LikeButtonProps {
   className?: string;
   liked?: boolean;
   id: string;
+  fav: any;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({
   className = "",
   liked = false,
   id,
+  fav,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(fav);
   const { data: session } = useSession();
+
+  // console.log({debPFav: fav})
+
   useEffect(() => {
-    if (!session?.user) return;
-    console.log({deb:session?.user})
-    setIsLiked(session?.user?.favorite.includes(id));
-  }, [session]);
+    setIsLiked(fav);
+  }, [fav]);
   const handleFavChange = async (id: string) => {
     await _axios
       .post(
@@ -33,7 +36,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
       .then((res: any) => setIsLiked(!isLiked))
       .catch((err: any) => console.log(err));
   };
-
+  if (!session?.user) return null;
   return (
     <button
       className={`w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-slate-900 text-neutral-700 dark:text-slate-200 nc-shadow-lg ${className}`}

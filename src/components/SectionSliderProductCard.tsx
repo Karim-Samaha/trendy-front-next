@@ -8,6 +8,8 @@ import ProductCard from "./ProductCard";
 import { Product, PRODUCTS } from "@/data/data";
 import axios from "axios";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import _axios from "@/contains/api/axios";
 
 export interface SectionSliderProductCardProps {
   className?: string;
@@ -21,6 +23,7 @@ export interface SectionSliderProductCardProps {
   order: number;
   modal?: true;
   selectCard: any;
+  _id: string;
 }
 
 const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
@@ -40,7 +43,22 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   //
   const [isShow, setIsShow] = useState(false);
   const [data_, setData_] = useState([...data]);
+  const [fav, setFav] = useState([]);
+  const { data: session } = useSession();
   const [category, setCategory] = useState<any>({});
+  useEffect(() => {
+    if (session) {
+      _axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/favorite?id=true`,
+          {},
+          //@ts-ignore
+          { session }
+        )
+        .then((res) => setFav(res.data.data))
+        .catch((err) => console.log(err));
+    }
+  }, [session]);
   useEffect(() => {
     axios
       .get(
@@ -83,7 +101,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
       perView: 4,
       gap: 32,
       bound: true,
-      direction: "rtl", 
+      direction: "rtl",
       // diirection: "rtl",
       breakpoints: {
         1280: {
@@ -149,7 +167,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             {data_.map((item, index) => (
               <li key={index} className={`glide__slide ${itemClassName}`}>
                 <ProductCard
-                  data={item}
+                  // @ts-ignore
+                  data={{ ...item, fav: fav.includes(item?._id) }}
                   featuredImage={undefined}
                   _id={""}
                   modal={modal}
@@ -160,7 +179,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             {data_.map((item, index) => (
               <li key={index} className={`glide__slide ${itemClassName}`}>
                 <ProductCard
-                  data={item}
+                  // @ts-ignore
+                  data={{ ...item, fav: fav.includes(item?._id) }}
                   featuredImage={undefined}
                   _id={""}
                   modal={modal}
@@ -171,7 +191,6 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           </ul>
         </div>
       </div>
-      {console.log(category)}
       {!modal && (
         <div className="show-more">
           <Link href={`/category/${category?._id}/${category?._id}`}>

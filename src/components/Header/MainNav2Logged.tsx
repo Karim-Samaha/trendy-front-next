@@ -100,7 +100,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
         </div>
 
         <div
-          className="flex-[7] hidden lg:flex justify-center mx-4"
+          className="flex-[5] hidden lg:flex justify-center mx-4"
           style={{ direction: "ltr" }}
         >
           {showSearchForm ? renderSearchForm() : <Navigation />}

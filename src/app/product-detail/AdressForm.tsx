@@ -52,9 +52,8 @@ const AdressForm: FC<Props> = ({
     }));
   }, [orderType]);
   useEffect(() => {
-    console.log('ssad');
+    console.log("ssad");
   }, [formValue.deliveryDate]);
-
 
   const [errors, setErrors] = useState<any>({
     deliveryDate: false,
@@ -62,7 +61,7 @@ const AdressForm: FC<Props> = ({
   });
   const handleChange = (e: any) => {
     setFormValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    if (e.target.name === 'address') {
+    if (e.target.name === "address") {
       setErrors((prev: any) => ({ ...prev, address: false }));
     }
   };
@@ -270,8 +269,12 @@ const AdressForm: FC<Props> = ({
                 name="cardText"
                 onChange={(e) => handleChange(e)}
                 defaultValue={""}
+                style={{height: "100px"}}
                 type={"text"}
               />
+              {/* <textarea style={{height: "100px"}} className="rounded-2xl mt-1.5 text-sm font-normal h-11 px-4 py-3 block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 disabled:bg-neutral-200 dark:disabled:bg-neutral-800">
+
+              </textarea> */}
             </div>
           </div>
         )}
@@ -292,7 +295,7 @@ const AdressForm: FC<Props> = ({
                 onChange={(e) => handleChange(e)}
                 value={formValue.address}
                 type={"text"}
-                style={{border: errors.address && "1px solid red"}}
+                style={{ border: errors.address && "1px solid red" }}
               />
               {errors.address && (
                 <span style={{ color: "red" }}>

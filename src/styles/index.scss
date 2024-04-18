@@ -477,3 +477,18 @@ tamara-widget {
 .nc-Footer {
   padding-top: 1rem;
 }
+.login-btn {
+  width: 300px;
+  margin-bottom: 10px;
+}
+.login-btn-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.web-rates {
+  @media (max-width: 968px) {
+    display: none;
+  }
+}

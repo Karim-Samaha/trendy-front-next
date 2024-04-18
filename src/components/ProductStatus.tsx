@@ -37,14 +37,14 @@ const ProductStatus: FC<Props> = ({
         </div>
       );
     }
-    if (status === "Sold Out") {
-      return (
-        <div className={CLASSES}>
-          <NoSymbolIcon className="w-3.5 h-3.5" />
-          <span className="ms-1 leading-none">نفذ</span>
-        </div>
-      );
-    }
+    // if (status === "Sold Out") {
+    //   return (
+    //     <div className={CLASSES}>
+    //       <NoSymbolIcon className="w-3.5 h-3.5" />
+    //       <span className="ms-1 leading-none">نفذ</span>
+    //     </div>
+    //   );
+    // }
     if (status === "limited edition") {
       return (
         <div className={CLASSES}>

@@ -47,7 +47,19 @@ const AccountSavelists = () => {
       });
   }, [session]);
 
-  if (data.length <= 0) return null;
+  if (data.length <= 0)
+    return (
+      <div className="space-y-10 sm:space-y-12">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-semibold dir-rtl">
+            المنتجات المفضلة
+          </h2>
+        </div>
+        <div style={{ textAlign: "center", fontSize: "20px" }}>
+          لم يتم اضافة منتجات في القائمة
+        </div>
+      </div>
+    );
   return (
     <div className="space-y-10 sm:space-y-12">
       <div>
@@ -59,7 +71,7 @@ const AccountSavelists = () => {
         {data.map((stay) => (
           <ProductCard
             key={stay.id}
-            data={stay}
+            data={{ ...stay, fav: true }}
             featuredImage={undefined}
             _id={""}
             modal={false}
@@ -67,9 +79,6 @@ const AccountSavelists = () => {
           />
         ))}
       </div>
-      {/* <div className="flex !mt-20 justify-center items-center">
-        <ButtonSecondary loading>Show me more</ButtonSecondary>
-      </div> */}
     </div>
   );
 };
