@@ -105,6 +105,18 @@ footer {
   background-color: #55a8b9 !important;
   color: #faefe3;
 }
+.ttnc-logo {
+  @media (max-width: 1280px) {
+    width: 150px;    
+  }
+}
+.nav-link {
+  @media (max-width: 1280px) {
+    font-size: 12px !important;
+    white-space: nowrap !important;
+
+  }
+}
 .megamnue {
   padding: 15px;
   border-radius: 16px;
