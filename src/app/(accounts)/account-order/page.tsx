@@ -13,7 +13,8 @@ import ModalAddReview from "@/components/ModalAddReview";
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();
-  const [addReview, setAddReview] = useState(true);
+  const [addReview, setAddReview] = useState(false);
+  const [itemToBeReviews, setItemToBeReviewd] = useState<string>("");
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: 1,
@@ -43,7 +44,7 @@ const AccountOrder = () => {
     method: string,
     index: number
   ) => {
-    const { image, name } = order;
+    const { image, name, _id } = order;
     return (
       <div key={index} className="flex py-4 sm:py-7 last:pb-0 first:pt-0">
         <div
@@ -87,7 +88,10 @@ const AccountOrder = () => {
               <button
                 type="button"
                 className="font-medium text-indigo-600 dark:text-primary-500 "
-                onClick={() => setAddReview(true)}
+                onClick={() => {
+                  setAddReview(true);
+                  setItemToBeReviewd(_id);
+                }}
               >
                 قيم تجربتك
               </button>
@@ -168,6 +172,7 @@ const AccountOrder = () => {
         {addReview && (
           <ModalAddReview
             show={addReview}
+            id={itemToBeReviews}
             onClose={() => setAddReview(false)}
             // selectCard={handleSelectedGiftCard}
             data={undefined}

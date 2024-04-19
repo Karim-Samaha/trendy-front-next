@@ -5,12 +5,11 @@ import { Transition, Dialog } from "@/app/headlessui";
 import NavMobile from "@/shared/Navigation/NavMobile";
 
 export interface MenuBarProps {}
-const MenuBar: React.FC<MenuBarProps> = () => {
+const MenuBar: React.FC<MenuBarProps> = (params) => {
   const [isVisable, setIsVisable] = useState(false);
 
   const handleOpenMenu = () => setIsVisable(true);
   const handleCloseMenu = () => setIsVisable(false);
-
   const renderContent = () => {
     return (
       <Transition appear show={isVisable} as={Fragment}>

@@ -13,19 +13,28 @@ import SwitchDarkMode from "@/shared/SwitchDarkMode/SwitchDarkMode";
 import Link from "next/link";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 export interface NavMobileProps {
   onClickClose?: () => void;
 }
 
 const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchTry, setSearchTry] = useState(0);
+  useEffect(() => {
+    onClickClose;
+    console.log({searchTry})
+  }, [searchTry]);
+  const router = useRouter();
+
   useEffect(() => {
     axios(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true`)
       .then((res) => res.data.data)
       .then((items) => {
         setData(
           items.map((item: any) => ({
-            type: item.name === "الاكثر مبيعا" ? null :"dropdown",
+            type: item.name === "الاكثر مبيعا" ? null : "dropdown",
             id: item._id,
             href: `/category/${item?._id}`,
             name: item.name,
@@ -154,13 +163,20 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
         action=""
         method="POST"
         className="flex-1 text-slate-900 dark:text-slate-200"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setSearchTry(searchTry + 1);
+          router.push(`/search/${search}`);
+        }}
       >
         <div className="bg-slate-50 dark:bg-slate-800 flex items-center space-x-1 py-2 px-4 rounded-xl h-full">
           {renderMagnifyingGlassIcon()}
           <input
             type="search"
             placeholder="ابحث عن منتجك"
-            className="border-none bg-transparent focus:outline-none focus:ring-0 w-full text-sm "
+            className="border-none bg-transparent focus:outline-none focus:ring-0 w-full text-sm"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <input type="submit" hidden value="" />
@@ -172,19 +188,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
     <div className="overflow-y-auto w-full h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">
       <div className="py-6 px-5 dir-rtl">
         <Logo />
-        <div className="flex flex-col mt-5 text-slate-600 dark:text-slate-300 text-sm">
-          {/* <span>
-            Discover the most outstanding articles on all topics of life. Write
-            your stories and share them
-          </span> */}
 
-          <div className="flex justify-between items-center mt-4">
-            <SocialsList itemClass="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xl" />
-            <span className="block">
-              {/* <SwitchDarkMode className="bg-neutral-100 dark:bg-neutral-800" /> */}
-            </span>
-          </div>
-        </div>
         <span className="absolute right-2 top-2 p-1">
           <ButtonClose onClick={onClickClose} />
         </span>

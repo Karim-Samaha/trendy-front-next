@@ -65,16 +65,16 @@ const ContactInfo: FC<Props> = ({ isActive, onCloseActive, onOpenActive }) => {
             </h3>
             <div  className="font-semibold mt-1 text-sm" style={{direction: "ltr"}}>
               <span   className="ml-3 tracking-tighter" >+966-666-7744 </span>
-              <span style={{margin: "0 10px"}}>احمد خالد </span>
+              <span style={{margin: "0 10px"}}>karim mahmoud</span>
 
             </div>
           </div>
-          <button
+          {/* <button
             className="py-2 px-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 mt-5 sm:mt-0 sm:ml-auto text-sm font-medium rounded-lg"
             onClick={() => onOpenActive()}
           >
             تعديل
-          </button>
+          </button> */}
         </div>
         <div
           className={`border-t border-slate-200 dark:border-slate-700 px-6 py-7 space-y-4 sm:space-y-6 ${

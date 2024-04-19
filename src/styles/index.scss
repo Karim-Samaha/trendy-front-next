@@ -92,6 +92,11 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 968px) {
+    min-width: 200px;
+    font-size: 11px;
+
+  }
 }
 .order-info p {
   font-size: 13px;
@@ -333,7 +338,7 @@ footer {
           text-align: right;
           width: 100%;
           padding: 0 10px;
-          min-height: 10px;
+          min-height: 35px;
           justify-content: flex-end;
         }
       }
@@ -384,7 +389,7 @@ footer {
     svg {
       width: 120px;
       height: 200px;
-      opacity: .3;
+      opacity: 0.3;
     }
   }
 }
@@ -516,7 +521,7 @@ tamara-widget {
   }
 }
 .star {
-  color: #FBBF25;
+  color: #fbbf25;
 }
 .review-bg {
   // background-color: #55a8b9;
@@ -526,5 +531,25 @@ tamara-widget {
   // }
   .nc-ReviewItem {
     // background-color: #fff;
+  }
+}
+.rate-input {
+  width: 350px;
+  @media (max-width: 600px) {
+    width: 290px;
+  }
+}
+.star-pick {
+  transform: rotateY(180deg);
+  margin: 10px 0;
+}
+.product-controls {
+  @media (max-width: 968px) {
+    flex-direction: column;
+    align-items: center;
+    button {
+      width: 100%;
+      margin-top: 10px;
+    }
   }
 }
