@@ -59,7 +59,7 @@ const ReviewItem: FC<ReviewItemProps> = ({
           </div>
         </div>
       </div>
-      <div className="mt-4 prose prose-sm sm:prose dark:prose-invert sm:max-w-2xl">
+      <div className="mt-4 prose prose-sm sm:prose dark:prose-invert sm:max-w-2xl" style={{borderTop: "1px solid #f1f5f9"}}>
         <p className="text-slate-600 dark:text-slate-300" style={{textAlign: "right"}}>{data.comment}</p>
       </div>
     </div>

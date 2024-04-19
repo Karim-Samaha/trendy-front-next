@@ -67,7 +67,7 @@ const DiscoverMoreReviews: FC<any> = ({ reviews }) => {
           // rightDescText="التصنيفات"
           hasNextPrev
         >
-          <h2 className="title">التقيمات</h2>
+          <h2 className="title">أراء العملاء</h2>
         </Heading>
         <div
           style={{ direction: "rtl" }}
@@ -85,7 +85,7 @@ const DiscoverMoreReviews: FC<any> = ({ reviews }) => {
               return (
                 <li key={i} className={`glide__slide`}>
                   <div className="mt-10 dir-rtl">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-5">
                       {reviewList?.map((reviewItem: any, i) => {
                         return (
                           <ReviewItem

@@ -33,7 +33,7 @@ const AdressForm: FC<Props> = ({
     cardText: "",
     addressSelected: false,
     address: "",
-    giftAdd: "",
+    giftAdd: "1",
     sentFrom: "",
     sentTo: "",
     giftLink: "",
@@ -45,7 +45,7 @@ const AdressForm: FC<Props> = ({
       cardText: "",
       addressSelected: false,
       address: "",
-      giftAdd: "",
+      giftAdd: "1",
       sentFrom: "",
       sentTo: "",
       giftLink: "",
@@ -269,7 +269,7 @@ const AdressForm: FC<Props> = ({
                 name="cardText"
                 onChange={(e) => handleChange(e)}
                 defaultValue={""}
-                style={{height: "100px"}}
+                style={{ height: "100px" }}
                 type={"text"}
               />
               {/* <textarea style={{height: "100px"}} className="rounded-2xl mt-1.5 text-sm font-normal h-11 px-4 py-3 block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 disabled:bg-neutral-200 dark:disabled:bg-neutral-800">
@@ -314,9 +314,8 @@ const AdressForm: FC<Props> = ({
               name="giftAdd"
               onChange={(e) => handleChange(e)}
             >
-              <option value="0">{formValue.giftAdd}</option>
-              <option value="1">شيكولاته بلجيكيه</option>
-              <option value="2">كروت اهداء</option>
+              <option value="1">كروت اهداء</option>
+              <option value="2">شيكولاته بلجيكيه</option>
               <option value="3">بالونات</option>
             </Select>
           </div>
@@ -338,12 +337,28 @@ const AdressForm: FC<Props> = ({
               </div>
             </div>
             <div className="flex flex-col sm:flex-row pt-6 gift-btn">
-              <ButtonSecondary
-                className="flex-2 flex-shrink-0 "
-                onClick={setShopingCards}
-              >
-                تصميم البطاقه
-              </ButtonSecondary>
+              {formValue.giftAdd === "1" ? (
+                <ButtonSecondary
+                  className="flex-2 flex-shrink-0 "
+                  onClick={setShopingCards}
+                >
+                  تصميم البطاقه
+                </ButtonSecondary>
+              ) : formValue.giftAdd === "2" ? (
+                <ButtonSecondary
+                  className="flex-2 flex-shrink-0 "
+                  onClick={setShopingCards}
+                >
+                  اختيار الشيكولاتة
+                </ButtonSecondary>
+              ) : formValue.giftAdd === "3" ? (
+                <ButtonSecondary
+                  className="flex-2 flex-shrink-0 "
+                  onClick={setShopingCards}
+                >
+                  اختيار البالونات
+                </ButtonSecondary>
+              ) : null}
             </div>
             {selectedCard?._id && (
               <div className="flex flex-col sm:flex-row pt-6 gift-btn">

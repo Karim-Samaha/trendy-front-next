@@ -8,11 +8,12 @@ import _axios from "@/contains/api/axios";
 import { useSession } from "next-auth/react";
 import { adjustNames } from "@/utils/adjustNames";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-
+import ModalAddReview from "@/components/ModalAddReview";
 
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();
+  const [addReview, setAddReview] = useState(true);
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: 1,
@@ -58,7 +59,10 @@ const AccountOrder = () => {
           />
         </div>
 
-        <div className="ml-4 flex flex-1 flex-col" style={{minWidth: "205px"}}>
+        <div
+          className="ml-4 flex flex-1 flex-col"
+          style={{ minWidth: "205px" }}
+        >
           <div>
             <div className="flex justify-between ">
               <div>
@@ -83,6 +87,7 @@ const AccountOrder = () => {
               <button
                 type="button"
                 className="font-medium text-indigo-600 dark:text-primary-500 "
+                onClick={() => setAddReview(true)}
               >
                 قيم تجربتك
               </button>
@@ -99,13 +104,16 @@ const AccountOrder = () => {
             </div>
           ) : null}
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
-            <div className="order-info flex-1" style={{minWidth: "205px"}}>
+            <div className="order-info flex-1" style={{ minWidth: "205px" }}>
               تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
               <span className="font-bold">( + 0.00 ر.س ) </span>
             </div>
           </div>
           {order?.selectedCard?._id && (
-            <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300" style={{minWidth: "205px"}}>
+            <div
+              className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
+              style={{ minWidth: "205px" }}
+            >
               <div className="order-info flex-1">
                 كرت اهداء :
                 <span className="font-bold">
@@ -118,7 +126,7 @@ const AccountOrder = () => {
             </div>
           )}
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
-            <div className="order-info flex-1" style={{minWidth: "205px"}}>
+            <div className="order-info flex-1" style={{ minWidth: "205px" }}>
               وسيله الدفع :{" "}
               <span className="font-bold">{`${method.toUpperCase()}`}</span>
             </div>
@@ -157,6 +165,14 @@ const AccountOrder = () => {
             </p>
           </div>
         </div>
+        {addReview && (
+          <ModalAddReview
+            show={addReview}
+            onClose={() => setAddReview(false)}
+            // selectCard={handleSelectedGiftCard}
+            data={undefined}
+          />
+        )}
         <div className="border-t border-slate-200 dark:border-slate-700 p-2 sm:p-8 divide-y divide-y-slate-200 dark:divide-slate-700">
           {console.log({ [i]: item })}
           {item.purchaseBulk?.map((order: any, i: number) =>

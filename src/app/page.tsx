@@ -173,7 +173,7 @@ async function PageHome() {
           selectCard={undefined}
         />
 
-        <div className="py-24 lg:py-32 border-t border-b border-slate-200 dark:border-slate-700">
+        <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
         </div>
         {/* <SectionPromo1 /> */}

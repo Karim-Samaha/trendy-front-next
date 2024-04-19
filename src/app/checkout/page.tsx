@@ -289,37 +289,37 @@ const CheckoutPage = () => {
 
                 <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع</span>
-                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
                     {renderTotalPrice.total} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>تكاليف الشحن</span>
-                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
                     0 ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>نص بطاقه</span>
-                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
                     {renderTotalPrice.cards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>كروت اهداء</span>
-                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
                     {renderTotalPrice.giftCards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>الضريبة</span>
-                  <span className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
                     0 ر.س
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                   <span>مجموع الفاتورة</span>
-                  <span> {renderTotalPrice.fintalTotal} ر.س</span>
+                  <span style={{minWidth: "100px"}}> {renderTotalPrice.fintalTotal} ر.س</span>
                 </div>
               </div>
               <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary>

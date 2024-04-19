@@ -415,7 +415,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
           selectedCard={selectedCard}
           setShopingCards={() => {
             setShopingCards(true);
-            setSelectedCard(null);
+            // setSelectedCard(null);
           }}
         />
         <ModalCards
@@ -446,13 +446,13 @@ const ProductDetailPage: FC<any> = ({ params }) => {
       <div className="" style={{ direction: "rtl" }}>
         {/* HEADING */}
         <h2 className="text-2xl font-semibold flex items-center">
-          <StarIcon className="w-7 h-7 mb-0.5" />
-          <span className="ml-1.5"> {reviews.length} تقيم</span>
+          <StarIcon className="star w-7 h-7 mb-0.5" />
+          <span className="title ml-1.5"> {reviews.length} تقيم</span>
         </h2>
 
         {/* comment */}
         <div className="mt-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
+          <div className="review-bg grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
             {reviews.slice(0, 4).map((item, i) => {
               return (
                 <ReviewItem
@@ -552,7 +552,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
             subHeading=""
             headingFontClassName="text-2xl font-semibold"
             headingClassName="mb-10 text-neutral-900 dark:text-neutral-50"
-            order={0}
+            order={2}
             selectCard={undefined}
           />
 
