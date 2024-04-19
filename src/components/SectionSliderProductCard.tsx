@@ -5,7 +5,7 @@ import Heading from "@/components/Heading/Heading";
 // @ts-ignore
 import Glide from "@glidejs/glide/dist/glide.esm";
 import ProductCard from "./ProductCard";
-import { Product, PRODUCTS } from "@/data/data";
+import { Product, PRODUCTS, DummyData } from "@/data/data";
 import axios from "axios";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -33,7 +33,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   headingClassName,
   heading,
   subHeading = "REY backpacks & bags",
-  data = PRODUCTS.filter((_, i) => i < 8 && i > 2),
+  data = DummyData,
   themeData = PRODUCTS.filter((_, i) => i < 8 && i > 2),
   order = 1,
   modal = false,
@@ -59,40 +59,42 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
         .catch((err) => console.log(err));
     }
   }, [session]);
+  console.log({dummy: data_})
   useEffect(() => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`
-      )
-      .then((res) => res.data.data)
-      .then((data) => {
-        setCategory({ ...data[0], productList: [] });
-        setData_(
-          data[0].productList.reverse().map((item: any) => ({
-            ...themeData[0],
-            name: item.name,
-            id: item?._id,
-            _id: item?._id,
-            color: "bg-yellow-50",
-            featuredImage: {
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`
+        )
+        .then((res) => res.data.data)
+        .then((data) => {
+          setCategory({ ...data[0], productList: [] });
+          setData_(
+            data[0].productList.reverse().map((item: any) => ({
+              ...themeData[0],
+              name: item.name,
               id: item?._id,
-              category: 1,
-              src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
-              blurHeight: 8,
-              blurWidth: 7,
-              height: 200,
-              width: 362,
-              allOfSizes: ["XS", "S"],
-              link: "product-detail",
-              numberOfReviews: 50,
-              rating: "4.9",
-            },
-            price: item.price,
-            description: item.nameAr,
-            rates: item.rates,
-          }))
-        );
-      });
+              _id: item?._id,
+              color: "bg-yellow-50",
+              featuredImage: {
+                id: item?._id,
+                category: 1,
+                src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
+                blurHeight: 8,
+                blurWidth: 7,
+                height: 200,
+                width: 362,
+                allOfSizes: ["XS", "S"],
+                link: "product-detail",
+                numberOfReviews: 50,
+                rating: "4.9",
+              },
+              price: item.price,
+              description: item.nameAr,
+              rates: item.rates,
+            }))
+          );
+        });
+    
   }, []);
 
   useEffect(() => {

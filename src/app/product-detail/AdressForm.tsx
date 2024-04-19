@@ -224,6 +224,7 @@ const AdressForm: FC<Props> = ({
                   onChange={(e) => handleChange(e)}
                   className="mt-1.5"
                   placeholder=""
+                  style={{ height: "100px" }}
                   type={"text"}
                 />
               </div>
