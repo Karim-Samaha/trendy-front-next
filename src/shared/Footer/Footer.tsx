@@ -21,11 +21,11 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: "5",
     title: "روابط هامة",
     menus: [
-      { href: "/", label: "الشروط والأحكام" },
-      { href: "/", label: "سياسة الاستبدال والاسترجاع" },
+      { href: "/terms", label: "الشروط والأحكام" },
+      { href: "/refund", label: "سياسة الاستبدال والاسترجاع" },
       { href: "/", label: "سياسة الشحن والدفع" },
-      { href: "/", label: "خدمة العملاء والشكاوى والاقتراحات" },
-      { href: "/", label: "التراخيص" },
+      { href: "/complaints", label: "خدمة العملاء والشكاوى والاقتراحات" },
+      { href: "/license", label: "التراخيص" },
     ],
   },
   {
@@ -62,15 +62,14 @@ const Footer: React.FC = () => {
         <ul className="mt-5 space-y-4">
           {menu?.menus?.map((item, index) => (
             <li key={index}>
-              <a
+              <Link
                 key={index}
                 className=""
                 href={item.href}
-                target="_blank"
                 rel="noopener noreferrer"
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
