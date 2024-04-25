@@ -1,26 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
-import BackgroundSection from "@/components/BackgroundSection/BackgroundSection";
-import SectionPromo1 from "@/components/SectionPromo1";
 import SectionHero2 from "@/components/SectionHero/SectionHero2";
-import SectionSliderLargeProduct from "@/components/SectionSliderLargeProduct";
 import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 // import DiscoverMoreSlider from "@/components/DiscoverMoreSlider";
-import SectionGridMoreExplore from "@/components/SectionGridMoreExplore/SectionGridMoreExplore";
 import SectionPromo2 from "@/components/SectionPromo2";
-import SectionSliderCategories from "@/components/SectionSliderCategories/SectionSliderCategories";
-import SectionPromo3 from "@/components/SectionPromo3";
-import SectionClientSay from "@/components/SectionClientSay/SectionClientSay";
-import Heading from "@/components/Heading/Heading";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
-import { PRODUCTS, SPORT_PRODUCTS } from "@/data/data";
-import SectionGridFeatureItems from "@/components/SectionGridFeatureItems";
-import SectionMagazine5 from "@/app/blog/SectionMagazine5";
-import ModalViewAllReviews from "./product-detail/ModalViewAllReviews";
+import { Product, PRODUCTS, DummyData } from "@/data/data";
 import axios from "axios";
-import ReviewItem from "@/components/ReviewItem";
-import { StarIcon } from "@heroicons/react/24/solid";
-import { getServerAuthSession } from "../server/auth";
+
 import Partners from "@/components/Partners";
 import dynamic from "next/dynamic";
 // import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
@@ -125,16 +111,21 @@ async function PageHome() {
       <div className="mt-24 lg:mt-32">
         <DiscoverMoreSlider categories={categories} />
       </div>
-
+      {console.log(PRODUCTS)}
       <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
-      <SectionSliderProductCard
-          data={[
-            PRODUCTS[4],
-            SPORT_PRODUCTS[5],
-            PRODUCTS[7],
-            SPORT_PRODUCTS[1],
-            PRODUCTS[6],
-          ]}
+        <SectionSliderProductCard
+          data={DummyData}
+          order={1}
+          selectCard={undefined}
+        />
+        <SectionPromo2
+          image={banners.filter(
+            (item: { type: string }) => item.type === "BANNER"
+          )}
+        />
+
+        <SectionSliderProductCard
+          data={DummyData}
           order={2}
           selectCard={undefined}
         />
@@ -145,31 +136,8 @@ async function PageHome() {
         />
 
         <SectionSliderProductCard
-          data={[
-            PRODUCTS[4],
-            SPORT_PRODUCTS[5],
-            PRODUCTS[7],
-            SPORT_PRODUCTS[1],
-            PRODUCTS[6],
-          ]}
-          order={2}
-          selectCard={undefined}
-        />
-        <SectionPromo2
-          image={banners.filter(
-            (item: { type: string }) => item.type === "BANNER"
-          )}
-        />
-
-        <SectionSliderProductCard
-          data={[
-            PRODUCTS[4],
-            SPORT_PRODUCTS[5],
-            PRODUCTS[7],
-            SPORT_PRODUCTS[1],
-            PRODUCTS[6],
-          ]}
-          order={2}
+          data={PRODUCTS}
+          order={3}
           selectCard={undefined}
         />
 

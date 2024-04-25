@@ -161,8 +161,9 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
         >
           <ul
             style={{
-              direction: "ltr",
-              marginRight: modal ? "-54% " : "-3%",
+              direction: "rtl",
+              // marginRight: modal ? "-54% " : "-54%",
+              // width: "100%"
             }}
             className="glide__slides prouct-slide"
           >
@@ -178,7 +179,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
                 />
               </li>
             ))}
-            {data_.map((item, index) => (
+            {/* {data_.map((item, index) => (
               <li key={index} className={`glide__slide ${itemClassName}`}>
                 <ProductCard
                   // @ts-ignore
@@ -189,7 +190,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
                   selectCard={selectCard}
                 />
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
       </div>

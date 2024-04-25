@@ -565,3 +565,9 @@ tamara-widget {
     }
   }
 }
+.glide__slides.prouct-slide {
+  @media (max-width: 968px) {
+    // direction: ltr !important;
+    margin-right: auto !important;
+  }
+}
