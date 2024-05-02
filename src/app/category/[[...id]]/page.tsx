@@ -68,6 +68,8 @@ async function getSubCategoriesProducts(subCtgId) {
         id: item?._id,
         _id: item?._id,
         price: item.price,
+        priceBefore: item.priceBefore,
+        isOffer: item?.isOffer,
         description: item.nameAr,
       }));
     });
@@ -101,6 +103,8 @@ async function getCategoryAllProducts(ctgId) {
         id: item?._id,
         _id: item?._id,
         price: item.price,
+        priceBefore: item.priceBefore,
+        isOffer: item?.isOffer,
         description: item.nameAr,
       }));
     });
@@ -116,20 +120,21 @@ const PageCollection2 = async ({ params }) => {
   );
   let products;
 
-    
   if (params.id.length > 1) {
     products = await getSubCategoriesProducts(params?.id[1]);
   } else {
     products = await getCategoryAllProducts(params?.id[0]);
   }
-
   return (
     <div className={`nc-PageCollection2`}>
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 sm:space-y-20 lg:space-y-28">
         <div className="space-y-10 lg:space-y-14">
           {/* HEADING */}
           <div className="" style={{ width: "100%", direction: "rtl" }}>
-            <h2 style={{marginTop: "-25px"}} className="block text-2xl sm:text-3xl lg:text-4xl font-semibold">
+            <h2
+              style={{ marginTop: "-25px" }}
+              className="block text-2xl sm:text-3xl lg:text-4xl font-semibold"
+            >
               {currentCategory?.name}
             </h2>
             <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base">
@@ -141,7 +146,6 @@ const PageCollection2 = async ({ params }) => {
           <main>
             {/* LOOP ITEMS */}
             <div className="flex flex-col lg:flex-row">
-              
               <ProductSection products={products} />
               <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0"></div>
               <div className="lg:w-1/3 xl:w-1/4 pr-4">

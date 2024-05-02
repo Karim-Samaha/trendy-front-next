@@ -18,9 +18,10 @@ import Moysar from "@/components/payment/Moysar";
 import Tabby from "./tabby";
 import TabbyIcon from "@/images/icons/Tabby.png";
 import { renderTotalPrice_ } from "@/utils/adjustNames";
+import _axios from "@/contains/api/axios";
+import { useSession } from "next-auth/react";
 const CheckoutPage = () => {
   const { items } = useCart();
-  const renderTotalPrice = renderTotalPrice_(items);
 
   const [tabActive, setTabActive] = useState<
     "ContactInfo" | "ShippingAddress" | "PaymentMethod"
@@ -33,6 +34,23 @@ const CheckoutPage = () => {
     }, 80);
   };
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [coupon, setCoupon] = useState("");
+  const [couponResponse, setCouponResponse] = useState({});
+  const renderTotalPrice = renderTotalPrice_(items, couponResponse?.precent);
+  const { data: session } = useSession();
+  const validateCoupon = async () => {
+    await _axios
+      .post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/coupon-redeem`,
+        {
+          code: coupon,
+        },
+        //@ts-ignore
+        { session }
+      )
+      .then((res) => setCouponResponse({ ...res.data, code: coupon }))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     // Moyasar
     const styleScript = document.createElement("link");
@@ -244,7 +262,7 @@ const CheckoutPage = () => {
             className="scroll-mt-24"
             style={{ minHeight: "200px" }}
           >
-            <Moysar />
+            <Moysar fintalTotal={+renderTotalPrice.fintalTotal} couponResponse={couponResponse}/>
           </div>
         )}
       </div>
@@ -278,48 +296,96 @@ const CheckoutPage = () => {
 
               <div className="mt-10 pt-6 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200/70 dark:border-slate-700 ">
                 <div>
-                  <Label className="text-sm">كود خصم</Label>
-                  <div className="flex mt-1.5">
-                    <Input sizeClass="h-10 px-4 py-3" className="flex-1" />
-                    <button className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors">
-                      تفعيل
-                    </button>
-                  </div>
+                  <Label className="text-sm">هل لديك كوبون خصم؟</Label>
+                  {couponResponse?.redeemed ? (
+                    <div className="flex mt-1.5 justify-center">
+                      <h3 className="text-lg font-semibold">
+                        تم تفيعل كوبون {couponResponse?.code}
+                      </h3>
+                      <h3 className="text-lg font-semibold">
+                        خصم {couponResponse?.precent}%
+                      </h3>
+                    </div>
+                  ) : (
+                    <div className="flex mt-1.5">
+                      <Input
+                        value={coupon}
+                        onChange={(e) => setCoupon(e.target.value)}
+                        sizeClass="h-10 px-4 py-3"
+                        className="flex-1"
+                      />
+                      <button
+                        onClick={validateCoupon}
+                        className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
+                      >
+                        تفعيل
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     {renderTotalPrice.total} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>تكاليف الشحن</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     0 ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>نص بطاقه</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     {renderTotalPrice.cards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>كروت اهداء</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     {renderTotalPrice.giftCards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-2.5">
                   <span>الضريبة</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     0 ر.س
                   </span>
                 </div>
+                {couponResponse?.precent && (
+                  <div className="flex justify-between py-2.5">
+                    <span>خصم كوبون</span>
+                    <span
+                      style={{ minWidth: "100px" }}
+                      className="font-semibold text-slate-900 dark:text-slate-200"
+                    >
+                      {couponResponse.precent}%
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                   <span>مجموع الفاتورة</span>
-                  <span style={{minWidth: "100px"}}> {renderTotalPrice.fintalTotal} ر.س</span>
+                  <span style={{ minWidth: "100px" }}>
+                    {" "}
+                    {renderTotalPrice.fintalTotal} ر.س
+                  </span>
                 </div>
               </div>
               <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary>

@@ -3,12 +3,14 @@ import React, { FC } from "react";
 export interface PricesProps {
   className?: string;
   price?: number;
+  priceBefore: number;
   contentClass?: string;
 }
 
 const Prices: FC<PricesProps> = ({
   className = "",
   price = 33,
+  priceBefore,
   contentClass = "py-1 px-2 md:py-1.5 md:px-2.5 text-sm font-medium",
 }) => {
   return (
@@ -16,10 +18,23 @@ const Prices: FC<PricesProps> = ({
       <div
         className={`flex items-center border-2  price rounded-lg ${contentClass} price-label`}
       >
-        <span className=" !leading-none" style={{ direction: "rtl"}}>
+        <span className=" !leading-none" style={{ direction: "rtl" }}>
           {" "}
           {String(price)} ر.س
         </span>
+        {priceBefore && (
+          <span
+            className=" !leading-none"
+            style={{
+              color: "#676767",
+              margin: "0 10px",
+              textDecoration: "line-through",
+            }}
+          >
+            {" "}
+            {String(priceBefore)} ر.س
+          </span>
+        )}
       </div>
     </div>
   );

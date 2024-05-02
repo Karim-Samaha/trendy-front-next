@@ -36,6 +36,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ProductNcNumber from "@/components/productNcNumber";
+import Discount from "@/components/Discount";
 const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
 
 const ProductDetailPage: FC<any> = ({ params }) => {
@@ -156,10 +157,8 @@ const ProductDetailPage: FC<any> = ({ params }) => {
       selectedCard: { ...selectedCard },
     };
     if (items.some((item) => item.id === itemToBeAdded.id)) {
-      console.log("whaaaaaaaaaaaaaaaaaat");
       let item = items.find((item) => item.id === itemToBeAdded.id);
       if (!item) return;
-      console.log(`!!!!!!!!${item.quantity}!!!!!!!!!`);
       updateItemQuantity(item.id, item?.quantity + qty);
       itemToBeAdded = {
         ...item,
@@ -327,6 +326,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
             <Prices
               contentClass="py-1 px-2 md:py-1.5 md:px-3 text-lg font-semibold"
               price={productData.price}
+              priceBefore={productData.priceBefore}
             />
 
             <div className="h-7 border-l border-slate-300 dark:border-slate-700"></div>
@@ -344,7 +344,10 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                     {reviews.length} تقيم
                   </span>
                 </div>
+
               </a>
+              <Discount price={productData.price} priceBefore={productData.priceBefore} /> 
+
               <span className="hidden sm:block mx-2.5">·</span>
               <div className="hidden sm:flex items-center text-sm">
                 {/* <SparklesIcon className="w-3.5 h-3.5" />
@@ -366,6 +369,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
         <div style={{ marginBottom: "30px" }} id="TabbyPromo"></div>
         {/* // @ts-ignore */}
         {tammaraReady && productData?.price && (
+          //@ts-ignore
           <tamara-widget
             type="tamara-summary"
             amount={`${productData?.price}`}

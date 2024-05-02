@@ -59,7 +59,6 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
         .catch((err) => console.log(err));
     }
   }, [session]);
-  console.log({dummy: data_})
   useEffect(() => {
       axios
         .get(
@@ -89,6 +88,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
                 rating: "4.9",
               },
               price: item.price,
+              isOffer: item.isOffer,
+              priceBefore: item.priceBefore,
               description: item.nameAr,
               rates: item.rates,
             }))

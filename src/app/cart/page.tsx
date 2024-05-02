@@ -68,7 +68,7 @@ const CartPage = () => {
                     {adjustNames(name)}
                   </Link>
                 </h3>
-                {formInfo?.cardText.length > 0 ? (
+                {formInfo?.cardText?.length > 0 ? (
                   <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
                     <div className="order-info flex-1">
                       <p> نص البطاقة - اكتب إهدائك هنا ( + 6.00 ر.س )</p>

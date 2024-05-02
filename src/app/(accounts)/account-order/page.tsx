@@ -28,7 +28,7 @@ const AccountOrder = () => {
     if (session?.user?.accessToken) {
       _axios
         .post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/orders?page=${pagination.page}&limit=${pagination.limit}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/get-user-order?page=${pagination.page}&limit=${pagination.limit}`,
           { test: "!" },
           { session }
         )
@@ -97,7 +97,7 @@ const AccountOrder = () => {
               </button>
             </div>
           </div>
-          {order?.formInfo?.cardText.length > 0 ? (
+          {order?.formInfo?.cardText?.length > 0 ? (
             <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
               <div className="order-info flex-1">
                 <p>
@@ -109,7 +109,7 @@ const AccountOrder = () => {
           ) : null}
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
             <div className="order-info flex-1" style={{ minWidth: "205px" }}>
-              تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
+             (من الي) تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
               <span className="font-bold">( + 0.00 ر.س ) </span>
             </div>
           </div>
@@ -165,6 +165,8 @@ const AccountOrder = () => {
               >
                 {/* {status === 1 ? "تم التوصيل" : status === 2 ? "تم الشحن" : null} */}
                 {item.orderStatus === "PROCCESSING" && "قيد التنفيذ"}
+                {item.orderStatus === "DELEIVERD" && "تم الشحن"}
+
               </span>
             </p>
           </div>

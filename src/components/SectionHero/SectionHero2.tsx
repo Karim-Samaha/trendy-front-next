@@ -7,11 +7,12 @@ import useInterval from "react-use/lib/useInterval";
 import useBoolean from "react-use/lib/useBoolean";
 import Image from "next/image";
 import axios from "axios";
+import Link from "next/link";
 // import { HERO2_DEMO_DATA as DATA } from "./data";
 
 export interface SectionHero2Props {
   className?: string;
-  data_: any
+  data_: any;
 }
 
 let TIME_OUT: NodeJS.Timeout | null = null;
@@ -20,34 +21,6 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", data_ }) => {
   // =================
   const [indexActive, setIndexActive] = useState(0);
   const [isRunning, toggleIsRunning] = useBoolean(true);
-  // const [data_, setData_] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/api/banners")
-  //     .then((res) => res.data.data)
-  //     .then((data) => {
-  //       setData_(
-  //         data.filter((item: { type: string; }) => item.type === 'HERO_IMG').map((item: any) => ({
-  //           btnLink: item?.route,
-  //           btnText: item?.name,
-  //           heading: item?.name,
-  //           image: {
-  //             src: `http://localhost:5000${item.imageSrc}`,
-  //             height: 1001,
-  //             width: 1000,
-  //             blurDataURL:
-  //               "/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-right-2.dc1c84f6.png&w=8&q=70",
-  //             blurWidth: 8,
-  //             blurHeight: 8,
-  //           },
-  //           subHeading: "",
-  //         }))
-  //       );
-  //     });
-  // }, []);
-  // useEffect(() => {
-  //   console.log({ my: data_ });
-  // }, [data_]);
   useInterval(
     () => {
       handleAutoNext();
@@ -149,63 +122,20 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", data_ }) => {
           onClickNext={handleClickNext}
         />
 
-        {/* BG */}
-        {/* <div className="absolute inset-0 bg-[#E3FFE6]"> */}
-      
+        <Link href={`${item.route}`}>
+          <div className="relative container pb-0 pt-14 sm:pt-20 lg:py-44">
+            <Image
+              width={1200}
+              height={600}
+              className="w-full h-full  nc-SectionHero2Item__image"
+              src={item.image.src}
+              alt={item.heading}
+              priority
+            />
 
-        <div className="relative container pb-0 pt-14 sm:pt-20 lg:py-44">
-          <Image
-            // fill
-            // sizes="(max-width: 768px) 100vw, 50vw"
-            width={1200}
-            height={600}
-            className="w-full h-full  nc-SectionHero2Item__image"
-            src={item.image.src}
-            alt={item.heading}
-            priority
-          />
-          {/* <div
-            className={`relative z-[1] w-full max-w-3xl space-y-8 sm:space-y-14 nc-SectionHero2Item__left`}
-          >
-            <div className="space-y-5 sm:space-y-6">
-              <span className="nc-SectionHero2Item__subheading block text-base md:text-xl text-slate-700 font-medium">
-                {item.subHeading}
-              </span>
-              <h2 className="nc-SectionHero2Item__heading font-semibold text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl !leading-[114%] text-slate-900">
-                {item.heading}
-              </h2>
-            </div>
-
-            <ButtonPrimary
-              className="nc-SectionHero2Item__button dark:bg-slate-900"
-              sizeClass="py-3 px-6 sm:py-5 sm:px-9"
-              href={item.btnLink}
-            >
-              <span>{item.btnText}</span>
-              <span>
-                <svg className="w-5 h-5 ms-2.5" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M22 22L20 20"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </ButtonPrimary>
-          </div> */}
-          <div className="mt-10 lg:mt-0 lg:absolute end-0 rtl:-end-28 bottom-0 top-0 w-full max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
-            {/* {console.log({debsss: item.image.src})} */}
+            <div className="mt-10 lg:mt-0 lg:absolute end-0 rtl:-end-28 bottom-0 top-0 w-full max-w-2xl xl:max-w-3xl 2xl:max-w-4xl"></div>
           </div>
-        </div>
+        </Link>
       </div>
     );
   };

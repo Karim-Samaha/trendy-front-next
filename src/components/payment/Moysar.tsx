@@ -4,31 +4,28 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import _axios from "@/contains/api/axios";
 import { useCart } from "react-use-cart";
-const Moysar = () => {
+const Moysar = ({
+  fintalTotal,
+  couponResponse = {},
+}: {
+  fintalTotal: number;
+  couponResponse: any;
+}) => {
   const [init, setInit] = useState(false);
   const { data: session }: any = useSession();
   const { items } = useCart();
-  console.log({ items });
   const savePayment: any = async (payloda: any) => {
     if (!session) return;
     _axios
-      .post(`/create-checkout-session`, { ...payloda }, { session })
+      .post(
+        `/create-checkout-session`,
+        { ...payloda },
+        //@ts-ignore
+        { session }
+      )
       .then((res) => res);
   };
-  let getTotalPrice = () => {
-    let price = 0;
-    items.map((item) => {
-      price += item.price;
-      if (item?.selectedCard?.price) {
-        price += item.selectedCard.price;
-      }
-      if (item?.formInfo?.cardText.length > 0) {
-        price += 6;
-      }
-    });
-    return price;
-  };
-  console.log({ adj: JSON.stringify(items) });
+
   useEffect(() => {
     // if (!init) {
     //   const styleScript = document.createElement("link");
@@ -55,7 +52,7 @@ const Moysar = () => {
           // 10 SAR = 10 * 100 Halalas
           // 10 KWD = 10 * 1000 Fils
           // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
-          amount: ${getTotalPrice() * 100},
+          amount: ${+fintalTotal * 100},
           currency: 'SAR',
           language: "ar",   
           description: '${JSON.stringify(items)}',
@@ -79,7 +76,7 @@ const Moysar = () => {
                    method: "POST",
                    body: JSON.stringify({...payment, token: '${
                      session?.user?.accessToken
-                   }'})
+                   }', couponResponse: ${JSON.stringify(couponResponse)}})
                }).then((res) => res).catch(err => console.log(err))
                console.log({saved: saved.status})
                if(saved?.status === 201) {
@@ -97,7 +94,10 @@ const Moysar = () => {
   // if (!init) return null
   return (
     <>
-      <div className="mysr-form" style={{ maxWidth: "515px !important", direction: "rtl" }}></div>
+      <div
+        className="mysr-form"
+        style={{ maxWidth: "515px !important", direction: "rtl" }}
+      ></div>
       <script type="application/javascript" className="pay"></script>
     </>
   );

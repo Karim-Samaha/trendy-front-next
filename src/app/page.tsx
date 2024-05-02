@@ -1,3 +1,5 @@
+export const revalidate = 3600; // revalidate every hour
+
 import React from "react";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
 import SectionHero2 from "@/components/SectionHero/SectionHero2";
@@ -63,6 +65,7 @@ async function getBanners() {
         heading: item?.name,
         type: item.type,
         what: item.imageSrc,
+        route: item.route,
         image: {
           src: `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.imageSrc}`,
           height: 1001,

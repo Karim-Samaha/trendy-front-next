@@ -20,7 +20,7 @@ import NcImage from "@/shared/NcImage/NcImage";
 import { useCart } from "react-use-cart";
 import { adjustNames } from "@/utils/adjustNames";
 import { useSession } from "next-auth/react";
-
+import Discount from "./Discount";
 export interface ProductCardProps {
   className?: string;
   data?: any;
@@ -41,23 +41,19 @@ const ProductCard: FC<ProductCardProps> = ({
   const {
     name,
     price,
+    priceBefore,
+    isOffer,
     description,
-    sizes,
     variants,
-    variantType,
     status,
-    image,
     rating,
     _id,
-    numberOfReviews,
     featuredImage,
     fav,
   } = data;
-  const { updateItem, items } = useCart();
   const [variantActive, setVariantActive] = useState(0);
   const [showModalQuickView, setShowModalQuickView] = useState(false);
   const router = useRouter();
-  const addGiftCard = (id: string, data: any) => {};
   const notifyAddTocart = ({ size }: { size?: string }) => {
     toast.custom(
       (t) => (
@@ -111,7 +107,11 @@ const ProductCard: FC<ProductCardProps> = ({
                   <span>{size || "XL"}</span>
                 </p>
               </div>
-              <Prices price={price} className="mt-0.5" />
+              <Prices
+                price={price}
+                priceBefore={priceBefore}
+                className="mt-0.5"
+              />
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
@@ -304,7 +304,16 @@ const ProductCard: FC<ProductCardProps> = ({
           </Link>
           <ProductStatus status={status} />
 
-          <LikeButton fav={fav} id={_id} className="absolute top-3 end-3 z-10" />
+          <LikeButton
+            fav={fav}
+            id={_id}
+            className="absolute top-3 end-3 z-10"
+          />
+          <Discount
+            price={price}
+            priceBefore={priceBefore}
+            className="absolute top-3 start-2 z-10"
+          />
           {/* {sizes ? renderSizeList() : renderGroupButtons()} */}
           {renderGroupButtons()}
         </div>
@@ -318,13 +327,10 @@ const ProductCard: FC<ProductCardProps> = ({
             >
               {adjustNames(name)}
             </h2>
-            {/* <p style={{height: "30px", textAlign: "right"}}  className={`text-sm text-slate-500 dark:text-slate-400 mt-1 `}>
-              {description}
-            </p> */}
           </div>
 
           <div className="flex justify-between items-end product-footer">
-            <Prices price={price} />
+            <Prices price={price} priceBefore={priceBefore} />
             <Link
               href={
                 data?.rates > 0
