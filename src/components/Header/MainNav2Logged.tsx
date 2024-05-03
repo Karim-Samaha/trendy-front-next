@@ -31,6 +31,11 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
       />
     );
   };
+  const userLogoEmail = () => {
+    if (!data) return;
+    let nameArr: any = data?.user.email?.substring(0, 2);
+    return <AvatarDropdown logo={nameArr.toUpperCase()} />;
+  };
   const renderMagnifyingGlassIcon = () => {
     return (
       <svg
@@ -117,6 +122,8 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
           )}
           {data?.user?.name ? (
             <div className="user-logo">{userLogo()}</div>
+          ) : data?.user?.email ? (
+            <div className="user-logo">{userLogoEmail()}</div>
           ) : (
             <Link href={"/login"} className="login-link">
               <svg

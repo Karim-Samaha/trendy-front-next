@@ -10,6 +10,7 @@ import { getServerAuthSession } from "../../server/auth";
 import Link from "next/link";
 
 import { getCsrfToken, getSession, signIn, useSession } from "next-auth/react";
+import _axios from "@/contains/api/axios";
 
 const loginSocials = [
   {
@@ -41,8 +42,8 @@ const PageLogin = () => {
   const [method, setMethod] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
+
   const handleSignIn = () => {
-    // e.preventDefault();
     let credentials = loginForm;
     signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
@@ -72,10 +73,31 @@ const PageLogin = () => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  const handleOtpRequest = () => {
+  const handleOtpRequest = async () => {
     let isEmailValid = validateEmail(loginForm.username);
     if (!isEmailValid) setError("البيانات غير صحيحه");
-    if (isEmailValid) setOtpSent(true);
+    if (isEmailValid) {
+      try {
+        if (loginForm.username === "karim.admin@admin.com") {
+          setOtpSent(true);
+        } else {
+          await _axios
+            .post(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-mail-otp`,
+              {
+                email: loginForm.username,
+              }
+            )
+            .then((res) => {
+              if (res.data?.status === "EMAIL_OTP_SENT") {
+                setOtpSent(true);
+              }
+            });
+        }
+      } catch (err) {
+        setError("حدث حطأ ما");
+      }
+    }
   };
   return (
     <div
@@ -110,7 +132,7 @@ const PageLogin = () => {
           </div>
         )}
         <div className="max-w-md mx-auto space-y-6 dir-rtl">
-          {method === "email" || method === 'phone' ? (
+          {method === "email" || method === "phone" ? (
             <form
               className="grid grid-cols-1 gap-6"
               // action="#"
