@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import { useSession } from "next-auth/react";
 import _axios from "@/contains/api/axios";
-const Tabby = () => {
+import { useCart } from "react-use-cart";
+
+const Tabby = ({ fintalTotal }: { fintalTotal: number }) => {
+  const { items } = useCart();
+
   useEffect(() => {
     const tabbyCard = document.createElement("script");
     tabbyCard.async = true;
@@ -11,7 +15,7 @@ const Tabby = () => {
       selector: '#tabbyCard', // empty div for TabbyCard.
       currency: 'SAR', // required, currency of your product. AED|SAR|KWD|BHD|QAR only supported, with no spaces or lowercase.
       lang: 'ar', // Optional, language of snippet and popups.
-      price: 100, // required, total price or the cart. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+      price: ${fintalTotal}, // required, total price or the cart. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
       size: 'narrow', // required, can be also 'wide', depending on the width.
       theme: 'default', // required, can be also 'default'.
       header: true // if a Payment method name present already.
@@ -27,7 +31,7 @@ const Tabby = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/create-tabby-session`,
         {
           payment: {
-            amount: "100",
+            amount: `${fintalTotal}`,
             currency: "SAR",
             description: "testing product",
             buyer: {
@@ -58,11 +62,12 @@ const Tabby = () => {
       )
       .then((res) => {
         let url =
-          res.data?.paymentSession?.configuration?.available_products?.installments[0]?.web_url;
+          res.data?.paymentSession?.configuration?.available_products
+            ?.installments[0]?.web_url;
         if (url) {
-          sessionStorage.setItem("tabbyId", res.data?.paymentSession?.id)
+          sessionStorage.setItem("tabbyId", res.data?.paymentSession?.id);
           window.location.href = url;
-          return
+          return;
         }
       });
   };

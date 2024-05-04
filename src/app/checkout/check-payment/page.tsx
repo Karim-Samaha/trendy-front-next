@@ -8,10 +8,11 @@ import { useSearchParams } from "next/navigation";
 import Logo from "@/shared/Logo/Logo";
 
 import axios from "axios";
+import { useCart } from "react-use-cart";
 const CheckoutCheck = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const { emptyCart } = useCart();
   const id = searchParams.get("id");
   const gateway = searchParams.get("gateway");
 
@@ -41,10 +42,8 @@ const CheckoutCheck = () => {
   }, [id]);
   useEffect(() => {
     if (status?.data?.status === "paid") {
-      setTimeout(
-        () => router.replace(`/account-order`),
-        3000
-      );
+      emptyCart();
+      setTimeout(() => router.replace(`/account-order`), 3000);
     }
   }, [status]);
   return (

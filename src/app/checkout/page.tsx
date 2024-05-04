@@ -187,7 +187,9 @@ const CheckoutPage = () => {
             </div>
           </div>
         </div>
-        {paymentMethod === "tabby" && <Tabby />}
+        {paymentMethod === "tabby" && (
+          <Tabby fintalTotal={+renderTotalPrice.fintalTotal} />
+        )}
 
         <div id="PaymentMethod" className="scroll-mt-24 ">
           <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
@@ -262,7 +264,10 @@ const CheckoutPage = () => {
             className="scroll-mt-24"
             style={{ minHeight: "200px" }}
           >
-            <Moysar fintalTotal={+renderTotalPrice.fintalTotal} couponResponse={couponResponse}/>
+            <Moysar
+              fintalTotal={+renderTotalPrice.fintalTotal}
+              couponResponse={couponResponse}
+            />
           </div>
         )}
       </div>
