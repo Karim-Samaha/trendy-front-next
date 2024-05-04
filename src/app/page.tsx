@@ -1,4 +1,4 @@
-export const revalidate = 3600; // revalidate every hour
+export const revalidate = 1000; // revalidate .15 hour
 
 import React from "react";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
@@ -23,29 +23,28 @@ const DiscoverMoreReviews = dynamic(
 
 async function getCategories() {
   const res = axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?isHomeCategory=true`)
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`)
     .then((res) => res.data.data)
     .then((data) => {
-      return (
-        data
-          // .filter((item: { type: string }) => item.type === "HERO_IMG")
-          .map((item: any) => ({
-            name: item.name,
-            desc: item.name,
-            _id: item._id,
-            // featuredImage: CATS_DISCOVER[0].featuredImage,
-            color: "bg-yellow-50",
-            featuredImage: {
-              src:
-                item?.image &&
-                `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.image}`,
-              blurHeight: 8,
-              blurWidth: 7,
-              height: 200,
-              width: 362,
-            },
-          }))
-      );
+      return data
+        .reverse()
+        .filter((item: { active: boolean }) => item.active)
+        .map((item: any) => ({
+          name: item.name,
+          desc: item.name,
+          _id: item._id,
+          // featuredImage: CATS_DISCOVER[0].featuredImage,
+          color: "bg-yellow-50",
+          featuredImage: {
+            src:
+              item?.image &&
+              `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.image}`,
+            blurHeight: 8,
+            blurWidth: 7,
+            height: 200,
+            width: 362,
+          },
+        }));
     });
   if (!res) {
     throw new Error("Failed to fetch data");
@@ -114,7 +113,6 @@ async function PageHome() {
       <div className="mt-24 lg:mt-32">
         <DiscoverMoreSlider categories={categories} />
       </div>
-      {console.log(PRODUCTS)}
       <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
         <SectionSliderProductCard
           data={DummyData}

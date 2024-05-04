@@ -12,32 +12,31 @@ import ProductSection from "../ProductsSection";
 async function getCategories() {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&products=true`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&products=true?channel=web`
     )
     .then((res) => res.data.data)
     .then((data) => {
-      return (
-        data
-          // .filter((item: { type: string }) => item.type === "HERO_IMG")
-          .map((item: any) => ({
-            name: item.name,
-            desc: item.name,
-            _id: item._id,
-            // featuredImage: CATS_DISCOVER[0].featuredImage,
-            color: "bg-yellow-50",
-            productList: item.productList,
-            subCategories: item.subCategories,
-            featuredImage: {
-              src:
-                item?.image &&
-                `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item.image}`,
-              blurHeight: 8,
-              blurWidth: 7,
-              height: 200,
-              width: 362,
-            },
-          }))
-      );
+      return data
+        .filter((item: { active: boolean }) => item.active)
+        .map((item: any) => ({
+          name: item.name,
+          desc: item.name,
+          _id: item._id,
+          color: "bg-yellow-50",
+          productList: item.productList,
+          subCategories: item.subCategories.filter(
+            (item: { active: boolean }) => item.active
+          ),
+          featuredImage: {
+            src:
+              item?.image &&
+              `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item.image}`,
+            blurHeight: 8,
+            blurWidth: 7,
+            height: 200,
+            width: 362,
+          },
+        }));
     });
   if (!res) {
     throw new Error("Failed to fetch data");
@@ -47,7 +46,9 @@ async function getCategories() {
 }
 async function getSubCategoriesProducts(subCtgId) {
   const res = await axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}/`)
+    .get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web`
+    )
     .then((res) => res.data.data)
     .then((data) => {
       return data.productList?.map((item: any) => ({
@@ -55,7 +56,7 @@ async function getSubCategoriesProducts(subCtgId) {
         color: "bg-yellow-50",
         featuredImage: {
           category: 1,
-          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
+          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
           blurHeight: 8,
           blurWidth: 7,
           height: 200,
@@ -81,7 +82,7 @@ async function getSubCategoriesProducts(subCtgId) {
 async function getCategoryAllProducts(ctgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web`
     )
     .then((res) => res.data.data)
     .then((data) => {
@@ -90,7 +91,7 @@ async function getCategoryAllProducts(ctgId) {
         color: "bg-yellow-50",
         featuredImage: {
           category: 1,
-          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
+          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
           blurHeight: 8,
           blurWidth: 7,
           height: 200,

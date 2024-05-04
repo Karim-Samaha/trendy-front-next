@@ -388,7 +388,7 @@ const CheckoutPage = () => {
                   </span>
                 </div>
               </div>
-              <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary>
+              {/* <ButtonPrimary className="mt-8 w-full">تاكيد الطلب</ButtonPrimary> */}
               <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center"></div>
             </div>
             <div className="flex-shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 my-10 lg:my-0 lg:mx-10 xl:lg:mx-14 2xl:mx-16 "></div>

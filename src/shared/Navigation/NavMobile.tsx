@@ -29,7 +29,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
   const router = useRouter();
 
   useEffect(() => {
-    axios(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true`)
+    axios(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&channel=web`)
       .then((res) => res.data.data)
       .then((items) => {
         setData(

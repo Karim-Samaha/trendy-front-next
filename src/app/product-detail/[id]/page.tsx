@@ -6,11 +6,7 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import BagIcon from "@/components/BagIcon";
 import NcInputNumber from "@/components/NcInputNumber";
 import { PRODUCTS } from "@/data/data";
-import {
-  NoSymbolIcon,
-  ClockIcon,
-  SparklesIcon,
-} from "@heroicons/react/24/outline";
+
 import IconDiscount from "@/components/IconDiscount";
 import Prices from "@/components/Prices";
 import toast from "react-hot-toast";
@@ -37,6 +33,24 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ProductNcNumber from "@/components/productNcNumber";
 import Discount from "@/components/Discount";
+import {
+  FacebookShareButton,
+  InstapaperShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  FacebookShareCount,
+} from "react-share";
+import {
+  FacebookIcon,
+  InstapaperIcon,
+  LivejournalIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  XIcon,
+} from "react-share";
+//@ts-ignore
+import { Snapshare } from "@thezano/react-snapshare";
+
 const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
 
 const ProductDetailPage: FC<any> = ({ params }) => {
@@ -169,148 +183,6 @@ const ProductDetailPage: FC<any> = ({ params }) => {
     }
     notifyAddTocart(itemToBeAdded);
   };
-  // const renderVariants = () => {
-  //   if (!variants || !variants.length) {
-  //     return null;
-  //   }
-
-  //   return (
-  //     <div>
-  //       <label htmlFor="">
-  //         <span className="text-sm font-medium">
-  //           Color:
-  //           <span className="ml-1 font-semibold">
-  //             {variants[variantActive].name}
-  //           </span>
-  //         </span>
-  //       </label>
-  //       <div className="flex mt-3">
-  //         {variants.map((variant, index) => (
-  //           <div
-  //             key={index}
-  //             onClick={() => setVariantActive(index)}
-  //             className={`relative flex-1 max-w-[75px] h-10 sm:h-11 rounded-full border-2 cursor-pointer ${
-  //               variantActive === index
-  //                 ? "border-primary-6000 dark:border-primary-500"
-  //                 : "border-transparent"
-  //             }`}
-  //           >
-  //             <div
-  //               className="absolute inset-0.5 rounded-full overflow-hidden z-0 object-cover bg-cover"
-  //               style={{
-  //                 backgroundImage: `url(${
-  //                   // @ts-ignore
-  //                   typeof variant.thumbnail?.src === "string"
-  //                     ? // @ts-ignore
-  //                       variant.thumbnail?.src
-  //                     : typeof variant.thumbnail === "string"
-  //                     ? variant.thumbnail
-  //                     : ""
-  //                 })`,
-  //               }}
-  //             ></div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
-  // const renderSizeList = () => {
-  //   if (!allOfSizes || !sizes || !sizes.length) {
-  //     return null;
-  //   }
-  //   return (
-  //     <div>
-  //       <div className="flex justify-between font-medium text-sm">
-  //         <label htmlFor="">
-  //           <span className="">
-  //             Size:
-  //             <span className="ml-1 font-semibold">{sizeSelected}</span>
-  //           </span>
-  //         </label>
-  //         <a
-  //           target="_blank"
-  //           rel="noopener noreferrer"
-  //           href="##"
-  //           className="text-primary-6000 hover:text-primary-500"
-  //         >
-  //           See sizing chart
-  //         </a>
-  //       </div>
-  //       <div className="grid grid-cols-5 sm:grid-cols-7 gap-2 mt-3">
-  //         {allOfSizes.map((size, index) => {
-  //           const isActive = size === sizeSelected;
-  //           const sizeOutStock = !sizes.includes(size);
-  //           return (
-  //             <div
-  //               key={index}
-  //               className={`relative h-10 sm:h-11 rounded-2xl border flex items-center justify-center
-  //               text-sm sm:text-base uppercase font-semibold select-none overflow-hidden z-0 ${
-  //                 sizeOutStock
-  //                   ? "text-opacity-20 dark:text-opacity-20 cursor-not-allowed"
-  //                   : "cursor-pointer"
-  //               } ${
-  //                 isActive
-  //                   ? "bg-primary-6000 border-primary-6000 text-white hover:bg-primary-6000"
-  //                   : "border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-200 hover:bg-neutral-50 dark:hover:bg-neutral-700"
-  //               }`}
-  //               onClick={() => {
-  //                 if (sizeOutStock) {
-  //                   return;
-  //                 }
-  //                 setSizeSelected(size);
-  //               }}
-  //             >
-  //               {size}
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   );
-  // };
-
-  const renderStatus = () => {
-    if (!status) {
-      return null;
-    }
-    const CLASSES =
-      "absolute top-3 left-3 px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 nc-shadow-lg rounded-full flex items-center justify-center text-slate-700 text-slate-900 dark:text-slate-300";
-    if (status === "New in") {
-      return (
-        <div className={CLASSES}>
-          <SparklesIcon className="w-3.5 h-3.5" />
-          <span className="ml-1 leading-none">{status}</span>
-        </div>
-      );
-    }
-    if (status === "50% Discount") {
-      return (
-        <div className={CLASSES}>
-          <IconDiscount className="w-3.5 h-3.5" />
-          <span className="ml-1 leading-none">{status}</span>
-        </div>
-      );
-    }
-    if (status === "Sold Out") {
-      return (
-        <div className={CLASSES}>
-          <NoSymbolIcon className="w-3.5 h-3.5" />
-          <span className="ml-1 leading-none">{status}</span>
-        </div>
-      );
-    }
-    if (status === "limited edition") {
-      return (
-        <div className={CLASSES}>
-          <ClockIcon className="w-3.5 h-3.5" />
-          <span className="ml-1 leading-none">{status}</span>
-        </div>
-      );
-    }
-    return null;
-  };
 
   const renderSectionContent = () => {
     return (
@@ -344,9 +216,11 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                     {reviews.length} تقيم
                   </span>
                 </div>
-
               </a>
-              <Discount price={productData.price} priceBefore={productData.priceBefore} /> 
+              <Discount
+                price={productData.price}
+                priceBefore={productData.priceBefore}
+              />
 
               <span className="hidden sm:block mx-2.5">·</span>
               <div className="hidden sm:flex items-center text-sm">
@@ -492,6 +366,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
           <div className="w-full lg:w-[35%] ">
             {/* HEADING */}
             <div className="relative">
+              {console.log(`http://localhost:5000/public/imgs/${productData?.image}`)}
               <div className="">
                 <Image
                   width={500}
@@ -500,11 +375,50 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                     // productData?.image
                     //   ? `http://localhost:5000${productData?.image}`
                     //   :
-                    `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`
+                    `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`
                   }
                   className=" rounded-2xl object-cover product-img"
                   alt="product detail 1"
                 />
+                <div
+                  style={{
+                    // border: "1px solid red",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    marginTop: "10px",
+                  }}
+                >
+                  <p style={{fontWeight: "bold"}}>شارك المنتج عبر:</p>
+                  <div style={{ display: "flex" }}>
+                    <FacebookShareButton
+                      style={{ margin: "0 10px" }}
+                      url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
+                    >
+                      <FacebookIcon borderRadius={5} />
+                    </FacebookShareButton>
+
+                    <TwitterShareButton
+                      style={{ margin: "0 10px" }}
+                      url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
+                    >
+                      <TwitterIcon borderRadius={5}/>
+                    </TwitterShareButton>
+
+                    <Snapshare
+                      dataShareUrl="https://twang.dev/react-snapshare/"
+                      stickerAssetURL="https://kit.snapchat.com/ckweb/test/image.png"
+                      customButtonStyles={{ height: "80px" }}
+                    />
+                    <WhatsappShareButton
+                      style={{ margin: "0 10px" }}
+                      url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
+                    >
+                      <WhatsappIcon borderRadius={5}/>
+                    </WhatsappShareButton>
+                  </div>
+                </div>
               </div>
               {/* {renderStatus()} */}
               {/* META FAVORITES */}

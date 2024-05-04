@@ -40,7 +40,7 @@ const ModalAddReview: FC<AddReviewModal> = ({ show, onClose, data, id }) => {
   }, [formValue]);
   const submitReview = () => {
     _axios(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${id}?channel=web`,
       {
         storeReview: formValue.storeReview,
         storeRating: formValue.storeRate,

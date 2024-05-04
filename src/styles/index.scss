@@ -95,7 +95,6 @@ footer {
   @media (max-width: 968px) {
     min-width: 200px;
     font-size: 11px;
-
   }
 }
 .order-info p {
@@ -107,14 +106,13 @@ footer {
 }
 .ttnc-logo {
   @media (max-width: 1280px) {
-    width: 150px;    
+    width: 150px;
   }
 }
 .nav-link {
   @media (max-width: 1280px) {
     font-size: 12px !important;
     white-space: nowrap !important;
-
   }
 }
 .megamnue {
@@ -569,5 +567,49 @@ tamara-widget {
   @media (max-width: 968px) {
     // direction: ltr !important;
     margin-right: auto !important;
+  }
+}
+
+.snapchat-creative-kit-share,
+.snapchat-creative-kit-share button {
+  height: 64px;
+  width: 64px;
+}
+.snapchat-creative-kit-share .f1psvwpi {
+  display: none;
+}
+.snapchat-creative-kit-share .f16qnola {
+  height: 64px;
+  width: 64px;
+}
+.react-time-picker__wrapper {
+  width: fill !important;
+  height: 54px;
+  border-radius: 20px;
+  border: 2px solid rgba(var(--c-neutral-200), var(--tw-border-opacity));
+}
+@media (max-width: 968px) {
+  .react-time-picker__wrapper {
+    width: 250px !important;
+  }
+}
+#time-picker, .react-time-picker {
+  width: 100% !important;
+}
+
+.react-time-picker__wrapper input:focus, .react-time-picker__wrapper select:focus {
+  outline: 1px solid #ffffff00 !important;
+  outline: 1px solid #ffffff00 !important;
+  box-shadow: none !important;
+}
+.react-time-picker__wrapper input {
+  width: 100px !important;
+  border-radius: 20px;
+  text-indent: 10px;
+  margin: 0 5px;
+}
+@media (max-width: 968px) {
+  .react-time-picker__wrapper input {
+    width: 70px !important;
   }
 }

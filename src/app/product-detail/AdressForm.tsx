@@ -6,8 +6,13 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import Calendar from "react-calendar";
+import TimePicker from "react-time-picker";
+
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
+
 import Checkbox from "@/shared/Checkbox/Checkbox";
 interface Props {
   isActive: boolean;
@@ -25,11 +30,15 @@ const AdressForm: FC<Props> = ({
   selectedCard,
 }) => {
   const [value, onChange] = useState<string>("");
+  const [time, onTimeChange] = useState<string>("");
+
   const [showClender, setShowClender] = useState<boolean>(false);
+  const [showTime, setShowTime] = useState<boolean>(false);
 
   const [formValue, setFormValue] = useState({
     type: orderType,
     deliveryDate: "",
+    time: "",
     cardText: "",
     addressSelected: false,
     address: "",
@@ -42,6 +51,7 @@ const AdressForm: FC<Props> = ({
     setFormValue((prev) => ({
       type: orderType,
       deliveryDate: "",
+      time: "",
       cardText: "",
       addressSelected: false,
       address: "",
@@ -51,13 +61,14 @@ const AdressForm: FC<Props> = ({
       giftLink: "",
     }));
   }, [orderType]);
-  useEffect(() => {
-    console.log("ssad");
-  }, [formValue.deliveryDate]);
+  // useEffect(() => {
+  //   console.log("ssad");
+  // }, [formValue.deliveryDate]);
 
   const [errors, setErrors] = useState<any>({
     deliveryDate: false,
     address: false,
+    time: false,
   });
   const handleChange = (e: any) => {
     setFormValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -77,6 +88,7 @@ const AdressForm: FC<Props> = ({
     setErrors((prev: any) => ({ ...prev, deliveryDate: false }));
     setShowClender(false);
   };
+
   const [selectAdress, setSelectAdress] = useState<boolean>(true);
 
   const validate = () => {
@@ -90,6 +102,10 @@ const AdressForm: FC<Props> = ({
       setErrors((prev: any) => ({ ...prev, address: true }));
       address = false;
     }
+    if (formValue.time.length <= 0) {
+      setErrors((prev: any) => ({ ...prev, time: true }));
+      address = false;
+    }
     return deliveryDate && address;
   };
   const validateAndAddToCart = async (formValue: any) => {
@@ -97,8 +113,13 @@ const AdressForm: FC<Props> = ({
     if (isValid) handleAddToCart(formValue);
   };
   useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+    console.log({ deb: formValue });
+    setFormValue((prev) => ({
+      ...prev,
+      time: time,
+    }));
+    setErrors((prev: any) => ({ ...prev, time: false }));
+  }, [time]);
   return (
     <div
       className={`border border-slate-200 dark:border-slate-700 rounded-xl ${
@@ -257,6 +278,36 @@ const AdressForm: FC<Props> = ({
                 value={value}
               />
             )}
+          </div>
+        </div>
+        <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
+          <div className="flex-1">
+            <Label className="text-sm">وقت التوصيل ( من 2 الظهر الي 11م)</Label>
+            <div id="time-picker" style={{ width: "500px" }}>
+              <TimePicker
+                style={{ width: "100px" }}
+                onChange={onTimeChange}
+                value={time}
+                locale={"ar-EG"}
+                hourPlaceholder={"الساعة"}
+                minutePlaceholder={"دقيقة"}
+                amPmAriaLabel={"PM"}
+                clockIcon={() => null}
+                renderNumbers={true}
+              />
+            </div>
+            {errors.time && (
+              <span style={{ color: "red" }}>يجب تحديد وقت التوصيل</span>
+            )}
+            {/* <Input
+              className="mt-1.5"
+              placeholder=""
+              defaultValue={""}
+              type={"text"}
+              value={value}
+              onFocus={() => setShowTime(true)}
+              style={{ border: errors.deliveryDate && "1px solid red" }}
+            /> */}
           </div>
         </div>
         {orderType !== "GIFT_ORDER" && (

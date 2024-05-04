@@ -60,15 +60,18 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
     }
   }, [session]);
   useEffect(() => {
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`
-        )
-        .then((res) => res.data.data)
-        .then((data) => {
-          setCategory({ ...data[0], productList: [] });
-          setData_(
-            data[0].productList.reverse().map((item: any) => ({
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`
+      )
+      .then((res) => res.data.data)
+      .then((data) => {
+        setCategory({ ...data[0], productList: [] });
+        setData_(
+          data[0].productList
+            .reverse()
+            .filter((item: { active: boolean }) => item.active)
+            .map((item: any) => ({
               ...themeData[0],
               name: item.name,
               id: item?._id,
@@ -77,7 +80,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               featuredImage: {
                 id: item?._id,
                 category: 1,
-                src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
+                src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
                 blurHeight: 8,
                 blurWidth: 7,
                 height: 200,
@@ -93,9 +96,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               description: item.nameAr,
               rates: item.rates,
             }))
-          );
-        });
-    
+        );
+      });
   }, []);
 
   useEffect(() => {
