@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import LikeButton from "@/components/LikeButton";
 import { StarIcon } from "@heroicons/react/24/solid";
@@ -35,28 +35,25 @@ import ProductNcNumber from "@/components/productNcNumber";
 import Discount from "@/components/Discount";
 import {
   FacebookShareButton,
-  InstapaperShareButton,
   TwitterShareButton,
   WhatsappShareButton,
-  FacebookShareCount,
 } from "react-share";
 import {
   FacebookIcon,
-  InstapaperIcon,
-  LivejournalIcon,
   TwitterIcon,
   WhatsappIcon,
   XIcon,
 } from "react-share";
 //@ts-ignore
-import { Snapshare } from "@thezano/react-snapshare";
-
+// import { Snapshare } from "@thezano/react-snapshare";
+// import Test from "@/components/test";
 const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
 
 const ProductDetailPage: FC<any> = ({ params }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
   const { addItem, updateItemQuantity, items, setItems } = useCart();
   //
+
   const [qty, setQty] = useState(1);
   const [productData, setProductData] = useState<any>([]);
   const [reviews, setReviews] = useState<any>([]);
@@ -131,11 +128,9 @@ const ProductDetailPage: FC<any> = ({ params }) => {
         }
     }
       `;
-
       if (tabbyReady && root) {
         root.appendChild(tabbyCard);
       }
-
       if (tammaraReady && root) {
         root.appendChild(tabbyCard);
       }
@@ -366,7 +361,6 @@ const ProductDetailPage: FC<any> = ({ params }) => {
           <div className="w-full lg:w-[35%] ">
             {/* HEADING */}
             <div className="relative">
-              {console.log(`http://localhost:5000/public/imgs/${productData?.image}`)}
               <div className="">
                 <Image
                   width={500}
@@ -390,7 +384,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                     marginTop: "10px",
                   }}
                 >
-                  <p style={{fontWeight: "bold"}}>شارك المنتج عبر:</p>
+                  <p style={{ fontWeight: "bold" }}>شارك المنتج عبر:</p>
                   <div style={{ display: "flex" }}>
                     <FacebookShareButton
                       style={{ margin: "0 10px" }}
@@ -403,19 +397,14 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                       style={{ margin: "0 10px" }}
                       url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
                     >
-                      <TwitterIcon borderRadius={5}/>
+                      <TwitterIcon borderRadius={5} />
                     </TwitterShareButton>
-
-                    <Snapshare
-                      dataShareUrl="https://twang.dev/react-snapshare/"
-                      stickerAssetURL="https://kit.snapchat.com/ckweb/test/image.png"
-                      customButtonStyles={{ height: "80px" }}
-                    />
+                    {/* <Test /> */}
                     <WhatsappShareButton
                       style={{ margin: "0 10px" }}
                       url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
                     >
-                      <WhatsappIcon borderRadius={5}/>
+                      <WhatsappIcon borderRadius={5} />
                     </WhatsappShareButton>
                   </div>
                 </div>
