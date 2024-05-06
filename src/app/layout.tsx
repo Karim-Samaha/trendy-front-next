@@ -12,6 +12,8 @@ import { CartProvider } from "react-use-cart";
 import { SessionProvider } from "next-auth/react";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { getServerAuthSession } from "../server/auth";
+import logo from "@/images/trendy.svg";
+
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -25,12 +27,11 @@ const cairo = Cairo({
 
 export default function RootLayout({
   children,
-  params: {session},
+  params: { session },
 }: {
   children: React.ReactNode;
   params: any;
 }) {
-  {console.log({children})}
   return (
     <SessionProvider>
       <CartProvider id="cart">

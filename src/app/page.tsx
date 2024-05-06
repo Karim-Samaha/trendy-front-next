@@ -8,7 +8,7 @@ import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 import SectionPromo2 from "@/components/SectionPromo2";
 import { Product, PRODUCTS, DummyData } from "@/data/data";
 import axios from "axios";
-
+import { Metadata } from "next";
 import Partners from "@/components/Partners";
 import dynamic from "next/dynamic";
 // import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
@@ -21,6 +21,13 @@ const DiscoverMoreReviews = dynamic(
   { ssr: false }
 );
 
+export const metadata: Metadata = {
+  title: "Trendy Store",
+  description: "",
+  icons: {
+    icon: "/trendy.svg",
+  },
+};
 async function getCategories() {
   const res = axios
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`)
@@ -120,9 +127,11 @@ async function PageHome() {
           selectCard={undefined}
         />
         <SectionPromo2
-          image={banners.filter(
-            (item: { type: string }) => item.type === "BANNER"
-          )}
+          image={
+            banners.filter(
+              (item: { type: string }) => item.type === "BANNER"
+            )[0]
+          }
         />
 
         <SectionSliderProductCard
@@ -131,9 +140,11 @@ async function PageHome() {
           selectCard={undefined}
         />
         <SectionPromo2
-          image={banners.filter(
-            (item: { type: string }) => item.type === "BANNER"
-          )}
+          image={
+            banners.filter(
+              (item: { type: string }) => item.type === "BANNER"
+            )[1]
+          }
         />
 
         <SectionSliderProductCard
@@ -145,93 +156,12 @@ async function PageHome() {
         <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
         </div>
-        {/* <SectionPromo1 /> */}
 
-        {/* <div className="relative py-24 lg:py-32">
-          <BackgroundSection />
-          <SectionGridMoreExplore />
-        </div> */}
-
-        {/* <SectionSliderProductCard
-          heading="Best Sellers"
-          subHeading="Best selling of the month"
-        /> */}
-
-        {/* <SectionSliderLargeProduct cardStyle="style2" /> */}
-
-        {/* <SectionSliderCategories /> */}
-
-        {/* <SectionPromo3 /> */}
-
-        {/* <SectionGridFeatureItems /> */}
-
-        {/* <div className="relative py-24 lg:py-32">
-          <BackgroundSection />
-          <div>
-            <Heading rightDescText="From the Ciseco blog">
-              The latest news
-            </Heading>
-            <SectionMagazine5 />
-            <div className="flex mt-16 justify-center">
-              <ButtonSecondary>Show all blog articles</ButtonSecondary>
-            </div>
-          </div>
-        </div> */}
-        {/* <SectionClientSay /> */}
         <Partners />
-        {/* <div className="" style={{ direction: "rtl" }}>
-          <h2 className="text-2xl font-semibold flex items-center">
-            <StarIcon style={{ color: "#EAB308" }} className="w-7 h-7 mb-0.5" />
-            <span className="title ml-1.5"> تقييمات عملاؤنا</span>
-          </h2>
-        </div> */}
 
-        {/* comment */}
         <div className="web-rates container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
           <DiscoverMoreReviews reviews={reviews} />
         </div>
-        {/* <div className="mt-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-11 gap-x-28">
-              <ReviewItem
-                data={{
-                  comment: `منتج رائع`,
-                  date: "08/03/2023",
-                  name: "احمد محمد",
-                  starPoint: 5,
-                }}
-              />
-              <ReviewItem
-                data={{
-                  comment: `منتج رائع`,
-                  date: "08/03/2023",
-                  name: "احمد محمد",
-                  starPoint: 5,
-                }}
-              />
-              <ReviewItem
-                data={{
-                  comment: `منتج رائع`,
-                  date: "08/03/2023",
-                  name: "احمد محمد",
-                  starPoint: 5,
-                }}
-              />
-              <ReviewItem
-                data={{
-                  comment: `منتج رائع`,
-                  date: "08/03/2023",
-                  name: "احمد محمد",
-                  starPoint: 5,
-                }}
-              />
-            </div>
-          </div> */}
-        {/* </div> */}
-
-        {/* <ModalViewAllReviews
-        // show={isOpenModalViewAllReviews}
-        // onCloseModalViewAllReviews={() => setIsOpenModalViewAllReviews(false)}
-      /> */}
       </div>
     </div>
   );

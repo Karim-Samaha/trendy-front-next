@@ -66,7 +66,13 @@ const AvatarDropdown: FC<Props> = ({ logo }) => {
                       <Avatar imgUrl={AvatarImg} sizeClass="w-12 h-12" />
 
                       <div className="flex-grow">
-                        <h4 className="font-semibold">{session?.user?.name}</h4>
+                        <h4 className="font-semibold">
+                          {session?.user?.name || (
+                            <span style={{ fontSize: "11px" }}>
+                              {session?.user?.email}
+                            </span>
+                          )}
+                        </h4>
                         {/* <p className="text-xs mt-0.5">Los Angeles, CA</p> */}
                       </div>
                     </div>

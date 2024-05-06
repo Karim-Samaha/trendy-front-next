@@ -38,12 +38,8 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from "react-share";
-import {
-  FacebookIcon,
-  TwitterIcon,
-  WhatsappIcon,
-  XIcon,
-} from "react-share";
+import { FacebookIcon, TwitterIcon, WhatsappIcon, XIcon } from "react-share";
+
 //@ts-ignore
 // import { Snapshare } from "@thezano/react-snapshare";
 // import Test from "@/components/test";
@@ -314,7 +310,22 @@ const ProductDetailPage: FC<any> = ({ params }) => {
   };
 
   const renderReviews = () => {
-    if (reviews.length <= 0) return;
+    if (reviews.length <= 0) {
+      return (
+        <div className="" style={{ direction: "rtl" }}>
+          {/* HEADING */}
+          <h2
+            className="text-2xl font-semibold flex items-center justify-center"
+            style={{ textAlign: "center" }}
+          >
+            <span className="title ml-1.5" style={{ textAlign: "center" }}>
+              {" "}
+              لا يوجد تقييمات حتى اللحظة
+            </span>
+          </h2>
+        </div>
+      );
+    }
     return (
       <div className="" style={{ direction: "rtl" }}>
         {/* HEADING */}
@@ -365,12 +376,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                 <Image
                   width={500}
                   height={600}
-                  src={
-                    // productData?.image
-                    //   ? `http://localhost:5000${productData?.image}`
-                    //   :
-                    `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`
-                  }
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`}
                   className=" rounded-2xl object-cover product-img"
                   alt="product detail 1"
                 />
@@ -388,21 +394,20 @@ const ProductDetailPage: FC<any> = ({ params }) => {
                   <div style={{ display: "flex" }}>
                     <FacebookShareButton
                       style={{ margin: "0 10px" }}
-                      url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
+                      url={window && window.location.href}
                     >
                       <FacebookIcon borderRadius={5} />
                     </FacebookShareButton>
-
                     <TwitterShareButton
                       style={{ margin: "0 10px" }}
-                      url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
+                      url={window && window.location.href}
                     >
                       <TwitterIcon borderRadius={5} />
                     </TwitterShareButton>
                     {/* <Test /> */}
                     <WhatsappShareButton
                       style={{ margin: "0 10px" }}
-                      url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}`}
+                      url={window && window.location.href}
                     >
                       <WhatsappIcon borderRadius={5} />
                     </WhatsappShareButton>

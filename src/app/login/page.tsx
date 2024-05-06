@@ -80,6 +80,7 @@ const PageLogin = () => {
       try {
         if (loginForm.username === "karim.admin@admin.com") {
           setOtpSent(true);
+          setError("");
         } else {
           await _axios
             .post(
@@ -91,6 +92,7 @@ const PageLogin = () => {
             .then((res) => {
               if (res.data?.status === "EMAIL_OTP_SENT") {
                 setOtpSent(true);
+                setError("");
               }
             });
         }

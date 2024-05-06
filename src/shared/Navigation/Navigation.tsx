@@ -44,11 +44,14 @@ function Navigation() {
       });
   }, []);
   return (
-    <ul className="nc-Navigation flex items-center">
-      {data.map((item) => (
-        <NavigationItem key={item._id} menuItem={item} />
-      ))}
-    </ul>
+    <>
+
+      <ul className="nc-Navigation flex items-center">
+        {data.map((item) => (
+          <NavigationItem key={item._id} menuItem={item} />
+        ))}
+      </ul>
+    </>
   );
 }
 
