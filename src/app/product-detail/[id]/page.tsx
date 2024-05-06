@@ -466,6 +466,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
             headingClassName="mb-10 text-neutral-900 dark:text-neutral-50"
             order={2}
             selectCard={undefined}
+            title={"منتجات مشابهة"}
           />
 
           {/* SECTION */}

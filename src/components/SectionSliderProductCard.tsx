@@ -24,6 +24,7 @@ export interface SectionSliderProductCardProps {
   modal?: true;
   selectCard: any;
   _id: string;
+  title: string;
 }
 
 const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
@@ -38,6 +39,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   order = 1,
   modal = false,
   selectCard,
+  title = "",
 }) => {
   const sliderRef = useRef(null);
   //
@@ -154,7 +156,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
         <Heading
           className={headingClassName}
           fontClass={headingFontClassName}
-          rightDescText={category?.nameAr}
+          rightDescText={title ? title : category?.name}
           hasNextPrev
         ></Heading>
         <div

@@ -45,6 +45,7 @@ const AccountOrder = () => {
     index: number
   ) => {
     const { image, name, _id } = order;
+    console.log(order)
     return (
       <div key={index} className="flex py-4 sm:py-7 last:pb-0 first:pt-0">
         <div
@@ -81,7 +82,7 @@ const AccountOrder = () => {
             <p className="text-gray-500 dark:text-slate-400 flex items-center">
               <span className="hidden sm:inline-block">الكمية</span>
               <span className="inline-block sm:hidden">x</span>
-              <span className="ml-2">1</span>
+              <span className="ml-2">{order.quantity}</span>
             </p>
 
             <div className="flex">
@@ -109,7 +110,7 @@ const AccountOrder = () => {
           ) : null}
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
             <div className="order-info flex-1" style={{ minWidth: "205px" }}>
-             (من الي) تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
+              (من الي) تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
               <span className="font-bold">( + 0.00 ر.س ) </span>
             </div>
           </div>
@@ -152,21 +153,25 @@ const AccountOrder = () => {
 
           <div>
             <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5 sm:mt-2">
-              <span>08-3-2024</span>
+              <span>
+                {new Date(item.createdAt).toISOString().substring(0, 10)}
+              </span>
               <span className="mx-2">·</span>
               <span
                 className={`${
                   item.orderStatus === "DELEIVERD"
                     ? "status-deliverd"
-                    : item.orderStatus === "PROCCESSING"
+                    : item.orderStatus === "PROCCESSING" ||
+                      item.orderStatus === "ON_THE_WAY" ||
+                      item.orderStatus == "RETURNED"
                     ? "status-dilivery"
                     : null
                 } text-primary-500`}
               >
-                {/* {status === 1 ? "تم التوصيل" : status === 2 ? "تم الشحن" : null} */}
                 {item.orderStatus === "PROCCESSING" && "قيد التنفيذ"}
-                {item.orderStatus === "DELEIVERD" && "تم الشحن"}
-
+                {item.orderStatus === "DELEIVERD" && "تم التوصيل"}
+                {item.orderStatus === "ON_THE_WAY" && "تم الشحن"}
+                {item.orderStatus === "RETURNED" && "مسترجع"}
               </span>
             </p>
           </div>
