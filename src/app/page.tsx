@@ -1,4 +1,5 @@
 export const revalidate = 1; 
+export const fetchCache = 'force-no-store'
 
 import React from "react";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
