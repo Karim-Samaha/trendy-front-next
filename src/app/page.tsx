@@ -1,4 +1,4 @@
-export const revalidate = 1000; // revalidate .15 hour
+export const revalidate = 1; 
 
 import React from "react";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
