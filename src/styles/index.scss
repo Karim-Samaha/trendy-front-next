@@ -593,11 +593,13 @@ tamara-widget {
     width: 250px !important;
   }
 }
-#time-picker, .react-time-picker {
+#time-picker,
+.react-time-picker {
   width: 100% !important;
 }
 
-.react-time-picker__wrapper input:focus, .react-time-picker__wrapper select:focus {
+.react-time-picker__wrapper input:focus,
+.react-time-picker__wrapper select:focus {
   outline: 1px solid #ffffff00 !important;
   outline: 1px solid #ffffff00 !important;
   box-shadow: none !important;
@@ -611,5 +613,43 @@ tamara-widget {
 @media (max-width: 968px) {
   .react-time-picker__wrapper input {
     width: 70px !important;
+  }
+}
+.categories-page {
+  width: 95vw;
+  max-width: 1217px;
+  margin: 50px auto;
+  h1 {
+    font-size: 2.25rem;
+    color: #000;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+  .ctg-item {
+    width: 30%;
+    margin: 10px 1.6%;
+    background-color: #F4F1DF;
+    padding: 40px;
+    border-radius: 22px;
+    @media (max-width: 968px) {
+      width: 95vw;
+      img {
+        max-width: 200px;
+        margin: 0 auto;
+      }
+    }
+    img {
+      min-height: 210px;
+    }
+    h3 {
+      font-size: 1.5rem;
+      color: rgb(15 23 42 / var(--tw-text-opacity));
+      margin-top: 30px !important;
+    }
   }
 }

@@ -5,8 +5,7 @@ import Heading from "./Heading/Heading";
 import CardCategory3 from "./CardCategories/CardCategory3";
 // @ts-ignore
 import Glide from "@glidejs/glide/dist/glide.esm";
-import { CATS_DISCOVER } from "./CardCategories/data";
-import axios from "axios";
+import Link from "next/link";
 
 const DiscoverMoreSlider: FC<any> = ({ categories }) => {
   const sliderRef = useRef(null);
@@ -98,6 +97,9 @@ const DiscoverMoreSlider: FC<any> = ({ categories }) => {
             )
           )}
         </ul>
+      </div>
+      <div className="show-more" style={{ width: "100vw" }}>
+        <Link href={`/categories  `}>عرض كل</Link>
       </div>
     </div>
   );

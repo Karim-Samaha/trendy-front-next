@@ -7,13 +7,32 @@ import Image from "next/image";
 import { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
-import { Key } from "react";
+import { Key, useEffect } from "react";
 import { adjustNames } from "@/utils/adjustNames";
 import { renderTotalPrice_ } from "@/utils/adjustNames";
 import { useSession } from "next-auth/react";
+import _axios from "@/contains/api/axios";
 const CartPage = () => {
   const { items, removeItem } = useCart();
   const { data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+      const cartPrices = renderTotalPrice_(items);
+      const total = +cartPrices.fintalTotal;
+      _axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/cart`,
+          {
+            cart: items,
+            amount: total,
+          },
+          //@ts-ignore
+          { session }
+        )
+        .then((res) => console.log("session created"))
+        .catch((err) => console.log(err));
+    }
+  }, [session]);
   const renderStatusSoldout = () => {
     return (
       <div className="rounded-full flex items-center justify-center px-2.5 py-1.5 text-xs text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
@@ -214,44 +233,64 @@ const CartPage = () => {
               <div className="mt-7 text-sm text-slate-500 dark:text-slate-400 divide-y divide-slate-200/70 dark:divide-slate-700/80">
                 <div className="flex justify-between pb-4">
                   <span>المجموع</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     {renderTotalPrice.total} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>تكاليف الشحن</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     0 ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>نص بطاقه</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     {renderTotalPrice.cards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>كروت اهداء</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     {renderTotalPrice.giftCards} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>الضريبة</span>
-                  <span style={{minWidth: "100px"}} className="font-semibold text-slate-900 dark:text-slate-200">
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
                     0 ر.س
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                   <span>مجموع الفاتورة</span>
-                  <span style={{minWidth: "100px"}}> {renderTotalPrice.fintalTotal} ر.س</span>
+                  <span style={{ minWidth: "100px" }}>
+                    {" "}
+                    {renderTotalPrice.fintalTotal} ر.س
+                  </span>
                 </div>
               </div>
-              <ButtonPrimary href={session?.user?.accessToken ? "/checkout" : "/login"} className="mt-8 w-full">
+              <ButtonPrimary
+                href={session?.user?.accessToken ? "/checkout" : "/login"}
+                className="mt-8 w-full"
+              >
                 إتمام عملية الشراء{" "}
               </ButtonPrimary>
-              <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center">
-              </div>
+              <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center"></div>
             </div>
           </div>
         </div>
