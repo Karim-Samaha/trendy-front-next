@@ -67,7 +67,7 @@ const CartPage = () => {
         >
           <Image
             fill
-            src={featuredImage}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${image}`}
             alt={name}
             sizes="300px"
             className="h-full w-full object-cover object-center"

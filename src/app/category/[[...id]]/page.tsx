@@ -51,28 +51,30 @@ async function getSubCategoriesProducts(subCtgId) {
     )
     .then((res) => res.data.data)
     .then((data) => {
-      return data.productList?.map((item: any) => ({
-        name: item.name,
-        color: "bg-yellow-50",
-        featuredImage: {
-          category: 1,
-          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
-          blurHeight: 8,
-          blurWidth: 7,
-          height: 200,
-          width: 362,
-          allOfSizes: ["XS", "S"],
-          link: "product-detail",
-          numberOfReviews: 50,
-          rating: "4.9",
-        },
-        id: item?._id,
-        _id: item?._id,
-        price: item.price,
-        priceBefore: item.priceBefore,
-        isOffer: item?.isOffer,
-        description: item.nameAr,
-      }));
+      return data.productList
+        ?.filter((item: { active: boolean }) => item.active)
+        .map((item: any) => ({
+          name: item.name,
+          color: "bg-yellow-50",
+          featuredImage: {
+            category: 1,
+            src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
+            blurHeight: 8,
+            blurWidth: 7,
+            height: 200,
+            width: 362,
+            allOfSizes: ["XS", "S"],
+            link: "product-detail",
+            numberOfReviews: 50,
+            rating: "4.9",
+          },
+          id: item?._id,
+          _id: item?._id,
+          price: item.price,
+          priceBefore: item.priceBefore,
+          isOffer: item?.isOffer,
+          description: item.nameAr,
+        }));
     });
   if (!res) {
     throw new Error("Failed to fetch data");
@@ -86,28 +88,30 @@ async function getCategoryAllProducts(ctgId) {
     )
     .then((res) => res.data.data)
     .then((data) => {
-      return data.map((item: any) => ({
-        name: item.name,
-        color: "bg-yellow-50",
-        featuredImage: {
-          category: 1,
-          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
-          blurHeight: 8,
-          blurWidth: 7,
-          height: 200,
-          width: 362,
-          allOfSizes: ["XS", "S"],
-          link: "product-detail",
-          numberOfReviews: 50,
-          rating: "4.9",
-        },
-        id: item?._id,
-        _id: item?._id,
-        price: item.price,
-        priceBefore: item.priceBefore,
-        isOffer: item?.isOffer,
-        description: item.nameAr,
-      }));
+      return data
+        .filter((item: { active: boolean }) => item.active)
+        .map((item: any) => ({
+          name: item.name,
+          color: "bg-yellow-50",
+          featuredImage: {
+            category: 1,
+            src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
+            blurHeight: 8,
+            blurWidth: 7,
+            height: 200,
+            width: 362,
+            allOfSizes: ["XS", "S"],
+            link: "product-detail",
+            numberOfReviews: 50,
+            rating: "4.9",
+          },
+          id: item?._id,
+          _id: item?._id,
+          price: item.price,
+          priceBefore: item.priceBefore,
+          isOffer: item?.isOffer,
+          description: item.nameAr,
+        }));
     });
   if (!res) {
     throw new Error("Failed to fetch data");

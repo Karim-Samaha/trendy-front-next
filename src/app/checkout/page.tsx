@@ -1,19 +1,13 @@
 "use client";
 import Label from "@/components/Label/Label";
-import NcInputNumber from "@/components/NcInputNumber";
 import Prices from "@/components/Prices";
-import { Product, PRODUCTS } from "@/data/data";
+import { Product } from "@/data/data";
 import { useEffect, useState } from "react";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import ContactInfo from "./ContactInfo";
-import PaymentMethod from "./PaymentMethod";
-import ShippingAddress from "./ShippingAddress";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
-import Head from "next/head";
-import { Metadata } from "next";
 import Moysar from "@/components/payment/Moysar";
 import Tabby from "./tabby";
 import TabbyIcon from "@/images/icons/Tabby.png";
@@ -71,7 +65,7 @@ const CheckoutPage = () => {
     document.head.appendChild(tabbyScript);
   }, []);
   const renderProduct = (item: Product, index: number) => {
-    const { image, price, name, featuredImage } = item;
+    const { image, price, name, featuredImage, _id } = item;
 
     return (
       <div key={index} className="relative flex py-7 first:pt-0 last:pb-0">
@@ -80,13 +74,16 @@ const CheckoutPage = () => {
           className="relative h-36 w-24 sm:w-28 flex-shrink-0 overflow-hidden rounded-xl bg-slate-100"
         >
           <Image
-            src={featuredImage}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${image}`}
             fill
             alt={name}
             className="h-full w-full object-contain object-center"
             sizes="300px"
           />
-          <Link href="/product-detail" className="absolute inset-0"></Link>
+          <Link
+            href={`/product-detail/${_id}`}
+            className="absolute inset-0"
+          ></Link>
         </div>
 
         <div className="ml-3 sm:ml-6 flex flex-1 flex-col">
@@ -94,7 +91,7 @@ const CheckoutPage = () => {
             <div className="flex justify-between ">
               <div className="flex-[1.5] ">
                 <h3 className="text-base font-semibold">
-                  <Link href="/product-detail">{name}</Link>
+                  <Link href={`/product-detail/${_id}`}>{name}</Link>
                 </h3>
                 <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
                   <div className="flex items-center space-x-1.5"></div>
@@ -312,20 +309,29 @@ const CheckoutPage = () => {
                       </h3>
                     </div>
                   ) : (
-                    <div className="flex mt-1.5">
-                      <Input
-                        value={coupon}
-                        onChange={(e) => setCoupon(e.target.value)}
-                        sizeClass="h-10 px-4 py-3"
-                        className="flex-1"
-                      />
-                      <button
-                        onClick={validateCoupon}
-                        className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
-                      >
-                        تفعيل
-                      </button>
-                    </div>
+                    <>
+                      {" "}
+                      <div className="flex mt-1.5">
+                        <Input
+                          value={coupon}
+                          onChange={(e) => {
+                            setCoupon(e.target.value);
+                            setCouponResponse({});
+                          }}
+                          sizeClass="h-10 px-4 py-3"
+                          className="flex-1"
+                        />
+                        <button
+                          onClick={validateCoupon}
+                          className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
+                        >
+                          تفعيل
+                        </button>
+                      </div>
+                      {couponResponse?.valid === false && (
+                        <span style={{ color: "red" }}>الكود خاطئ</span>
+                      )}
+                    </>
                   )}
                 </div>
 

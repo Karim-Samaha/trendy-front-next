@@ -16,20 +16,23 @@ export default function CartDropdown() {
   const { data: session } = useSession();
   const totalPrice = () => {
     let total = 0;
-    items.map((item: { price: number }) => (total += +item.price * +item.quantity));
+    items.map(
+      (item: { price: number }) => (total += +item.price * +item.quantity)
+    );
     return total.toFixed(2);
   };
   const renderProduct = (item: any, index: number, close: () => void) => {
     const { image, price, name, featuredImage, id, _id, quantity } = item;
     return (
       <div key={index} className="flex py-5 last:pb-0">
+
         <div
           style={{ margin: "0 20px" }}
           className="relative h-24 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-slate-100"
         >
           <Image
             fill
-            src={featuredImage}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${image}`}
             alt={name}
             className="h-full w-full object-contain object-center"
           />
@@ -59,7 +62,6 @@ export default function CartDropdown() {
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
-            
             <p className="text-gray-500 dark:text-slate-400">{`الكمية ${quantity}`}</p>
 
             <div className="flex">
@@ -149,7 +151,7 @@ export default function CartDropdown() {
                   <div className="max-h-[60vh] p-5 overflow-y-auto hiddenScrollbar">
                     <h3 className="text-xl font-semibold">عربه التسوق</h3>
                     <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                      {console.log({items})}
+                      {console.log({ items })}
                       {items.length > 0
                         ? items.map((item, index) =>
                             renderProduct(item, index, close)
@@ -179,8 +181,8 @@ export default function CartDropdown() {
                         href={
                           items.length === 0
                             ? "/cart"
-                              : !session?.user?.accessToken
-                              ? "/login"
+                            : !session?.user?.accessToken
+                            ? "/login"
                             : "/checkout"
                         }
                         onClick={close}

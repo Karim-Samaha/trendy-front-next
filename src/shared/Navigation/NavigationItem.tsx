@@ -71,7 +71,7 @@ const NavigationItem: FC<NavigationItemProps> = ({ menuItem }) => {
                 <div className="w-[40%] xl:w-[35%]">
                   <CardCategory3
                     featuredImage={{
-                      src: `${process.env.NEXT_PUBLIC_BACKEND_URL}${menu.image}`,
+                      src: `${process.env.NEXT_PUBLIC_ASSETS_URL}${menu.image}`,
                       width: 200,
                       height: 200,
                     }}

@@ -2,18 +2,13 @@ export const revalidate = 1;
 export const fetchCache = "force-no-store";
 
 import React from "react";
-import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
-import SectionHero2 from "@/components/SectionHero/SectionHero2";
-import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 // import DiscoverMoreSlider from "@/components/DiscoverMoreSlider";
-import SectionPromo2 from "@/components/SectionPromo2";
-import { Product, PRODUCTS, DummyData } from "@/data/data";
 import axios from "axios";
 import { Metadata } from "next";
-import Partners from "@/components/Partners";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import LogoImAGE  from '../../images/logo.svg'
 // import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
 const DiscoverMoreSlider = dynamic(
   () => import("@/components/DiscoverMoreSlider"),
