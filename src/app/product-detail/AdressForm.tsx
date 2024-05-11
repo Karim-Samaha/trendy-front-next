@@ -6,18 +6,11 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import Calendar from "react-calendar";
-import TimePicker from "react-time-picker";
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import DateTimePicker from "react-datetime-picker";
-import DatePicker from "react-datepicker";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
-import { ar } from "date-fns/locale/ar";
-console.log({ debugar: ar });
-registerLocale("ar", ar);
-setDefaultLocale("ar");
+
 
 import "react-datepicker/dist/react-datepicker.css";
 
