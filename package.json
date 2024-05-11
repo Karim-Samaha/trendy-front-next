@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "^1.19.0",
     "@glidejs/glide": "^3.6.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
@@ -30,6 +31,7 @@
     "install": "^0.13.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.7",
+    "next-image-zoom": "^1.1.7",
     "next-nprogress-bar": "^2.3.9",
     "npm": "^10.7.0",
     "rc-slider": "^10.4.0",
@@ -38,6 +40,8 @@
     "react-dom": "18.2.0",
     "react-hooks-global-state": "^2.1.0",
     "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.2.0",
+    "react-inner-image-zoom": "^3.0.2",
     "react-rating-stars-component": "^2.2.0",
     "react-share": "^5.1.0",
     "react-swipeable": "^7.0.1",
