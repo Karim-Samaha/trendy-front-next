@@ -633,7 +633,7 @@ tamara-widget {
   .ctg-item {
     width: 30%;
     margin: 10px 1.6%;
-    background-color: #F4F1DF;
+    background-color: #f4f1df;
     padding: 40px;
     border-radius: 22px;
     @media (max-width: 968px) {
@@ -650,6 +650,33 @@ tamara-widget {
       font-size: 1.5rem;
       color: rgb(15 23 42 / var(--tw-text-opacity));
       margin-top: 30px !important;
+    }
+  }
+}
+.time-select {
+  display: flex;
+  flex: 1;
+
+}
+.time-select {
+  .time-title {
+    color: #55a8b9;
+    padding: 10px 0;
+  }
+}
+.time-select > div {
+  flex: 1;
+  text-align: center;
+  max-height: 400px;
+  overflow-y: auto;
+  direction: ltr;
+  div:not(.time-title) {
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    border-radius: 10px;
+    padding: 3px 0;
+    &:hover {
+      background-color: silver !important;
     }
   }
 }

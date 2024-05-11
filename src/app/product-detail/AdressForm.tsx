@@ -7,11 +7,19 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import Calendar from "react-calendar";
 import TimePicker from "react-time-picker";
-
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import DateTimePicker from "react-datetime-picker";
+import DatePicker from "react-datepicker";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { ar } from "date-fns/locale/ar";
+console.log({ debugar: ar });
+registerLocale("ar", ar);
+setDefaultLocale("ar");
+
+import "react-datepicker/dist/react-datepicker.css";
 
 import Checkbox from "@/shared/Checkbox/Checkbox";
 interface Props {
@@ -33,8 +41,38 @@ const AdressForm: FC<Props> = ({
   const [time, onTimeChange] = useState<string>("");
 
   const [showClender, setShowClender] = useState<boolean>(false);
-  const [showTime, setShowTime] = useState<boolean>(false);
+  const [showTime_, setShowTime_] = useState<boolean>(false);
 
+  const [time_, setTime] = useState({
+    hour: "00",
+    minute: "00",
+    day: "00",
+  });
+
+  const selectHour = (e: any) => {
+    setTime((prev) => ({ ...prev, hour: e }));
+  };
+  const selectMinute = (e: any) => {
+    setTime((prev) => ({ ...prev, minute: e }));
+  };
+  const selectDay = (type: any) => {
+    setTime((prev) => ({ ...prev, day: type }));
+  };
+  const hours = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const minutes = ["00", "15", "30", "45"];
   const [formValue, setFormValue] = useState({
     type: orderType,
     deliveryDate: "",
@@ -113,13 +151,20 @@ const AdressForm: FC<Props> = ({
     if (isValid) handleAddToCart(formValue);
   };
   useEffect(() => {
-    console.log({ deb: formValue });
-    setFormValue((prev) => ({
-      ...prev,
-      time: time,
-    }));
-    setErrors((prev: any) => ({ ...prev, time: false }));
-  }, [time]);
+    if (
+      (time_.hour && time_.hour !== "00" && time_.day === "am") ||
+      (time_.hour && time_.hour !== "00" && time_.day === "pm")
+    ) {
+      setFormValue((prev) => ({
+        ...prev,
+        time: `${time_.hour || "00"} : ${time_.minute || "00"} : ${
+          time_.day === "am" ? "ص" : time_.day === "pm" ? "م" : "--"
+        }`,
+      }));
+      setErrors((prev: any) => ({ ...prev, time: false }));
+    }
+    console.log(formValue);
+  }, [time_]);
   return (
     <div
       className={`border border-slate-200 dark:border-slate-700 rounded-xl ${
@@ -280,34 +325,101 @@ const AdressForm: FC<Props> = ({
             )}
           </div>
         </div>
+
         <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
           <div className="flex-1">
             <Label className="text-sm">وقت التوصيل ( من 2 الظهر الي 11م)</Label>
-            <div id="time-picker" style={{ width: "500px" }}>
-              <TimePicker
-                style={{ width: "100px" }}
-                onChange={onTimeChange}
-                value={time}
-                locale={"ar-EG"}
-                hourPlaceholder={"الساعة"}
-                minutePlaceholder={"دقيقة"}
-                amPmAriaLabel={"PM"}
-                clockIcon={() => null}
-                renderNumbers={true}
+            <div
+              id="time-picker"
+              style={{ width: "500px", position: "relative" }}
+            >
+              <Input
+                className="mt-1.5"
+                placeholder=""
+                defaultValue={""}
+                type={"text"}
+                value={`${time_.hour || "00"} : ${time_.minute || "00"} : ${
+                  time_.day === "am" ? "ص" : time_.day === "pm" ? "م" : "--"
+                }`}
+                onFocus={() => setShowTime_(true)}
+                onMouseEnter={() => setShowTime_(true)}
+                style={{ border: errors.deliveryDate && "1px solid red" }}
               />
+              {showTime_ && (
+                <div
+                  className="time-select"
+                  style={{
+                    position: "absolute",
+                    backgroundColor: "#fff",
+                    width: "300px",
+                    height: "220px",
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  }}
+                  onMouseLeave={() => setShowTime_(false)}
+                >
+                  <div className="time">
+                    <div className="time-title">الساعة</div>
+                    {hours.map((item) => {
+                      return (
+                        <div
+                          id={item}
+                          onClick={() => selectHour(item)}
+                          key={item}
+                          style={{
+                            backgroundColor:
+                              time_.hour === item ? "silver" : "#fff",
+                          }}
+                        >
+                          {item}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="minute">
+                    <div className="time-title">دقيقة</div>
+                    {minutes.map((item) => {
+                      return (
+                        <div
+                          id={item}
+                          onClick={() => selectMinute(item)}
+                          key={item}
+                          style={{
+                            backgroundColor:
+                              time_.minute === item ? "silver" : "#fff",
+                          }}
+                        >
+                          {item}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="pm-am">
+                    <div className="time-title">ص م</div>
+                    <div
+                      id="am"
+                      style={{
+                        backgroundColor: time_.day === "am" ? "silver" : "#fff",
+                      }}
+                      onClick={() => selectDay("am")}
+                    >
+                      ص
+                    </div>
+                    <div
+                      id="pm"
+                      style={{
+                        backgroundColor: time_.day === "pm" ? "silver" : "#fff",
+                      }}
+                      onClick={() => selectDay("pm")}
+                    >
+                      م
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             {errors.time && (
               <span style={{ color: "red" }}>يجب تحديد وقت التوصيل</span>
             )}
-            {/* <Input
-              className="mt-1.5"
-              placeholder=""
-              defaultValue={""}
-              type={"text"}
-              value={value}
-              onFocus={() => setShowTime(true)}
-              style={{ border: errors.deliveryDate && "1px solid red" }}
-            /> */}
           </div>
         </div>
         {orderType !== "GIFT_ORDER" && (
@@ -316,16 +428,7 @@ const AdressForm: FC<Props> = ({
               <Label className="text-sm">
                 نص البطاقة - اكتب إهدائك هنا ( + 6.00 ر.س )
               </Label>
-              {/* <Input
-                className="mt-1.5"
-                placeholder=""
-                value={formValue.cardText}
-                name="cardText"
-                onChange={(e) => handleChange(e)}
-                defaultValue={""}
-                style={{ height: "100px" }}
-                type={"text"}
-              /> */}
+
               <textarea
                 value={formValue.cardText}
                 onChange={(e) => handleChange(e)}
