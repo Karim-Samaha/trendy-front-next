@@ -8,11 +8,8 @@ import Select from "@/shared/Select/Select";
 import Calendar from "react-calendar";
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
 
 
-import "react-datepicker/dist/react-datepicker.css";
 
 import Checkbox from "@/shared/Checkbox/Checkbox";
 interface Props {
