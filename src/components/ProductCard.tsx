@@ -50,6 +50,7 @@ const ProductCard: FC<ProductCardProps> = ({
     _id,
     featuredImage,
     fav,
+    purchaseCount,
   } = data;
   const [variantActive, setVariantActive] = useState(0);
   const [showModalQuickView, setShowModalQuickView] = useState(false);
@@ -312,6 +313,7 @@ const ProductCard: FC<ProductCardProps> = ({
           <Discount
             price={price}
             priceBefore={priceBefore}
+            purchaseCount={purchaseCount}
             className="absolute top-3 start-2 z-10"
           />
           {/* {sizes ? renderSizeList() : renderGroupButtons()} */}

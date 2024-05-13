@@ -4,10 +4,7 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import LikeButton from "@/components/LikeButton";
 import { StarIcon } from "@heroicons/react/24/solid";
 import BagIcon from "@/components/BagIcon";
-import NcInputNumber from "@/components/NcInputNumber";
 import { PRODUCTS } from "@/data/data";
-
-import IconDiscount from "@/components/IconDiscount";
 import Prices from "@/components/Prices";
 import toast from "react-hot-toast";
 import detail1JPG from "@/images/products/detail1.jpg";
@@ -16,13 +13,11 @@ import detail3JPG from "@/images/products/detail3.jpg";
 import Policy from "../Policy";
 import ReviewItem from "@/components/ReviewItem";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
-import SectionPromo2 from "@/components/SectionPromo2";
 import ModalViewAllReviews from "../ModalViewAllReviews";
 import NotifyAddTocart from "@/components/NotifyAddTocart";
 import Image from "next/image";
 import AccordionInfo from "@/components/AccordionInfo";
 import axios from "axios";
-import ShippingAddress from "@/app/checkout/ShippingAddress";
 import AdressForm from "@/app/product-detail/AdressForm";
 import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 import { useCart } from "react-use-cart";
@@ -62,7 +57,10 @@ const ProductDetailPage: FC<any> = ({ params }) => {
   const [qualitySelected, setQualitySelected] = useState(1);
   const [tammaraReady, setTamarraReady] = useState(false);
   const [tabbyReady, setTabbyReady] = useState(false);
-
+  const [options, setOptions] = useState({
+    color: null,
+    text: null,
+  });
   const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
     useState(false);
   const [formType, setFormType] = useState("");
@@ -160,6 +158,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
       quantity: qty,
       formInfo: { ...formInfo },
       selectedCard: { ...selectedCard },
+      ...options,
     };
     if (items.some((item) => item.id === itemToBeAdded.id)) {
       let item = items.find((item) => item.id === itemToBeAdded.id);
@@ -211,6 +210,7 @@ const ProductDetailPage: FC<any> = ({ params }) => {
               <Discount
                 price={productData.price}
                 priceBefore={productData.priceBefore}
+                purchaseCount={productData.purchaseCount}
               />
 
               <span className="hidden sm:block mx-2.5">·</span>
@@ -276,6 +276,59 @@ const ProductDetailPage: FC<any> = ({ params }) => {
               <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
             </ButtonPrimary>
           )}
+        </div>
+        <div>اختيار لون المنتج :</div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {productData?.colors?.map((item) => {
+            return (
+              <p
+                key={item}
+                style={{
+                  margin: "0 5px",
+                  width: options.color === item ? "40px" : "30px",
+                  height: options.color === item ? "40px" : "30px",
+                  borderRadius: "50%",
+                  backgroundColor: item,
+                  border:
+                    options.color === item
+                      ? "3px solid #55a8b9"
+                      : "1px solid black",
+                  opacity: ".8",
+                  cursor: "pointer",
+                }}
+                onClick={() => setOptions((prev) => ({ ...prev, color: item }))}
+              ></p>
+            );
+          })}
+        </div>
+        <div>نص البطاقة الخاص بالمنتج :</div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            flexDirection: "column",
+          }}
+        >
+          {productData?.textArr?.map((item) => {
+            return (
+              <p
+                key={item}
+                style={{
+                  marginBlockEnd: "8px",
+                  padding: "2px 10px",
+                  border:
+                    options.text === item
+                      ? "3px solid #55a8b9"
+                      : "1px solid silver",
+                  opacity: ".8",
+                  cursor: "pointer",
+                }}
+                onClick={() => setOptions((prev) => ({ ...prev, text: item }))}
+              >
+                {item}
+              </p>
+            );
+          })}
         </div>
         <AdressForm
           orderType={formType}

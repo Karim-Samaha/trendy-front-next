@@ -42,6 +42,7 @@ const AccountSavelists = () => {
             price: item.price,
             description: item.nameAr,
             rates: item.rates,
+            purchaseCount: item.purchaseCount
           }))
         );
       });

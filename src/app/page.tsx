@@ -1,5 +1,5 @@
-export const revalidate = 1; 
-export const fetchCache = 'force-no-store'
+export const revalidate = 1;
+export const fetchCache = "force-no-store";
 
 import React from "react";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
@@ -12,6 +12,7 @@ import axios from "axios";
 import { Metadata } from "next";
 import Partners from "@/components/Partners";
 import dynamic from "next/dynamic";
+import Alert from "@/components/Alert";
 // import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
 const DiscoverMoreSlider = dynamic(
   () => import("@/components/DiscoverMoreSlider"),
@@ -73,6 +74,7 @@ async function getBanners() {
         type: item.type,
         what: item.imageSrc,
         route: item.route,
+        name: item.name,
         image: {
           src: `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.imageSrc}`,
           height: 1001,
@@ -112,6 +114,11 @@ async function PageHome() {
   //   useState(false);
   return (
     <div className="nc-PageHome relative overflow-hidden">
+      <Alert
+        text={
+          banners.find((item: { type: string }) => item.type === "ALERT")?.name
+        }
+      />
       <SectionHero2
         data_={banners.filter(
           (item: { type: string }) => item.type === "HERO_IMG"

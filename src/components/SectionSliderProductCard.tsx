@@ -97,6 +97,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               priceBefore: item.priceBefore,
               description: item.nameAr,
               rates: item.rates,
+              purchaseCount: item.purchaseCount
+
             }))
         );
       });

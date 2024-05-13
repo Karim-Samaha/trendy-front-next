@@ -33,11 +33,13 @@ const CheckoutPage = () => {
   const renderTotalPrice = renderTotalPrice_(items, couponResponse?.precent);
   const { data: session } = useSession();
   const validateCoupon = async () => {
+    const renderTotalPrice = renderTotalPrice_(items, null);
     await _axios
       .post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/coupon-redeem`,
         {
           code: coupon,
+          amount: +renderTotalPrice.fintalTotal,
         },
         //@ts-ignore
         { session }
@@ -328,9 +330,16 @@ const CheckoutPage = () => {
                           تفعيل
                         </button>
                       </div>
-                      {couponResponse?.valid === false && (
+                      {couponResponse?.valid === false &&
+                      !couponResponse?.minimumAmount ? (
                         <span style={{ color: "red" }}>الكود خاطئ</span>
-                      )}
+                      ) : couponResponse?.valid === false &&
+                        couponResponse?.minimumAmount ? (
+                        <span style={{ color: "red" }}>
+                          الحد الادني لاستخدام الكوبون{" "}
+                          {couponResponse?.minimumAmount}رس
+                        </span>
+                      ) : null}
                     </>
                   )}
                 </div>
