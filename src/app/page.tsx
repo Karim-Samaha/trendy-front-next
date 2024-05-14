@@ -23,13 +23,6 @@ const DiscoverMoreReviews = dynamic(
   { ssr: false }
 );
 
-export const metadata: Metadata = {
-  title: "Trendy Store",
-  description: "",
-  icons: {
-    icon: "/trendy.svg",
-  },
-};
 async function getCategories() {
   const res = axios
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`)
@@ -105,13 +98,34 @@ async function getReviews() {
 
   return res;
 }
+async function getHeadTags() {
+  const res = await axios
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tags`)
+    .then((res) => res.data.data)
+    .then((data) => data.find((item: any) => item.type === "HEAD"))
+    .catch((err) => console.log(err));
+  if (!res) {
+    throw new Error("Failed to fetch data");
+  }
+  return res;
+}
+const headTags = { decb: getHeadTags().then((rs) => rs) };
+console.log(headTags);
+export const metadata: any = async () => {
+  return {
+    title: "Trendy Store",
+    description: "",
+    icons: {
+      icon: "/trendy.svg",
+    },
+  };
+};
 
 async function PageHome() {
   const categories = await getCategories();
   const reviews = await getReviews();
   const banners: [{ type: string }] = await getBanners();
-  // const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
-  //   useState(false);
+
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <Alert

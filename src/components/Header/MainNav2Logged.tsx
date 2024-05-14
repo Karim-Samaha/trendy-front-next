@@ -27,7 +27,9 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
     let nameArr: any = data?.user.name.split(" ");
     return (
       <AvatarDropdown
-        logo={nameArr[0][0].toUpperCase() + nameArr[1][0].toUpperCase()}
+        // logo={nameArr[0][0].toUpperCase() + nameArr[1]?.length &&  nameArr[1][0]?.toUpperCase()}
+        logo={""}
+
       />
     );
   };
