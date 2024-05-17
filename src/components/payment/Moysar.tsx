@@ -7,9 +7,11 @@ import { useCart } from "react-use-cart";
 const Moysar = ({
   fintalTotal,
   couponResponse = {},
+  deleviryMethod
 }: {
   fintalTotal: number;
   couponResponse: any;
+  deleviryMethod: string;
 }) => {
   const [init, setInit] = useState(false);
   const { data: session }: any = useSession();
@@ -76,7 +78,7 @@ const Moysar = ({
                    method: "POST",
                    body: JSON.stringify({...payment, token: '${
                      session?.user?.accessToken
-                   }', couponResponse: ${JSON.stringify(couponResponse)}})
+                   }', couponResponse: ${JSON.stringify(couponResponse)}, ShippingType: "${deleviryMethod}"})
                }).then((res) => res).catch(err => console.log(err))
                console.log({saved: saved.status})
                if(saved?.status === 201) {

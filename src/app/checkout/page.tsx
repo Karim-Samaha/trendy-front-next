@@ -28,6 +28,8 @@ const CheckoutPage = () => {
     }, 80);
   };
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [deleviryMethods, setDeleviryMethods] = useState("");
+  const [deleviryMethod, setDeleviryMethod] = useState("Trendy Rose");
   const [coupon, setCoupon] = useState("");
   const [couponResponse, setCouponResponse] = useState({});
   const renderTotalPrice = renderTotalPrice_(items, couponResponse?.precent);
@@ -48,6 +50,19 @@ const CheckoutPage = () => {
       .catch((err) => console.log(err));
   };
   useEffect(() => {
+    _axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tags`)
+      .then((res) => res.data.data)
+      .then((data) => {
+        let deleviry = data.find(
+          (item: { type: string }) => item.type === "delivery"
+        );
+        console.log("!!!!!!!!!!!!!!!!!!");
+        console.log({ deb1: data, deb2: deleviry });
+        setDeleviryMethods(deleviry?.items);
+      })
+      .catch((err) => console.log(err));
+
     // Moyasar
     const styleScript = document.createElement("link");
     styleScript.rel = "stylesheet";
@@ -66,6 +81,7 @@ const CheckoutPage = () => {
     document.head.appendChild(jsScript);
     document.head.appendChild(tabbyScript);
   }, []);
+
   const renderProduct = (item: Product, index: number) => {
     const { image, price, name, featuredImage, _id } = item;
 
@@ -158,6 +174,44 @@ const CheckoutPage = () => {
               handleScrollToEl("ShippingAddress");
             }}
           />
+        </div>
+        <div id="PaymentMethod" className="scroll-mt-24 ">
+          <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+            <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
+              <div className="sm:ml-8">
+                <h2>شركة الشحن</h2>
+                <div className="font-semibold mt-1 text-sm flex-col">
+                  {deleviryMethods.length > 0
+                    ? deleviryMethods?.map((item, i) => {
+                        return (
+                          <div key={i}>
+                            <button
+                              className="deleveryBtn"
+                              onClick={() => setDeleviryMethod(item.name)}
+                              style={{
+                                border:
+                                  deleviryMethod === item.name
+                                    ? "3px solid #55a8b9"
+                                    : "",
+                              }}
+                            >
+                              {" "}
+                              من خلال {`  `}
+                              {item.name}{" "}
+                              {item.name === "Trendy Rose" ? (
+                                <span>داخل الرياض</span>
+                              ) : (
+                                <span>خارج الرياض</span>
+                              )}
+                            </button>
+                          </div>
+                        );
+                      })
+                    : null}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="PaymentMethod" className="scroll-mt-24 ">
           <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
@@ -266,6 +320,7 @@ const CheckoutPage = () => {
             <Moysar
               fintalTotal={+renderTotalPrice.fintalTotal}
               couponResponse={couponResponse}
+              deleviryMethod={deleviryMethod}
             />
           </div>
         )}

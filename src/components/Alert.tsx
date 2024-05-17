@@ -18,7 +18,8 @@ const Alert: FC<AlerProps> = ({ text }) => {
   return (
     <div
       style={{
-        width: "100vw",
+        width: "98vw",
+        margin: "0 auto",
         textAlign: "center",
         backgroundColor: "#5C777D",
         // position: "absolute",
