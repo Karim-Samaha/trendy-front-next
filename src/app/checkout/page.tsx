@@ -40,13 +40,13 @@ const CheckoutPage = () => {
       .post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/coupon-redeem`,
         {
-          code: coupon,
+          code: coupon.trim(),
           amount: +renderTotalPrice.fintalTotal,
         },
         //@ts-ignore
         { session }
       )
-      .then((res) => setCouponResponse({ ...res.data, code: coupon }))
+      .then((res) => setCouponResponse({ ...res.data, code: coupon.trim() }))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
