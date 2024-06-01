@@ -14,7 +14,7 @@ import { getServerAuthSession } from "../server/auth";
 import logo from "@/images/trendy.svg";
 import { useEffect, useState } from "react";
 import _axios from "@/contains/api/axios";
-
+import HitRequest from "@/components/HitRequest";
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -45,7 +45,12 @@ export default function RootLayout({
           head: data.find((item: any) => item.type === "HEAD")?.tag,
           body: data.find((item: any) => item.type === "BODY")?.tag,
         }));
-        setFooter(data.filter((item: {type: string}) => item.type !== 'BODY' ||  item.type !== 'HEAD'))
+        setFooter(
+          data.filter(
+            (item: { type: string }) =>
+              item.type !== "BODY" || item.type !== "HEAD"
+          )
+        );
       })
       .catch((err) => console.log(err));
   }, []);
@@ -84,6 +89,7 @@ export default function RootLayout({
               />
               <SiteHeader />
               {children}
+              <HitRequest />
               <CommonClient />
               <Footer data={footer} />
               <div dangerouslySetInnerHTML={{ __html: tags.body }} />

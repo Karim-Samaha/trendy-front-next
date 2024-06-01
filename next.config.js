@@ -3,6 +3,7 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  reactStrictMode: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

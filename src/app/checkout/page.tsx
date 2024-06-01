@@ -319,7 +319,10 @@ const CheckoutPage = () => {
           >
             <Moysar
               fintalTotal={+renderTotalPrice.fintalTotal}
-              couponResponse={couponResponse}
+              couponResponse={{
+                ...couponResponse,
+                deductedAmount: +renderTotalPrice?.deductedAmount,
+              }}
               deleviryMethod={deleviryMethod}
             />
           </div>
