@@ -9,6 +9,7 @@ import { Disclosure } from "@/app/headlessui";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
 import ProductSection from "../ProductsSection";
+
 async function getCategories() {
   const res = await axios
     .get(
@@ -43,6 +44,29 @@ async function getCategories() {
   }
 
   return res;
+}
+export async function generateMetadata({ params }: any) {
+  let data;
+  if (params.id.length > 1) {
+    data = await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${params?.id[1]}?channel=web`
+      )
+      .then((res) => res.data.data);
+    console.log({ data });
+  } else {
+    data = await axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${params?.id[0]}`)
+      .then((res) => res.data.data);
+  }
+  return {
+    title: data?.name,
+    description: data.description,
+    keywords: data?.name.split(""),
+    icons: {
+      icon: "/trendy.svg",
+    },
+  };
 }
 async function getSubCategoriesProducts(subCtgId) {
   const res = await axios
@@ -118,6 +142,7 @@ async function getCategoryAllProducts(ctgId) {
   }
   return res;
 }
+
 const PageCollection2 = async ({ params }) => {
   const categories = await getCategories();
   const currentCategory = await categories.find(
@@ -136,12 +161,12 @@ const PageCollection2 = async ({ params }) => {
         <div className="space-y-10 lg:space-y-14">
           {/* HEADING */}
           <div className="" style={{ width: "100%", direction: "rtl" }}>
-            <h2
+            <h1
               style={{ marginTop: "-25px" }}
               className="block text-2xl sm:text-3xl lg:text-4xl font-semibold"
             >
               {currentCategory?.name}
-            </h2>
+            </h1>
             <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base">
               {currentCategory?.desc}
             </span>

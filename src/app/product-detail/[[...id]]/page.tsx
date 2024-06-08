@@ -37,12 +37,29 @@ import { FacebookIcon, TwitterIcon, WhatsappIcon, XIcon } from "react-share";
 import ProductPage from "@/components/PAGES/ProductPage";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "My Page Title",
+const getProduct = async (id: string) => {
+  const product = await axios
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+  return product;
 };
 
-const ProductDetailPage: FC<any> = ({ params }) => {
-  return <ProductPage params={params} />;
+export async function generateMetadata({ params }: any) {
+  const product = await getProduct(params.id[0]);
+  return {
+    title: product?.name,
+    description: product.description,
+    keywords: product?.name.split(""),
+    icons: {
+      icon: "/trendy.svg",
+    },
+  };
+}
+
+const ProductDetailPage: FC<any> = async ({ params }) => {
+  const product = await getProduct(params.id[0]);
+  return <ProductPage params={params} product={product} />;
 };
 
 export default ProductDetailPage;

@@ -1,12 +1,10 @@
 import VisaImg from "@/images/partners/visa.svg";
 import MadaImg from "@/images/partners/new-mada-footer.svg";
-import STC from "@/images/partners/stc.svg";
-import Paypal from "@/images/partners/paypal-svgrepo-com.svg";
+import Moyassar from "@/images/partners/moyasar-logo.png";
 import AMEX from "@/images/partners/amex.png";
 import MASTER from "@/images/partners/mastercard-circle.png";
 import TABBY from "@/images/partners/tabby2.svg";
 import TAMARRA from "@/images/partners/tamara2.svg";
-
 import Image from "next/image";
 const Partners = () => {
   return (
@@ -35,13 +33,13 @@ const Partners = () => {
           minHeight: "150px",
         }}
       >
-        <Image width={100} height={50} src={TABBY} />
-        <Image width={100} height={50} src={AMEX} />
-        <Image width={100} height={50} src={MASTER} />
-        <Image width={100} height={50} src={VisaImg} />
-        <Image width={100} height={50} src={MadaImg} />
-        <Image width={100} height={50} src={Paypal} />
-        <Image width={100} height={50} src={TAMARRA} />
+        <Image width={100} height={50} src={TABBY} alt={"TABBY"} />
+        <Image width={100} height={50} src={AMEX} alt={"AMEX"} />
+        <Image width={100} height={50} src={MASTER} alt={"MASTER"} />
+        <Image width={100} height={50} src={VisaImg} alt={"VisaImg"} />
+        <Image width={100} height={50} src={MadaImg} alt={"MadaImg"} />
+        <Image width={100} height={50} src={Moyassar} alt={"Moyassar"} />
+        <Image width={100} height={50} src={TAMARRA} alt={"TAMARRA"} />
         <div className="bg">
           <svg
             width="214"

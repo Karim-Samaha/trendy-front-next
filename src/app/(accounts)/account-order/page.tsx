@@ -9,12 +9,14 @@ import { useSession } from "next-auth/react";
 import { adjustNames } from "@/utils/adjustNames";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ModalAddReview from "@/components/ModalAddReview";
-
+import { useSearchParams } from "next/navigation";
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();
   const [addReview, setAddReview] = useState(false);
   const [itemToBeReviews, setItemToBeReviewd] = useState<string>("");
+  const searchParams = useSearchParams();
+  const isFromCheckout = searchParams?.get("from") === "checkout";
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: 1,
@@ -45,7 +47,7 @@ const AccountOrder = () => {
     index: number
   ) => {
     const { image, name, _id } = order;
-    console.log(order)
+    console.log(order);
     return (
       <div key={index} className="flex py-4 sm:py-7 last:pb-0 first:pt-0">
         <div
@@ -198,12 +200,22 @@ const AccountOrder = () => {
   return (
     <div className="space-y-10 sm:space-y-12 dir-rtl">
       {/* HEADING */}
-      <h2 className="text-2xl sm:text-3xl font-semibold">تاريخ الطلب</h2>
+      {isFromCheckout ? (
+        <h2 className="text-2xl sm:text-3xl font-semibold">
+          تم استلام طلبك بنجاح
+        </h2>
+      ) : (
+        <h2 className="text-2xl sm:text-3xl font-semibold">تاريخ الطلب</h2>
+      )}
       {/* {renderOrder()} */}
-      {data.map((item, i) => renderOrder(item, i))}
-      <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-500/5">
-        <ButtonPrimary onClick={hangleShowMore}>عرض المزيد</ButtonPrimary>
-      </div>
+      {isFromCheckout
+        ? data.slice(0, 1).map((item, i) => renderOrder(item, i))
+        : data.map((item, i) => renderOrder(item, i))}
+      {!isFromCheckout && (
+        <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-500/5">
+          <ButtonPrimary onClick={hangleShowMore}>عرض المزيد</ButtonPrimary>
+        </div>
+      )}
     </div>
   );
 };

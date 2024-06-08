@@ -9,10 +9,10 @@ import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 import SectionPromo2 from "@/components/SectionPromo2";
 import { Product, PRODUCTS, DummyData } from "@/data/data";
 import axios from "axios";
-import { Metadata } from "next";
 import Partners from "@/components/Partners";
 import dynamic from "next/dynamic";
 import Alert from "@/components/Alert";
+import ArticleSlider from "@/components/ArticleSlider";
 // import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
 const DiscoverMoreSlider = dynamic(
   () => import("@/components/DiscoverMoreSlider"),
@@ -47,6 +47,19 @@ async function getCategories() {
             width: 362,
           },
         }));
+    });
+  if (!res) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res;
+}
+async function getArticles() {
+  const res = axios
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/article`)
+    .then((res) => res.data.data)
+    .then((data) => {
+      return data.filter((item: { active: boolean }) => item.active);
     });
   if (!res) {
     throw new Error("Failed to fetch data");
@@ -98,22 +111,11 @@ async function getReviews() {
 
   return res;
 }
-async function getHeadTags() {
-  const res = await axios
-    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tags`)
-    .then((res) => res.data.data)
-    .then((data) => data.find((item: any) => item.type === "HEAD"))
-    .catch((err) => console.log(err));
-  if (!res) {
-    throw new Error("Failed to fetch data");
-  }
-  return res;
-}
-const headTags = { decb: getHeadTags().then((rs) => rs) };
-console.log(headTags);
+
+
 export const metadata: any = async () => {
   return {
-    title: "Trendy Store",
+    title: " الزهرة العصرية - الرئيسية  ",
     description: "",
     icons: {
       icon: "/trendy.svg",
@@ -124,6 +126,7 @@ export const metadata: any = async () => {
 async function PageHome() {
   const categories = await getCategories();
   const reviews = await getReviews();
+  const articles = await getArticles();
   const banners: [{ type: string }] = await getBanners();
 
   return (
@@ -177,6 +180,11 @@ async function PageHome() {
 
         <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
+        </div>
+        <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
+
+        <ArticleSlider data={articles} order={0} selectCard={undefined} _id={""} title={""}/>
+
         </div>
 
         <Partners />

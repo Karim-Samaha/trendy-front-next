@@ -6,6 +6,8 @@ import Input from "@/shared/Input/Input";
 import { useSession } from "next-auth/react";
 import _axios from "@/contains/api/axios";
 
+
+
 const AccountPage = () => {
   const { data: session }: any = useSession();
   const [updated, setUpdated] = useState({});

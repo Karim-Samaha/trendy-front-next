@@ -192,9 +192,15 @@ const PageLogin = () => {
                 <span style={{ color: "red" }}>{error}</span>
               ) : null}
               {otpSent ? (
-                <ButtonPrimary onClick={handleSignIn}>
-                  تسجيل الدخول
-                </ButtonPrimary>
+                <>
+                  <p>
+                    بالضغط على دخول الطلب فأنت توافق على{" "}
+                    <Link href={"/terms"} style={{textDecoration: "underline"}}>سياسة الخصوصية</Link>
+                  </p>
+                  <ButtonPrimary onClick={handleSignIn}>
+                    تسجيل الدخول
+                  </ButtonPrimary>
+                </>
               ) : (
                 <ButtonPrimary onClick={handleOtpRequest}>
                   ارسال رمز التحقق

@@ -7,26 +7,24 @@ import { useCart } from "react-use-cart";
 const Moysar = ({
   fintalTotal,
   couponResponse = {},
-  deleviryMethod
+  deleviryMethod,
+  deleviryInfo,
+  vat,
+  userNote,
+  pointsUsed
 }: {
   fintalTotal: number;
   couponResponse: any;
   deleviryMethod: string;
+  deleviryInfo: any;
+  vat: number;
+  userNote: string;
+  pointsUsed: number
 }) => {
   const [init, setInit] = useState(false);
   const { data: session }: any = useSession();
   const { items } = useCart();
-  const savePayment: any = async (payloda: any) => {
-    if (!session) return;
-    _axios
-      .post(
-        `/create-checkout-session`,
-        { ...payloda },
-        //@ts-ignore
-        { session }
-      )
-      .then((res) => res);
-  };
+
 
   useEffect(() => {
     // if (!init) {
@@ -78,7 +76,13 @@ const Moysar = ({
                    method: "POST",
                    body: JSON.stringify({...payment, token: '${
                      session?.user?.accessToken
-                   }', couponResponse: ${JSON.stringify(couponResponse)}, ShippingType: "${deleviryMethod}"})
+                   }', couponResponse: ${JSON.stringify(couponResponse)},
+                    ShippingType: "${deleviryMethod}",
+                    ShippingInfo: ${JSON.stringify(deleviryInfo)},
+                    vat: ${vat},
+                    userNote: "${userNote}",
+                    pointsUsed: ${pointsUsed},
+                  })
                }).then((res) => res).catch(err => console.log(err))
                console.log({saved: saved.status})
                if(saved?.status === 201) {

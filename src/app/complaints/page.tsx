@@ -4,6 +4,15 @@ import SectionFounder from "./SectionFounder";
 import SectionStatistic from "./SectionStatistic";
 import SectionHero from "./SectionHero";
 
+export const metadata: any = async () => {
+  return {
+    title: "الزهرة العصرية - يسعدنا تقديم اقتراحاتك",
+    description: "",
+    icons: {
+      icon: "/trendy.svg",
+    },
+  };
+};
 const PageAbout = ({}) => {
   return (
     <div className={`nc-PageAbout overflow-hidden relative`}>

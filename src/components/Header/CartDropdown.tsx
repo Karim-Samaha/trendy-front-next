@@ -175,7 +175,7 @@ export default function CartDropdown() {
                         className="flex-1 border border-slate-200 dark:border-slate-700"
                         onClick={close}
                       >
-                        عربة التسوق
+                        العربة
                       </ButtonSecondary>
                       <ButtonPrimary
                         href={
@@ -188,7 +188,7 @@ export default function CartDropdown() {
                         onClick={close}
                         className="flex-1"
                       >
-                        اتمام عمليه الدفع
+                        اتمام الدفع
                       </ButtonPrimary>
                     </div>
                   </div>

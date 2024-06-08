@@ -237,7 +237,7 @@ const ProductCard: FC<ProductCardProps> = ({
           >
             <BagIcon className="w-3.5 h-3.5 mb-0.5" />
 
-            <Link href={`/product-detail/${data?._id}`}>
+            <Link href={`/product-detail/${data?._id}/${data?._name}`}>
               {" "}
               <span className="ms-1">اضف الي السلة</span>
             </Link>
@@ -284,12 +284,12 @@ const ProductCard: FC<ProductCardProps> = ({
         className={`nc-ProductCard relative flex flex-col bg-transparent ${className}`}
       >
         <Link
-          href={`/product-detail/${_id}`}
+          href={`/product-detail/${_id}/${name}`}
           className="absolute inset-0"
         ></Link>
 
         <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
-          <Link href={`/product-detail/${_id}`} className="block">
+          <Link href={`/product-detail/${_id}/${name}`} className="block">
             <NcImage
               containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
               src={
@@ -313,7 +313,7 @@ const ProductCard: FC<ProductCardProps> = ({
           <Discount
             price={price}
             priceBefore={priceBefore}
-            purchaseCount={purchaseCount}
+            purchaseCount={0}
             className="absolute top-3 start-2 z-10"
           />
           {/* {sizes ? renderSizeList() : renderGroupButtons()} */}
@@ -336,8 +336,8 @@ const ProductCard: FC<ProductCardProps> = ({
             <Link
               href={
                 data?.rates > 0
-                  ? `/product-detail/${_id}?rate=true`
-                  : `/product-detail/${_id}`
+                  ? `/product-detail/${_id}/${name}?rate=true`
+                  : `/product-detail/${_id}/${name}`
               }
               style={{ zIndex: "9999" }}
             >
@@ -363,7 +363,7 @@ const ProductCard: FC<ProductCardProps> = ({
             >
               <BagIcon className="w-3.5 h-3.5 mb-0.5" />
 
-              <Link href={`/product-detail/${data?._id}`}>
+              <Link href={`/product-detail/${data?._id}/${data?.name}`}>
                 {" "}
                 <span className="ms-1">اضف الي السلة</span>
               </Link>

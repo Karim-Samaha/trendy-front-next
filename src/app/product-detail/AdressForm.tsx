@@ -9,8 +9,6 @@ import Calendar from "react-calendar";
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 
-
-
 import Checkbox from "@/shared/Checkbox/Checkbox";
 interface Props {
   isActive: boolean;
@@ -432,7 +430,7 @@ const AdressForm: FC<Props> = ({
         <Checkbox
           className="!text-sm address-box"
           name="uudai"
-          label="لا اريد نحديد العنوان (فريق الدعم سيتواصل مع المستلم) "
+          label="لا اعرف عنوان المستلم (فريق الدعم سيتواصل مع المستلم) "
           onChange={(e) => setSelectAdress(!e)}
         />
         {selectAdress && (
@@ -441,12 +439,13 @@ const AdressForm: FC<Props> = ({
               <Label className="text-sm">العنوان</Label>
               <Input
                 className="mt-1.5"
-                placeholder=""
+                placeholder="يفضل كتابة العنوان المختصر XXXX0000"
                 name="address"
                 onChange={(e) => handleChange(e)}
                 value={formValue.address}
                 type={"text"}
                 style={{ border: errors.address && "1px solid red" }}
+                
               />
               {errors.address && (
                 <span style={{ color: "red" }}>
@@ -493,21 +492,21 @@ const AdressForm: FC<Props> = ({
                   className="flex-2 flex-shrink-0 "
                   onClick={setShopingCards}
                 >
-                  تصميم البطاقه
+                  اختر كروت اهداء
                 </ButtonSecondary>
               ) : formValue.giftAdd === "2" ? (
                 <ButtonSecondary
                   className="flex-2 flex-shrink-0 "
                   onClick={setShopingCards}
                 >
-                  اختيار الشيكولاتة
+                  اختر شيكولاته بلجيكية
                 </ButtonSecondary>
               ) : formValue.giftAdd === "3" ? (
                 <ButtonSecondary
                   className="flex-2 flex-shrink-0 "
                   onClick={setShopingCards}
                 >
-                  اختيار البالونات
+                  اختر البالونات
                 </ButtonSecondary>
               ) : null}
             </div>
@@ -542,14 +541,40 @@ const AdressForm: FC<Props> = ({
             </div>
           </>
         ) : (
-          <div className="flex flex-col sm:flex-row pt-6">
-            <ButtonPrimary
-              className="flex-1 flex-shrink-0"
-              onClick={() => validateAndAddToCart(formValue)}
-            >
-              اضف الي السلة
-            </ButtonPrimary>
-          </div>
+          <>
+            <div className="flex flex-col sm:flex-row pt-6 gift-btn">
+              {formValue.giftAdd === "1" ? (
+                <ButtonSecondary
+                  className="flex-2 flex-shrink-0 "
+                  onClick={setShopingCards}
+                >
+                  اختر كروت اهداء
+                </ButtonSecondary>
+              ) : formValue.giftAdd === "2" ? (
+                <ButtonSecondary
+                  className="flex-2 flex-shrink-0 "
+                  onClick={setShopingCards}
+                >
+                  اختر شيكولاته بلجيكية
+                </ButtonSecondary>
+              ) : formValue.giftAdd === "3" ? (
+                <ButtonSecondary
+                  className="flex-2 flex-shrink-0 "
+                  onClick={setShopingCards}
+                >
+                  اختر البالونات
+                </ButtonSecondary>
+              ) : null}
+            </div>
+            <div className="flex flex-col sm:flex-row pt-6">
+              <ButtonPrimary
+                className="flex-1 flex-shrink-0"
+                onClick={() => validateAndAddToCart(formValue)}
+              >
+                اضف الي السلة
+              </ButtonPrimary>
+            </div>
+          </>
         )}
       </div>
     </div>

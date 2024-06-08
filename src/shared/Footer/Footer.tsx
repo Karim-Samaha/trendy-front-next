@@ -68,15 +68,15 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
         <div className="footer-container">
           <div className="section-one">
             {/* <Logo /> */}
-            <Image
+            {/* <Image
               width={170}
               height={70}
               src={logo}
               style={{ margin: "25px 0" }}
-            />
-            <h3>عن الزهرة العصرية</h3>
+            /> */}
+            <h3 style={{ margin: "55px 0 25PX 0" }}>عن الزهرة العصرية</h3>
             <p>{data.find((item) => item.type === "FOOTER")?.tag}</p>
-            <div className="linkContainer">
+            <div className="linkContainer" >
               <Link href="/">
                 <Image width={150} height={100} src={AppleImg} />
               </Link>

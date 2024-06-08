@@ -43,7 +43,7 @@ const CheckoutCheck = () => {
   useEffect(() => {
     if (status?.data?.status === "paid") {
       emptyCart();
-      setTimeout(() => router.replace(`/account-order`), 3000);
+      setTimeout(() => router.replace(`/account-order?from=checkout`), 3000);
     }
   }, [status]);
   return (

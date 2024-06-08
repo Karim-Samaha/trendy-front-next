@@ -1,9 +1,16 @@
-import rightImg from "@/images/hero-right1.png";
 import React, { FC } from "react";
-import SectionFounder from "./SectionFounder";
-import SectionStatistic from "./SectionStatistic";
 import SectionHero from "./SectionHero";
 
+
+export const metadata: any = async () => {
+  return {
+    title: " الزهرة العصرية - سياسة الاستبدال و الاسترجاع  ",
+    description: "",
+    icons: {
+      icon: "/trendy.svg",
+    },
+  };
+};
 const PageAbout = ({}) => {
   return (
     <div className={`nc-PageAbout overflow-hidden relative`}>

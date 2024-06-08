@@ -65,7 +65,7 @@ const AccordionInfo: FC<Props> = ({
   let productData = data;
   productData[0] = {
     name: "عن المنتج:",
-    content: desc,
+    content: desc ? desc.trim() : "",
   };
   return (
     <div className="w-full rounded-2xl space-y-2.5">
@@ -84,7 +84,7 @@ const AccordionInfo: FC<Props> = ({
                   )}
                 </Disclosure.Button>
                 <Disclosure.Panel
-                  className={`${panelClassName} info`}
+                  className={`${panelClassName} info description-product`}
                   as="div"
                   dangerouslySetInnerHTML={{ __html: item.content }}
                 ></Disclosure.Panel>

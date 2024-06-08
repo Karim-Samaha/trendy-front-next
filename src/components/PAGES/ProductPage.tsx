@@ -29,17 +29,25 @@ import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
+  FacebookMessengerShareButton,
 } from "react-share";
-import { FacebookIcon, TwitterIcon, WhatsappIcon, XIcon } from "react-share";
+import { StickyShareButtons, InlineFollowButtons } from "sharethis-reactjs";
 
+import {
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  XIcon,
+  FacebookMessengerIcon,
+} from "react-share";
 
-const ProductPage: FC<any> = ({ params }) => {
+const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
   const { addItem, updateItemQuantity, items, setItems } = useCart();
   //
 
   const [qty, setQty] = useState(1);
-  const [productData, setProductData] = useState<any>([]);
+  const [productData, setProductData] = useState<any>(product);
   const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
@@ -59,7 +67,6 @@ const ProductPage: FC<any> = ({ params }) => {
   const [formType, setFormType] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const isRateModalQuery = searchParams.get("rate");
 
   useEffect(() => {
@@ -76,12 +83,12 @@ const ProductPage: FC<any> = ({ params }) => {
 
   useEffect(() => {
     Promise.all([
+      // axios
+      //   .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${params.id[0]}`)
+      //   .then((res) => setProductData({ ...res.data }))
+      //   .catch((err) => console.log(err)),
       axios
-        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${params.id}`)
-        .then((res) => setProductData({ ...res.data }))
-        .catch((err) => console.log(err)),
-      axios
-        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${params.id}`)
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${params.id[0]}`)
         .then((res) => setReviews(res.data.data))
         .catch((err) => console.log(err)),
     ]);
@@ -172,9 +179,9 @@ const ProductPage: FC<any> = ({ params }) => {
       <div className="space-y-7 2xl:space-y-8">
         {/* ---------- 1 HEADING ----------  */}
         <div>
-          <h2 className="text-2xl sm:text-3xl font-semibold">
+          <h1 className="text-2xl sm:text-3xl font-semibold">
             {productData.name}
-          </h2>
+          </h1>
 
           <div className="flex items-center mt-5 space-x-4 sm:space-x-5">
             {/* <div className="flex text-xl font-semibold">$112.00</div> */}
@@ -242,34 +249,8 @@ const ProductPage: FC<any> = ({ params }) => {
         {/* <div className="">{renderSizeList()}</div> */}
 
         {/*  ---------- 4  QTY AND ADD TO CART BUTTON */}
-        <div className="flex space-x-3.5 product-controls">
-          <div className="flex items-center justify-center bg-slate-100/70 dark:bg-slate-800/70 px-2 py-3 sm:p-3.5 rounded-full">
-            <ProductNcNumber
-              defaultValue={qualitySelected}
-              onChange={setQualitySelected}
-              qty={qty}
-              setQty={setQty}
-            />
-          </div>
-          {formType !== "NORMAL_ORDER" && (
-            <ButtonPrimary
-              className="flex-1 flex-shrink-0"
-              onClick={() => setFormType("NORMAL_ORDER")}
-            >
-              <span className="ml-3">اضف الي السله</span>
-              <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
-            </ButtonPrimary>
-          )}
-          {formType !== "GIFT_ORDER" && (
-            <ButtonPrimary
-              className="flex-1 flex-shrink-0"
-              onClick={() => setFormType("GIFT_ORDER")}
-            >
-              <span className="ml-3">شراء كهديه</span>
-              <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
-            </ButtonPrimary>
-          )}
-        </div>
+        <AccordionInfo allOpen={true} desc={productData.description} />
+
         {productData?.colors?.length > 0 ? (
           <>
             <div>اختيار لون المنتج :</div>
@@ -335,6 +316,36 @@ const ProductPage: FC<any> = ({ params }) => {
             </div>
           </>
         ) : null}
+
+        <div className="flex space-x-3.5 product-controls">
+          <div className="flex items-center justify-center bg-slate-100/70 dark:bg-slate-800/70 px-2 py-3 sm:p-3.5 rounded-full">
+            <ProductNcNumber
+              defaultValue={qualitySelected}
+              onChange={setQualitySelected}
+              qty={qty}
+              setQty={setQty}
+            />
+          </div>
+          {formType !== "NORMAL_ORDER" && (
+            <ButtonPrimary
+              className="flex-1 flex-shrink-0"
+              onClick={() => setFormType("NORMAL_ORDER")}
+            >
+              <span className="ml-3">اضف الي السله</span>
+              <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
+            </ButtonPrimary>
+          )}
+          {formType !== "GIFT_ORDER" && (
+            <ButtonPrimary
+              className="flex-1 flex-shrink-0"
+              onClick={() => setFormType("GIFT_ORDER")}
+            >
+              <span className="ml-3">شراء كهديه</span>
+              <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
+            </ButtonPrimary>
+          )}
+        </div>
+
         <AdressForm
           orderType={formType}
           isActive={formType === "NORMAL_ORDER" || formType === "GIFT_ORDER"}
@@ -357,7 +368,6 @@ const ProductPage: FC<any> = ({ params }) => {
         {/*  */}
 
         {/* ---------- 5 ----------  */}
-        <AccordionInfo allOpen={true} desc={productData.description} />
 
         {/* ---------- 6 ----------  */}
         <div className="hidden xl:block">
@@ -420,69 +430,103 @@ const ProductPage: FC<any> = ({ params }) => {
       </div>
     );
   };
-  
 
   return (
     <>
-    <Head>
-    <title>ssssssssssssssssssssssss</title>
-    </Head>
-    <div className={`nc-ProductDetailPage `}>
-      {/* MAIn */}
-      <main className="container mt-5 lg:mt-11">
-        <div className="lg:flex justify-between" style={{ direction: "rtl" }}>
-          {/* CONTENT */}
-          <div className="w-full lg:w-[35%] ">
-            {/* HEADING */}
-            <div className="relative">
-              <div className="">
-                <Image
-                  width={500}
-                  height={600}
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`}
-                  className=" rounded-2xl object-cover product-img"
-                  alt="product detail 1"
-                />
-                <div
-                  style={{
-                    // border: "1px solid red",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    flexWrap: "wrap",
-                    marginTop: "10px",
-                  }}
-                >
-                  <p style={{ fontWeight: "bold" }}>شارك المنتج عبر:</p>
-                  <div style={{ display: "flex" }}>
-                    <FacebookShareButton
-                      style={{ margin: "0 10px" }}
-                      url={window && window.location.href}
-                    >
-                      <FacebookIcon borderRadius={5} />
-                    </FacebookShareButton>
-                    <TwitterShareButton
-                      style={{ margin: "0 10px" }}
-                      url={window && window.location.href}
-                    >
-                      <TwitterIcon borderRadius={5} />
-                    </TwitterShareButton>
-                    {/* <Test /> */}
-                    <WhatsappShareButton
-                      style={{ margin: "0 10px" }}
-                      url={window && window.location.href}
-                    >
-                      <WhatsappIcon borderRadius={5} />
-                    </WhatsappShareButton>
+      <Head>
+        <title>ssssssssssssssssssssssss</title>
+      </Head>
+      <div className={`nc-ProductDetailPage `}>
+        {/* MAIn */}
+        <main className="container mt-5 lg:mt-11">
+          <div className="lg:flex justify-between" style={{ direction: "rtl" }}>
+            {/* CONTENT */}
+            <div className="w-full lg:w-[35%] ">
+              {/* HEADING */}
+              <div className="relative">
+                <div className="">
+                  <Image
+                    width={500}
+                    height={600}
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`}
+                    className=" rounded-2xl object-cover product-img"
+                    alt="product detail 1"
+                  />
+                  <div
+                    style={{
+                      // border: "1px solid red",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <p style={{ fontWeight: "bold" }}>شارك المنتج عبر:</p>
+                    <div style={{ display: "flex" }}>
+                      {/* <InlineFollowButtons
+                        config={{
+                          alignment: "right", // alignment of buttons (left, right)
+                          color: "social", // set the color of buttons (social, white)
+                          enabled: true, // show/hide buttons (true, false)
+                          font_size: 16, // font size for the buttons
+                          hide_desktop: false,// hide buttons on desktop (true, false)
+                          labels: "counts", // button labels (cta, counts, null)
+                          language: "en", // which language to use (see LANGUAGES)
+                          min_count: 0, // hide react counts less than min_count (INTEGER)
+                          networks: [
+                            // which networks to include (see SHARING NETWORKS)
+                            "facebook",
+                            "tiktok",
+                            'instagram',
+                            "twitter",
+                          ],
+
+                          // OPTIONAL PARAMETERS
+                          url: "https://www.sharethis.com", // (defaults to current url)
+                          image: "https://bit.ly/2CMhCMC", // (defaults to og:image or twitter:image)
+                          description: "custom text", // (defaults to og:description or twitter:description)
+                          // title: "custom title", // (defaults to og:title or twitter:title)
+                          // message: "custom email text", // (only for email sharing)
+                          // subject: "custom email subject", // (only for email sharing)
+                          // username: "custom twitter handle", // (only for twitter sharing)
+                        }}
+                      /> */}
+                      <FacebookMessengerShareButton
+                        style={{ margin: "0 5px" }}
+                        url={window && window.location.href}
+                      >
+                        <FacebookMessengerIcon borderRadius={5} />
+                      </FacebookMessengerShareButton>
+
+                      <FacebookShareButton
+                        style={{ margin: "0 5px" }}
+                        url={window && window.location.href}
+                      >
+                        <FacebookIcon borderRadius={5} />
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        style={{ margin: "0 5px" }}
+                        url={window && window.location.href}
+                      >
+                        <TwitterIcon borderRadius={5} />
+                      </TwitterShareButton>
+                      {/* <Test /> */}
+                      <WhatsappShareButton
+                        style={{ margin: "0 5px" }}
+                        url={window && window.location.href}
+                      >
+                        <WhatsappIcon borderRadius={5} />
+                      </WhatsappShareButton>
+                    </div>
                   </div>
                 </div>
+                {/* {renderStatus()} */}
+                {/* META FAVORITES */}
+                {/* <LikeButton className="absolute right-3 top-3 " /> */}
               </div>
-              {/* {renderStatus()} */}
-              {/* META FAVORITES */}
-              {/* <LikeButton className="absolute right-3 top-3 " /> */}
-            </div>
-            <div className="grid grid-cols-2 gap-3 mt-3 sm:gap-6 sm:mt-6 xl:gap-8 xl:mt-8">
-              {/* {[LIST_IMAGES_DEMO[1], LIST_IMAGES_DEMO[2]].map((item, index) => {
+              <div className="grid grid-cols-2 gap-3 mt-3 sm:gap-6 sm:mt-6 xl:gap-8 xl:mt-8">
+                {/* {[LIST_IMAGES_DEMO[1], LIST_IMAGES_DEMO[2]].map((item, index) => {
                 return (
                   <div
                     key={index}
@@ -498,54 +542,54 @@ const ProductPage: FC<any> = ({ params }) => {
                   </div>
                 );
               })} */}
+              </div>
+            </div>
+
+            {/* SIDEBAR */}
+            <div className="w-full lg:w-[60%] pt-10 lg:pt-0 lg:pl-7 xl:pl-9 2xl:pl-10">
+              {renderSectionContent()}
             </div>
           </div>
 
-          {/* SIDEBAR */}
-          <div className="w-full lg:w-[60%] pt-10 lg:pt-0 lg:pl-7 xl:pl-9 2xl:pl-10">
-            {renderSectionContent()}
+          {/* DETAIL AND REVIEW */}
+          <div className="mt-12 sm:mt-16 space-y-10 sm:space-y-16">
+            <div className="block xl:hidden">
+              <Policy />
+            </div>
+
+            {/* {renderDetailSection()} */}
+
+            <hr className="border-slate-200 dark:border-slate-700" />
+
+            {renderReviews()}
+
+            <hr className="border-slate-200 dark:border-slate-700" />
+
+            {/* OTHER SECTION */}
+            <SectionSliderProductCard
+              heading="Customers also purchased"
+              subHeading=""
+              headingFontClassName="text-2xl font-semibold"
+              headingClassName="mb-10 text-neutral-900 dark:text-neutral-50"
+              order={2}
+              selectCard={undefined}
+              title={"منتجات مشابهة"}
+            />
+
+            {/* SECTION */}
+            <div className="pb-20 xl:pb-28 lg:pt-14">
+              {/* <SectionPromo2 /> */}
+            </div>
           </div>
-        </div>
+        </main>
 
-        {/* DETAIL AND REVIEW */}
-        <div className="mt-12 sm:mt-16 space-y-10 sm:space-y-16">
-          <div className="block xl:hidden">
-            <Policy />
-          </div>
-
-          {/* {renderDetailSection()} */}
-
-          <hr className="border-slate-200 dark:border-slate-700" />
-
-          {renderReviews()}
-
-          <hr className="border-slate-200 dark:border-slate-700" />
-
-          {/* OTHER SECTION */}
-          <SectionSliderProductCard
-            heading="Customers also purchased"
-            subHeading=""
-            headingFontClassName="text-2xl font-semibold"
-            headingClassName="mb-10 text-neutral-900 dark:text-neutral-50"
-            order={2}
-            selectCard={undefined}
-            title={"منتجات مشابهة"}
-          />
-
-          {/* SECTION */}
-          <div className="pb-20 xl:pb-28 lg:pt-14">
-            {/* <SectionPromo2 /> */}
-          </div>
-        </div>
-      </main>
-
-      {/* MODAL VIEW ALL REVIEW */}
-      <ModalViewAllReviews
-        show={isOpenModalViewAllReviews}
-        reviews={reviews}
-        onCloseModalViewAllReviews={() => setIsOpenModalViewAllReviews(false)}
-      />
-    </div>
+        {/* MODAL VIEW ALL REVIEW */}
+        <ModalViewAllReviews
+          show={isOpenModalViewAllReviews}
+          reviews={reviews}
+          onCloseModalViewAllReviews={() => setIsOpenModalViewAllReviews(false)}
+        />
+      </div>
     </>
   );
 };

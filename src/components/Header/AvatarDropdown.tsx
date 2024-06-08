@@ -9,6 +9,7 @@ import Link from "next/link";
 import AvatarImg from "@/images/avatars/defaul-avatar.jpg";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import usePoints from "@/app/checkout/usePoints";
 
 interface Props {
   logo: string;
@@ -16,6 +17,7 @@ interface Props {
 
 const AvatarDropdown: FC<Props> = ({ logo }) => {
   const { data: session } = useSession();
+  const { points } = usePoints();
   return (
     <div className="AvatarDropdown ">
       <Popover className="relative">
@@ -113,7 +115,14 @@ const AvatarDropdown: FC<Props> = ({ logo }) => {
                         <p className="text-sm font-medium ">{"حسابي"}</p>
                       </div>
                     </Link>
+                    <div className="ml-4 ">
+                      <p className="text-sm font-medium ">
+                        {" "}
+                        {"نقاطي"}
+                        <span style={{fontWeight:"bold", marginInlineStart: "10px"}}>{points}{` `}نقطة</span>
 
+                      </p>
+                    </div>
                     {/* ------------------ 2 --------------------- */}
                     <Link
                       href={"/account-order"}

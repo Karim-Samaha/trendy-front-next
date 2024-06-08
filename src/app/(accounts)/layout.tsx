@@ -1,5 +1,3 @@
-"use client";
-
 import { Route } from "@/routers/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,34 +24,52 @@ const pages: {
     name: "بينات حسابي",
     link: "/account",
   },
-  // {
-  //   name: "Change password",
-  //   link: "/account-password",
-  // },
-  // {
-  //   name: "Change Billing",
-  //   link: "/account-billing",
-  // },
 ];
+import { headers } from "next/headers";
+
+// export const metadata: any = async () => {
+//   const heads = headers()
+//   const pathname = heads.get('next-url')
+
+//   return {
+//     title: " الزهرة العصرية - سياسة الاستبدال و الاسترجاع  ",
+//     description: "",
+//     icons: {
+//       icon: "/trendy.svg",
+//     },
+//   };
+// };
+export async function generateMetadata({ params }: any) {
+  const heads = headers();
+  const pathname = heads.get("next-url");
+  let headElem = {
+    title: " الزهرة العصرية - حسابي  ",
+    description: "",
+    icons: {
+      icon: "/trendy.svg",
+    },
+  };
+  if (pathname === "/account") {
+    headElem.title = " الزهرة العصرية - حسابي  ";
+    headElem.description = "حسابي";
+  } else if (pathname === "/account-savelists") {
+    headElem.title = " الزهرة العصرية - المنتجات المفضلة ";
+    headElem.description = "المنتجات المفضلة";
+  } else if (pathname === "/account-order") {
+    headElem.title = " الزهرة العصرية - تاريخ الطلب ";
+    headElem.description = "تاريخ الطلب";
+  }
+  return headElem;
+}
 
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
-  const pathname = usePathname();
-
+  const heads = headers();
+  const pathname = heads.get("next-url");
   return (
     <div className="nc-AccountCommonLayout container">
       <div className="mt-14 sm:mt-20">
         <div className="max-w-4xl mx-auto">
-          {/* <div className="max-w-2xl">
-            <h2 className="text-3xl xl:text-4xl font-semibold">Account</h2>
-            <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-base sm:text-lg">
-              <span className="text-slate-900 dark:text-slate-200 font-semibold">
-                Enrico Cole,
-              </span>{" "}
-              ciseco@gmail.com · Los Angeles, CA
-            </span>
-          </div> */}
           <hr className="mt-10 border-slate-200 dark:border-slate-700"></hr>
-
           <div className="flex space-x-8 md:space-x-14 overflow-x-auto hiddenScrollbar dir-rtl">
             {pages.map((item, index) => {
               return (
