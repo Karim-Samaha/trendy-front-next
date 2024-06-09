@@ -7,12 +7,13 @@ import ProductQuickView from "./ProductQuickView";
 import ProductQuickView2 from "./ProductQuickView2";
 import { usePathname } from "next/navigation";
 import SectionSliderProductCard from "@/components/SectionSliderProductCard";
-
+import ProductAddsSliderProductCard from "./ProductAddsSliderProductCard";
 export interface ModalQuickViewProps {
   show: boolean;
   onClose: () => void;
   data: any;
   selectCard: any;
+  type: string;
 }
 
 const ModalCards: FC<ModalQuickViewProps> = ({
@@ -20,6 +21,7 @@ const ModalCards: FC<ModalQuickViewProps> = ({
   onClose,
   data,
   selectCard,
+  type,
 }) => {
   const pathname = usePathname();
 
@@ -62,7 +64,22 @@ const ModalCards: FC<ModalQuickViewProps> = ({
                 </span>
 
                 <div className="flex-1 overflow-y-auto rounded-xl hiddenScrollbar dir-rtl">
-                  <SectionSliderProductCard modal={true} order={0} selectCard={selectCard}/>
+                  <ProductAddsSliderProductCard
+                    modal={true}
+                    order={0}
+                    selectCard={selectCard}
+                    _id={""}
+                    title={""}
+                    ctgName={
+                      type === "1"
+                        ? "كروت اهداء"
+                        : type === "2"
+                        ? "شيكولاته بلجيكيه"
+                        : type === "3"
+                        ? "بالونات"
+                        : ""
+                    }
+                  />
                 </div>
               </div>
             </div>

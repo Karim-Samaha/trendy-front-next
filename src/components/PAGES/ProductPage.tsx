@@ -51,10 +51,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
-  const [shopingCards, setShopingCards] = useState(false);
-  const [selectedCard, setSelectedCard] = useState<{ _id: string } | null>(
-    null
-  );
+
   const [qualitySelected, setQualitySelected] = useState(1);
   const [tammaraReady, setTamarraReady] = useState(false);
   const [tabbyReady, setTabbyReady] = useState(false);
@@ -75,11 +72,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
     }
   }, []);
   //
-  useEffect(() => {
-    if (selectedCard?._id) {
-      setShopingCards(false);
-    }
-  }, [selectedCard]);
+
 
   useEffect(() => {
     Promise.all([
@@ -148,9 +141,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
       { position: "top-right", id: "nc-product-notify", duration: 3000 }
     );
   };
-  const handleSelectedGiftCard = (item: any) => {
-    setSelectedCard(item);
-  };
+
   const handleAddToCart = (formInfo: Object) => {
     let itemToBeAdded: any = {
       ...productData,
@@ -350,19 +341,9 @@ const ProductPage: FC<any> = ({ params, product }) => {
           orderType={formType}
           isActive={formType === "NORMAL_ORDER" || formType === "GIFT_ORDER"}
           handleAddToCart={handleAddToCart}
-          selectedCard={selectedCard}
-          setShopingCards={() => {
-            setShopingCards(true);
-            // setSelectedCard(null);
-          }}
+     
         />
-        <ModalCards
-          show={shopingCards}
-          onClose={() => setShopingCards(false)}
-          selectCard={handleSelectedGiftCard}
-          data={undefined}
-        />
-
+    
         {/*  */}
         <hr className=" 2xl:!my-10 border-slate-200 dark:border-slate-700"></hr>
         {/*  */}

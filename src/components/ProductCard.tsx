@@ -292,11 +292,7 @@ const ProductCard: FC<ProductCardProps> = ({
           <Link href={`/product-detail/${_id}/${name}`} className="block">
             <NcImage
               containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
-              src={
-                modal
-                  ? `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/card.jpg`
-                  : featuredImage
-              }
+              src={featuredImage}
               className="object-cover w-full h-full drop-shadow-xl"
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
