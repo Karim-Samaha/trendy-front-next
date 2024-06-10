@@ -11,7 +11,7 @@ const Moysar = ({
   deleviryInfo,
   vat,
   userNote,
-  pointsUsed
+  pointsUsed,
 }: {
   fintalTotal: number;
   couponResponse: any;
@@ -19,29 +19,13 @@ const Moysar = ({
   deleviryInfo: any;
   vat: number;
   userNote: string;
-  pointsUsed: number
+  pointsUsed: number;
 }) => {
   const [init, setInit] = useState(false);
   const { data: session }: any = useSession();
   const { items } = useCart();
 
-
   useEffect(() => {
-    // if (!init) {
-    //   const styleScript = document.createElement("link");
-    //   styleScript.rel = "stylesheet";
-    //   styleScript.href = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.css";
-    //   const jsScript = document.createElement("script");
-    //   jsScript.src = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.js";
-    //   const jsPayScript = document.createElement("script");
-    //   jsPayScript.type = "application/javascript";
-    //   jsPayScript.className = "pay";
-    //   document.head.appendChild(styleScript);
-    //   document.head.appendChild(jsScript);
-    //   setInit(true);
-    //   console.log("first")
-    // }
-    // if (init) {
     const script = document.createElement("script");
     script.async = true;
     script.innerHTML = `  
