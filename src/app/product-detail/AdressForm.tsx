@@ -15,18 +15,18 @@ interface Props {
   isActive: boolean;
   orderType: string;
   handleAddToCart: any;
+  setSelectedCard: any;
+  selectedCard: string | null;
 }
 
-const AdressForm: FC<Props> = ({ isActive, orderType, handleAddToCart }) => {
+const AdressForm: FC<Props> = ({ isActive, orderType, handleAddToCart, selectedCard, setSelectedCard }) => {
   const [value, onChange] = useState<string>("");
   const [time, onTimeChange] = useState<string>("");
 
   const [showClender, setShowClender] = useState<boolean>(false);
   const [showTime_, setShowTime_] = useState<boolean>(false);
   const [shopingCards, setShopingCards] = useState(false);
-  const [selectedCard, setSelectedCard] = useState<{ _id: string } | null>(
-    null
-  );
+
   const [time_, setTime] = useState({
     hour: "00",
     minute: "00",

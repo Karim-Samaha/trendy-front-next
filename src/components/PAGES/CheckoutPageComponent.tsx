@@ -97,22 +97,7 @@ const CheckoutPageComponent = () => {
       .catch((err) => console.log(err));
 
     // Moyasar
-    const styleScript = document.createElement("link");
-    styleScript.rel = "stylesheet";
-    styleScript.href = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.css";
-    const jsScript = document.createElement("script");
-    jsScript.src = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.js";
-    const jsPayScript = document.createElement("script");
-    jsPayScript.type = "application/javascript";
-    jsPayScript.className = "pay";
-    // tabby
-    const tabbyScript = document.createElement("script");
-    tabbyScript.async = true;
-    tabbyScript.src = "https://checkout.tabby.ai/tabby-card.js";
-
-    document.head.appendChild(styleScript);
-    document.head.appendChild(jsScript);
-    document.head.appendChild(tabbyScript);
+  
   }, []);
   const getPrevCouponSession = async () => {
     const couponResponseSession = sessionStorage.getItem("couponResponse");
@@ -706,11 +691,11 @@ const CheckoutPageComponent = () => {
                             setCouponResponse({});
                           }}
                           sizeClass="h-10 px-4 py-3"
-                          className="flex-1"
+                          className="flex-1 coupon-field"
                         />
                         <button
                           onClick={validateCoupon}
-                          className="text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
+                          className="nc-Button coupon-btn text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
                         >
                           تفعيل
                         </button>

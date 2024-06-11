@@ -43,9 +43,9 @@ const PageLogin = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     let credentials = loginForm;
-    signIn("credentials", { ...credentials, redirect: false })
+    await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
         if (res?.ok) {
           window.location.assign("/");
@@ -195,7 +195,12 @@ const PageLogin = () => {
                 <>
                   <p>
                     بالضغط على دخول الطلب فأنت توافق على{" "}
-                    <Link href={"/terms"} style={{textDecoration: "underline"}}>سياسة الخصوصية</Link>
+                    <Link
+                      href={"/terms"}
+                      style={{ textDecoration: "underline" }}
+                    >
+                      سياسة الخصوصية
+                    </Link>
                   </p>
                   <ButtonPrimary onClick={handleSignIn}>
                     تسجيل الدخول

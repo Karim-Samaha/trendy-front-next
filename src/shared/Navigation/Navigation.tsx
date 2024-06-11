@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavigationItem from "./NavigationItem";
 import { NAVIGATION_DEMO_2 } from "@/data/navigation";
 import axios from "axios";
-
+import Link from "next/link";
 function Navigation() {
   const ourNav = [
     NAVIGATION_DEMO_2[4],

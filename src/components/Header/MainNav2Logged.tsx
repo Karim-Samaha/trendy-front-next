@@ -29,7 +29,6 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
       <AvatarDropdown
         // logo={nameArr[0][0].toUpperCase() + nameArr[1]?.length &&  nameArr[1][0]?.toUpperCase()}
         logo={""}
-
       />
     );
   };
@@ -97,7 +96,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
 
   const renderContent = () => {
     return (
-      <div className="h-20 flex justify-between">
+      <div className="h-20 flex justify-between" style={{alignItems: "center"}}>
         <div className="flex items-center lg:hidden flex-1">
           <MenuBar />
         </div>
@@ -119,7 +118,10 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             </>
           )}
         </div>
-
+        <span>
+          {" "}
+          <Link href="/#articles">المقالات</Link>
+        </span>
         <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
           {!showSearchForm && (
             <button

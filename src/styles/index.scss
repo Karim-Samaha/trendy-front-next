@@ -5,6 +5,9 @@
 
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
 
+body, html {
+  scroll-behavior: smooth;
+}
 .title {
   color: #55a8b9;
   font-weight: bold;
@@ -135,6 +138,13 @@ footer {
   color: #fff;
   transition: all 0.3s ease-in-out;
   font-weight: bold;
+  &.coupon-btn {
+    border-radius: 5px 0px 0px 5px !important;
+    
+  }
+}
+.coupon-field {
+  border-radius: 0px 30px 30px 0px !important;
 }
 .nc-Button:hover {
   background-color: #faefe3;
