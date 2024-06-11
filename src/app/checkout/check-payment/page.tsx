@@ -1,8 +1,5 @@
 "use client";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import React, { useEffect, useState } from "react";
-import I404Png from "@/images/404.png";
-import NcImage from "@/shared/NcImage/NcImage";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Logo from "@/shared/Logo/Logo";
@@ -61,10 +58,6 @@ const CheckoutCheck = () => {
               جاري التحقق من عملية الدفع...
             </span>
           )}
-
-          {/* <div className="pt-8">
-          <ButtonPrimary href="/">Return Home Page</ButtonPrimary>
-        </div> */}
         </header>
       </div>
     </div>
