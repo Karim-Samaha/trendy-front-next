@@ -140,8 +140,8 @@ const ArticleSlider: FC<SectionSliderProductCardProps> = ({
                     </Link>
                   </div>
                 </div>
-                <h1>{item?.name}</h1>
-                <p style={{ opacity: ".6" }}>{formatDate(item?.createdAt)}</p>
+                <h2 style={{marginInlineStart: '20px', marginTop: "10px"}}>{item?.name}</h2>
+                <p style={{ opacity: ".6", marginInlineStart: '20px' }}>{formatDate(item?.createdAt)}</p>
               </li>
             ))}
           </ul>

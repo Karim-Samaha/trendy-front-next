@@ -181,7 +181,7 @@ async function PageHome() {
         <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
         </div>
-        <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
+        <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700" id="articles">
 
         <ArticleSlider data={articles} order={0} selectCard={undefined} _id={""} title={""}/>
 

@@ -95,6 +95,7 @@ const AccountOrder = () => {
                   setAddReview(true);
                   setItemToBeReviewd(_id);
                 }}
+                style={{ marginTop: "15px", marginLeft: "25px" }}
               >
                 قيم تجربتك
               </button>

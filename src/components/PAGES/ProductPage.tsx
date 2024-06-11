@@ -51,8 +51,9 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
-
-  const [qualitySelected, setQualitySelected] = useState(1);
+  const [selectedCard, setSelectedCard] = useState<{ _id: string } | null>(
+    null
+  );  const [qualitySelected, setQualitySelected] = useState(1);
   const [tammaraReady, setTamarraReady] = useState(false);
   const [tabbyReady, setTabbyReady] = useState(false);
   const [options, setOptions] = useState({
@@ -341,7 +342,8 @@ const ProductPage: FC<any> = ({ params, product }) => {
           orderType={formType}
           isActive={formType === "NORMAL_ORDER" || formType === "GIFT_ORDER"}
           handleAddToCart={handleAddToCart}
-     
+          selectedCard={selectedCard}
+          setSelectedCard={setSelectedCard}
         />
     
         {/*  */}
