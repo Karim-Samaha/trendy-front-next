@@ -1,5 +1,5 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
-import Credentials from "node_modules/next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import axios from "axios";
 import { use } from "react";
 
