@@ -283,13 +283,15 @@ const ProductCard: FC<ProductCardProps> = ({
       <div
         className={`nc-ProductCard relative flex flex-col bg-transparent ${className}`}
       >
-        <Link
-          href={`/product-detail/${_id}/${name}`}
-          className="absolute inset-0"
-        ></Link>
+        {!modal && (
+          <Link
+            href={`/product-detail/${_id}/${name}`}
+            className="absolute inset-0"
+          ></Link>
+        )}
 
         <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
-          <Link href={`/product-detail/${_id}/${name}`} className="block">
+          {modal ? (
             <NcImage
               containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
               src={featuredImage}
@@ -298,7 +300,19 @@ const ProductCard: FC<ProductCardProps> = ({
               sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
               alt="product"
             />
-          </Link>
+          ) : (
+            <Link href={`/product-detail/${_id}/${name}`} className="block">
+              <NcImage
+                containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
+                src={featuredImage}
+                className="object-cover w-full h-full drop-shadow-xl"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                alt="product"
+              />
+            </Link>
+          )}
+
           <ProductStatus status={status} />
 
           <LikeButton
@@ -375,7 +389,7 @@ const ProductCard: FC<ProductCardProps> = ({
               }}
             >
               <BagIcon className="w-3.5 h-3.5 mb-0.5 " />{" "}
-              <span className="ms-1">اضف كرت الاهداء</span>
+              <span className="ms-1">اضف الي السلة</span>
             </ButtonPrimary>
           )}
         </div>
@@ -386,6 +400,7 @@ const ProductCard: FC<ProductCardProps> = ({
         show={showModalQuickView}
         onCloseModalQuickView={() => setShowModalQuickView(false)}
         data={data}
+        modal={modal}
       />
     </>
   );

@@ -78,7 +78,9 @@ const Moysar = ({
           },   
         })
         `;
-    document.body.appendChild(script);
+    setTimeout(() => {
+      document.body.appendChild(script);
+    }, 500);
     // }
   }, [init]);
   // if (!init) return null

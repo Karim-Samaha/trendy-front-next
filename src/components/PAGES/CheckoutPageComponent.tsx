@@ -153,6 +153,25 @@ const CheckoutPageComponent = () => {
       setPayOnDelviery(false);
     }
   }, [payOnDelviery, payWithTransfer]);
+  useEffect(() => {
+    // Moyasar
+    const styleScript = document.createElement("link");
+    styleScript.rel = "stylesheet";
+    styleScript.href = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.css";
+    const jsScript = document.createElement("script");
+    jsScript.src = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.js";
+    const jsPayScript = document.createElement("script");
+    jsPayScript.type = "application/javascript";
+    jsPayScript.className = "pay";
+    // tabby
+    const tabbyScript = document.createElement("script");
+    tabbyScript.async = true;
+    tabbyScript.src = "https://checkout.tabby.ai/tabby-card.js";
+
+    document.head.appendChild(styleScript);
+    document.head.appendChild(jsScript);
+    document.head.appendChild(tabbyScript);
+  }, []);
   const renderProduct = (item: Product, index: number) => {
     const { image, price, name, featuredImage, _id } = item;
 

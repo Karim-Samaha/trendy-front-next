@@ -117,22 +117,27 @@ const AccountOrder = () => {
               <span className="font-bold">( + 0.00 ر.س ) </span>
             </div>
           </div>
-          {order?.selectedCard?._id && (
-            <div
-              className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
-              style={{ minWidth: "205px" }}
-            >
-              <div className="order-info flex-1">
-                كرت اهداء :
-                <span className="font-bold">
-                  {adjustNames(order?.selectedCard.name)}
-                </span>
-                <span className="font-bold" style={{ margin: "0 10px" }}>
-                  {order?.selectedCard.price} ر.س
-                </span>
-              </div>
-            </div>
-          )}
+          {order?.selectedCard?.length > 0
+            ? order?.selectedCard?.map((item: any) => {
+                return (
+                  <div
+                    className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
+                    style={{ minWidth: "205px" }}
+                  >
+                    <div className="order-info flex-1">
+                      كرت اهداء :
+                      <span className="font-bold">
+                        {adjustNames(item?.name)}
+                      </span>
+                      <span className="font-bold" style={{ margin: "0 10px" }}>
+                        {item?.price} ر.س
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
+
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
             <div className="order-info flex-1" style={{ minWidth: "205px" }}>
               وسيله الدفع :{" "}

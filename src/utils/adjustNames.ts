@@ -32,8 +32,11 @@ export const renderTotalPrice_ = (
     if (item.formInfo?.cardText?.length > 1) {
       cards += 6;
     }
-    if (item?.selectedCard?._id) {
-      giftCards += item?.selectedCard?.price;
+    if (item?.selectedCard?.length) {
+      for (let i = 0; i < item?.selectedCard.length; i++) {
+        giftCards +=
+          item?.selectedCard[i]?.price * item?.selectedCard[i]?.quantity;
+      }
     }
   });
   vat = +((total * 15) / 100);
@@ -46,7 +49,7 @@ export const renderTotalPrice_ = (
     totalCheckout = totalCheckout - pointsAmount;
   }
   if (totalCheckout <= 0) {
-    totalCheckout = 0
+    totalCheckout = 0;
   }
   return {
     total: total.toFixed(2),
@@ -60,14 +63,12 @@ export const renderTotalPrice_ = (
 
 export function formatDate(date: any) {
   var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
 
-  return [year, month, day].join('-');
+  return [year, month, day].join("-");
 }

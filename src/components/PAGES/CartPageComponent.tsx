@@ -131,20 +131,30 @@ const CartPageComponent = () => {
                     </div>
                   </div>
                 )}
+                {selectedCard?.length
+                  ? selectedCard.map((item: any) => {
+                      return (
+                        <div
+                          className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
+                          key={item?._id}
+                        >
+                          <div className="order-info flex-1 font-bold">
+                            كرت اهداء{" "}
+                            <span className="font-bold">
+                              {adjustNames(item?.name)}
+                            </span>
+                            <span
+                              className="font-bold"
+                              style={{ margin: "0 10px" }}
+                            >
+                              {item?.price} ر.س
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
 
-                {selectedCard?._id && (
-                  <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
-                    <div className="order-info flex-1 font-bold">
-                      كرت اهداء{" "}
-                      <span className="font-bold">
-                        {adjustNames(selectedCard.name)}
-                      </span>
-                      <span className="font-bold" style={{ margin: "0 10px" }}>
-                        {selectedCard.price} ر.س
-                      </span>
-                    </div>
-                  </div>
-                )}
                 <div className="mt-3 flex justify-between w-full sm:hidden relative">
                   <select
                     name="qty"

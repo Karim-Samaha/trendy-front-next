@@ -25,11 +25,13 @@ import AccordionInfo from "./AccordionInfo";
 export interface ProductQuickView2Props {
   className?: string;
   data: any;
+  modal: boolean;
 }
 
 const ProductQuickView2: FC<ProductQuickView2Props> = ({
   className = "",
   data,
+  modal,
 }) => {
   const { sizes, status, allOfSizes } = PRODUCTS[0];
   const LIST_IMAGES_DEMO = [detail1JPG, detail2JPG, detail3JPG];
@@ -196,15 +198,17 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
         <div className="">{renderSizeList()}</div> */}
 
         {/*  ---------- 4  QTY AND ADD TO CART BUTTON */}
-        <div className="flex space-x-3.5">
-          <ButtonPrimary
-            className="flex-1 flex-shrink-0"
-            href={`/product-detail/${data?._id}`}
-          >
-            <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
-            <span className="ml-3">اضف الي السلة</span>
-          </ButtonPrimary>
-        </div>
+        {!modal && (
+          <div className="flex space-x-3.5">
+            <ButtonPrimary
+              className="flex-1 flex-shrink-0"
+              href={`/product-detail/${data?._id}`}
+            >
+              <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
+              <span className="ml-3">اضف الي السلة</span>
+            </ButtonPrimary>
+          </div>
+        )}
 
         {/*  */}
         <hr className=" border-slate-200 dark:border-slate-700"></hr>
@@ -238,7 +242,7 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
               <Image
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
+                src={data?.featuredImage}
                 className="w-full rounded-xl object-cover"
                 alt="product detail 1"
               />
