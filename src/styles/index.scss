@@ -5,7 +5,8 @@
 
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
 
-body, html {
+body,
+html {
   scroll-behavior: smooth;
 }
 .title {
@@ -140,7 +141,6 @@ footer {
   font-weight: bold;
   &.coupon-btn {
     border-radius: 5px 0px 0px 5px !important;
-    
   }
 }
 .coupon-field {
@@ -666,7 +666,6 @@ tamara-widget {
 .time-select {
   display: flex;
   flex: 1;
-
 }
 .time-select {
   .time-title {
@@ -682,7 +681,7 @@ tamara-widget {
   direction: ltr;
   div:not(.time-title) {
     cursor: pointer;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     border-radius: 10px;
     padding: 3px 0;
     &:hover {
@@ -700,7 +699,7 @@ tamara-widget {
   font-weight: bold;
   span {
     font-weight: 300;
-    margin:auto 0 10px;
+    margin: auto 0 10px;
   }
   &:hover {
     border: 3px solid #55a8b9;
@@ -711,3 +710,11 @@ tamara-widget {
 //   border: 2px solid red;
 //   white-space: normal;
 // }
+.articles-link {
+  @media (max-width: 968px) {
+    display: none;
+  }
+}
+.drop-down-checkout {
+  margin: 0 !important;
+}

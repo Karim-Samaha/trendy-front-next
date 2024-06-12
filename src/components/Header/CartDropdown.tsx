@@ -186,7 +186,7 @@ export default function CartDropdown() {
                             : "/checkout"
                         }
                         onClick={close}
-                        className="flex-1"
+                        className="flex-1 drop-down-checkout"
                       >
                         اتمام الدفع
                       </ButtonPrimary>

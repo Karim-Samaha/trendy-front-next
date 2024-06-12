@@ -51,9 +51,8 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const [reviews, setReviews] = useState<any>([]);
   const [variantActive, setVariantActive] = useState(0);
   const [sizeSelected, setSizeSelected] = useState(sizes ? sizes[0] : "");
-  const [selectedCard, setSelectedCard] = useState<{ _id: string } | null>(
-    null
-  );  const [qualitySelected, setQualitySelected] = useState(1);
+  const [selectedCard, setSelectedCard] = useState([]);
+  const [qualitySelected, setQualitySelected] = useState(1);
   const [tammaraReady, setTamarraReady] = useState(false);
   const [tabbyReady, setTabbyReady] = useState(false);
   const [options, setOptions] = useState({
@@ -73,7 +72,6 @@ const ProductPage: FC<any> = ({ params, product }) => {
     }
   }, []);
   //
-
 
   useEffect(() => {
     Promise.all([
@@ -149,7 +147,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
       id: productData?._id,
       quantity: qty,
       formInfo: { ...formInfo },
-      selectedCard: { ...selectedCard },
+      selectedCard: [...selectedCard],
       ...options,
     };
     if (items.some((item) => item.id === itemToBeAdded.id)) {
@@ -345,7 +343,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
           selectedCard={selectedCard}
           setSelectedCard={setSelectedCard}
         />
-    
+
         {/*  */}
         <hr className=" 2xl:!my-10 border-slate-200 dark:border-slate-700"></hr>
         {/*  */}

@@ -9,17 +9,24 @@ import Calendar from "react-calendar";
 import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import ModalCards from "@/components/ModalCards";
-
+import ProductNcNumber from "@/components/productNcNumber";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Checkbox from "@/shared/Checkbox/Checkbox";
 interface Props {
   isActive: boolean;
   orderType: string;
   handleAddToCart: any;
   setSelectedCard: any;
-  selectedCard: string | null;
+  selectedCard: [any] | null;
 }
 
-const AdressForm: FC<Props> = ({ isActive, orderType, handleAddToCart, selectedCard, setSelectedCard }) => {
+const AdressForm: FC<Props> = ({
+  isActive,
+  orderType,
+  handleAddToCart,
+  selectedCard,
+  setSelectedCard,
+}) => {
   const [value, onChange] = useState<string>("");
   const [time, onTimeChange] = useState<string>("");
 
@@ -150,13 +157,40 @@ const AdressForm: FC<Props> = ({ isActive, orderType, handleAddToCart, selectedC
     console.log(formValue);
   }, [time_]);
   const handleSelectedGiftCard = (item: any) => {
-    setSelectedCard(item);
+    setSelectedCard((prev: any) => [...prev, { ...item, quantity: 1 }]);
+    setShopingCards(false);
   };
-  useEffect(() => {
-    if (selectedCard?._id) {
-      setShopingCards(false);
-    }
-  }, [selectedCard]);
+  const handleRemoveGiftCard = (id: string) => {
+    let newList = selectedCard?.filter(
+      (item: { _id: string }) => item?._id !== id
+    );
+    setSelectedCard(newList);
+  };
+  const handleAddQuantity = (id: string) => {
+    let item = selectedCard?.find((item: { _id: string }) => item?._id === id);
+    item.quantity += 1;
+    const newItems = selectedCard?.map((prevItem: any) => {
+      if (item?._id === prevItem?._id) {
+        return item;
+      } else {
+        return prevItem;
+      }
+    });
+    setSelectedCard(newItems);
+  };
+  const handleRemoveQuantity = (id: string) => {
+    let item = selectedCard?.find((item: { _id: string }) => item?._id === id);
+    item.quantity -= 1;
+    const newItems = selectedCard?.map((prevItem: any) => {
+      if (item?._id === prevItem?._id) {
+        return item;
+      } else {
+        return prevItem;
+      }
+    });
+    setSelectedCard(newItems);
+  };
+
   useEffect(() => {
     console.log(selectedCard);
   }, [selectedCard]);
@@ -521,27 +555,45 @@ const AdressForm: FC<Props> = ({ isActive, orderType, handleAddToCart, selectedC
                   </ButtonSecondary>
                 ) : null}
               </div>
-              {selectedCard?._id && (
-                <div className="flex flex-col sm:flex-row pt-6 gift-btn">
-                  <svg
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 ml-3 text-slate-900 dark:text-slate-100"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>
-                  تم اختيار بطاقه{" "}
-                  <span style={{ margin: "0 10px" }} className="font-bold">
-                    {selectedCard?.name}
-                  </span>
-                </div>
-              )}
+              {selectedCard?.length
+                ? selectedCard.map(
+                    (item: { id: string; name: string; _id: string }) => {
+                      return (
+                        <div
+                          className="flex flex-col sm:flex-row pt-6 gift-btn"
+                          key={item?._id}
+                        >
+                          <svg
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2.5"
+                            stroke="currentColor"
+                            className="w-5 h-5 ml-3 text-slate-900 dark:text-slate-100"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4.5 12.75l6 6 9-13.5"
+                            />
+                          </svg>
+                          تم اختيار{" "}
+                          <span
+                            style={{ margin: "0 10px" }}
+                            className="font-bold"
+                          >
+                            {item?.name}
+
+                            <span
+                              onClick={() => handleRemoveGiftCard(item?._id)}
+                            >
+                              مسح
+                            </span>
+                          </span>
+                        </div>
+                      );
+                    }
+                  )
+                : null}
               <div className="flex flex-col sm:flex-row pt-6">
                 <ButtonPrimary
                   className="flex-1 flex-shrink-0"
@@ -577,27 +629,80 @@ const AdressForm: FC<Props> = ({ isActive, orderType, handleAddToCart, selectedC
                   </ButtonSecondary>
                 ) : null}
               </div>
-              {selectedCard?._id && (
-                <div className="flex flex-col sm:flex-row pt-6 gift-btn">
-                  <svg
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2.5"
-                    stroke="currentColor"
-                    className="w-5 h-5 ml-3 text-slate-900 dark:text-slate-100"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>
-                  تم اختيار بطاقه{" "}
-                  <span style={{ margin: "0 10px" }} className="font-bold">
-                    {selectedCard?.name}
-                  </span>
-                </div>
-              )}
+              {selectedCard?.length
+                ? selectedCard.map(
+                    (item: {
+                      id: string;
+                      name: string;
+                      _id: string;
+                      quantity: number;
+                    }) => {
+                      return (
+                        <div
+                          className="flex flex-col sm:flex-row pt-6 gift-btn"
+                          key={item?._id}
+                        >
+                          <svg
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2.5"
+                            stroke="currentColor"
+                            className="w-5 h-5 ml-3 text-slate-900 dark:text-slate-100"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4.5 12.75l6 6 9-13.5"
+                            />
+                          </svg>
+                          تم اختيار{" "}
+                          <span
+                            style={{ margin: "0 10px", display: "flex" }}
+                            className="font-bold"
+                          >
+                            {item?.name}
+                            <div
+                              className={`nc-NcInputNumber flex items-center justify-between space-x-5`}
+                            >
+                              <div
+                                className={`nc-NcInputNumber__content flex items-center justify-between w-[104px] sm:w-28`}
+                                style={{ direction: "rtl" }}
+                              >
+                                <button
+                                  className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
+                                  type="button"
+                                  onClick={() => handleAddQuantity(item?._id)}
+                                  // disabled={max ? max <= qty : false}
+                                >
+                                  <PlusIcon className="w-4 h-4" />
+                                </button>
+
+                                <span className="select-none block flex-1 text-center leading-none">
+                                  {item?.quantity}
+                                </span>
+                                <button
+                                  className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
+                                  type="button"
+                                  onClick={() =>
+                                    handleRemoveQuantity(item?._id)
+                                  }
+                                >
+                                  <MinusIcon className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
+                            <span
+                              onClick={() => handleRemoveGiftCard(item?._id)}
+                              style={{ color: "blue" }}
+                            >
+                              مسح
+                            </span>
+                          </span>
+                        </div>
+                      );
+                    }
+                  )
+                : null}
               <div className="flex flex-col sm:flex-row pt-6">
                 <ButtonPrimary
                   className="flex-1 flex-shrink-0"

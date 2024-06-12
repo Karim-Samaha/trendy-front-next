@@ -118,7 +118,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             </>
           )}
         </div>
-        <span>
+        <span className="articles-link">
           {" "}
           <Link href="/#articles">المقالات</Link>
         </span>
