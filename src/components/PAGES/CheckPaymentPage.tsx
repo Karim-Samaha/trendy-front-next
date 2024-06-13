@@ -6,12 +6,12 @@ import Logo from "@/shared/Logo/Logo";
 import axios from "axios";
 import { useCart } from "react-use-cart";
 
-const CheckoutCheck = () => {
+const CheckoutCheck = ({ id, gateway }) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+//   const searchParams = useSearchParams();
   const { emptyCart } = useCart();
-  const id = searchParams.get("id");
-  const gateway = searchParams.get("gateway");
+  //   const id = searchParams.get("id");
+  //   const gateway = searchParams.get("gateway");
   const [status, setStatus] = useState({});
 
   //   const handleTabby = async () => {

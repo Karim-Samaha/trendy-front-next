@@ -9,8 +9,12 @@ export const metadata: any = async () => {
     },
   };
 };
-const CheckoutCheckPage = () => {
-  return null;
+const CheckoutCheckPage = ({ params, searchParams }) => {
+  console.log({ searchParams });
+  const id = searchParams.id;
+  const gateway = searchParams.gateway;
+  console.log({id, gateway})
+  return <CheckoutCheck />;
 };
 
 export default CheckoutCheckPage;
