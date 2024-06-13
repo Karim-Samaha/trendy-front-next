@@ -44,6 +44,8 @@ const AccountOrder = () => {
     order: any,
     amount: string,
     method: string,
+    ShippingType: string,
+    ShippingInfo: any,
     index: number
   ) => {
     const { image, name, _id } = order;
@@ -86,7 +88,6 @@ const AccountOrder = () => {
               <span className="inline-block sm:hidden">x</span>
               <span className="ml-2">{order.quantity}</span>
             </p>
-
             <div className="flex">
               <button
                 type="button"
@@ -101,6 +102,67 @@ const AccountOrder = () => {
               </button>
             </div>
           </div>
+          <div
+            className="flex flex-1 items-end justify-between text-sm"
+            style={{ marginTop: "15px" }}
+          >
+            <p className="text-gray-500 dark:text-slate-400 flex items-center">
+              <span className="hidden sm:inline-block">طريقة الشحن</span>
+              <span
+                className="ml-2"
+                style={{ marginInlineStart: "10px", fontWeight: "bold" }}
+              >
+                {ShippingType}
+              </span>
+            </p>
+          </div>
+          <div
+            className="flex flex-1 items-end justify-between text-sm"
+            style={{ marginTop: "15px" }}
+          >
+            <p className="text-gray-500 dark:text-slate-400 flex items-center">
+              <span className="hidden sm:inline-block">عنوان الشحن</span>
+              <span
+                className="ml-2"
+                style={{ marginInlineStart: "10px", fontWeight: "bold" }}
+              >
+                {order?.formInfo?.address ||
+                  "لم يتم تحديد العنوان (سيقوم الدعم بالتواصل مع المستلم)"}
+              </span>
+            </p>
+          </div>
+          <div
+            className="flex flex-1 items-end justify-between text-sm"
+            style={{ marginTop: "15px" }}
+          >
+            <p className="text-gray-500 dark:text-slate-400 flex items-center">
+              <span className="hidden sm:inline-block">تاريخ التوصيل</span>
+              <span
+                className="ml-2"
+                style={{ marginInlineStart: "10px", fontWeight: "bold" }}
+              >
+                {order?.formInfo?.deliveryDate}
+              </span>
+            </p>
+          </div>
+          <div
+            className="flex flex-1 items-end justify-between text-sm"
+            style={{ marginTop: "15px" }}
+          >
+            <p className="text-gray-500 dark:text-slate-400 flex items-center">
+              <span className="hidden sm:inline-block">بيانات المستلم</span>
+              <span
+                className="ml-2"
+                style={{ marginInlineStart: "10px", fontWeight: "bold" }}
+              >
+                {order?.formInfo?.sentTo ||
+                  ShippingInfo?.name ||
+                  session?.user?.name ||
+                  session?.user?.email ||
+                  ""}
+              </span>
+            </p>
+          </div>
           {order?.formInfo?.cardText?.length > 0 ? (
             <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
               <div className="order-info flex-1">
@@ -111,21 +173,22 @@ const AccountOrder = () => {
               </div>
             </div>
           ) : null}
-          <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
+          {/* <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
             <div className="order-info flex-1" style={{ minWidth: "205px" }}>
               (من الي) تاريخ التوصيل {order.formInfo?.deliveryDate}{" "}
               <span className="font-bold">( + 0.00 ر.س ) </span>
             </div>
-          </div>
+          </div> */}
           {order?.selectedCard?.length > 0
             ? order?.selectedCard?.map((item: any) => {
                 return (
                   <div
                     className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
                     style={{ minWidth: "205px" }}
+                    key={item?._id}
                   >
                     <div className="order-info flex-1">
-                      كرت اهداء :
+                      اضافات الورود :
                       <span className="font-bold">
                         {adjustNames(item?.name)}
                       </span>
@@ -141,7 +204,13 @@ const AccountOrder = () => {
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
             <div className="order-info flex-1" style={{ minWidth: "205px" }}>
               وسيله الدفع :{" "}
-              <span className="font-bold">{`${method.toUpperCase()}`}</span>
+              {method.toUpperCase() === "BANK_TRANSFER" ? (
+                <span className="font-bold">{`تحويل بنكي`}</span>
+              ) : method.toUpperCase() === "CASH_ON_DELIVERY" ? (
+                <span className="font-bold">{`الدفع عند الاستلام`}</span>
+              ) : (
+                <span className="font-bold">{`${method.toUpperCase()}`}</span>
+              )}
             </div>
           </div>
         </div>
@@ -194,9 +263,15 @@ const AccountOrder = () => {
           />
         )}
         <div className="border-t border-slate-200 dark:border-slate-700 p-2 sm:p-8 divide-y divide-y-slate-200 dark:divide-slate-700">
-          {console.log({ [i]: item })}
           {item.purchaseBulk?.map((order: any, i: number) =>
-            renderProductItem(order, item.amount, item.source, i)
+            renderProductItem(
+              order,
+              item.amount,
+              item.source,
+              item?.ShippingType,
+              item?.ShippingInfo,
+              i
+            )
           )}
         </div>
       </div>

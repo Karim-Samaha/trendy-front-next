@@ -26,6 +26,7 @@ export const renderTotalPrice_ = (
   let cards: number = 0;
   let giftCards: number = 0;
   let deductedAmount = 0;
+  let amountToApplyVatInReceipt: number = 0;
 
   items.map((item: any) => {
     total += item.price * item.quantity;
@@ -39,11 +40,17 @@ export const renderTotalPrice_ = (
       }
     }
   });
-  vat = +((total * 15) / 100);
   let totalCheckout = total + cards + giftCards + vat;
   if (couponPrecent) {
-    deductedAmount = (totalCheckout * couponPrecent) / 100;
-    totalCheckout = totalCheckout - (totalCheckout * couponPrecent) / 100;
+    deductedAmount = (total * couponPrecent) / 100;
+    let amountToApplyVat = total - deductedAmount;
+    vat = +((amountToApplyVat * 15) / 100);
+    amountToApplyVatInReceipt = amountToApplyVat;
+    totalCheckout = amountToApplyVatInReceipt + vat;
+  } else {
+    vat = +((total * 15) / 100);
+    amountToApplyVatInReceipt = total;
+    totalCheckout = amountToApplyVatInReceipt + vat;
   }
   if (pointsAmount && useUserPoints) {
     totalCheckout = totalCheckout - pointsAmount;
@@ -58,6 +65,7 @@ export const renderTotalPrice_ = (
     vat: vat.toFixed(2),
     fintalTotal: totalCheckout.toFixed(2),
     deductedAmount: deductedAmount.toFixed(2),
+    amountToApplyVatInReceipt: amountToApplyVatInReceipt.toFixed(2),
   };
 };
 

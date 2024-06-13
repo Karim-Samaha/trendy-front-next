@@ -405,7 +405,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
             onClick={() => setIsOpenModalViewAllReviews(true)}
             className="mt-10 border border-slate-300 dark:border-slate-700 "
           >
-            عرض كل التقيمات
+            عرض كل التقييمات
           </ButtonSecondary>
         </div>
       </div>

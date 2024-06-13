@@ -46,7 +46,8 @@ const CheckoutPageComponent = () => {
   const [payOnDelviery, setPayOnDelviery] = useState(false);
   const [payWithTransfer, setPayWithTransfer] = useState(false);
   const [useUserPoints, setUseUserPoints] = useState<boolean>(false);
-  const { points, redeemData, allPaid, isAllPaidWithPoints } = usePoints();
+  const { points, redeemData, allPaid, isAllPaidWithPoints, minToApply } =
+    usePoints();
   const handleChange = (e: any) => {
     setStoreDeleviryData((prev) => ({
       ...prev,
@@ -97,7 +98,6 @@ const CheckoutPageComponent = () => {
       .catch((err) => console.log(err));
 
     // Moyasar
-  
   }, []);
   const getPrevCouponSession = async () => {
     const couponResponseSession = sessionStorage.getItem("couponResponse");
@@ -734,7 +734,7 @@ const CheckoutPageComponent = () => {
                 </div>
 
                 <div className="mt-4 flex justify-between py-2.5">
-                  <span>المجموع</span>
+                  <span>المجموع غير شامل الضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
@@ -742,8 +742,28 @@ const CheckoutPageComponent = () => {
                     {renderTotalPrice.total} ر.س
                   </span>
                 </div>
+                {couponResponse?.precent && (
+                  <div className="flex justify-between py-2.5">
+                    <span>قسيمة التخفيض {couponResponse.precent}%</span>
+                    <span
+                      style={{ minWidth: "100px", color: "red" }}
+                      className="font-semibold text-slate-900 dark:text-slate-200"
+                    >
+                      -{renderTotalPrice.deductedAmount} ر.س
+                    </span>
+                  </div>
+                )}
                 <div className="mt-4 flex justify-between py-2.5">
-                  <span>ضريبة القيمة المضافة</span>
+                  <span>المجموع الخاضع للضريبة</span>
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
+                    {renderTotalPrice.amountToApplyVatInReceipt} ر.س
+                  </span>
+                </div>
+                <div className="mt-4 flex justify-between py-2.5">
+                  <span>ضريبة القيمة المضافة (15%)</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
@@ -751,7 +771,7 @@ const CheckoutPageComponent = () => {
                     {renderTotalPrice.vat} ر.س
                   </span>
                 </div>
-                {redeemData?.point ? (
+                {redeemData?.point && minToApply < +renderTotalPrice.total ? (
                   <div className="mt-4 flex justify-between py-2.5">
                     <span>
                       <input
@@ -780,7 +800,7 @@ const CheckoutPageComponent = () => {
                     </span>
                     {allPaid ? (
                       <span
-                        style={{ minWidth: "100px" }}
+                        style={{ minWidth: "100px", color: "red" }}
                         className="font-semibold text-slate-900 dark:text-slate-200"
                       >
                         -
@@ -791,7 +811,7 @@ const CheckoutPageComponent = () => {
                       </span>
                     ) : (
                       <span
-                        style={{ minWidth: "100px" }}
+                        style={{ minWidth: "100px", color: "red" }}
                         className="font-semibold text-slate-900 dark:text-slate-200"
                       >
                         -{redeemData.amount} ر.س
@@ -809,7 +829,7 @@ const CheckoutPageComponent = () => {
                     0 ر.س
                   </span>
                 </div>
-                <div className="flex justify-between py-2.5">
+                {/* <div className="flex justify-between py-2.5">
                   <span>نص بطاقه</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -817,8 +837,8 @@ const CheckoutPageComponent = () => {
                   >
                     {renderTotalPrice.cards} ر.س
                   </span>
-                </div>
-                <div className="flex justify-between py-2.5">
+                </div> */}
+                {/* <div className="flex justify-between py-2.5">
                   <span>كروت اهداء</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -826,8 +846,8 @@ const CheckoutPageComponent = () => {
                   >
                     {renderTotalPrice.giftCards} ر.س
                   </span>
-                </div>
-                <div className="flex justify-between py-2.5">
+                </div> */}
+                {/* <div className="flex justify-between py-2.5">
                   <span>الضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -835,21 +855,18 @@ const CheckoutPageComponent = () => {
                   >
                     0 ر.س
                   </span>
-                </div>
-                {couponResponse?.precent && (
-                  <div className="flex justify-between py-2.5">
-                    <span>خصم كوبون</span>
-                    <span
-                      style={{ minWidth: "100px" }}
-                      className="font-semibold text-slate-900 dark:text-slate-200"
-                    >
-                      {couponResponse.precent}%
-                    </span>
-                  </div>
-                )}
+                </div> */}
+
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                  <span>مجموع الفاتورة</span>
+                  <span>مجموع المنتجات شامل ضريبة القيمة المضافة</span>
                   <span style={{ minWidth: "100px" }}>
+                    {" "}
+                    {renderTotalPrice.fintalTotal} ر.س
+                  </span>
+                </div>
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span>مجموع الكلي</span>
+                  <span style={{ minWidth: "100px", color: "green" }}>
                     {" "}
                     {renderTotalPrice.fintalTotal} ر.س
                   </span>
