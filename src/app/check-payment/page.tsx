@@ -10,7 +10,7 @@ export const metadata: any = async () => {
   };
 };
 const CheckoutCheckPage = () => {
-  return <CheckoutCheck />;
+  return null;
 };
 
 export default CheckoutCheckPage;
