@@ -44,7 +44,7 @@ const Moysar = ({
           publishable_api_key: 'pk_test_A4Ae74mFrkjuhhzovBc3KrYVE6Nc9u8YEryNe6dv',
           callback_url: '${
             process.env.NEXT_PUBLIC_FRONTEND_URL
-          }/checkout/check-payment',
+          }/check-payment',
           methods: ['creditcard'],
           on_completed: function (payment) {
             return new Promise(async function (resolve, reject) {

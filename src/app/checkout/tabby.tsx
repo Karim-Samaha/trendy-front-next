@@ -53,9 +53,9 @@ const Tabby = ({ fintalTotal }: { fintalTotal: number }) => {
           lang: "ar",
           merchant_code: "zid_sa",
           merchant_urls: {
-            success: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/checkout/check-payment?gateway=tabby`,
-            cancel: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/checkout/check-payment`,
-            failure: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/checkout/check-payment`,
+            success: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment?gateway=tabby`,
+            cancel: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`,
+            failure: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`,
           },
         },
         { session }
