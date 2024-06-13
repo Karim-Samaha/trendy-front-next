@@ -14,22 +14,25 @@ const CheckoutCheck = () => {
   const gateway = searchParams.get("gateway");
   const [status, setStatus] = useState({});
 
-  const handleTabby = async () => {
-    const tabbyId = sessionStorage.getItem("tabbyId");
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyId}`);
-      setStatus(response.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //   const handleTabby = async () => {
+  //     const tabbyId = sessionStorage.getItem("tabbyId");
+  //     try {
+  //       const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyId}`);
+  //       setStatus(response.data);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
 
   useEffect(() => {
     if (gateway === "tabby") {
-      handleTabby();
+      //   handleTabby();
+      console.log("test");
     } else if (id) {
       axios
-        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/check-payment-status/${id}`)
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-payment-status/${id}`
+        )
         .then((response) => setStatus(response.data))
         .catch((err) => console.error(err));
     }
@@ -38,7 +41,8 @@ const CheckoutCheck = () => {
   useEffect(() => {
     if (status?.data?.status === "paid") {
       emptyCart();
-      setTimeout(() => router.replace(`/account-order?from=checkout`), 3000);
+      router.replace(`/account-order?from=checkout`);
+      //   setTimeout(() => router.replace(`/account-order?from=checkout`), 3000);
     }
   }, [status, emptyCart, router]);
 
