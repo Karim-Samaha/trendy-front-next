@@ -313,7 +313,7 @@ const CartPageComponent = () => {
               </div>
               <div className="mt-7 text-sm text-slate-500 dark:text-slate-400 divide-y divide-slate-200/70 dark:divide-slate-700/80">
                 <div className="flex justify-between pb-4">
-                  <span>المجموع</span>
+                  <span>المجموع غير شامل الضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
@@ -321,7 +321,36 @@ const CartPageComponent = () => {
                     {renderTotalPrice.total} ر.س
                   </span>
                 </div>
-                <div className="flex justify-between py-4">
+                {couponResponse?.precent && (
+                  <div className="flex justify-between py-2.5">
+                    <span>قسيمة التخفيض {couponResponse.precent}%</span>
+                    <span
+                      style={{ minWidth: "100px", color: "red" }}
+                      className="font-semibold text-slate-900 dark:text-slate-200"
+                    >
+                      -{renderTotalPrice.deductedAmount} ر.س
+                    </span>
+                  </div>
+                )}
+                <div className="mt-4 flex justify-between py-2.5">
+                  <span>المجموع الخاضع للضريبة</span>
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
+                    {renderTotalPrice.amountToApplyVatInReceipt} ر.س
+                  </span>
+                </div>
+                <div className="mt-4 flex justify-between py-2.5">
+                  <span>ضريبة القيمة المضافة (15%)</span>
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
+                    {renderTotalPrice.vat} ر.س
+                  </span>
+                </div>
+                <div className="flex justify-between py-2.5">
                   <span>تكاليف الشحن</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -330,7 +359,30 @@ const CartPageComponent = () => {
                     0 ر.س
                   </span>
                 </div>
-                <div className="flex justify-between py-4">
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span style={{fontSize: "14px"}}>مجموع المنتجات شامل ضريبة القيمة المضافة</span>
+                  <span style={{ minWidth: "100px" }}>
+                    {" "}
+                    {renderTotalPrice.fintalTotal} ر.س
+                  </span>
+                </div>
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span>مجموع الكلي</span>
+                  <span style={{ minWidth: "100px", color: "green" }}>
+                    {" "}
+                    {renderTotalPrice.fintalTotal} ر.س
+                  </span>
+                </div>
+                {/* <div className="flex justify-between py-4">
+                  <span>تكاليف الشحن</span>
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
+                    0 ر.س
+                  </span>
+                </div> */}
+                {/* <div className="flex justify-between py-4">
                   <span>نص بطاقه</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -338,8 +390,8 @@ const CartPageComponent = () => {
                   >
                     {renderTotalPrice.cards} ر.س
                   </span>
-                </div>
-                <div className="flex justify-between py-4">
+                </div> */}
+                {/* <div className="flex justify-between py-4">
                   <span>كروت اهداء</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -347,8 +399,8 @@ const CartPageComponent = () => {
                   >
                     {renderTotalPrice.giftCards} ر.س
                   </span>
-                </div>
-                <div className="flex justify-between py-4">
+                </div> */}
+                {/* <div className="flex justify-between py-4">
                   <span>الضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -356,8 +408,8 @@ const CartPageComponent = () => {
                   >
                     0 ر.س
                   </span>
-                </div>
-                {couponResponse?.precent && (
+                </div> */}
+                {/* {couponResponse?.precent && (
                   <div className="flex justify-between py-2.5">
                     <span>خصم كوبون</span>
                     <span
@@ -367,14 +419,14 @@ const CartPageComponent = () => {
                       {couponResponse.precent}%
                     </span>
                   </div>
-                )}
-                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                )} */}
+                {/* <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                   <span>مجموع الفاتورة</span>
                   <span style={{ minWidth: "100px" }}>
                     {" "}
                     {renderTotalPrice.fintalTotal} ر.س
                   </span>
-                </div>
+                </div> */}
               </div>
               <ButtonPrimary
                 href={session?.user?.accessToken ? "/checkout" : "/login"}

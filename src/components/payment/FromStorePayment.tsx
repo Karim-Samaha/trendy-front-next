@@ -54,11 +54,11 @@ const DeleveryForm: FC<Props> = ({ setFormValue, formValue, handleChange }) => {
   return (
     <div
       className={`border border-slate-200 dark:border-slate-700 rounded-xl block`}
-      style={{ width: "100%", direction: "rtl" }}
+      style={{ width: "100%", direction: "rtl", padding: "10px" }}
     >
       <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
-        <div className="flex-1">
-          <Label className="text-sm">الاسم</Label>
+        <div className="flex-1 form-payment-label">
+          <Label className="text-sm ">الاسم</Label>
           <Input
             className="mt-1.5"
             placeholder=""
@@ -77,7 +77,7 @@ const DeleveryForm: FC<Props> = ({ setFormValue, formValue, handleChange }) => {
         </div>
       </div>
       <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
-        <div className="flex-1">
+        <div className="flex-1 form-payment-label">
           <Label className="text-sm">رقم الهاتف</Label>
           <Input
             className="mt-1.5"
@@ -103,7 +103,7 @@ const DeleveryForm: FC<Props> = ({ setFormValue, formValue, handleChange }) => {
           )}
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 form-payment-label">
         <Label className="text-sm">
           تاريخ التوصيل (متاح من 2 الظهر الي 11م)
         </Label>
