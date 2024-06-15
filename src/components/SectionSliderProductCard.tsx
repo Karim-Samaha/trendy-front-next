@@ -97,8 +97,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               priceBefore: item.priceBefore,
               description: item.nameAr,
               rates: item.rates,
-              purchaseCount: item.purchaseCount
-
+              purchaseCount: item.purchaseCount,
             }))
         );
       });
@@ -171,6 +170,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               direction: "rtl",
               // marginRight: modal ? "-54% " : "-54%",
               // width: "100%"
+              maxHeight: "500px",
             }}
             className="glide__slides prouct-slide"
           >
