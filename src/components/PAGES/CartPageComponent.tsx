@@ -180,7 +180,7 @@ const CartPageComponent = () => {
                 <NcInputNumber className="relative z-10" item={item} />
               </div>
 
-              <div className="hidden flex-1 sm:flex justify-end">
+              <div className="hidden flex-1 sm:flex justify-end" style={{marginTop: "-12px"}}>
                 <Prices price={price} className="mt-0.5" />
               </div>
             </div>

@@ -74,7 +74,7 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
               src={logo}
               style={{ margin: "25px 0" }}
             /> */}
-            <h3 style={{ margin: "55px 0 25PX 0" }}>عن الزهرة العصرية</h3>
+            <h2 style={{ margin: "55px 0 25PX 0" }}>عن الزهرة العصرية</h2>
             <p>{data.find((item) => item.type === "FOOTER")?.tag}</p>
             <div className="linkContainer" >
               <Link href="/">

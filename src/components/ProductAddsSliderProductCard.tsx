@@ -153,7 +153,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       <div
         ref={sliderRef}
         className={`flow-root ${isShow ? "" : "invisible"}`}
-        style={{ direction: "rtl" }}
+        style={{ direction: "rtl",  }}
       >
         <Heading
           className={headingClassName}
@@ -169,6 +169,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
           <ul
             style={{
               direction: "rtl",
+              maxHeight: "600px"
             }}
             className="glide__slides prouct-slide"
           >

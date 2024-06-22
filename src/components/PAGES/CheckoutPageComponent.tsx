@@ -18,16 +18,16 @@ import DeleveryForm from "@/components/payment/FromStorePayment";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { useRouter } from "next/navigation";
 import usePoints from "@/app/checkout/usePoints";
-import PaymentMethod from "@/app/checkout/PaymentMethod";
 
 const CheckoutPageComponent = () => {
-  const { items } = useCart();
+  const { items, emptyCart } = useCart();
 
   const [tabActive, setTabActive] = useState<
     "ContactInfo" | "ShippingAddress" | "PaymentMethod"
   >("ShippingAddress");
 
   const handleScrollToEl = (id: string) => {
+    //@ts-ignore
     const element = document.getElementById(id);
     setTimeout(() => {
       element?.scrollIntoView({ behavior: "smooth" });
@@ -35,6 +35,7 @@ const CheckoutPageComponent = () => {
   };
   const [paymentMethod, setPaymentMethod] = useState("");
   const [deleviryMethods, setDeleviryMethods] = useState("");
+  const [paymentMethodsTag, setPaymentMethodsTag] = useState([]);
   const [deleviryMethod, setDeleviryMethod] = useState("Trendy Rose");
   const [storeDeleviryData, setStoreDeleviryData] = useState({
     name: "",
@@ -55,7 +56,9 @@ const CheckoutPageComponent = () => {
     }));
   };
   const [coupon, setCoupon] = useState("");
-  const [couponResponse, setCouponResponse] = useState({});
+  const [couponResponse, setCouponResponse] = useState<
+    { precent: number } | any
+  >({});
   let renderTotalPrice = renderTotalPrice_(
     items,
     couponResponse?.precent,
@@ -63,12 +66,13 @@ const CheckoutPageComponent = () => {
     useUserPoints
   );
   useEffect(() => {
-    if (renderTotalPrice.fintalTotal <= 0 && useUserPoints) {
+    if (+renderTotalPrice.fintalTotal <= 0 && useUserPoints) {
       isAllPaidWithPoints();
     }
   }, [renderTotalPrice.fintalTotal]);
   const { data: session } = useSession();
   const validateCoupon = async () => {
+    //@ts-ignore
     const renderTotalPrice = renderTotalPrice_(items, null);
     await _axios
       .post(
@@ -91,15 +95,18 @@ const CheckoutPageComponent = () => {
         let deleviry = data.find(
           (item: { type: string }) => item.type === "delivery"
         );
-        console.log("!!!!!!!!!!!!!!!!!!");
-        console.log({ deb1: data, deb2: deleviry });
+        let paymentMethods = data.find(
+          (item: { type: string }) => item.type === "paymentMethods"
+        );
         setDeleviryMethods(deleviry?.items);
+        setPaymentMethodsTag(paymentMethods?.items);
       })
       .catch((err) => console.log(err));
 
     // Moyasar
   }, []);
   const getPrevCouponSession = async () => {
+    //@ts-ignore
     const couponResponseSession = sessionStorage.getItem("couponResponse");
     if (couponResponseSession) {
       setCouponResponse(JSON.parse(couponResponseSession));
@@ -128,7 +135,7 @@ const CheckoutPageComponent = () => {
               : paymentMethod === "Points"
               ? "Points"
               : "Cash_On_Delivery",
-          userId: session?.user?._d,
+          userId: session?.user?._id,
           couponResponse: JSON.stringify({
             ...couponResponse,
             deductedAmount: +renderTotalPrice?.deductedAmount,
@@ -138,9 +145,11 @@ const CheckoutPageComponent = () => {
           userNote: userNote,
           pointsUsed: redeemData?.point,
         },
+        //@ts-ignore
         { session }
       )
       .then((res) => {
+        emptyCart();
         router.push(`/account-order?from=checkout`);
       })
       .catch((err) => console.log(err));
@@ -155,21 +164,27 @@ const CheckoutPageComponent = () => {
   }, [payOnDelviery, payWithTransfer]);
   useEffect(() => {
     // Moyasar
+    //@ts-ignore
     const styleScript = document.createElement("link");
     styleScript.rel = "stylesheet";
     styleScript.href = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.css";
+    //@ts-ignore
     const jsScript = document.createElement("script");
     jsScript.src = "https://cdn.moyasar.com/mpf/1.13.0/moyasar.js";
+    //@ts-ignore
     const jsPayScript = document.createElement("script");
     jsPayScript.type = "application/javascript";
     jsPayScript.className = "pay";
     // tabby
+    //@ts-ignore
     const tabbyScript = document.createElement("script");
     tabbyScript.async = true;
     tabbyScript.src = "https://checkout.tabby.ai/tabby-card.js";
-
+    //@ts-ignore
     document.head.appendChild(styleScript);
+    //@ts-ignore
     document.head.appendChild(jsScript);
+    //@ts-ignore
     document.head.appendChild(tabbyScript);
   }, []);
   const renderProduct = (item: Product, index: number) => {
@@ -366,270 +381,301 @@ const CheckoutPageComponent = () => {
           </>
         ) : (
           <>
-            {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
-              <div id="PaymentMethod" className="scroll-mt-24 ">
-                <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
-                  <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
-                    <span
-                      className="hidden sm:block"
-                      style={{ margin: "0 20px" }}
-                    >
-                      <Image
-                        style={{ borderRadius: "10px" }}
-                        src={TabbyIcon}
-                        width={40}
-                        height={40}
-                      />
-                    </span>
-                    <div className="sm:ml-8">
-                      <div className="font-semibold mt-1 text-sm">
-                        <button
-                          onClick={() =>
-                            setPaymentMethod((prev) =>
-                              prev === "tabby" ? "" : "tabby"
-                            )
-                          }
+            {paymentMethodsTag?.find(
+              (item: { active: boolean; id: number }) => item.id === 2
+            )?.active && (
+              <>
+                {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
+                  <div id="PaymentMethod" className="scroll-mt-24 ">
+                    <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+                      <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
+                        <span
+                          className="hidden sm:block"
+                          style={{ margin: "0 20px" }}
                         >
-                          تابي
-                        </button>{" "}
+                          <Image
+                            style={{ borderRadius: "10px" }}
+                            src={TabbyIcon}
+                            width={40}
+                            height={40}
+                          />
+                        </span>
+                        <div className="sm:ml-8">
+                          <div className="font-semibold mt-1 text-sm">
+                            <button
+                              onClick={() =>
+                                setPaymentMethod((prev) =>
+                                  prev === "tabby" ? "" : "tabby"
+                                )
+                              }
+                            >
+                              تابي
+                            </button>{" "}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
-            {paymentMethod === "tabby" && (
-              <Tabby fintalTotal={+renderTotalPrice.fintalTotal} />
+                )}
+                {paymentMethod === "tabby" && (
+                  <Tabby fintalTotal={+renderTotalPrice.fintalTotal} />
+                )}
+              </>
             )}
 
-            {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
-              <div id="PaymentMethod" className="scroll-mt-24 ">
-                <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
-                  <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
-                    <span
-                      className="hidden sm:block"
-                      style={{ margin: "0 20px" }}
-                    >
-                      <svg
-                        className="w-6 h-6 text-slate-700 dark:text-slate-400 mt-0.5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3.92969 15.8792L15.8797 3.9292"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeMiterlimit="10"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M11.1013 18.2791L12.3013 17.0791"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeMiterlimit="10"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M13.793 15.5887L16.183 13.1987"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeMiterlimit="10"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M3.60127 10.239L10.2413 3.599C12.3613 1.479 13.4213 1.469 15.5213 3.569L20.4313 8.479C22.5313 10.579 22.5213 11.639 20.4013 13.759L13.7613 20.399C11.6413 22.519 10.5813 22.529 8.48127 20.429L3.57127 15.519C1.47127 13.419 1.47127 12.369 3.60127 10.239Z"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M2 21.9985H22"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                    <div className="sm:ml-8">
-                      <div className="font-semibold mt-1 text-sm">
-                        <button
-                          onClick={() =>
-                            setPaymentMethod((prev) =>
-                              prev === "card" ? "" : "card"
-                            )
-                          }
+            {paymentMethodsTag?.find(
+              (item: { active: boolean; id: number }) => item.id === 1
+            )?.active && (
+              <>
+                {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
+                  <div id="PaymentMethod" className="scroll-mt-24 ">
+                    <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+                      <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
+                        <span
+                          className="hidden sm:block"
+                          style={{ margin: "0 20px" }}
                         >
-                          بطافة بنكية
-                          <span
-                            style={{ opacity: ".8", marginInlineStart: "20px" }}
+                          <svg
+                            className="w-6 h-6 text-slate-700 dark:text-slate-400 mt-0.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            (فيزا , ماستركارد , مدا)
-                          </span>
-                        </button>{" "}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {paymentMethod === "card" && (
-              <div
-                id="PaymentMethod"
-                className="scroll-mt-24"
-                style={{ minHeight: "200px" }}
-              >
-                <Moysar
-                  fintalTotal={+renderTotalPrice.fintalTotal}
-                  couponResponse={{
-                    ...couponResponse,
-                    deductedAmount: +renderTotalPrice?.deductedAmount,
-                  }}
-                  deleviryMethod={deleviryMethod}
-                  deleviryInfo={storeDeleviryData}
-                  vat={+renderTotalPrice.vat}
-                  pointsUsed={useUserPoints ? redeemData?.point : 0}
-                  userNote={userNote}
-                />
-              </div>
-            )}
-            {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
-              <div id="PaymentMethod" className="scroll-mt-24">
-                <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
-                  <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
-                    <div className="sm:ml-8">
-                      <div
-                        className="font-semibold mt-1 text-sm"
-                        // onClick={() => setPayOnDelviery(!payOnDelviery)}
-                      >
-                        <input
-                          type="checkbox"
-                          style={{ margin: "0 10px" }}
-                          checked={paymentMethod === "payOnDelviery"}
-                          disabled={true}
-                          // onChange={(e) => setPayOnDelviery(!payOnDelviery)}
-                        />
-                        <button
-                          onClick={() =>
-                            setPaymentMethod((prev) =>
-                              prev === "payOnDelviery" ? "" : "payOnDelviery"
-                            )
-                          }
-                        >
-                          الدفع عند الاستلام
-                        </button>{" "}
-                      </div>
-                      {paymentMethod === "payOnDelviery" && (
-                        <>
-                          <div style={{ margin: "20px" }}>
-                            <ButtonSecondary
-                              className="flex-2 flex-shrink-0 "
-                              onClick={createCheckoutSession}
+                            <path
+                              d="M3.92969 15.8792L15.8797 3.9292"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M11.1013 18.2791L12.3013 17.0791"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M13.793 15.5887L16.183 13.1987"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M3.60127 10.239L10.2413 3.599C12.3613 1.479 13.4213 1.469 15.5213 3.569L20.4313 8.479C22.5313 10.579 22.5213 11.639 20.4013 13.759L13.7613 20.399C11.6413 22.519 10.5813 22.529 8.48127 20.429L3.57127 15.519C1.47127 13.419 1.47127 12.369 3.60127 10.239Z"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M2 21.9985H22"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <div className="sm:ml-8">
+                          <div className="font-semibold mt-1 text-sm">
+                            <button
+                              onClick={() =>
+                                setPaymentMethod((prev) =>
+                                  prev === "card" ? "" : "card"
+                                )
+                              }
                             >
-                              تاكيد الطلب
-                            </ButtonSecondary>
+                              بطافة بنكية
+                              <span
+                                style={{
+                                  opacity: ".8",
+                                  marginInlineStart: "20px",
+                                }}
+                              >
+                                (فيزا , ماستركارد , مدا)
+                              </span>
+                            </button>{" "}
                           </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
-              <div id="PaymentMethod" className="scroll-mt-24">
-                <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
-                  <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
-                    <div className="sm:ml-8">
-                      <div
-                        className="font-semibold mt-1 text-sm"
-                        // onClick={() => setPayWithTransfer(!payWithTransfer)}
-                      >
-                        <input
-                          type="checkbox"
-                          style={{ margin: "0 10px" }}
-                          checked={paymentMethod === "Transfer"}
-                          disabled={true}
-                          // onChange={(e) => setPayWithTransfer(!payWithTransfer)}
-                        />
-                        <button
-                          onClick={() =>
-                            setPaymentMethod((prev) =>
-                              prev === "Transfer" ? "" : "Transfer"
-                            )
-                          }
-                        >
-                          تحويل بنكي
-                        </button>{" "}
+                        </div>
                       </div>
-                      {paymentMethod === "Transfer" && (
-                        <>
-                          <div style={{ margin: "15px 10px" }}>
-                            <h2 style={{ fontWeight: "bold" }}>مصرف الراجحي</h2>
-                            <p style={{ marginTop: "10px" }}>
-                              اسم المالك:{" "}
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  marginInlineStart: "10px",
-                                }}
-                              >
-                                TRENDY ROSE
-                              </span>
-                            </p>
-                            <p style={{ marginTop: "10px" }}>
-                              رقم الحساب:{" "}
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  marginInlineStart: "10px",
-                                }}
-                              >
-                                996000010006080868434
-                              </span>
-                            </p>
-                            <p style={{ marginTop: "10px" }}>
-                              الأيبان:{" "}
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  marginInlineStart: "10px",
-                                }}
-                              >
-                                SA1280000996000010006080868434
-                              </span>
-                            </p>
-                            <p style={{ marginTop: "10px" }}>
-                              السويفت:{" "}
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  marginInlineStart: "10px",
-                                }}
-                              >
-                                RJHISARI
-                              </span>
-                            </p>
-                          </div>
-                          <div style={{ margin: "20px" }}>
-                            <ButtonSecondary
-                              className="flex-2 flex-shrink-0 "
-                              onClick={createCheckoutSession}
-                            >
-                              تاكيد الطلب
-                            </ButtonSecondary>
-                          </div>
-                        </>
-                      )}
                     </div>
                   </div>
-                </div>
-              </div>
+                )}
+                {paymentMethod === "card" && (
+                  <div
+                    id="PaymentMethod"
+                    className="scroll-mt-24"
+                    style={{ minHeight: "200px" }}
+                  >
+                    <Moysar
+                      fintalTotal={+renderTotalPrice.fintalTotal}
+                      couponResponse={{
+                        ...couponResponse,
+                        deductedAmount: +renderTotalPrice?.deductedAmount,
+                      }}
+                      deleviryMethod={deleviryMethod}
+                      deleviryInfo={storeDeleviryData}
+                      vat={+renderTotalPrice.vat}
+                      pointsUsed={useUserPoints ? redeemData?.point : 0}
+                      userNote={userNote}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            {paymentMethodsTag?.find(
+              (item: { active: boolean; id: number }) => item.id === 3
+            )?.active && (
+              <>
+                {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
+                  <div id="PaymentMethod" className="scroll-mt-24">
+                    <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+                      <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
+                        <div className="sm:ml-8">
+                          <div
+                            className="font-semibold mt-1 text-sm"
+                            // onClick={() => setPayOnDelviery(!payOnDelviery)}
+                          >
+                            <input
+                              type="checkbox"
+                              style={{ margin: "0 10px" }}
+                              checked={paymentMethod === "payOnDelviery"}
+                              disabled={true}
+                              // onChange={(e) => setPayOnDelviery(!payOnDelviery)}
+                            />
+                            <button
+                              onClick={() =>
+                                setPaymentMethod((prev) =>
+                                  prev === "payOnDelviery"
+                                    ? ""
+                                    : "payOnDelviery"
+                                )
+                              }
+                            >
+                              الدفع عند الاستلام
+                            </button>{" "}
+                          </div>
+                          {paymentMethod === "payOnDelviery" && (
+                            <>
+                              <div style={{ margin: "20px" }}>
+                                <ButtonSecondary
+                                  className="flex-2 flex-shrink-0 "
+                                  onClick={createCheckoutSession}
+                                >
+                                  تاكيد الطلب
+                                </ButtonSecondary>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+            {paymentMethodsTag?.find(
+              (item: { active: boolean; id: number }) => item.id === 4
+            )?.active && (
+              <>
+                {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
+                  <div id="PaymentMethod" className="scroll-mt-24">
+                    <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+                      <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
+                        <div className="sm:ml-8">
+                          <div
+                            className="font-semibold mt-1 text-sm"
+                            // onClick={() => setPayWithTransfer(!payWithTransfer)}
+                          >
+                            <input
+                              type="checkbox"
+                              style={{ margin: "0 10px" }}
+                              checked={paymentMethod === "Transfer"}
+                              disabled={true}
+                              // onChange={(e) => setPayWithTransfer(!payWithTransfer)}
+                            />
+                            <button
+                              onClick={() =>
+                                setPaymentMethod((prev) =>
+                                  prev === "Transfer" ? "" : "Transfer"
+                                )
+                              }
+                            >
+                              تحويل بنكي
+                            </button>{" "}
+                          </div>
+                          {paymentMethod === "Transfer" && (
+                            <>
+                              <div style={{ margin: "15px 10px" }}>
+                                <h2 style={{ fontWeight: "bold" }}>
+                                  مصرف الراجحي
+                                </h2>
+                                <p style={{ marginTop: "10px" }}>
+                                  اسم المالك:{" "}
+                                  <span
+                                    style={{
+                                      fontWeight: "bold",
+                                      marginInlineStart: "10px",
+                                    }}
+                                  >
+                                    TRENDY ROSE
+                                  </span>
+                                </p>
+                                <p style={{ marginTop: "10px" }}>
+                                  رقم الحساب:{" "}
+                                  <span
+                                    style={{
+                                      fontWeight: "bold",
+                                      marginInlineStart: "10px",
+                                    }}
+                                  >
+                                    996000010006080868434
+                                  </span>
+                                </p>
+                                <p style={{ marginTop: "10px" }}>
+                                  الأيبان:{" "}
+                                  <span
+                                    style={{
+                                      fontWeight: "bold",
+                                      marginInlineStart: "10px",
+                                    }}
+                                  >
+                                    SA1280000996000010006080868434
+                                  </span>
+                                </p>
+                                <p style={{ marginTop: "10px" }}>
+                                  السويفت:{" "}
+                                  <span
+                                    style={{
+                                      fontWeight: "bold",
+                                      marginInlineStart: "10px",
+                                    }}
+                                  >
+                                    RJHISARI
+                                  </span>
+                                </p>
+                              </div>
+                              <div style={{ margin: "20px" }}>
+                                <ButtonSecondary
+                                  className="flex-2 flex-shrink-0 "
+                                  onClick={createCheckoutSession}
+                                >
+                                  تاكيد الطلب
+                                </ButtonSecondary>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}
@@ -732,7 +778,39 @@ const CheckoutPageComponent = () => {
                     </>
                   )}
                 </div>
-
+                {redeemData?.point && minToApply > +renderTotalPrice.total ? (
+                  <div className="mt-4 flex justify-between py-2.5">
+                    <span>
+                      <input
+                        type="checkbox"
+                        style={{ marginLeft: "5px", cursor: "not-allowed" }}
+                        checked={false}
+                        onChange={(e) => null}
+                      />
+                      استخدام النقاط (
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "#000",
+                          fontSize: "12px",
+                        }}
+                      ></span>
+                      {` `}
+                      {
+                        <span
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "10px",
+                            color: "#000",
+                          }}
+                        >
+                          الحد الادني للطلب لتفعيل النقاط {minToApply} رس
+                        </span>
+                      }
+                      )
+                    </span>
+                  </div>
+                ) : null}
                 <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع غير شامل الضريبة</span>
                   <span

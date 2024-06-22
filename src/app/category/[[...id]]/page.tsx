@@ -61,13 +61,14 @@ export async function generateMetadata({ params }: any) {
   }
   return {
     title: data?.name,
-    description: data.description,
     keywords: data?.name.split(""),
+    description: data?.description,
     icons: {
       icon: "/trendy.svg",
     },
   };
 }
+
 async function getSubCategoriesProducts(subCtgId) {
   const res = await axios
     .get(
@@ -75,7 +76,7 @@ async function getSubCategoriesProducts(subCtgId) {
     )
     .then((res) => res.data.data)
     .then((data) => {
-      return data.productList
+      return data?.productList
         ?.filter((item: { active: boolean }) => item.active)
         .map((item: any) => ({
           name: item.name,

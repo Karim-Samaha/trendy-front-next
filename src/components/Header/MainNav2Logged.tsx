@@ -68,6 +68,8 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
     return (
       <form
         className="flex-1 py-2 text-slate-900 dark:text-slate-100"
+        style={{flex: ".94 1 0%"}}
+
         onSubmit={(e) => {
           e.preventDefault();
           router.push(`/search/${search}`);

@@ -105,7 +105,7 @@ const DeleveryForm: FC<Props> = ({ setFormValue, formValue, handleChange }) => {
       </div>
       <div className="flex-1 form-payment-label">
         <Label className="text-sm">
-          تاريخ التوصيل (متاح من 2 الظهر الي 11م)
+          تاريخ الأستلام (متاح من 2 الظهر الي 11م)
         </Label>
         <Input
           className="mt-1.5"
