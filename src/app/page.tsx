@@ -112,11 +112,12 @@ async function getReviews() {
   return res;
 }
 
-
 export const metadata: any = async () => {
   return {
     title: " الزهرة العصرية - الرئيسية  ",
-    description: "",
+    keywords: "الزهرة العصرية",
+    description:
+      "استعد لتجربة رائعة مع الزهرة العصرية Trendy Rose في عالم الورود والهدايا. باقات الورود الفاخرة والهدايا المميزة تعكس الأناقة والتميز. اختر الخيار المثالي لأي مناسبة وأضف لمسة سحرية على لحظاتك الخاصة. خدمة التوصيل السريعة والاهتمام بأدق التفاصيل تضمن رضاك التام. استمتع بتجربة تسوق رائعة  اطلب الآن واصنع لحظات لا تنسى مع Trendy Rose.",
     icons: {
       icon: "/trendy.svg",
     },
@@ -181,10 +182,17 @@ async function PageHome() {
         <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
         </div>
-        <div className="why-trendy py-24 lg:py-10 border-b border-slate-200 dark:border-slate-700" id="articles">
-
-        <ArticleSlider data={articles} order={0} selectCard={undefined} _id={""} title={""}/>
-
+        <div
+          className="why-trendy py-24 lg:py-10 border-b border-slate-200 dark:border-slate-700"
+          id="articles"
+        >
+          <ArticleSlider
+            data={articles}
+            order={0}
+            selectCard={undefined}
+            _id={""}
+            title={""}
+          />
         </div>
 
         <Partners />
