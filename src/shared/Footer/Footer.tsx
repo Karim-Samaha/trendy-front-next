@@ -78,10 +78,10 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
             <p>{data.find((item) => item.type === "FOOTER")?.tag}</p>
             <div className="linkContainer" >
               <Link href="/">
-                <Image width={150} height={100} src={AppleImg} />
+                <Image width={150} height={100} src={AppleImg}  alt="App Store"/>
               </Link>
               <Link href="/">
-                <Image width={150} height={100} src={AndroidImg} />
+                <Image width={150} height={100} src={AndroidImg} alt="Google Play Store" />
               </Link>
             </div>
           </div>
@@ -194,7 +194,7 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
             </div>
             <div className="legal">
               <div className="legal-item">
-                <Image width={40} height={5} src={VatIcon} />
+                <Image width={40} height={5} src={VatIcon} alt="Vat Icon" />
                 <div className="info">
                   {" "}
                   <p>الرقم الضريبي</p>
@@ -202,7 +202,7 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
                 </div>
               </div>
               <div className="legal-item">
-                <Image width={40} height={5} src={VatIcon} />
+                <Image width={40} height={5} src={VatIcon} alt="Vat Icon" />
                 <div className="info">
                   {" "}
                   <p>منصة الأعمال</p>
