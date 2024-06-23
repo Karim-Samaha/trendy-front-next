@@ -47,10 +47,11 @@ const getProduct = async (id: string) => {
 
 export async function generateMetadata({ params }: any) {
   const product = await getProduct(params.id[0]);
+  console.log(product)
   return {
     title: product?.name,
     description: product.description,
-    keywords: product?.name.split(""),
+    keywords: product?.keywords,
     icons: {
       icon: "/trendy.svg",
     },

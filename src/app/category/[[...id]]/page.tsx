@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: any) {
   }
   return {
     title: data?.name,
-    keywords: data?.name.split(""),
+    keywords: data?.keywords,
     description: data?.description,
     icons: {
       icon: "/trendy.svg",
