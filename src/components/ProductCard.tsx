@@ -89,7 +89,7 @@ const ProductCard: FC<ProductCardProps> = ({
           <Image
             width={80}
             height={96}
-            src={featuredImage.src}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${data.image}`}
             alt={adjustNames(name)}
             className="absolute object-cover object-center"
           />

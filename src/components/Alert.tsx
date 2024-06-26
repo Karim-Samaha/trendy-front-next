@@ -22,14 +22,13 @@ const Alert: FC<AlerProps> = ({ text }) => {
         margin: "0 auto",
         textAlign: "center",
         backgroundColor: "#5C777D",
-        // position: "absolute",
-        // top: "0px",
         color: "#fff",
         height: "48px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
+      className="alert"
     >
       {alert && alert}
     </div>

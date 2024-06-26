@@ -721,3 +721,8 @@ tamara-widget {
 .form-payment-label {
   padding: 10px;
 }
+.alert {
+  @media (max-width: "968px") {
+    font-size: 11px;
+  }
+}

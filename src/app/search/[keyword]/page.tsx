@@ -29,7 +29,7 @@ const PageSearch = ({ params }) => {
             featuredImage: {
               id: item?._id,
               category: 1,
-              src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/Ramdan Gifts.jpeg`,
+              src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
               blurHeight: 8,
               blurWidth: 7,
               height: 200,
@@ -71,7 +71,6 @@ const PageSearch = ({ params }) => {
             {data.length > 0 && loaded ? (
               <>
                 {" "}
-                
                 {data.map((item, index) => (
                   <ProductCard
                     data={item}

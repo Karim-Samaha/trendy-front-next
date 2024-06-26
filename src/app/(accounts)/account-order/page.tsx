@@ -59,7 +59,7 @@ const AccountOrder = () => {
           <Image
             fill
             sizes="100px"
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${image}`}
             alt={name}
             className="h-full w-full object-cover object-center"
           />

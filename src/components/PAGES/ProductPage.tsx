@@ -128,7 +128,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
       (t) => (
         <Link href={"/cart"}>
           <NotifyAddTocart
-            productImage={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/defualt.jpg`}
+            productImage={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item?.image}`}
             qualitySelected={item.quantity}
             show={t.visible}
             sizeSelected={sizeSelected}
