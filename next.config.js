@@ -36,6 +36,12 @@ const nextConfig = {
         hostname: "trendy-rose-ea018d58bf02.herokuapp.com",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "trendy-rose-backend-1d3339f8bb01.herokuapp.com",
+        port: "",
+        pathname: "/**",
       }
     ],
   },

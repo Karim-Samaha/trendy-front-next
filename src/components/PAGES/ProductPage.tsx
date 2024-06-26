@@ -431,7 +431,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
                     height={600}
                     src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`}
                     className=" rounded-2xl object-cover product-img"
-                    alt="product detail 1"
+                    alt={productData?.name}
                   />
                   <div
                     style={{
