@@ -290,7 +290,7 @@ const ProductCard: FC<ProductCardProps> = ({
           ></Link>
         )}
 
-        <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
+        <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group" style={{backgroundColor: "#CCAA91"}}>
           {modal ? (
             <NcImage
               containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"

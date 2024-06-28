@@ -39,12 +39,23 @@ const Moysar = ({
           amount: ${+fintalTotal * 100},
           currency: 'SAR',
           language: "ar",   
-          description: '${JSON.stringify(items)}',
+          description: '${JSON.stringify(
+            items.map((item) => ({
+              id: item.id,
+              price: item.price,
+              priceBefore: item.priceBefore,
+              name: item.name,
+              formInfo: item.formInfo,
+              color: item.color,
+              quantity: item.quantity,
+              selectedCard: item?.selectedCard,
+              text: item?.text,
+              image: item?.image,
+            }))
+          )}',
           userId: '${session?.user?._id}',
           publishable_api_key: 'pk_test_A4Ae74mFrkjuhhzovBc3KrYVE6Nc9u8YEryNe6dv',
-          callback_url: '${
-            process.env.NEXT_PUBLIC_FRONTEND_URL
-          }/check-payment',
+          callback_url: '${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment',
           methods: ['creditcard'],
           on_completed: function (payment) {
             return new Promise(async function (resolve, reject) {

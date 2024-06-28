@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: any) {
 async function getSubCategoriesProducts(subCtgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web&limit=12`
     )
     .then((res) => res.data.data)
     .then((data) => {
@@ -109,7 +109,7 @@ async function getSubCategoriesProducts(subCtgId) {
 async function getCategoryAllProducts(ctgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web&limit=12`
     )
     .then((res) => res.data.data)
     .then((data) => {
@@ -150,7 +150,6 @@ const PageCollection2 = async ({ params }) => {
     (ctg) => ctg._id === params?.id[0]
   );
   let products;
-
   if (params.id.length > 1) {
     products = await getSubCategoriesProducts(params?.id[1]);
   } else {
@@ -177,7 +176,7 @@ const PageCollection2 = async ({ params }) => {
           <main>
             {/* LOOP ITEMS */}
             <div className="flex flex-col lg:flex-row">
-              <ProductSection products={products} />
+              <ProductSection products={products} params={params} />
               <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0"></div>
               <div className="lg:w-1/3 xl:w-1/4 pr-4">
                 <SidebarFilters categories={categories} params={params} />
