@@ -810,6 +810,38 @@ const CheckoutPageComponent = () => {
                       )
                     </span>
                   </div>
+                ) : redeemData?.point === 0 ? (
+                  <div className="mt-4 flex justify-between py-2.5">
+                    <span>
+                      <input
+                        type="checkbox"
+                        style={{ marginLeft: "5px", cursor: "not-allowed" }}
+                        checked={false}
+                        onChange={(e) => null}
+                      />
+                      استخدام النقاط (
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "#000",
+                          fontSize: "12px",
+                        }}
+                      ></span>
+                      {` `}
+                      {
+                        <span
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "10px",
+                            color: "#000",
+                          }}
+                        >
+                          رصيدك الحالي من النقاط 0
+                        </span>
+                      }
+                      )
+                    </span>
+                  </div>
                 ) : null}
                 <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع غير شامل الضريبة</span>
