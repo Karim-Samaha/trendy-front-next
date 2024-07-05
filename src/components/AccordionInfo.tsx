@@ -31,22 +31,22 @@ const DEMO_DATA = [
   //   content:
   //     "Use this as a guide. Preference is a huge factor — if you're near the top of a size range and/or prefer more coverage, you may want to size up.",
   // },
-  {
-    name: "خصائص المنتج:",
-    content: `
-    <ul class="list-disc list-inside leading-7">
-    <li>العلامة التجارية:الزهرة العصرية</li>
-    <li>    اللون:أخضر - أبيض - موف
-    </li>
-    <li>
-    الأبعاد:50×90
-    </li>
-    <li>
-    الخامة:فازه سيراميك - زهور طبيعية
-    </li>
-  </ul>
-    `,
-  },
+  // {
+  //   name: "خصائص المنتج:",
+  //   content: `
+  //   <ul class="list-disc list-inside leading-7">
+  //   <li>العلامة التجارية:الزهرة العصرية</li>
+  //   <li>    اللون:أخضر - أبيض - موف
+  //   </li>
+  //   <li>
+  //   الأبعاد:50×90
+  //   </li>
+  //   <li>
+  //   الخامة:فازه سيراميك - زهور طبيعية
+  //   </li>
+  // </ul>
+  //   `,
+  // },
 ];
 
 interface Props {

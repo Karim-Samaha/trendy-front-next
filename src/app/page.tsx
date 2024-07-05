@@ -73,7 +73,7 @@ async function getBanners() {
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/banners`)
     .then((res) => res.data.data)
     .then((data) => {
-      return data.reverse().map((item: any) => ({
+      return data.map((item: any) => ({
         btnLink: item?.route,
         btnText: item?.name,
         heading: item?.name,
@@ -146,7 +146,7 @@ async function PageHome() {
       <div className="mt-24 lg:mt-32">
         <DiscoverMoreSlider categories={categories} />
       </div>
-      <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
+      <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32 product-section">
         <SectionSliderProductCard
           data={DummyData}
           order={1}
@@ -182,10 +182,7 @@ async function PageHome() {
         <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
         </div>
-        <div
-          className="why-trendy py-24 lg:py-10 border-b border-slate-200 dark:border-slate-700"
-          id="articles"
-        >
+  
           <ArticleSlider
             data={articles}
             order={0}
@@ -193,7 +190,6 @@ async function PageHome() {
             _id={""}
             title={""}
           />
-        </div>
 
         <Partners />
 

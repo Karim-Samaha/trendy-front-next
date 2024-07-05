@@ -24,12 +24,14 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
   const [searchTry, setSearchTry] = useState(0);
   useEffect(() => {
     onClickClose;
-    console.log({searchTry})
+    console.log({ searchTry });
   }, [searchTry]);
   const router = useRouter();
 
   useEffect(() => {
-    axios(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&channel=web`)
+    axios(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category?subCtg=true&channel=web`
+    )
       .then((res) => res.data.data)
       .then((items) => {
         setData(
@@ -107,13 +109,16 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
         as="li"
         className="text-slate-900 dark:text-white"
       >
-        <span
-          className={!item.children ? "block w-full" : ""}
-          onClick={onClickClose}
-        >
+        <span className={!item.children ? "block w-full" : ""}>
           {item.name}
+          <Disclosure.Button as="span" className="flex justify-end flex-grow">
+            <ChevronDownIcon
+              className="ml-2 h-4 w-4 text-neutral-500"
+              aria-hidden="true"
+            />
+          </Disclosure.Button>
         </span>
-        {item.children && (
+        {/* {item.children && (
           <span className="block flex-grow" onClick={(e) => e.preventDefault()}>
             <Disclosure.Button as="span" className="flex justify-end flex-grow">
               <ChevronDownIcon
@@ -122,7 +127,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
               />
             </Disclosure.Button>
           </span>
-        )}
+        )} */}
         {item.children && (
           <Disclosure.Panel>{_renderMenuChild(item)}</Disclosure.Panel>
         )}
@@ -166,6 +171,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
         onSubmit={async (e) => {
           e.preventDefault();
           setSearchTry(searchTry + 1);
+          onClickClose();
           router.push(`/search/${search}`);
         }}
       >
@@ -186,7 +192,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
 
   return (
     <div className="overflow-y-auto w-full h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">
-      <div className="py-6 px-5 dir-rtl">
+      <div className="py-6 px-5 dir-rtl" onClick={onClickClose}>
         <Logo />
 
         <span className="absolute right-2 top-2 p-1">

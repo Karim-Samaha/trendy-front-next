@@ -29,6 +29,7 @@ export interface ProductCardProps {
   _id: string;
   modal: boolean;
   selectCard: any;
+  setImageErrorObj: any;
 }
 
 const ProductCard: FC<ProductCardProps> = ({
@@ -37,6 +38,7 @@ const ProductCard: FC<ProductCardProps> = ({
   isLiked,
   modal,
   selectCard,
+  setImageErrorObj,
 }) => {
   const {
     name,
@@ -54,6 +56,7 @@ const ProductCard: FC<ProductCardProps> = ({
   } = data;
   const [variantActive, setVariantActive] = useState(0);
   const [showModalQuickView, setShowModalQuickView] = useState(false);
+  const [imageError, setImageError] = useState<boolean>(false);
   const router = useRouter();
   const notifyAddTocart = ({ size }: { size?: string }) => {
     toast.custom(
@@ -281,7 +284,7 @@ const ProductCard: FC<ProductCardProps> = ({
   return (
     <>
       <div
-        className={`nc-ProductCard relative flex flex-col bg-transparent ${className}`}
+        className={`nc-ProductCard relative flex flex-col bg-transparent ${className} ${imageError && 'noImgProduct'}`}
       >
         {!modal && (
           <Link
@@ -290,7 +293,10 @@ const ProductCard: FC<ProductCardProps> = ({
           ></Link>
         )}
 
-        <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group" style={{backgroundColor: "#CCAA91"}}>
+        <div
+          className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group"
+          style={{ backgroundColor: "#CCAA91" }}
+        >
           {modal ? (
             <NcImage
               containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
@@ -299,6 +305,13 @@ const ProductCard: FC<ProductCardProps> = ({
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
               alt="product"
+              onError={() => {
+                setImageError(true);
+                setImageErrorObj((prev: any) => ({
+                  ...prev,
+                  [data?._id]: true,
+                }));
+              }}
             />
           ) : (
             <Link href={`/product-detail/${_id}/${name}`} className="block">
@@ -309,6 +322,13 @@ const ProductCard: FC<ProductCardProps> = ({
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
                 alt="product"
+                onError={() => {
+                  setImageError(true);
+                  setImageErrorObj((prev: any) => ({
+                    ...prev,
+                    [data?._id]: true,
+                  }));
+                }}
               />
             </Link>
           )}

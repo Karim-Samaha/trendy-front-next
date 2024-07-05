@@ -40,6 +40,7 @@ import {
   XIcon,
   FacebookMessengerIcon,
 } from "react-share";
+import { sendEvent } from "@/utils/firebase";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -158,8 +159,36 @@ const ProductPage: FC<any> = ({ params, product }) => {
         ...item,
         quantity: item.quantity + qty,
       };
+      sendEvent("add_to_cart", {
+        currency: "SAR",
+        value: +itemToBeAdded.price,
+        items: [
+          {
+            item_id: `${itemToBeAdded._id}`,
+            item_name: itemToBeAdded.name,
+            item_brand: itemToBeAdded?.brand || "",
+            item_category: "",
+            price: itemToBeAdded.price,
+            quantity: 1,
+          },
+        ],
+      });
     } else {
       addItem(itemToBeAdded, qty);
+      sendEvent("add_to_cart", {
+        currency: "SAR",
+        value: +itemToBeAdded.price,
+        items: [
+          {
+            item_id: `${itemToBeAdded._id}`,
+            item_name: itemToBeAdded.name,
+            item_brand: itemToBeAdded?.brand || "",
+            item_category: "",
+            price: itemToBeAdded.price,
+            quantity: 1,
+          },
+        ],
+      });
     }
     notifyAddTocart(itemToBeAdded);
   };

@@ -117,7 +117,15 @@ const ProductSection = ({ products, params }: any) => {
         <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl">
           {products?.length > 0
             ? renderdData.map((item, index) => (
-                <ProductCard data={item} key={index} />
+                <ProductCard
+                  data={item}
+                  key={index}
+                  featuredImage={undefined}
+                  _id={""}
+                  modal={false}
+                  selectCard={undefined}
+                  setImageErrorObj={undefined}
+                />
               ))
             : null}
         </div>
@@ -125,9 +133,11 @@ const ProductSection = ({ products, params }: any) => {
           className="flex"
           style={{ justifyContent: "center", marginTop: "50px" }}
         >
-          <ButtonPrimary onClick={handleShowMoreButton}>
-            عرض المزيد
-          </ButtonPrimary>
+          {products.length >= 8 && (
+            <ButtonPrimary onClick={handleShowMoreButton}>
+              عرض المزيد
+            </ButtonPrimary>
+          )}
         </div>
       </div>
       {products?.length <= 0 ? (

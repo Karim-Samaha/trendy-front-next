@@ -47,6 +47,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   const [data_, setData_] = useState([...data]);
   const [fav, setFav] = useState([]);
   const { data: session } = useSession();
+  const [imageErrorObj, setImageErrorObj] = useState<any>({});
+
   const [category, setCategory] = useState<any>({});
   useEffect(() => {
     if (session) {
@@ -168,14 +170,12 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           <ul
             style={{
               direction: "rtl",
-              // marginRight: modal ? "-54% " : "-54%",
-              // width: "100%"
               maxHeight: "500px",
             }}
-            className="glide__slides prouct-slide"
+            className="glide__slides prouct-slide home-slider"
           >
             {data_.map((item, index) => (
-              <li key={index} className={`glide__slide ${itemClassName}`}>
+              <li key={index} className={`glide__slide ${itemClassName} ${imageErrorObj[item?._id] && 'noImgProduct'}`}>
                 <ProductCard
                   // @ts-ignore
                   data={{ ...item, fav: fav.includes(item?._id) }}
@@ -183,21 +183,10 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
                   _id={""}
                   modal={modal}
                   selectCard={selectCard}
+                  setImageErrorObj={setImageErrorObj}
                 />
               </li>
             ))}
-            {/* {data_.map((item, index) => (
-              <li key={index} className={`glide__slide ${itemClassName}`}>
-                <ProductCard
-                  // @ts-ignore
-                  data={{ ...item, fav: fav.includes(item?._id) }}
-                  featuredImage={undefined}
-                  _id={""}
-                  modal={modal}
-                  selectCard={selectCard}
-                />
-              </li>
-            ))} */}
           </ul>
         </div>
       </div>

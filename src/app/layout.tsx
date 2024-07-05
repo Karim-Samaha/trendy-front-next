@@ -15,6 +15,8 @@ import logo from "@/images/trendy.svg";
 import { useEffect, useState } from "react";
 import _axios from "@/contains/api/axios";
 import HitRequest from "@/components/HitRequest";
+import { analytics } from '../utils/firebase';
+
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -53,6 +55,11 @@ export default function RootLayout({
         );
       })
       .catch((err) => console.log(err));
+      console.log({analytics})
+      if (analytics) {
+        console.log('Firebase Analytics initialized');
+      }
+
   }, []);
 
   useEffect(() => {

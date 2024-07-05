@@ -86,65 +86,74 @@ const ArticleSlider: FC<SectionSliderProductCardProps> = ({
       slider.destroy();
     };
   }, [sliderRef]);
-
+  if (data.length <= 0) return null;
   return (
     <div
-      className={`nc-SectionSliderProductCard ${className} ${
-        modal && "modalSlider"
-      }`}
+      className="why-trendy py-24 lg:py-10 border-b border-slate-200 dark:border-slate-700"
+      id="articles"
     >
       <div
-        ref={sliderRef}
-        className={`flow-root ${isShow ? "" : "invisible"}`}
-        style={{ direction: "rtl" }}
+        className={`nc-SectionSliderProductCard ${className} ${
+          modal && "modalSlider"
+        }`}
       >
-        <Heading
-          className={headingClassName}
-          fontClass={headingFontClassName}
-          rightDescText={"المقالات"}
-          hasNextPrev
-        ></Heading>
         <div
+          ref={sliderRef}
+          className={`flow-root ${isShow ? "" : "invisible"}`}
           style={{ direction: "rtl" }}
-          className="glide__track"
-          data-glide-el="track"
         >
-          <ul
-            style={{
-              direction: "rtl",
-            }}
-            className="glide__slides prouct-slide"
+          <Heading
+            className={headingClassName}
+            fontClass={headingFontClassName}
+            rightDescText={"المقالات"}
+            hasNextPrev
+          ></Heading>
+          <div
+            style={{ direction: "rtl" }}
+            className="glide__track"
+            data-glide-el="track"
           >
-            {data.map((item, index) => (
-              <li key={index} className={`glide__slide ${itemClassName}`}>
-                <div
-                  className={`nc-ProductCard relative flex flex-col bg-transparent `}
-                >
-                  <Link
-                    href={`/article-detail/${item?._id}/${item?.name}`}
-                    className="absolute inset-0"
-                  ></Link>
-                  <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
+            <ul
+              style={{
+                direction: "rtl",
+              }}
+              className="glide__slides prouct-slide article-slide"
+            >
+              {data.map((item, index) => (
+                <li key={index} className={`glide__slide ${itemClassName}`}>
+                  <div
+                    className={`nc-ProductCard relative flex flex-col bg-transparent `}
+                  >
                     <Link
                       href={`/article-detail/${item?._id}/${item?.name}`}
-                      className="block"
-                    >
-                      <NcImage
-                        containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
-                        src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item?.imageSrc}`}
-                        className="object-cover w-full h-full drop-shadow-xl"
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                        alt="product"
-                      />
-                    </Link>
+                      className="absolute inset-0"
+                    ></Link>
+                    <div className="relative flex-shrink-0 bg-slate-50 dark:bg-slate-300 rounded-3xl overflow-hidden z-1 group">
+                      <Link
+                        href={`/article-detail/${item?._id}/${item?.name}`}
+                        className="block"
+                      >
+                        <NcImage
+                          containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
+                          src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs${item?.imageSrc}`}
+                          className="object-cover w-full h-full drop-shadow-xl"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                          alt="product"
+                        />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                <h2 style={{marginInlineStart: '20px', marginTop: "10px"}}>{item?.name}</h2>
-                <p style={{ opacity: ".6", marginInlineStart: '20px' }}>{formatDate(item?.createdAt)}</p>
-              </li>
-            ))}
-          </ul>
+                  <h2 style={{ marginInlineStart: "20px", marginTop: "10px" }}>
+                    {item?.name}
+                  </h2>
+                  <p style={{ opacity: ".6", marginInlineStart: "20px" }}>
+                    {formatDate(item?.createdAt)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
