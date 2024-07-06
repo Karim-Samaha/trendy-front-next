@@ -59,7 +59,7 @@ const DATA_sortOrderRadios = [
   { name: "Price Hight - Low", id: "Price-hight-low" },
 ];
 
-const PRICE_RANGE = [1, 500];
+const PRICE_RANGE = [1, 10000];
 //
 const SidebarFilters = (
   { categories }: [{ _id: string; name: string }] | any,
@@ -67,7 +67,7 @@ const SidebarFilters = (
 ) => {
   //
   const [isOnSale, setIsIsOnSale] = useState(true);
-  const [rangePrices, setRangePrices] = useState([100, 500]);
+  const [rangePrices, setRangePrices] = useState([100, 10000]);
   const [categoriesState, setCategoriesState] = useState<string[]>([]);
   const [colorsState, setColorsState] = useState<string[]>([]);
   const [sizesState, setSizesState] = useState<string[]>([]);
@@ -229,7 +229,11 @@ const SidebarFilters = (
         </div>
         <div className="filter-btn block lg:w-1/3 xl:w-1/4 pr-4">
           <ButtonPrimary
-            href={id.length > 1 ? `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}` : `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}`}
+            href={
+              id.length > 1
+                ? `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}`
+                : `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}`
+            }
           >
             تصفيه
           </ButtonPrimary>
@@ -264,6 +268,18 @@ const SidebarFilters = (
 
     // const id = searchParams.getAll('_id');
 
+    const isOpen = (item) => {
+      if (item._id === id[0]) {
+        return true;
+      }
+      if (id[1] === id[0]) {
+        for (let i = 0; i < item.subCategories.length; i++) {
+          if (item.subCategories[i]?._id === id[1]) {
+            return true;
+          }
+        }
+      }
+    };
     return (
       <div
         style={{ direction: "rtl" }}
@@ -276,7 +292,7 @@ const SidebarFilters = (
             index: number
           ) => {
             return (
-              <Disclosure key={index} defaultOpen={item._id === id[0]}>
+              <Disclosure key={index} defaultOpen={isOpen(item)}>
                 {({ open }) => {
                   // setCurrentCtg(item.id);
                   return (

@@ -8,9 +8,11 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Image from "next/image";
 import { getServerAuthSession } from "../../server/auth";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 import { getCsrfToken, getSession, signIn, useSession } from "next-auth/react";
 import _axios from "@/contains/api/axios";
+import { useRouter } from "next/navigation";
 
 const loginSocials = [
   {
@@ -42,13 +44,18 @@ const PageLogin = () => {
   const [method, setMethod] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
-
+  const searchParams = useSearchParams();
   const handleSignIn = async () => {
     let credentials = loginForm;
     await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
         if (res?.ok) {
-          window.location.assign("/");
+          let callback = searchParams.get("callback");
+          if (callback) {
+            window.location.assign(`${callback}`);
+          } else {
+            window.location.assign("/");
+          }
         } else {
           let apiResults = await JSON.parse(res?.error);
           if (apiResults.user?.error === "wrongCredintials") {

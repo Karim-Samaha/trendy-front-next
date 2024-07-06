@@ -190,6 +190,7 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
           </div>
         </div>
         <div className="flex-1 dir-rtl">
+          {console.log({AccordionInfo: data})}
           <AccordionInfo allOpen={true} desc={data.description} />
         </div>
 

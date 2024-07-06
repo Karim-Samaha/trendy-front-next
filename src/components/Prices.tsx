@@ -18,7 +18,7 @@ const Prices: FC<PricesProps> = ({
       <div
         className={`flex items-center border-2  price rounded-lg ${contentClass} price-label`}
       >
-        <span className=" !leading-none" style={{ direction: "rtl" }}>
+        <span className=" !leading-none" style={{ direction: "rtl", fontWeight: "bold",fontSize: "15px" }}>
           {" "}
           {String(price)} ر.س
         </span>

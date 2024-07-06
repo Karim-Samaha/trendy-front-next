@@ -73,25 +73,29 @@ async function getBanners() {
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/banners`)
     .then((res) => res.data.data)
     .then((data) => {
-      return data.map((item: any) => ({
-        btnLink: item?.route,
-        btnText: item?.name,
-        heading: item?.name,
-        type: item.type,
-        what: item.imageSrc,
-        route: item.route,
-        name: item.name,
-        image: {
-          src: `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.imageSrc}`,
-          height: 1001,
-          width: 1000,
-          blurDataURL:
-            "/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-right-2.dc1c84f6.png&w=8&q=70",
-          blurWidth: 8,
-          blurHeight: 8,
-        },
-        subHeading: "",
-      }));
+      return data
+        .filter((item) => item.active)
+        .map((item: any) => {
+          return {
+            btnLink: item?.route,
+            btnText: item?.name,
+            heading: item?.name,
+            type: item.type,
+            what: item.imageSrc,
+            route: item.route,
+            name: item.name,
+            image: {
+              src: `${process.env.NEXT_PUBLIC_ASSETS_URL}${item.imageSrc}`,
+              height: 1001,
+              width: 1000,
+              blurDataURL:
+                "/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-right-2.dc1c84f6.png&w=8&q=70",
+              blurWidth: 8,
+              blurHeight: 8,
+            },
+            subHeading: "",
+          };
+        });
     })
     .catch((err) => console.log(err));
   if (!res) {
@@ -104,6 +108,17 @@ async function getReviews() {
   const res = await axios
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews`)
     .then((res) => res.data.data)
+    .catch((err) => console.log(err));
+  if (!res) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res;
+}
+async function getHomePageSectionsSettings() {
+  const res = await axios
+    .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/homepage-sections-settings`)
+    .then((res) => res.data)
     .catch((err) => console.log(err));
   if (!res) {
     throw new Error("Failed to fetch data");
@@ -129,27 +144,30 @@ async function PageHome() {
   const reviews = await getReviews();
   const articles = await getArticles();
   const banners: [{ type: string }] = await getBanners();
-
+  const sectionsSettings = await getHomePageSectionsSettings();
+  const sectionsCount =
+    (await sectionsSettings?.data?.homePageSettings.sectionsCount) || 3;
+  const sectionsInfo = sectionsSettings?.cateoriesInfo;
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <Alert
         text={
-          banners.find((item: { type: string }) => item.type === "ALERT")?.name
+          banners.find((item: { type: string }) => item?.type === "ALERT")?.name
         }
       />
       <SectionHero2
         data_={banners.filter(
-          (item: { type: string }) => item.type === "HERO_IMG"
+          (item: { type: string }) => item?.type === "HERO_IMG"
         )}
       />
 
-      <div className="mt-24 lg:mt-32">
+      <div className="mt-24 lg:mt-24">
         <DiscoverMoreSlider categories={categories} />
       </div>
-      <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32 product-section">
+      <div className="container relative space-y-24 my-24 lg:space-y-24 lg:my-24 product-section">
         <SectionSliderProductCard
           data={DummyData}
-          order={1}
+          order={sectionsInfo[0]?._id}
           selectCard={undefined}
         />
         <SectionPromo2
@@ -159,12 +177,14 @@ async function PageHome() {
             )[0]
           }
         />
+        {sectionsCount > 1 && (
+          <SectionSliderProductCard
+            data={DummyData}
+            order={sectionsInfo[1]?._id}
+            selectCard={undefined}
+          />
+        )}
 
-        <SectionSliderProductCard
-          data={DummyData}
-          order={2}
-          selectCard={undefined}
-        />
         <SectionPromo2
           image={
             banners.filter(
@@ -172,28 +192,63 @@ async function PageHome() {
             )[1]
           }
         />
-
-        <SectionSliderProductCard
-          data={PRODUCTS}
-          order={3}
-          selectCard={undefined}
-        />
-
+        {sectionsCount > 2 && (
+          <SectionSliderProductCard
+            data={PRODUCTS}
+            order={sectionsInfo[2]?._id}
+            selectCard={undefined}
+          />
+        )}
+        {sectionsCount > 3 && (
+          <SectionSliderProductCard
+            data={PRODUCTS}
+            order={sectionsInfo[3]?._id}
+            selectCard={undefined}
+          />
+        )}
+        {sectionsCount > 4 && (
+          <SectionSliderProductCard
+            data={PRODUCTS}
+            order={sectionsInfo[4]?._id}
+            selectCard={undefined}
+          />
+        )}
+        {sectionsCount > 5 && (
+          <SectionSliderProductCard
+            data={PRODUCTS}
+            order={sectionsInfo[5]?._id}
+            selectCard={undefined}
+          />
+        )}
+        {sectionsCount > 6 && (
+          <SectionSliderProductCard
+            data={PRODUCTS}
+            order={sectionsInfo[6]?._id}
+            selectCard={undefined}
+          />
+        )}
+        {sectionsCount > 7 && (
+          <SectionSliderProductCard
+            data={PRODUCTS}
+            order={sectionsInfo[7]?._id}
+            selectCard={undefined}
+          />
+        )}
         <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
           <SectionHowItWork />
         </div>
-  
-          <ArticleSlider
-            data={articles}
-            order={0}
-            selectCard={undefined}
-            _id={""}
-            title={""}
-          />
+
+        <ArticleSlider
+          data={articles}
+          order={0}
+          selectCard={undefined}
+          _id={""}
+          title={""}
+        />
 
         <Partners />
 
-        <div className="web-rates container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
+        <div className="web-rates container relative space-y-24 my-24 lg:space-y-32 lg:my-24">
           <DiscoverMoreReviews reviews={reviews} />
         </div>
       </div>

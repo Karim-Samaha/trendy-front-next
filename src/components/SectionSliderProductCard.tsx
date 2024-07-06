@@ -66,13 +66,14 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   useEffect(() => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory?isHomeSection=${order}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/homepage-sections?order=${order}`
       )
-      .then((res) => res.data.data)
+      .then((res) => res.data.data.subCategories[0])
       .then((data) => {
-        setCategory({ ...data[0], productList: [] });
+        setCategory({ ...data });
+        console.log({ data });
         setData_(
-          data[0].productList
+          data.productList
             .reverse()
             .filter((item: { active: boolean }) => item.active)
             .map((item: any) => ({
@@ -97,7 +98,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               price: item.price,
               isOffer: item.isOffer,
               priceBefore: item.priceBefore,
-              description: item.nameAr,
+              description: item.description,
               rates: item.rates,
               purchaseCount: item.purchaseCount,
             }))
@@ -144,7 +145,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
       slider.destroy();
     };
   }, [sliderRef]);
-
+  if (data_.length <= 0) return null;
   return (
     <div
       className={`nc-SectionSliderProductCard ${className} ${
@@ -170,12 +171,17 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           <ul
             style={{
               direction: "rtl",
-              maxHeight: "500px",
+              maxHeight: "450px",
             }}
             className="glide__slides prouct-slide home-slider"
           >
             {data_.map((item, index) => (
-              <li key={index} className={`glide__slide ${itemClassName} ${imageErrorObj[item?._id] && 'noImgProduct'}`}>
+              <li
+                key={index}
+                className={`glide__slide ${itemClassName} ${
+                  imageErrorObj[item?._id] && "noImgProduct"
+                }`}
+              >
                 <ProductCard
                   // @ts-ignore
                   data={{ ...item, fav: fav.includes(item?._id) }}

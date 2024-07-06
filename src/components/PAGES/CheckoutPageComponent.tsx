@@ -881,6 +881,15 @@ const CheckoutPageComponent = () => {
                     {renderTotalPrice.vat} ر.س
                   </span>
                 </div>
+                <div className="flex justify-between py-2.5">
+                  <span>تكاليف الشحن</span>
+                  <span
+                    style={{ minWidth: "100px" }}
+                    className="font-semibold text-slate-900 dark:text-slate-200"
+                  >
+                    0 ر.س
+                  </span>
+                </div>
                 {redeemData?.point && minToApply < +renderTotalPrice.total ? (
                   <div className="mt-4 flex justify-between py-2.5">
                     <span>
@@ -930,15 +939,7 @@ const CheckoutPageComponent = () => {
                   </div>
                 ) : null}
 
-                <div className="flex justify-between py-2.5">
-                  <span>تكاليف الشحن</span>
-                  <span
-                    style={{ minWidth: "100px" }}
-                    className="font-semibold text-slate-900 dark:text-slate-200"
-                  >
-                    0 ر.س
-                  </span>
-                </div>
+              
                 {/* <div className="flex justify-between py-2.5">
                   <span>نص بطاقه</span>
                   <span

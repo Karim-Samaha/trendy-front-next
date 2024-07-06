@@ -68,7 +68,7 @@ const AccordionInfo: FC<Props> = ({
     content: desc ? desc.trim() : "",
   };
   return (
-    <div className="w-full rounded-2xl space-y-2.5">
+    <div className="w-full rounded-2xl space-y-2.5 product-description" >
       {/* ============ */}
       {data.map((item, index) => {
         return (

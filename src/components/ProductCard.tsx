@@ -284,7 +284,9 @@ const ProductCard: FC<ProductCardProps> = ({
   return (
     <>
       <div
-        className={`nc-ProductCard relative flex flex-col bg-transparent ${className} ${imageError && 'noImgProduct'}`}
+        className={`nc-ProductCard relative flex flex-col bg-transparent ${className} ${
+          imageError && "noImgProduct"
+        }`}
       >
         {!modal && (
           <Link
@@ -361,7 +363,7 @@ const ProductCard: FC<ProductCardProps> = ({
             </h2>
           </div>
 
-          <div className="flex justify-between items-end product-footer">
+          <div className="flex justify-between items-center product-footer">
             <Prices price={price} priceBefore={priceBefore} />
             <Link
               href={
@@ -375,7 +377,11 @@ const ProductCard: FC<ProductCardProps> = ({
                 <StarIcon className="w-5 h-5 pb-[1px] text-amber-400" />
                 <span
                   className="text-sm ms-1 text-slate-500 dark:text-slate-400"
-                  style={{ direction: "rtl" }}
+                  style={{
+                    direction: "rtl",
+                    fontSize: "15px",
+                    fontWeight: "bold",
+                  }}
                 >
                   {rating || ""}({data.rates || 0} تقيم)
                 </span>

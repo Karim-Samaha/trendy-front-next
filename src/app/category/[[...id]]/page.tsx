@@ -21,7 +21,7 @@ async function getCategories() {
         .filter((item: { active: boolean }) => item.active)
         .map((item: any) => ({
           name: item.name,
-          desc: item.name,
+          desc: item.description,
           _id: item._id,
           color: "bg-yellow-50",
           productList: item.productList,
@@ -53,7 +53,6 @@ export async function generateMetadata({ params }: any) {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${params?.id[1]}?channel=web`
       )
       .then((res) => res.data.data);
-    console.log({ data });
   } else {
     data = await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${params?.id[0]}`)
@@ -72,7 +71,7 @@ export async function generateMetadata({ params }: any) {
 async function getSubCategoriesProducts(subCtgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web&limit=12`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web&limit=20`
     )
     .then((res) => res.data.data)
     .then((data) => {
@@ -109,7 +108,7 @@ async function getSubCategoriesProducts(subCtgId) {
 async function getCategoryAllProducts(ctgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web&limit=12`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web&limit=20`
     )
     .then((res) => res.data.data)
     .then((data) => {
@@ -166,8 +165,9 @@ const PageCollection2 = async ({ params }) => {
               className="block text-2xl sm:text-3xl lg:text-4xl font-semibold"
             >
               {currentCategory?.name}
+
             </h1>
-            <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base">
+            <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base" style={{lineHeight: "30px"}}>
               {currentCategory?.desc}
             </span>
           </div>

@@ -96,7 +96,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
               price: item.price,
               isOffer: item.isOffer,
               priceBefore: item.priceBefore,
-              description: item.nameAr,
+              description: item.description,
               rates: item.rates,
               purchaseCount: item.purchaseCount,
             }))
@@ -190,7 +190,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       </div>
       {!modal && (
         <div className="show-more">
-          <Link href={`/category/${category?._id}/${category?._id}`}>
+          <Link href={`/category/${category?.category || category?._id}/${category?._id}`}>
             عرض المزيد
           </Link>
         </div>

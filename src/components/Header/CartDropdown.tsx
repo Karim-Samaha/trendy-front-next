@@ -25,7 +25,6 @@ export default function CartDropdown() {
     const { image, price, name, featuredImage, id, _id, quantity } = item;
     return (
       <div key={index} className="flex py-5 last:pb-0">
-
         <div
           style={{ margin: "0 20px" }}
           className="relative h-24 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-slate-100"
@@ -182,7 +181,7 @@ export default function CartDropdown() {
                           items.length === 0
                             ? "/cart"
                             : !session?.user?.accessToken
-                            ? "/login"
+                            ? "/login?callback=/checkout"
                             : "/checkout"
                         }
                         onClick={close}

@@ -14,7 +14,7 @@ export interface SectionPromo2Props {
 }
 
 const SectionPromo2: FC<SectionPromo2Props> = ({
-  className = "lg:pt-10",
+  className = "",
   image = [{}],
 }) => {
   {

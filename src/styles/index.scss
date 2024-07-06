@@ -753,3 +753,13 @@ tamara-widget {
     min-width: 95%;      
   }
 }
+.hide-element {
+  display: none;
+}
+.product-description *{
+  font-family: __CAIRO_585AC7 !important;
+}
+.product-description a {
+  color: blue;
+  text-decoration: underline;
+}

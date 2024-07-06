@@ -33,7 +33,7 @@ async function getSubCategoriesProducts(subCtgId: string, limit: number) {
           price: item.price,
           priceBefore: item.priceBefore,
           isOffer: item?.isOffer,
-          description: item.nameAr,
+          description: item.description,
         }));
     });
   if (!res) {
@@ -70,7 +70,7 @@ async function getCategoryAllProducts(ctgId: string, limit: number) {
           price: item.price,
           priceBefore: item.priceBefore,
           isOffer: item?.isOffer,
-          description: item.nameAr,
+          description: item.description,
         }));
     });
   if (!res) {
@@ -82,7 +82,7 @@ async function getCategoryAllProducts(ctgId: string, limit: number) {
 const ProductSection = ({ products, params }: any) => {
   const searchParams = useSearchParams();
   const [renderdData, setRenderedData] = useState<any>(products);
-  const [requestedAmount, setRequestedAmount] = useState<number>(12);
+  const [requestedAmount, setRequestedAmount] = useState<number>(20);
   const priceFrom = searchParams.get("from");
   const priceTo = searchParams.get("to");
   useEffect(() => {
@@ -94,7 +94,7 @@ const ProductSection = ({ products, params }: any) => {
   }, [priceFrom, priceTo]);
 
   const handleShowMoreButton = () => {
-    setRequestedAmount((prev) => (prev += 9));
+    setRequestedAmount((prev) => (prev += 10));
   };
 
   const getDataBasedOnRequest = async () => {
@@ -114,6 +114,7 @@ const ProductSection = ({ products, params }: any) => {
   return (
     <>
       <div className="flex-1 ">
+        <h3 style={{marginBottom:  '30px'}}>النتائج : {renderdData.length} منتج</h3>
         <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl">
           {products?.length > 0
             ? renderdData.map((item, index) => (

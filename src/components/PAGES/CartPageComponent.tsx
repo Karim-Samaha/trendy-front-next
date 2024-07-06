@@ -429,7 +429,7 @@ const CartPageComponent = () => {
                 </div> */}
               </div>
               <ButtonPrimary
-                href={session?.user?.accessToken ? "/checkout" : "/login"}
+                href={session?.user?.accessToken ? "/checkout" : "/login?callback=/checkout"}
                 className="mt-8 w-full"
               >
                 إتمام عملية الشراء{" "}

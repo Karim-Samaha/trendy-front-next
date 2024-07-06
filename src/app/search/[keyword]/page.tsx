@@ -44,7 +44,7 @@ const PageSearch = ({ params }) => {
               rating: "4.9",
             },
             price: item.price,
-            description: item.nameAr,
+            description: item.description,
           }))
         );
         setLoaded(true);
