@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import _axios from "@/contains/api/axios";
 import NcImage from "@/shared/NcImage/NcImage";
 import { formatDate } from "@/utils/adjustNames";
+import { json } from "stream/consumers";
 
 export interface SectionSliderProductCardProps {
   className?: string;
@@ -86,6 +87,11 @@ const ArticleSlider: FC<SectionSliderProductCardProps> = ({
       slider.destroy();
     };
   }, [sliderRef]);
+  useEffect(() => {
+    if (data.length === 0) {
+      sessionStorage.setItem("articles", 0);
+    }
+  }, []);
   if (data.length <= 0) return null;
   return (
     <div

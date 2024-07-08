@@ -41,6 +41,7 @@ import {
   FacebookMessengerIcon,
 } from "react-share";
 import { sendEvent } from "@/utils/firebase";
+import SnapchatShareButton from "../SnapChatShareButton";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -502,13 +503,16 @@ const ProductPage: FC<any> = ({ params, product }) => {
                           // username: "custom twitter handle", // (only for twitter sharing)
                         }}
                       /> */}
-                      <FacebookMessengerShareButton
+                      {/* <FacebookMessengerShareButton
                         style={{ margin: "0 5px" }}
                         url={window && window.location.href}
                       >
                         <FacebookMessengerIcon borderRadius={5} />
-                      </FacebookMessengerShareButton>
-
+                      </FacebookMessengerShareButton> */}
+                      <SnapchatShareButton
+                        url={window && window.location.href}
+                        title={'Snap Chat'}
+                      />
                       <FacebookShareButton
                         style={{ margin: "0 5px" }}
                         url={window && window.location.href}

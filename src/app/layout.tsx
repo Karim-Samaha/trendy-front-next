@@ -113,11 +113,12 @@ export default function RootLayout({
                   right: "16px",
                   boxSizing: "border-box",
                   position: "fixed",
-                  zIndex: "9999",
+                  zIndex: "99999999999",
                   direction: "ltr",
                   textAlign: "right",
                 }}
               >
+                <div className="text-us-msg">راسلنا</div>
                 <div className="sc-q8c6tt-3 hKYcqG">
                   <div
                     color="#4dc247"

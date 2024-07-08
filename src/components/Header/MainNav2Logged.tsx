@@ -22,6 +22,20 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const { data } = useSession();
+  const rendeArticlesLink =  () => {
+    //@ts-ignore
+    if (typeof window !== "undefined") {
+      //@ts-ignore
+      let articles = sessionStorage.getItem("articles");
+      if (articles == 0) return null;
+      return (
+        <span className="articles-link">
+          {" "}
+          <Link href="/#articles">المقالات</Link>
+        </span>
+      );
+    }
+  };
   const userLogo = () => {
     if (!data) return;
     let nameArr: any = data?.user.name.split(" ");
@@ -68,8 +82,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
     return (
       <form
         className="flex-1 py-2 text-slate-900 dark:text-slate-100"
-        style={{flex: ".94 1 0%"}}
-
+        style={{ flex: ".94 1 0%" }}
         onSubmit={(e) => {
           e.preventDefault();
           router.push(`/search/${search}`);
@@ -98,15 +111,19 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
 
   const renderContent = () => {
     return (
-      <div className="h-20 flex justify-between" style={{alignItems: "center"}}>
+      <div
+        className="h-20 flex justify-between"
+        style={{ alignItems: "center" }}
+      >
         <div className="flex items-center lg:hidden flex-1">
           <MenuBar />
         </div>
-
-        <div className="lg:flex-1 flex items-center" style={{maxWidth: "140px"}}>
+        <div
+          className="lg:flex-1 flex items-center"
+          style={{ maxWidth: "140px" }}
+        >
           <Logo className="flex-shrink-0" />
         </div>
-
         <div
           className="flex-[5] hidden lg:flex justify-center mx-4"
           style={{ direction: "ltr" }}
@@ -120,10 +137,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             </>
           )}
         </div>
-        <span className="articles-link">
-          {" "}
-          <Link href="/#articles">المقالات</Link>
-        </span>
+        {rendeArticlesLink()}
         <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
           {!showSearchForm && (
             <button

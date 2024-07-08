@@ -47,6 +47,9 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
   //
   const [isShow, setIsShow] = useState(false);
   const [data_, setData_] = useState([...data]);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [noData, setNoData] = useState<boolean>(false);
+
   const [fav, setFav] = useState([...data]);
   const { data: session } = useSession();
   const [category, setCategory] = useState<any>({});
@@ -70,6 +73,11 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       )
       .then((res) => res.data.data)
       .then((data) => {
+        console.log({data})
+        if (!data || data?.productList?.length === 0) {
+          setNoData(true);
+          console.log({deb: data.productList.length})
+        }
         setData_(
           data.productList
             .reverse()
@@ -101,6 +109,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
               purchaseCount: item.purchaseCount,
             }))
         );
+        setLoaded(true);
       });
   }, []);
 
@@ -143,7 +152,9 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       slider.destroy();
     };
   }, [sliderRef]);
-
+  if (noData) return <div style={{textAlign: "center", fontWeight: "bold"}}>
+    لا يوجد منتجات حاليا
+  </div>;
   return (
     <div
       className={`nc-SectionSliderProductCard ${className} ${
@@ -153,7 +164,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       <div
         ref={sliderRef}
         className={`flow-root ${isShow ? "" : "invisible"}`}
-        style={{ direction: "rtl",  }}
+        style={{ direction: "rtl" }}
       >
         <Heading
           className={headingClassName}
@@ -169,7 +180,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
           <ul
             style={{
               direction: "rtl",
-              maxHeight: "600px"
+              maxHeight: "600px",
             }}
             className="glide__slides prouct-slide"
           >
@@ -190,7 +201,11 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       </div>
       {!modal && (
         <div className="show-more">
-          <Link href={`/category/${category?.category || category?._id}/${category?._id}`}>
+          <Link
+            href={`/category/${category?.category || category?._id}/${
+              category?._id
+            }`}
+          >
             عرض المزيد
           </Link>
         </div>

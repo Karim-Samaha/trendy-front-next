@@ -72,6 +72,7 @@ const SidebarFilters = (
   const [colorsState, setColorsState] = useState<string[]>([]);
   const [sizesState, setSizesState] = useState<string[]>([]);
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
+  const [renderWithOffer, setRenderWithOffer] = useState(false);
   const { id } = useParams();
 
   //
@@ -117,46 +118,46 @@ const SidebarFilters = (
   };
 
   // OK
-  const renderTabsColor = () => {
-    return (
-      <div className="relative flex flex-col py-8 space-y-4">
-        <h3 className="font-semibold mb-2.5">Colors</h3>
-        {DATA_colors.map((item) => (
-          <div key={item.name} className="">
-            <Checkbox
-              sizeClassName="w-5 h-5"
-              labelClassName="text-sm font-normal"
-              name={item.name}
-              label={item.name}
-              defaultChecked={colorsState.includes(item.name)}
-              onChange={(checked) => handleChangeColors(checked, item.name)}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // const renderTabsColor = () => {
+  //   return (
+  //     <div className="relative flex flex-col py-8 space-y-4">
+  //       <h3 className="font-semibold mb-2.5">Colors</h3>
+  //       {DATA_colors.map((item) => (
+  //         <div key={item.name} className="">
+  //           <Checkbox
+  //             sizeClassName="w-5 h-5"
+  //             labelClassName="text-sm font-normal"
+  //             name={item.name}
+  //             label={item.name}
+  //             defaultChecked={colorsState.includes(item.name)}
+  //             onChange={(checked) => handleChangeColors(checked, item.name)}
+  //           />
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
-  // OK
-  const renderTabsSize = () => {
-    return (
-      <div className="relative flex flex-col py-8 space-y-4">
-        <h3 className="font-semibold mb-2.5">Sizes</h3>
-        {DATA_sizes.map((item) => (
-          <div key={item.name} className="">
-            <Checkbox
-              name={item.name}
-              label={item.name}
-              defaultChecked={sizesState.includes(item.name)}
-              onChange={(checked) => handleChangeSizes(checked, item.name)}
-              sizeClassName="w-5 h-5"
-              labelClassName="text-sm font-normal"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // // OK
+  // const renderTabsSize = () => {
+  //   return (
+  //     <div className="relative flex flex-col py-8 space-y-4">
+  //       <h3 className="font-semibold mb-2.5">Sizes</h3>
+  //       {DATA_sizes.map((item) => (
+  //         <div key={item.name} className="">
+  //           <Checkbox
+  //             name={item.name}
+  //             label={item.name}
+  //             defaultChecked={sizesState.includes(item.name)}
+  //             onChange={(checked) => handleChangeSizes(checked, item.name)}
+  //             sizeClassName="w-5 h-5"
+  //             labelClassName="text-sm font-normal"
+  //           />
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   // OK
   const renderTabsPriceRage = () => {
@@ -227,12 +228,21 @@ const SidebarFilters = (
             </div>
           </div>
         </div>
+        <div style={{ direction: "rtl" }}>
+          <input
+            type="checkbox"
+            checked={renderWithOffer}
+            style={{ marginInlineEnd: "10px" }}
+            onChange={(e) => setRenderWithOffer(!renderWithOffer)}
+          />
+          <label htmlFor="">عرض التخفيضات فقط</label>
+        </div>
         <div className="filter-btn block lg:w-1/3 xl:w-1/4 pr-4">
           <ButtonPrimary
             href={
               id.length > 1
-                ? `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}`
-                : `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}`
+                ? `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}&offer=${renderWithOffer}`
+                : `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}&offer=${renderWithOffer}`
             }
           >
             تصفيه

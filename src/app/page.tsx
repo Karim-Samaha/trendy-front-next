@@ -148,6 +148,7 @@ async function PageHome() {
   const sectionsCount =
     (await sectionsSettings?.data?.homePageSettings.sectionsCount) || 3;
   const sectionsInfo = sectionsSettings?.cateoriesInfo;
+
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <Alert

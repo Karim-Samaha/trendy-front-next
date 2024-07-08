@@ -740,26 +740,84 @@ tamara-widget {
 .home-slider {
   @media (max-width: 968px) {
     max-height: 400px !important;
-    
   }
   .nc-ProductCard__title {
     @media (max-width: 968px) {
-      font-size: 12px;      
+      font-size: 12px;
     }
   }
 }
 .article-slide {
   @media (max-width: 968px) {
-    min-width: 95%;      
+    min-width: 95%;
   }
 }
 .hide-element {
   display: none;
 }
-.product-description *{
+.product-description * {
   font-family: __CAIRO_585AC7 !important;
 }
 .product-description a {
   color: blue;
   text-decoration: underline;
+}
+.nc-SectionSliderProductCard {
+  margin-top: 15px !important;
+}
+.text-us-msg {
+  height: 34px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: absolute;
+  left: -80px;
+  top: 13px;
+  border-radius: 7px;
+  transition: all 0.5s ease-in-out;
+}
+#gb-widget-8323:hover .text-us-msg {
+  opacity: 0;
+}
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  p {
+    border: 1px solid #f1f5f9;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+  }
+  .menu {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 150px;
+    border-radius: 9px;
+    position: absolute;
+    z-index: 9999;
+    background-color: #fff;
+    top: 38px;
+    .listItem {
+      width: 100%;
+      text-align: center;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background-color: #55a8b9;
+        color: #fff;
+      }
+    }
+  }
+}
+.footer-icon {
+  width: 28px;
+  height: 28px;
+  margin-inline-end: 8px;
+  background-color: #ffffff24;
+  padding: 2px 3px;
+  border-radius: 5px;
+  object-fit: contain;
 }

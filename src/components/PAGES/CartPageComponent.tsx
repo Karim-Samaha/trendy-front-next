@@ -139,8 +139,9 @@ const CartPageComponent = () => {
                           key={item?._id}
                         >
                           <div className="order-info flex-1 font-bold">
-                            كرت اهداء{" "}
+                            <span style={{margin: "0 5px"}}>اضافات الورود {`:`}</span>
                             <span className="font-bold">
+                              {` `}
                               {adjustNames(item?.name)}
                             </span>
                             <span
@@ -180,7 +181,10 @@ const CartPageComponent = () => {
                 <NcInputNumber className="relative z-10" item={item} />
               </div>
 
-              <div className="hidden flex-1 sm:flex justify-end" style={{marginTop: "-12px"}}>
+              <div
+                className="hidden flex-1 sm:flex justify-end"
+                style={{ marginTop: "-12px" }}
+              >
                 <Prices price={price} className="mt-0.5" />
               </div>
             </div>
@@ -360,7 +364,9 @@ const CartPageComponent = () => {
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                  <span style={{fontSize: "14px"}}>مجموع المنتجات شامل ضريبة القيمة المضافة</span>
+                  <span style={{ fontSize: "14px" }}>
+                    مجموع المنتجات شامل ضريبة القيمة المضافة
+                  </span>
                   <span style={{ minWidth: "100px" }}>
                     {" "}
                     {renderTotalPrice.fintalTotal} ر.س
@@ -429,7 +435,11 @@ const CartPageComponent = () => {
                 </div> */}
               </div>
               <ButtonPrimary
-                href={session?.user?.accessToken ? "/checkout" : "/login?callback=/checkout"}
+                href={
+                  session?.user?.accessToken
+                    ? "/checkout"
+                    : "/login?callback=/checkout"
+                }
                 className="mt-8 w-full"
               >
                 إتمام عملية الشراء{" "}

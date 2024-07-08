@@ -9,6 +9,15 @@ import Image from "next/image";
 import PhoneIcon from "@/images/icons/phone-call.svg";
 import VatIcon from "@/images/icons/vat.png";
 import logo from "@/images/footer.png";
+import Icon1 from "@/images/footer-icons/zidship_3.png";
+import Icon2 from "@/images/footer-icons/mandob.png";
+import Icon3 from "@/images/footer-icons/mada-circle.png";
+import Icon4 from "@/images/footer-icons/apple_pay.svg";
+import Icon5 from "@/images/footer-icons/visa-circle.png";
+import Icon6 from "@/images/footer-icons/mastercard-circle.png";
+import Icon7 from "@/images/footer-icons/amex.png";
+import Icon8 from "@/images/footer-icons/tabby2.svg";
+import Icon9 from "@/images/footer-icons/tamara2.svg";
 
 export interface WidgetFooterMenu {
   id: string;
@@ -76,12 +85,22 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
             /> */}
             <h2 style={{ margin: "55px 0 25PX 0" }}>عن الزهرة العصرية</h2>
             <p>{data.find((item) => item.type === "FOOTER")?.tag}</p>
-            <div className="linkContainer" >
+            <div className="linkContainer">
               <Link href="/">
-                <Image width={150} height={100} src={AppleImg}  alt="App Store"/>
+                <Image
+                  width={150}
+                  height={100}
+                  src={AppleImg}
+                  alt="App Store"
+                />
               </Link>
               <Link href="/">
-                <Image width={150} height={100} src={AndroidImg} alt="Google Play Store" />
+                <Image
+                  width={150}
+                  height={100}
+                  src={AndroidImg}
+                  alt="Google Play Store"
+                />
               </Link>
             </div>
           </div>
@@ -191,6 +210,17 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
                   </svg>
                 </a>
               </div>
+            </div>
+            <div className="contact" style={{marginTop: '22px'}}>
+              <Image src={Icon1} alt="Icon" className="footer-icon" />
+              <Image src={Icon2} alt="Icon" className="footer-icon" />
+              <Image src={Icon3} alt="Icon" className="footer-icon" />
+              <Image src={Icon4} alt="Icon" className="footer-icon" />
+              <Image src={Icon5} alt="Icon" className="footer-icon" />
+              <Image src={Icon6} alt="Icon" className="footer-icon" />
+              <Image src={Icon7} alt="Icon" className="footer-icon" />
+              <Image src={Icon8} alt="Icon" className="footer-icon" />
+              <Image src={Icon9} alt="Icon" className="footer-icon" />
             </div>
             <div className="legal">
               <div className="legal-item">
