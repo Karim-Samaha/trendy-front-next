@@ -17,9 +17,7 @@ const SectionPromo2: FC<SectionPromo2Props> = ({
   className = "",
   image = [{}],
 }) => {
-  {
-    console.log({ debBanner: image.image.src });
-  }
+
   return (
     <div className={`nc-SectionPromo2 ${className}`}>
       <div

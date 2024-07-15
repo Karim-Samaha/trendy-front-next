@@ -54,7 +54,7 @@ const Moysar = ({
             }))
           )}',
           userId: '${session?.user?._id}',
-          publishable_api_key: 'pk_test_A4Ae74mFrkjuhhzovBc3KrYVE6Nc9u8YEryNe6dv',
+          publishable_api_key: '${process.env.NEXT_PUBLIC_MOYASAR_KEY}',
           callback_url: '${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment',
           methods: ['creditcard'],
           on_completed: function (payment) {
