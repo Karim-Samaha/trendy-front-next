@@ -777,6 +777,7 @@ tamara-widget {
   top: 13px;
   border-radius: 7px;
   transition: all 0.5s ease-in-out;
+  background-color: #fff;
 }
 #gb-widget-8323:hover .text-us-msg {
   opacity: 0;
@@ -820,4 +821,17 @@ tamara-widget {
   padding: 2px 3px;
   border-radius: 5px;
   object-fit: contain;
+}
+.product-card {
+  border-radius: 20px;
+}
+
+.nc-HeaderLogged {
+  z-index: 99999;
+}
+.products-sort{
+  @media (max-width: 968px) {
+    width: 100% !important;
+    justify-content: space-between;
+  }
 }

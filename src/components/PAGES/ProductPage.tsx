@@ -42,6 +42,7 @@ import {
 } from "react-share";
 import { sendEvent } from "@/utils/firebase";
 import SnapchatShareButton from "../SnapChatShareButton";
+import _axios from "@/contains/api/axios";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -57,6 +58,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const [qualitySelected, setQualitySelected] = useState(1);
   const [tammaraReady, setTamarraReady] = useState(false);
   const [tabbyReady, setTabbyReady] = useState(false);
+  const [categoryId, setCategoryId] = useState();
   const [options, setOptions] = useState({
     color: null,
     text: null,
@@ -73,14 +75,23 @@ const ProductPage: FC<any> = ({ params, product }) => {
       setIsOpenModalViewAllReviews(true);
     }
   }, []);
+
+  const requestProductCategoryId = async () => {
+    try {
+      const response = await _axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/categories/${productData?._id}`
+      );
+      const id = response?.data?.data[0]?.subCategory?._id;
+      setCategoryId(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   //
 
   useEffect(() => {
     Promise.all([
-      // axios
-      //   .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${params.id[0]}`)
-      //   .then((res) => setProductData({ ...res.data }))
-      //   .catch((err) => console.log(err)),
+      requestProductCategoryId(),
       axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${params.id[0]}`)
         .then((res) => setReviews(res.data.data))
@@ -511,7 +522,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
                       </FacebookMessengerShareButton> */}
                       <SnapchatShareButton
                         url={window && window.location.href}
-                        title={'Snap Chat'}
+                        title={"Snap Chat"}
                       />
                       <FacebookShareButton
                         style={{ margin: "0 5px" }}
@@ -580,15 +591,18 @@ const ProductPage: FC<any> = ({ params, product }) => {
             <hr className="border-slate-200 dark:border-slate-700" />
 
             {/* OTHER SECTION */}
-            <SectionSliderProductCard
-              heading="Customers also purchased"
-              subHeading=""
-              headingFontClassName="text-2xl font-semibold"
-              headingClassName="mb-10 text-neutral-900 dark:text-neutral-50"
-              order={2}
-              selectCard={undefined}
-              title={"منتجات مشابهة"}
-            />
+            {categoryId && (
+              <SectionSliderProductCard
+                heading="Customers also purchased"
+                subHeading=""
+                headingFontClassName="text-2xl font-semibold"
+                headingClassName="mb-10 text-neutral-900 dark:text-neutral-50"
+                order={categoryId}
+                selectCard={undefined}
+                title={"منتجات مشابهة"}
+                _id={""}
+              />
+            )}
 
             {/* SECTION */}
             <div className="pb-20 xl:pb-28 lg:pt-14">

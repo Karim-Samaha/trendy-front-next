@@ -191,18 +191,18 @@ const SidebarFilters = (
             >
               السعر من
             </label>
-            <div className="mt-1 relative rounded-md">
-              <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm">
-                ر.س
-              </span>
+            <div className="mt-1 relative rounded-md" style={{position:"relative"}}>
               <input
                 type="text"
                 name="minPrice"
                 disabled
                 id="minPrice"
-                className="block w-32 pr-10 pl-4 sm:text-sm border-neutral-200 dark:border-neutral-700 rounded-full bg-transparent"
+                className="block w-32 pr-6 pl-2 sm:text-sm border-neutral-200 dark:border-neutral-700 rounded-full bg-transparent"
                 value={rangePrices[0]}
               />
+              <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm" style={{left: "12px", display: "flex", justifyContent:"flex-end"}}>
+                ر.س
+              </span>
             </div>
           </div>
           <div>
@@ -214,17 +214,18 @@ const SidebarFilters = (
               السعر الي
             </label>
             <div className="mt-1 relative rounded-md">
-              <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm">
-                ر.س
-              </span>
+           
               <input
                 type="text"
                 disabled
                 name="maxPrice"
                 id="maxPrice"
-                className="block w-32 pr-10 pl-4 sm:text-sm border-neutral-200 dark:border-neutral-700 rounded-full bg-transparent"
+                className="block w-32 pr-6 pl-2 sm:text-sm border-neutral-200 dark:border-neutral-700 rounded-full bg-transparent"
                 value={rangePrices[1]}
               />
+                 <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm" style={{left: "7px", display: "flex", justifyContent:"flex-end"}}>
+                ر.س
+              </span>
             </div>
           </div>
         </div>

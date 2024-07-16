@@ -64,7 +64,48 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
     }
   }, [session]);
   useEffect(() => {
-    axios
+    if (title === 'منتجات مشابهة') {
+      axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${order}`
+      )
+      .then((res) => res.data)
+      .then((data) => {
+        setData_(
+          data.data.productList
+            .reverse()
+            .filter((item: { active: boolean }) => item.active)
+            .map((item: any) => ({
+              ...themeData[0],
+              name: item.name,
+              id: item?._id,
+              _id: item?._id,
+              color: "bg-yellow-50",
+              featuredImage: {
+                id: item?._id,
+                category: 1,
+                src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
+                blurHeight: 8,
+                blurWidth: 7,
+                height: 200,
+                width: 362,
+                allOfSizes: ["XS", "S"],
+                link: "product-detail",
+                numberOfReviews: 50,
+                rating: "4.9",
+              },
+              price: item.price,
+              isOffer: item.isOffer,
+              priceBefore: item.priceBefore,
+              description: item.description,
+              rates: item.rates,
+              purchaseCount: item.purchaseCount,
+            }))
+        );
+      });
+
+    } else {
+      axios
       .get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/homepage-sections?order=${order}`
       )
@@ -104,6 +145,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             }))
         );
       });
+    }
+   
   }, []);
 
   useEffect(() => {
@@ -146,6 +189,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
     };
   }, [sliderRef]);
   if (data_.length <= 0) return null;
+  // return null
   return (
     <div
       className={`nc-SectionSliderProductCard ${className} ${
@@ -172,13 +216,14 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             style={{
               direction: "rtl",
               maxHeight: "450px",
+              padding: "5px 0"
             }}
             className="glide__slides prouct-slide home-slider"
           >
             {data_.map((item, index) => (
               <li
                 key={index}
-                className={`glide__slide ${itemClassName} ${
+                className={`glide__slide product-card ${itemClassName} ${
                   imageErrorObj[item?._id] && "noImgProduct"
                 }`}
               >

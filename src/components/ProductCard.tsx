@@ -387,23 +387,25 @@ const ProductCard: FC<ProductCardProps> = ({
                 </span>
               </div>
             </Link>
-            <ButtonPrimary
-              className="shadow-lg buy-responsive"
-              fontSize="text-xs"
-              sizeClass="py-2 px-4"
-              // onClick={() => {
-              //   console.log({ data });
-              //   addItem(data);
-              //   notifyAddTocajt({ size: "XL" });
-              // }}
-            >
-              <BagIcon className="w-3.5 h-3.5 mb-0.5" />
+            {!modal && (
+              <ButtonPrimary
+                className="shadow-lg buy-responsive"
+                fontSize="text-xs"
+                sizeClass="py-2 px-4"
+                // onClick={() => {
+                //   console.log({ data });
+                //   addItem(data);
+                //   notifyAddTocajt({ size: "XL" });
+                // }}
+              >
+                <BagIcon className="w-3.5 h-3.5 mb-0.5" />
 
-              <Link href={`/product-detail/${data?._id}/${data?.name}`}>
-                {" "}
-                <span className="ms-1">اضف الي السلة</span>
-              </Link>
-            </ButtonPrimary>
+                <Link href={`/product-detail/${data?._id}/${data?.name}`}>
+                  {" "}
+                  <span className="ms-1">اضف الي السلة</span>
+                </Link>
+              </ButtonPrimary>
+            )}
           </div>
           {modal && (
             <ButtonPrimary

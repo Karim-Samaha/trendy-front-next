@@ -158,13 +158,14 @@ const ProductSection = ({ products, params }: any) => {
   };
   return (
     <>
-      <div className="flex-1 ">
+      <div className="flex-1">
         <div
           style={{
             display: "flex",
             width: "300px",
             justifyContent: "space-between",
           }}
+          className="products-sort"
         >
           <h3 style={{ marginBottom: "30px" }}>
             النتائج : {renderdData.length} منتج
