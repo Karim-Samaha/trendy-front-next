@@ -161,7 +161,7 @@ async function PageHome() {
       }}
     >
       <Logo />
-      <h1 style={{fontSize: "35px", padding: "30px 0", lineHeight: "57px"}} >
+      <h1 style={{fontSize: "35px", padding: "30px 10px", lineHeight: "57px", textAlign: "center"}} >
         عملائنا الكرام: المتجر في وضع الصيانة مؤقتا لتحسين تجربتكم , ويمكنكم الطلب من 
         <a href="https://wa.me/966539123890" target="_blank" style={{color: "#77E377"}}>
           {" "}

@@ -13,10 +13,12 @@ const SiteHeader = () => {
   console.log({pathname});
   useThemeMode();
   return (
-    <>
-      <HeaderLogged />
-      {pathname !== '/' && <Alert text="" />}
-    </>
+    null
+    
+    // <>
+    //   <HeaderLogged />
+    //   {pathname !== '/' && <Alert text="" />}
+    // </>
   );
 };
 
