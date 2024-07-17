@@ -104,7 +104,7 @@ export default function RootLayout({
               {children}
               <HitRequest />
               <CommonClient />
-              <Footer data={footer} />
+              {/* <Footer data={footer} /> */}
               <div dangerouslySetInnerHTML={{ __html: tags.body }} />
               <div
                 id="gb-widget-8323"

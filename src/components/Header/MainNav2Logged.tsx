@@ -31,7 +31,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
       return (
         <span className="articles-link">
           {" "}
-          <Link href="/#articles">المقالات</Link>
+          {/* <Link href="/#articles">المقالات</Link> */}
         </span>
       );
     }
@@ -124,7 +124,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
         >
           <Logo className="flex-shrink-0" />
         </div>
-        <div
+        {/* <div
           className="flex-[5] hidden lg:flex justify-center mx-4"
           style={{ direction: "ltr" }}
         >
@@ -136,9 +136,9 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               <Navigation />
             </>
           )}
-        </div>
-        {rendeArticlesLink()}
-        <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
+        </div> */}
+        {/* {rendeArticlesLink()} */}
+        {/* <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
           {!showSearchForm && (
             <button
               className="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none items-center justify-center"
@@ -177,7 +177,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             </Link>
           )}
           <CartDropdown />
-        </div>
+        </div> */}
       </div>
     );
   };

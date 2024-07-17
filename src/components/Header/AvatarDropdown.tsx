@@ -9,7 +9,7 @@ import Link from "next/link";
 import AvatarImg from "@/images/avatars/defaul-avatar.jpg";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
-import usePoints from "@/app/checkout/usePoints";
+// import usePoints from "@/app/checkout/usePoints";
 
 interface Props {
   logo: string;

@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "react-use-cart";
 import { useSession } from "next-auth/react";
+import { sendEvent } from "@/utils/firebase";
+import ProductCard from "../ProductCard";
 
 export default function CartDropdown() {
   const { items, removeItem } = useCart();
@@ -66,8 +68,26 @@ export default function CartDropdown() {
             <div className="flex">
               <button
                 type="button"
-                className="font-medium text-primary-6000 dark:text-primary-500 "
-                onClick={() => removeItem(id)}
+                className="font-medium text-primary-6000 dark:text-primary-500"
+                onClick={() => {
+                  removeItem(id);
+                  const product = items?.find((item) => item.id === id);
+                  sendEvent("remove_from_cart", {
+                    currency: "SAR",
+                    value: product?.price,
+                    items: [
+                      {
+                        item_id: `${product?._id}`,
+                        item_name: product?.name,
+                        discount: 0,
+                        item_brand: `${product?.brand}`,
+                        item_category: `${product?.brand}`,
+                        price: +product?.price,
+                        quantity: +product?.quantity,
+                      },
+                    ],
+                  });
+                }}
               >
                 مسح
               </button>

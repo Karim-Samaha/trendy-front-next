@@ -2,17 +2,18 @@ export const revalidate = 1;
 export const fetchCache = "force-no-store";
 
 import React from "react";
-import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
-import SectionHero2 from "@/components/SectionHero/SectionHero2";
-import SectionSliderProductCard from "@/components/SectionSliderProductCard";
+// import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
+// import SectionHero2 from "@/components/SectionHero/SectionHero2";
+// import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 // import DiscoverMoreSlider from "@/components/DiscoverMoreSlider";
-import SectionPromo2 from "@/components/SectionPromo2";
-import { Product, PRODUCTS, DummyData } from "@/data/data";
+// import SectionPromo2 from "@/components/SectionPromo2";
+// import { Product, PRODUCTS, DummyData } from "@/data/data";
 import axios from "axios";
-import Partners from "@/components/Partners";
+// import Partners from "@/components/Partners";
 import dynamic from "next/dynamic";
-import Alert from "@/components/Alert";
-import ArticleSlider from "@/components/ArticleSlider";
+// import Alert from "@/components/Alert";
+// import ArticleSlider from "@/components/ArticleSlider";
+import Logo from "@/shared/Logo/Logo";
 // import DiscoverMoreReviews from "@/components/DiscoverMoreReviews";
 const DiscoverMoreSlider = dynamic(
   () => import("@/components/DiscoverMoreSlider"),
@@ -150,109 +151,25 @@ async function PageHome() {
   const sectionsInfo = sectionsSettings?.cateoriesInfo;
 
   return (
-    <div className="nc-PageHome relative overflow-hidden">
-      <Alert
-        text={
-          banners.find((item: { type: string }) => item?.type === "ALERT")?.name
-        }
-      />
-      <SectionHero2
-        data_={banners.filter(
-          (item: { type: string }) => item?.type === "HERO_IMG"
-        )}
-      />
-
-      <div className="mt-24 lg:mt-24">
-        <DiscoverMoreSlider categories={categories} />
-      </div>
-      <div className="container relative space-y-24 my-24 lg:space-y-24 lg:my-24 product-section">
-        <SectionSliderProductCard
-          data={DummyData}
-          order={sectionsInfo[0]?._id}
-          selectCard={undefined}
-        />
-        <SectionPromo2
-          image={
-            banners.filter(
-              (item: { type: string }) => item.type === "BANNER"
-            )[0]
-          }
-        />
-        {sectionsCount > 1 && (
-          <SectionSliderProductCard
-            data={DummyData}
-            order={sectionsInfo[1]?._id}
-            selectCard={undefined}
-          />
-        )}
-
-        <SectionPromo2
-          image={
-            banners.filter(
-              (item: { type: string }) => item.type === "BANNER"
-            )[1]
-          }
-        />
-        {sectionsCount > 2 && (
-          <SectionSliderProductCard
-            data={PRODUCTS}
-            order={sectionsInfo[2]?._id}
-            selectCard={undefined}
-          />
-        )}
-        {sectionsCount > 3 && (
-          <SectionSliderProductCard
-            data={PRODUCTS}
-            order={sectionsInfo[3]?._id}
-            selectCard={undefined}
-          />
-        )}
-        {sectionsCount > 4 && (
-          <SectionSliderProductCard
-            data={PRODUCTS}
-            order={sectionsInfo[4]?._id}
-            selectCard={undefined}
-          />
-        )}
-        {sectionsCount > 5 && (
-          <SectionSliderProductCard
-            data={PRODUCTS}
-            order={sectionsInfo[5]?._id}
-            selectCard={undefined}
-          />
-        )}
-        {sectionsCount > 6 && (
-          <SectionSliderProductCard
-            data={PRODUCTS}
-            order={sectionsInfo[6]?._id}
-            selectCard={undefined}
-          />
-        )}
-        {sectionsCount > 7 && (
-          <SectionSliderProductCard
-            data={PRODUCTS}
-            order={sectionsInfo[7]?._id}
-            selectCard={undefined}
-          />
-        )}
-        <div className="why-trendy py-24 lg:py-10 border-t border-b border-slate-200 dark:border-slate-700">
-          <SectionHowItWork />
-        </div>
-
-        <ArticleSlider
-          data={articles}
-          order={0}
-          selectCard={undefined}
-          _id={""}
-          title={""}
-        />
-
-        <Partners />
-
-        <div className="web-rates container relative space-y-24 my-24 lg:space-y-32 lg:my-24">
-          <DiscoverMoreReviews reviews={reviews} />
-        </div>
-      </div>
+    <div
+      className="nc-PageHome relative overflow-hidden"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Logo />
+      <h1 style={{fontSize: "35px", padding: "30px 0", lineHeight: "57px"}} >
+        عملائنا الكرام: المتجر في وضع الصيانة مؤقتا لتحسين تجربتكم , ويمكنكم الطلب من 
+        <a href="https://wa.me/966539123890" target="_blank" style={{color: "#77E377"}}>
+          {" "}
+        خلال الواتس
+        {" "}
+        </a>
+        وشكرا
+      </h1>
     </div>
   );
 }

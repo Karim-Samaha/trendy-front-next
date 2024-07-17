@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import _axios from "@/contains/api/axios";
 import Label from "@/components/Label/Label";
 import Input from "@/shared/Input/Input";
+import { sendEvent } from "@/utils/firebase";
 const CartPageComponent = () => {
   const { items, removeItem } = useCart();
   const { data: session } = useSession();
@@ -199,7 +200,25 @@ const CartPageComponent = () => {
               href="##"
               className="relative z-10 flex items-center mt-3 font-medium text-primary-6000 hover:text-primary-500 text-sm "
             >
-              <span onClick={() => removeItem(_id)}>ازاله المنتج</span>
+              <span onClick={() => {
+                removeItem(_id)
+                const product = items?.find((item) => item.id === _id);
+                sendEvent("remove_from_cart", {
+                  currency: "SAR",
+                  value: product?.price,
+                  items: [
+                    {
+                      item_id: `${product?._id}`,
+                      item_name: product?.name,
+                      discount: 0,
+                      item_brand: `${product?.brand}`,
+                      item_category: `${product?.brand}`,
+                      price: +product?.price,
+                      quantity: +product?.quantity,
+                    },
+                  ],
+                });
+              }}>ازاله المنتج</span>
             </a>
           </div>
         </div>
