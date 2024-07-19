@@ -288,7 +288,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
               >
                 <StarIcon className="w-5 h-5 pb-[1px] text-yellow-400" />
                 <div className="ml-1.5 flex">
-                  <span>4.9</span>
+                  <span>5</span>
                   <span className="block mx-2">·</span>
                   <span className="text-slate-600 dark:text-slate-400 underline">
                     {reviews.length} تقيم

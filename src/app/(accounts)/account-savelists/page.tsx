@@ -37,7 +37,7 @@ const AccountSavelists = () => {
               allOfSizes: ["XS", "S"],
               link: "product-detail",
               numberOfReviews: 50,
-              rating: "4.9",
+              rating: "5",
             },
             price: item.price,
             description: item.description,

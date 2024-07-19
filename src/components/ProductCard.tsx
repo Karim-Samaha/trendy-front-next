@@ -383,7 +383,7 @@ const ProductCard: FC<ProductCardProps> = ({
                     fontWeight: "bold",
                   }}
                 >
-                  {rating || ""}({data.rates || 0} تقيم)
+                  {5}({data.rates || 0} تقيم)
                 </span>
               </div>
             </Link>
