@@ -10,6 +10,8 @@ import { adjustNames } from "@/utils/adjustNames";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ModalAddReview from "@/components/ModalAddReview";
 import { useSearchParams } from "next/navigation";
+import { sendEvent } from "@/utils/firebase";
+import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();
@@ -17,6 +19,7 @@ const AccountOrder = () => {
   const [itemToBeReviews, setItemToBeReviewd] = useState<string>("");
   const searchParams = useSearchParams();
   const isFromCheckout = searchParams?.get("from") === "checkout";
+  const [events, setEvents] = useState(false);
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: 1,
@@ -40,6 +43,65 @@ const AccountOrder = () => {
         });
     }
   }, [session, pagination]);
+  useEffect(() => {
+    if (isFromCheckout && data.length > 0 && !events) {
+      console.log({ test: data[0] });
+      sendEvent("purchase", {
+        transaction_id: data[0]?._id,
+        affiliation: "Google Merchandise Store",
+        value: data[0]?.amount / 100,
+        currency: "SAR",
+        items: data[0]?.purchaseBulk.map((product, i) => {
+          return {
+            item_id: product?._id,
+            item_name: product?.name,
+            discount: 0,
+            index: i,
+            item_brand: product?.brand,
+            item_category: product?.brand,
+            price: product?.price,
+            quantity: product?.quantity,
+          };
+        }),
+      });
+      facebookPixel("Purchase", {
+        content_ids: data[0]?.purchaseBulk.map((item) => item?._id),
+        content_name: "Purchase",
+        content_type: "product_group",
+        contents: JSON.stringify(data[0]?.purchaseBulk),
+        currency: "SAR",
+        num_items: data[0]?.purchaseBulk.length,
+        value: data[0]?.amount / 100,
+      });
+      twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03t`, {
+        value: data[0]?.amount / 100,
+        currency: "SAR",
+        contents: data[0]?.purchaseBulk.map((product, i) => {
+          return {
+            content_type: "Product",
+            content_id: `${product._id}`,
+            content_name: product.name,
+            content_price: product?.price,
+            num_items: +product.quantity,
+          };
+        }),
+      });
+      tiktokPixel("CompletePayment", {
+        content_type: "product_group",
+        content_id:
+          JSON.stringify(
+            data[0]?.purchaseBulk.map((product) => {
+              return {
+                content_id: product?._id,
+              };
+            })
+          ) || "[]",
+        value: data[0]?.amount / 100,
+        currency: "SAR",
+      });
+      setEvents(true);
+    }
+  }, [isFromCheckout, data.length]);
   const renderProductItem = (
     order: any,
     amount: string,
@@ -49,7 +111,6 @@ const AccountOrder = () => {
     index: number
   ) => {
     const { image, name, _id } = order;
-    console.log(order);
     return (
       <div key={index} className="flex py-4 sm:py-7 last:pb-0 first:pt-0">
         <div

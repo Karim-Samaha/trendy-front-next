@@ -827,11 +827,20 @@ tamara-widget {
 }
 
 .nc-HeaderLogged {
-  z-index: 99999;
+  // z-index: 99999;
 }
-.products-sort{
+.products-sort {
   @media (max-width: 968px) {
     width: 100% !important;
     justify-content: space-between;
   }
+}
+
+.nav-ctg::-webkit-scrollbar {
+  background-color: silver !important;
+  height: 8px;
+}
+.nav-ctg::-webkit-scrollbar-thumb{
+  background-color: #55a8b9 !important;
+  border-radius: 11px;
 }

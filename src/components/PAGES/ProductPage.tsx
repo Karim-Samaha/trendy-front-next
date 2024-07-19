@@ -43,6 +43,7 @@ import {
 import { sendEvent } from "@/utils/firebase";
 import SnapchatShareButton from "../SnapChatShareButton";
 import _axios from "@/contains/api/axios";
+import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -185,6 +186,34 @@ const ProductPage: FC<any> = ({ params, product }) => {
           },
         ],
       });
+      facebookPixel("AddToCart", {
+        content_ids: itemToBeAdded._id,
+        content_name: itemToBeAdded.name,
+        content_type: "product",
+        currency: "SAR",
+        value: itemToBeAdded.price,
+      });
+      twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03u`, {
+        currency: "SAR",
+        value: itemToBeAdded.price,
+        contents: [
+          {
+            content_id: `${itemToBeAdded._id}`,
+            content_name: itemToBeAdded.name,
+            content_type: "product",
+            content_price: `${itemToBeAdded.price}`,
+            num_items: +itemToBeAdded.quantity,
+            content_group_id: `${itemToBeAdded._id}`,
+          },
+        ],
+      });
+      tiktokPixel("AddToCart", {
+        content_type: "product",
+        content_id: `${itemToBeAdded._id}`,
+        currency: "SAR",
+        value: itemToBeAdded.price,
+        quantity: +itemToBeAdded?.quantity || 1,
+      });
     } else {
       addItem(itemToBeAdded, qty);
       sendEvent("add_to_cart", {
@@ -200,6 +229,34 @@ const ProductPage: FC<any> = ({ params, product }) => {
             quantity: 1,
           },
         ],
+      });
+      facebookPixel("AddToCart", {
+        content_ids: itemToBeAdded._id,
+        content_name: itemToBeAdded.name,
+        content_type: "product",
+        currency: "SAR",
+        value: itemToBeAdded.price,
+      });
+      twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03u`, {
+        currency: "SAR",
+        value: itemToBeAdded.price,
+        contents: [
+          {
+            content_id: `${itemToBeAdded._id}`,
+            content_name: itemToBeAdded.name,
+            content_type: "product",
+            content_price: `${itemToBeAdded.price}`,
+            num_items: +itemToBeAdded.quantity,
+            content_group_id: `${itemToBeAdded._id}`,
+          },
+        ],
+      });
+      tiktokPixel("AddToCart", {
+        content_type: "product",
+        content_id: `${itemToBeAdded._id}`,
+        currency: "SAR",
+        value: itemToBeAdded.price,
+        quantity: +itemToBeAdded?.quantity || 1,
       });
     }
     notifyAddTocart(itemToBeAdded);

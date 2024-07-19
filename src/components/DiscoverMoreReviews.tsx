@@ -9,11 +9,78 @@ import { CATS_DISCOVER } from "./CardCategories/data";
 import axios from "axios";
 import { listOf4 } from "@/utils/adjustNames";
 import ReviewItem from "./ReviewItem";
+const staticReviews = [
+  {
+    _id: "1",
+    storeReview: "منتجات رائعه و فخمة",
+    storeRating: 5,
+    productReview: "",
+    productRating: 5,
+    shareProductReview: false,
+    shareStoreReview: true,
+    name: "فيصل عبد العزيز",
+    user: "65f591766bd1131a8195f021",
+    product: "666d781c2965c08c4d2bafef",
+    createdAt: "2024-07-14T11:37:22.294Z",
+    updatedAt: "2024-07-14T11:38:40.693Z",
+    __v: 0,
+    id: "1",
+  },
+  {
+    _id: "2",
+    storeReview: "ممتاز",
+    storeRating: 5,
+    productReview: "",
+    productRating: 5,
+    shareProductReview: false,
+    shareStoreReview: true,
+    name: "نور خالد",
+    user: "65f591766bd1131a8195f021",
+    product: "666d781c2965c08c4d2bafef",
+    createdAt: "2024-07-14T11:37:22.294Z",
+    updatedAt: "2024-07-14T11:38:40.693Z",
+    __v: 0,
+    id: "2",
+  },
+  {
+    _id: "3",
+    storeReview: "جودة المنتجات جيدة جدا",
+    storeRating: 5,
+    productReview: "Good",
+    productRating: 5,
+    shareProductReview: true,
+    shareStoreReview: true,
+    name: "عصمت الشعري",
+    user: "65f591766bd1131a8195f021",
+    product: "666d781c2965c08c4d2bafef",
+    createdAt: "2024-07-14T11:37:22.294Z",
+    updatedAt: "2024-07-14T11:38:40.693Z",
+    __v: 0,
+    id: "3",
+  },
+  {
+    _id: "4",
+    storeReview: "جودة واسعار المنتجات جيدة مقارنه بالمنافسين",
+    storeRating: 5,
+    productReview: "Good",
+    productRating: 5,
+    shareProductReview: true,
+    shareStoreReview: true,
+    name: "عبد الله",
+    user: "65f591766bd1131a8195f021",
+    product: "666d781c2965c08c4d2bafef",
+    createdAt: "2024-07-14T11:37:22.294Z",
+    updatedAt: "2024-07-14T11:38:40.693Z",
+    __v: 0,
+    id: "4",
+  },
+];
 const DiscoverMoreReviews: FC<any> = ({ reviews }) => {
   const sliderRef = useRef(null);
   const [isShow, setIsShow] = useState(false);
-  let sortedReviews = listOf4(reviews);
-  // console.log({ format: data });
+  // let sortedReviews = listOf4(reviews);
+  let sortedReviews = listOf4(staticReviews);
+
   useEffect(() => {
     const OPTIONS: Partial<Glide.Options> = {
       // direction: document.querySelector("html")?.getAttribute("dir") || "ltr",

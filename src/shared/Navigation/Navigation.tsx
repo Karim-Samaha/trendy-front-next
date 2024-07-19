@@ -20,15 +20,14 @@ function Navigation() {
       .then((items) => {
         setData(
           items
-            .slice(0, 7)
-            .reverse()
+            .slice(0, 16).filter((item) => item.name !== "أخري").reverse()
             .map((item: any) => ({
-              type:
-                item.name === "ورود للتهنئة"
-                  ? "megaMenu"
-                  : item.name === "الاكثر مبيعا"
-                  ? null
-                  : "dropdown",
+              type: "",
+                // item.name === "ورود للتهنئة"
+                //   ? "megaMenu"
+                //   : item.name === "الاكثر مبيعا"
+                //   ? null
+                //   : "dropdown",
               id: item._id,
               href: `/category/${item?._id}`,
               name: item.name,

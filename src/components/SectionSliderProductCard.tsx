@@ -105,6 +105,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
       });
 
     } else {
+      console.log({order})
       axios
       .get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/homepage-sections?order=${order}`
@@ -188,7 +189,10 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
       slider.destroy();
     };
   }, [sliderRef]);
-  if (data_.length <= 0) return null;
+  if (data_.length <= 0) {
+    console.log({data_})
+    return null;
+  }
   // return null
   return (
     <div

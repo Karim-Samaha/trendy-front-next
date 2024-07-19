@@ -126,15 +126,15 @@ const PageLogin = () => {
                 تسجيل الدخول عبر البريد الالكتروني
               </ButtonPrimary>
             </div>
-            <div>
-              <ButtonPrimary
-                className="login-btn"
-                type="submit"
-                onClick={() => setMethod("phone")}
-              >
-                تسجيل الدخول عبر رقم الهاتف
-              </ButtonPrimary>
-            </div>
+              {/* <div>
+                <ButtonPrimary
+                  className="login-btn"
+                  type="submit"
+                  onClick={() => setMethod("phone")}
+                >
+                  تسجيل الدخول عبر رقم الهاتف
+                </ButtonPrimary>
+              </div> */}
           </div>
         )}
         <div className="max-w-md mx-auto space-y-6 dir-rtl">

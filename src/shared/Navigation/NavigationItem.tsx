@@ -234,7 +234,7 @@ const NavigationItem: FC<NavigationItemProps> = ({ menuItem }) => {
           href={{
             pathname: item.href || undefined,
           }}
-          style={{ fontSize: "12px", fontWeight: "600" }}
+          style={{ fontSize: "13px", fontWeight: "600" }}
         >
           {item.name}
           {item.type && (

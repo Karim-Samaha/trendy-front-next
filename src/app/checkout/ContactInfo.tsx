@@ -15,7 +15,7 @@ const ContactInfo: FC<Props> = ({ isActive, onCloseActive, onOpenActive }) => {
   const renderAccount = () => {
     return (
       <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden z-0">
-        <div className="flex flex-col sm:flex-row items-start p-6 dir-rtl">
+        {/* <div className="flex flex-col sm:flex-row items-start p-6 dir-rtl">
           <span className="hidden sm:block" style={{margin: '0 20px'}}>
             <svg
               className="w-6 h-6 text-slate-700 dark:text-slate-400 mt-0.5"
@@ -69,13 +69,8 @@ const ContactInfo: FC<Props> = ({ isActive, onCloseActive, onOpenActive }) => {
 
             </div>
           </div>
-          {/* <button
-            className="py-2 px-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 mt-5 sm:mt-0 sm:ml-auto text-sm font-medium rounded-lg"
-            onClick={() => onOpenActive()}
-          >
-            تعديل
-          </button> */}
-        </div>
+        
+        </div> */}
         <div
           className={`border-t border-slate-200 dark:border-slate-700 px-6 py-7 space-y-4 sm:space-y-6 ${
             isActive ? "block" : "hidden"

@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
-import HIW1img from "@/images/products/market.jpeg";
-import HIW2img from "@/images/products/market.jpeg";
-import HIW3img from "@/images/products/market.jpeg";
-import HIW4img from "@/images/products/market.jpeg";
-import VectorImg from "@/images/VectorHIW.svg";
+import HIW1img from "@/images/product.jpeg";
+import HIW2img from "@/images/location.jpeg";
+import HIW3img from "@/images/shiping.jpeg";
+import HIW4img from "@/images/gift.jpeg";
+// import VectorImg from "@/images/VectorHIW.jpeg";
 import Badge from "@/shared/Badge/Badge";
 import Image from "next/image";
 
@@ -39,7 +39,7 @@ const DEMO_DATA = [
     id: 4,
     img: HIW4img,
     imgDark: HIW4img,
-    title: "احصل علي نقاط ترندي مع عملية الشراء",
+    title: "احصل علي نقاط ترندي",
     desc: "اربح نقاطك الان",
   },
 ];
@@ -58,11 +58,11 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
       لماذا متجر ترندي؟
       </h2>
       <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
-        <Image
+        {/* <Image
           className="hidden md:block absolute inset-x-0 top-5"
           src={VectorImg}
           alt="vector"
-        />
+        /> */}
         {data.map((item: (typeof DEMO_DATA)[number], index: number) => (
           <div
             key={item.id}
@@ -88,7 +88,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
                     : "purple"
                 }
               />
-              <h3 className="text-base font-semibold">{item.title}</h3>
+              <h3 className="text-base font-semibold" style={{color:"#55a8b9"}}>{item.title}</h3>
               <span className="block text-slate-600 dark:text-slate-400 text-sm leading-6">
                 {item.desc}
               </span>

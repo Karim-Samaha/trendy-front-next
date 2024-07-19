@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import PhoneIcon from "@/images/icons/phone-call.svg";
 import VatIcon from "@/images/icons/vat.png";
+import BussIcon from "@/images/buss.webp";
 import logo from "@/images/footer.png";
 import Icon1 from "@/images/footer-icons/zidship_3.png";
 import Icon2 from "@/images/footer-icons/mandob.png";
@@ -232,7 +233,7 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
                 </div>
               </div>
               <div className="legal-item">
-                <Image width={40} height={5} src={VatIcon} alt="Vat Icon" />
+                <Image width={40} height={5} src={BussIcon} alt="Vat Icon" style={{objectFit: "contain", borderRadius: '5px'}} />
                 <div className="info">
                   {" "}
                   <p>منصة الأعمال</p>

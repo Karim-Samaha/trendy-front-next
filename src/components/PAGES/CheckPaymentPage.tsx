@@ -8,26 +8,27 @@ import { useCart } from "react-use-cart";
 
 const CheckoutCheck = ({ id, gateway }) => {
   const router = useRouter();
-//   const searchParams = useSearchParams();
+  //   const searchParams = useSearchParams();
   const { emptyCart } = useCart();
   //   const id = searchParams.get("id");
   //   const gateway = searchParams.get("gateway");
   const [status, setStatus] = useState({});
 
-  //   const handleTabby = async () => {
-  //     const tabbyId = sessionStorage.getItem("tabbyId");
-  //     try {
-  //       const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyId}`);
-  //       setStatus(response.data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+  const handleTabby = async () => {
+    const tabbyId = sessionStorage.getItem("tabbyId");
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyId}`
+      );
+      setStatus(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (gateway === "tabby") {
-      //   handleTabby();
-      console.log("test");
+      handleTabby();
     } else if (id) {
       axios
         .get(
@@ -39,7 +40,13 @@ const CheckoutCheck = ({ id, gateway }) => {
   }, [id, gateway]);
 
   useEffect(() => {
-    if (status?.data?.status === "paid") {
+    console.log({ status: status?.data?.status });
+    let isPayed =
+      status?.data?.status === "paid" ||
+      status?.data?.status === "CREATED" ||
+      status?.data?.status === "AUTHORIZED" ||
+      status?.data?.status === "CLOSED";
+    if (isPayed) {
       emptyCart();
       router.replace(`/account-order?from=checkout`);
       //   setTimeout(() => router.replace(`/account-order?from=checkout`), 3000);

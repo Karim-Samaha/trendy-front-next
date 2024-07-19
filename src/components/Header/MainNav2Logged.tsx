@@ -18,11 +18,11 @@ export interface MainNav2LoggedProps {}
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const inputRef = createRef<HTMLInputElement>();
-  const [showSearchForm, setShowSearchForm] = useState(false);
+  const [showSearchForm, setShowSearchForm] = useState(true);
   const router = useRouter();
   const [search, setSearch] = useState("");
   const { data } = useSession();
-  const rendeArticlesLink =  () => {
+  const rendeArticlesLink = () => {
     //@ts-ignore
     if (typeof window !== "undefined") {
       //@ts-ignore
@@ -100,9 +100,9 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button type="button" onClick={() => setShowSearchForm(false)}>
+          {/* <button type="button" onClick={() => setShowSearchForm(false)}>
             <XMarkIcon className="w-5 h-5" />
-          </button>
+          </button> */}
         </div>
         <input type="submit" hidden value="" />
       </form>
@@ -111,74 +111,78 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
 
   const renderContent = () => {
     return (
-      <div
-        className="h-20 flex justify-between"
-        style={{ alignItems: "center" }}
-      >
-        <div className="flex items-center lg:hidden flex-1">
-          <MenuBar />
-        </div>
+      <>
         <div
-          className="lg:flex-1 flex items-center"
-          style={{ maxWidth: "140px" }}
+          className="h-20 flex justify-between"
+          style={{ alignItems: "center" }}
         >
-          <Logo className="flex-shrink-0" />
-        </div>
-        <div
-          className="flex-[5] hidden lg:flex justify-center mx-4"
-          style={{ direction: "ltr" }}
-        >
-          {showSearchForm ? (
-            renderSearchForm()
-          ) : (
-            <>
-              {" "}
-              <Navigation />
-            </>
-          )}
-        </div>
-        {rendeArticlesLink()}
-        <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
-          {!showSearchForm && (
-            <button
-              className="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none items-center justify-center"
-              onClick={() => setShowSearchForm(!showSearchForm)}
-            >
-              {renderMagnifyingGlassIcon()}
-            </button>
-          )}
-          {data?.user?.name ? (
-            <div className="user-logo">{userLogo()}</div>
-          ) : data?.user?.email ? (
-            <div className="user-logo">{userLogoEmail()}</div>
-          ) : (
-            <Link href={"/login"} className="login-link">
-              <svg
-                className=" w-6 h-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+    
+          <div className="flex items-center lg:hidden flex-1">
+            <MenuBar />
+          </div>
+          <div
+            className="lg:flex-1 flex items-center"
+            style={{ maxWidth: "140px" }}
+          >
+            <Logo className="flex-shrink-0" />
+          </div>
+          <div
+            className="flex-[5] hidden lg:flex justify-center mx-4"
+            style={{ direction: "ltr" }}
+          >
+            {showSearchForm ? renderSearchForm() : null}
+          </div>
+          {rendeArticlesLink()}
+          <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
+            {!showSearchForm && (
+              <button
+                className="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none items-center justify-center"
+                onClick={() => setShowSearchForm(!showSearchForm)}
               >
-                <path
-                  d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-          )}
-          <CartDropdown />
+                {renderMagnifyingGlassIcon()}
+              </button>
+            )}
+            
+            {data?.user?.name ? (
+              <div className="user-logo">{userLogo()}</div>
+            ) : data?.user?.email ? (
+              <div className="user-logo">{userLogoEmail()}</div>
+            ) : (
+              <Link href={"/login"} className="login-link">
+                <svg
+                  className=" w-6 h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            )}
+            
+            <CartDropdown />
+          </div>
         </div>
-      </div>
+        <div
+          className="flex-[5] hidden lg:flex justify-center mx-4 nav-ctg"
+          style={{ direction: "ltr", overflowX: "auto", overflowY: "hidden" }}
+        >
+          <Navigation />
+        </div>
+      </>
     );
   };
 

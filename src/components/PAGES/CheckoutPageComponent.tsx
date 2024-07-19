@@ -18,6 +18,9 @@ import DeleveryForm from "@/components/payment/FromStorePayment";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { useRouter } from "next/navigation";
 import usePoints from "@/app/checkout/usePoints";
+import { sendEvent } from "@/utils/firebase";
+import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import Tamarra from "../Tamarra";
 
 const CheckoutPageComponent = () => {
   const { items, emptyCart } = useCart();
@@ -112,8 +115,62 @@ const CheckoutPageComponent = () => {
       setCouponResponse(JSON.parse(couponResponseSession));
     }
   };
+  const sendAnalticEvenet = () => {
+    sendEvent("begin_checkout", {
+      currency: "SAR",
+      value: parseInt(renderTotalPrice.fintalTotal),
+      items: items.map((product, i) => {
+        return {
+          item_id: `${product?._id}`,
+          item_name: product?.name,
+          discount: 0,
+          index: i,
+          item_brand: product?.brand,
+          item_category: product?.brand,
+          price: +product.price,
+          quantity: +product?.quantity,
+        };
+      }),
+    });
+    facebookPixel("InitiateCheckout", {
+      content_category: "Checkout",
+      content_ids: items.map((item) => item?._id),
+      contents: JSON.stringify(items),
+      content_type: "product_group",
+      currency: "SAR",
+      num_items: items.length,
+    });
+    twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03v`, {
+      value: parseInt(renderTotalPrice.fintalTotal),
+      currency: "SAR",
+      contents: items.map((product, i) => {
+        return {
+          content_type: "Product",
+          content_id: `${product.id}`,
+          content_name: product.name,
+          content_price: +product.price,
+          num_items: +product.quantity,
+        };
+      }),
+    });
+    tiktokPixel("InitiateCheckout", {
+      content_category: "Purchase",
+      content_id: JSON.stringify(
+        items.map((item) => {
+          return {
+            content_id: item?._id,
+          };
+        })
+      ),
+      content_type: "product_group",
+      currency: "SAR",
+      quantity: items.length,
+      value: parseInt(renderTotalPrice.fintalTotal),
+    });
+  };
   useEffect(() => {
     getPrevCouponSession();
+    sendAnalticEvenet();
   }, []);
 
   const router = useRouter();
@@ -181,11 +238,24 @@ const CheckoutPageComponent = () => {
     tabbyScript.async = true;
     tabbyScript.src = "https://checkout.tabby.ai/tabby-card.js";
     //@ts-ignore
+    const tammarScript = document.createElement("script");
+    const tammarConfigScript = document.createElement("script");
+    tammarConfigScript.innerHTML = `
+    window.tamaraWidgetConfig = {
+      lang: "ar",
+      country: "SA",
+  }
+    `;
+    tammarScript.async = true;
+    tammarScript.src = "https://cdn.tamara.co/widget-v2/tamara-widget.js";
+
     document.head.appendChild(styleScript);
     //@ts-ignore
     document.head.appendChild(jsScript);
     //@ts-ignore
     document.head.appendChild(tabbyScript);
+    document.head.appendChild(tammarScript);
+    document.head.appendChild(tammarConfigScript);
   }, []);
   const renderProduct = (item: Product, index: number) => {
     const { image, price, name, featuredImage, _id } = item;
@@ -418,10 +488,63 @@ const CheckoutPageComponent = () => {
                   </div>
                 )}
                 {paymentMethod === "tabby" && (
-                  <Tabby fintalTotal={+renderTotalPrice.fintalTotal} />
+                  <Tabby
+                    fintalTotal={+renderTotalPrice.fintalTotal}
+                    couponResponse={{
+                      ...couponResponse,
+                      deductedAmount: +renderTotalPrice?.deductedAmount,
+                    }}
+                    deleviryMethod={deleviryMethod}
+                    deleviryInfo={storeDeleviryData}
+                    vat={+renderTotalPrice.vat}
+                    pointsUsed={useUserPoints ? redeemData?.point : 0}
+                    userNote={userNote}
+                  />
                 )}
               </>
             )}
+            {/* {paymentMethodsTag?.find(
+              (item: { active: boolean; id: number }) => item.id === 2
+            )?.active && ( */}
+            {/* {true && (
+              <>
+                {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
+                  <div id="PaymentMethod" className="scroll-mt-24 ">
+                    <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
+                      <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
+                        <span
+                          className="hidden sm:block"
+                          style={{ margin: "0 20px" }}
+                        >
+                          <Image
+                            style={{ borderRadius: "10px" }}
+                            src={TabbyIcon}
+                            width={40}
+                            height={40}
+                          />
+                        </span>
+                        <div className="sm:ml-8">
+                          <div className="font-semibold mt-1 text-sm">
+                            <button
+                              onClick={() =>
+                                setPaymentMethod((prev) =>
+                                  prev === "tammara" ? "" : "tammara"
+                                )
+                              }
+                            >
+                              تامارا
+                            </button>{" "}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {paymentMethod === "tammara" && (
+                  <Tamarra fintalTotal={+renderTotalPrice.fintalTotal} />
+                )}
+              </>
+            )} */}
 
             {paymentMethodsTag?.find(
               (item: { active: boolean; id: number }) => item.id === 1
@@ -939,7 +1062,6 @@ const CheckoutPageComponent = () => {
                   </div>
                 ) : null}
 
-              
                 {/* <div className="flex justify-between py-2.5">
                   <span>نص بطاقه</span>
                   <span
