@@ -336,7 +336,7 @@ const CartPageComponent = () => {
               </div>
               <div className="mt-7 text-sm text-slate-500 dark:text-slate-400 divide-y divide-slate-200/70 dark:divide-slate-700/80">
                 <div className="flex justify-between pb-4">
-                  <span>المجموع غير شامل الضريبة</span>
+                  <span>المجموع</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
@@ -355,16 +355,16 @@ const CartPageComponent = () => {
                     </span>
                   </div>
                 )}
-                <div className="mt-4 flex justify-between py-2.5">
-                  <span>المجموع الخاضع للضريبة</span>
+                {/* <div className="mt-4 flex justify-between py-2.5">
+                  <span>المجموع</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
                   >
                     {renderTotalPrice.amountToApplyVatInReceipt} ر.س
                   </span>
-                </div>
-                <div className="mt-4 flex justify-between py-2.5">
+                </div> */}
+                {/* <div className="mt-4 flex justify-between py-2.5">
                   <span>ضريبة القيمة المضافة (15%)</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -372,7 +372,7 @@ const CartPageComponent = () => {
                   >
                     {renderTotalPrice.vat} ر.س
                   </span>
-                </div>
+                </div> */}
                 <div className="flex justify-between py-2.5">
                   <span>تكاليف الشحن</span>
                   <span

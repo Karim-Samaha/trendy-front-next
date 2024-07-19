@@ -967,7 +967,7 @@ const CheckoutPageComponent = () => {
                   </div>
                 ) : null}
                 <div className="mt-4 flex justify-between py-2.5">
-                  <span>المجموع غير شامل الضريبة</span>
+                  <span>المجموع</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
@@ -986,7 +986,7 @@ const CheckoutPageComponent = () => {
                     </span>
                   </div>
                 )}
-                <div className="mt-4 flex justify-between py-2.5">
+                {/* <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع الخاضع للضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -994,8 +994,8 @@ const CheckoutPageComponent = () => {
                   >
                     {renderTotalPrice.amountToApplyVatInReceipt} ر.س
                   </span>
-                </div>
-                <div className="mt-4 flex justify-between py-2.5">
+                </div> */}
+                {/* <div className="mt-4 flex justify-between py-2.5">
                   <span>ضريبة القيمة المضافة (15%)</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -1003,7 +1003,7 @@ const CheckoutPageComponent = () => {
                   >
                     {renderTotalPrice.vat} ر.س
                   </span>
-                </div>
+                </div> */}
                 <div className="flex justify-between py-2.5">
                   <span>تكاليف الشحن</span>
                   <span

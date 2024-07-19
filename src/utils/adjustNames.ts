@@ -45,11 +45,11 @@ export const renderTotalPrice_ = (
   if (couponPrecent) {
     deductedAmount = (total * couponPrecent) / 100;
     let amountToApplyVat = total - deductedAmount;
-    vat = +((amountToApplyVat * 15) / 100);
+    vat = 0;
     amountToApplyVatInReceipt = amountToApplyVat;
     totalCheckout = amountToApplyVatInReceipt + vat;
   } else {
-    vat = +((total * 15) / 100);
+    vat = 0;
     amountToApplyVatInReceipt = total;
     totalCheckout = amountToApplyVatInReceipt + vat;
   }
