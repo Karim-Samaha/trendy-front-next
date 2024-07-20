@@ -178,7 +178,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
         </div>
         <div
           className="flex-[5] hidden lg:flex justify-center mx-4 nav-ctg"
-          style={{ direction: "ltr", overflowX: "auto", overflowY: "hidden" }}
+          style={{ direction: "ltr" }}
         >
           <Navigation />
         </div>

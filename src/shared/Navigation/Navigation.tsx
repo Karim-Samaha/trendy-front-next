@@ -22,7 +22,7 @@ function Navigation() {
           items
             .slice(0, 16).filter((item) => item.name !== "أخري").reverse()
             .map((item: any) => ({
-              type: "",
+              type: item?.subCategories.length > 1 ? "dropdown": "",
                 // item.name === "ورود للتهنئة"
                 //   ? "megaMenu"
                 //   : item.name === "الاكثر مبيعا"
