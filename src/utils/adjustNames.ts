@@ -27,6 +27,7 @@ export const renderTotalPrice_ = (
   let extraPurchase: number = 0;
   let deductedAmount = 0;
   let amountToApplyVatInReceipt: number = 0;
+  let totalBeforeVat: number = 0;
 
   items.map((item: any) => {
     total += item.price * item.quantity;
@@ -38,20 +39,22 @@ export const renderTotalPrice_ = (
         extraPurchase +=
           item?.selectedCard[i]?.price * item?.selectedCard[i]?.quantity;
       }
-      total = total + extraPurchase
+      total = total + extraPurchase;
     }
   });
-  let totalCheckout = total + cards  + vat;
+  let totalCheckout = total + cards;
   if (couponPrecent) {
     deductedAmount = (total * couponPrecent) / 100;
     let amountToApplyVat = total - deductedAmount;
-    vat = 0;
+    vat = +((amountToApplyVat * 15) / 100);
+    totalBeforeVat = total - vat;
     amountToApplyVatInReceipt = amountToApplyVat;
     totalCheckout = amountToApplyVatInReceipt + vat;
   } else {
-    vat = 0;
-    amountToApplyVatInReceipt = total;
-    totalCheckout = amountToApplyVatInReceipt + vat;
+    vat = +((total * 15) / 100);
+    totalBeforeVat = total - vat;
+    amountToApplyVatInReceipt = total;  
+    totalCheckout = amountToApplyVatInReceipt;
   }
   if (pointsAmount && useUserPoints) {
     totalCheckout = totalCheckout - pointsAmount;
@@ -62,6 +65,7 @@ export const renderTotalPrice_ = (
   return {
     total: total.toFixed(2),
     cards: cards.toFixed(2),
+    totalBeforeVat: totalBeforeVat.toFixed(2),
     giftCards: extraPurchase.toFixed(2),
     vat: vat.toFixed(2),
     fintalTotal: totalCheckout.toFixed(2),

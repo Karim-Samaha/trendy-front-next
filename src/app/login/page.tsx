@@ -69,8 +69,8 @@ const PageLogin = () => {
   };
 
   const validateEmail = (email: string) => {
-    console.log({ debEmail: email === "karim.admin@admin.com" });
-    if (email === "karim.admin@admin.com") return true;
+    // console.log({ debEmail: email === "karim.admin@admin.com" });
+    // if (email === "karim.admin@admin.com") return true;
     return String(email)
       .toLowerCase()
       .match(
@@ -82,10 +82,10 @@ const PageLogin = () => {
     if (!isEmailValid) setError("البيانات غير صحيحه");
     if (isEmailValid) {
       try {
-        if (loginForm.username === "karim.admin@admin.com") {
-          setOtpSent(true);
-          setError("");
-        } else {
+        // if (loginForm.username === "karim.admin@admin.com") {
+        //   setOtpSent(true);
+        //   setError("");
+        // } else {
           await _axios
             .post(
               `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-mail-otp`,
@@ -99,7 +99,7 @@ const PageLogin = () => {
                 setError("");
               }
             });
-        }
+        // }
       } catch (err) {
         setError("حدث حطأ ما");
       }
