@@ -55,7 +55,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
     >
       {" "}
       <h2 className="title text-3xl md:text-4xl font-semibold" style={{marginBottom: "60px"}}>
-      لماذا متجر ترندي؟
+      لماذا متجر ترندي روز؟
       </h2>
       <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
         {/* <Image
