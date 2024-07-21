@@ -79,6 +79,9 @@ footer {
 .product-img {
   width: 450px !important;
   height: 600px;
+  @media (max-width: 968px) {
+    height: 360px;
+  }
 }
 .gift-btn button {
   background-color: #55a8b9 !important;

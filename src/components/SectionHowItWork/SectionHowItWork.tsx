@@ -55,7 +55,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
     >
       {" "}
       <h2 className="title text-3xl md:text-4xl font-semibold" style={{marginBottom: "60px"}}>
-      لماذا متجر ترندي روز؟
+      لماذا متجر ترندي روز ؟
       </h2>
       <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
         {/* <Image
@@ -76,7 +76,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
               alt="HIW"
             />
             <div className="text-center mt-auto space-y-5">
-              <Badge
+              {/* <Badge
                 name={`Trendy Rose`}
                 color={
                   !index
@@ -87,7 +87,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
                     ? "yellow"
                     : "purple"
                 }
-              />
+              /> */}
               <h3 className="text-base font-semibold" style={{color:"#55a8b9"}}>{item.title}</h3>
               <span className="block text-slate-600 dark:text-slate-400 text-sm leading-6">
                 {item.desc}

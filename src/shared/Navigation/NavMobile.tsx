@@ -103,6 +103,9 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
   };
 
   const _renderItem = (item: NavItemType, index: number) => {
+    if (item.children?.length <= 1) {
+      return <Link onClick={onClickClose} href={`/category/${item?.id}/`} style={{ margin: "5px"}}> {item.name}</Link>;
+    }
     return (
       <Disclosure
         key={index}

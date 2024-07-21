@@ -33,7 +33,7 @@ const widgetMenus: WidgetFooterMenu[] = [
     menus: [
       { href: "/terms", label: "الشروط والأحكام" },
       { href: "/refund", label: "سياسة الاستبدال والاسترجاع" },
-      { href: "/", label: "سياسة الشحن والدفع" },
+      { href: "/shipping", label: "سياسة الشحن والدفع" },
       { href: "/complaints", label: "خدمة العملاء والشكاوى والاقتراحات" },
       { href: "/license", label: "التراخيص" },
     ],
