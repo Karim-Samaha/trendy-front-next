@@ -16,7 +16,7 @@ import Label from "@/components/Label/Label";
 import Input from "@/shared/Input/Input";
 import { sendEvent } from "@/utils/firebase";
 const CartPageComponent = () => {
-  const { items, removeItem } = useCart();
+  const { items, removeItem, updateItemQuantity } = useCart();
   const { data: session } = useSession();
   const [coupon, setCoupon] = useState("");
   const [couponResponse, setCouponResponse] = useState({});
@@ -80,8 +80,16 @@ const CartPageComponent = () => {
   };
 
   const renderProduct = (item: any, index: Key | null | undefined) => {
-    const { image, price, name, featuredImage, _id, formInfo, selectedCard } =
-      item;
+    const {
+      image,
+      price,
+      name,
+      featuredImage,
+      _id,
+      formInfo,
+      selectedCard,
+      quantity,
+    } = item;
     return (
       <div
         key={index}
@@ -140,7 +148,9 @@ const CartPageComponent = () => {
                           key={item?._id}
                         >
                           <div className="order-info flex-1 font-bold">
-                            <span style={{margin: "0 5px"}}>اضافات الورود {`:`}</span>
+                            <span style={{ margin: "0 5px" }}>
+                              اضافات الورود {`:`}
+                            </span>
                             <span className="font-bold">
                               {` `}
                               {adjustNames(item?.name)}
@@ -161,7 +171,9 @@ const CartPageComponent = () => {
                   <select
                     name="qty"
                     id="qty"
-                    className="form-select text-sm rounded-md py-1 border-slate-200 dark:border-slate-700 relative z-10 dark:bg-slate-800 "
+                    className="form-select text-sm rounded-md py-1 border-slate-200 dark:border-slate-700 relative z-10 dark:bg-slate-800"
+                    onChange={(e) => updateItemQuantity(_id, +e.target.value)}
+                    value={quantity.toString()}
                   >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -200,25 +212,29 @@ const CartPageComponent = () => {
               href="##"
               className="relative z-10 flex items-center mt-3 font-medium text-primary-6000 hover:text-primary-500 text-sm "
             >
-              <span onClick={() => {
-                removeItem(_id)
-                const product = items?.find((item) => item.id === _id);
-                sendEvent("remove_from_cart", {
-                  currency: "SAR",
-                  value: product?.price,
-                  items: [
-                    {
-                      item_id: `${product?._id}`,
-                      item_name: product?.name,
-                      discount: 0,
-                      item_brand: `${product?.brand}`,
-                      item_category: `${product?.brand}`,
-                      price: +product?.price,
-                      quantity: +product?.quantity,
-                    },
-                  ],
-                });
-              }}>ازاله المنتج</span>
+              <span
+                onClick={() => {
+                  removeItem(_id);
+                  const product = items?.find((item) => item.id === _id);
+                  sendEvent("remove_from_cart", {
+                    currency: "SAR",
+                    value: product?.price,
+                    items: [
+                      {
+                        item_id: `${product?._id}`,
+                        item_name: product?.name,
+                        discount: 0,
+                        item_brand: `${product?.brand}`,
+                        item_category: `${product?.brand}`,
+                        price: +product?.price,
+                        quantity: +product?.quantity,
+                      },
+                    ],
+                  });
+                }}
+              >
+                ازاله المنتج
+              </span>
             </a>
           </div>
         </div>
@@ -336,7 +352,7 @@ const CartPageComponent = () => {
               </div>
               <div className="mt-7 text-sm text-slate-500 dark:text-slate-400 divide-y divide-slate-200/70 dark:divide-slate-700/80">
                 <div className="flex justify-between pb-4">
-                <span>المجموع غير شامل الضريبة</span>
+                  <span>المجموع غير شامل الضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
@@ -356,7 +372,7 @@ const CartPageComponent = () => {
                   </div>
                 )}
                 <div className="mt-4 flex justify-between py-2.5">
-                <span>المجموع الخاضع للضريبة</span>
+                  <span>المجموع الخاضع للضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
