@@ -314,15 +314,13 @@ const AdressForm: FC<Props> = ({
                   <Label className="text-sm">
                     نص البطاقة - اكتب إهدائك هنا ( + 6.00 ر.س )
                   </Label>
-                  <Input
-                    name="cardText"
+                  <textarea
                     value={formValue.cardText}
                     onChange={(e) => handleChange(e)}
-                    className="mt-1.5"
-                    placeholder=""
+                    name="cardText"
                     style={{ height: "100px" }}
-                    type={"text"}
-                  />
+                    className="rounded-2xl mt-1.5 text-sm font-normal h-11 px-4 py-3 block w-full border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 disabled:bg-neutral-200 dark:disabled:bg-neutral-800"
+                  ></textarea>
                 </div>
               </div>
             </>
