@@ -74,7 +74,7 @@ const ModalCards: FC<ModalQuickViewProps> = ({
                       type === "1"
                         ? "كروت اهداء"
                         : type === "2"
-                        ? "شيكولاته بلجيكيه"
+                        ? "شوكولاته بلجيكية"
                         : type === "3"
                         ? "بالونات"
                         : ""

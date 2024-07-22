@@ -46,7 +46,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
   const sliderRef = useRef(null);
   //
   const [isShow, setIsShow] = useState(false);
-  const [data_, setData_] = useState([...data]);
+  const [data_, setData_] = useState([]);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [noData, setNoData] = useState<boolean>(false);
 
@@ -76,7 +76,6 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
         console.log({data})
         if (!data || data?.productList?.length === 0) {
           setNoData(true);
-          console.log({deb: data.productList.length})
         }
         setData_(
           data.productList
@@ -114,47 +113,49 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
   }, []);
 
   useEffect(() => {
-    const OPTIONS: Partial<Glide.Options> = {
-      // direction: document.querySelector("html")?.getAttribute("dir") || "ltr",
-      perView: 4,
-      gap: 32,
-      bound: true,
-      direction: "rtl",
-      // diirection: "rtl",
-      breakpoints: {
-        1280: {
-          perView: 4,
+    if (data_.length > 0) {
+      const OPTIONS: Partial<Glide.Options> = {
+        perView: 4,
+        gap: 32,
+        bound: true,
+        direction: "rtl",
+        breakpoints: {
+          1280: {
+            perView: 4,
+          },
+          1024: {
+            gap: 20,
+            perView: 4,
+          },
+          768: {
+            gap: 20,
+            perView: 4,
+          },
+          640: {
+            gap: 20,
+            perView: 1.5,
+          },
+          500: {
+            gap: 10,
+            perView: 2,
+          },
         },
-        1024: {
-          gap: 20,
-          perView: 4,
-        },
-        768: {
-          gap: 20,
-          perView: 4,
-        },
-        640: {
-          gap: 20,
-          perView: 1.5,
-        },
-        500: {
-          gap: 10,
-          perView: 2,
-        },
-      },
-    };
-    if (!sliderRef.current) return;
+      };
+      if (!sliderRef.current) return;
+  
+      let slider = new Glide(sliderRef.current, OPTIONS);
+      slider.mount();
+      setIsShow(true);
+      return () => {
+        slider.destroy();
+      };
+    }
+  }, [sliderRef, data_]);
 
-    let slider = new Glide(sliderRef.current, OPTIONS);
-    slider.mount();
-    setIsShow(true);
-    return () => {
-      slider.destroy();
-    };
-  }, [sliderRef]);
   if (noData) return <div style={{textAlign: "center", fontWeight: "bold"}}>
     لا يوجد منتجات حاليا
   </div>;
+
   return (
     <div
       className={`nc-SectionSliderProductCard ${className} ${
