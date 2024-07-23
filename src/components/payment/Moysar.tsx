@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import _axios from "@/contains/api/axios";
 import { useCart } from "react-use-cart";
+import { Description } from "@headlessui/react/dist/components/description/description";
 const Moysar = ({
   fintalTotal,
   couponResponse = {},
@@ -48,7 +49,10 @@ const Moysar = ({
               formInfo: item.formInfo,
               color: item.color,
               quantity: item.quantity,
-              selectedCard: item?.selectedCard,
+              selectedCard: item?.selectedCard?.map((item: any) => ({
+                ...item,
+                description: '',
+              })),
               text: item?.text,
               image: item?.image,
             }))
