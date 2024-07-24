@@ -34,15 +34,26 @@ const PageLogin = () => {
   const [loginForm, setLoginInForm] = useState<{
     username: string;
     password: string;
+    name: string;
+    phone: string;
   }>({
     username: "",
     password: "",
+    name: "",
+    phone: "",
   });
   const [method, setMethod] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
+  const [isNewRegester, setIsNewRegester] = useState(false);
   const handleSignIn = async () => {
     let credentials = loginForm;
+    let newUserNotValid =
+      (isNewRegester && !loginForm.name) || (isNewRegester && !loginForm.name);
+    if (newUserNotValid) {
+      setError("يجد ادخال كل اليانات المطلوبة");
+      return;
+    }
     await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
         if (res?.ok) {
@@ -69,8 +80,6 @@ const PageLogin = () => {
   };
 
   const validateEmail = (email: string) => {
-    // console.log({ debEmail: email === "karim.admin@admin.com" });
-    // if (email === "karim.admin@admin.com") return true;
     return String(email)
       .toLowerCase()
       .match(
@@ -82,23 +91,22 @@ const PageLogin = () => {
     if (!isEmailValid) setError("البيانات غير صحيحه");
     if (isEmailValid) {
       try {
-        // if (loginForm.username === "karim.admin@admin.com") {
-        //   setOtpSent(true);
-        //   setError("");
-        // } else {
-          await _axios
-            .post(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-mail-otp`,
-              {
-                email: loginForm.username,
-              }
-            )
-            .then((res) => {
-              if (res.data?.status === "EMAIL_OTP_SENT") {
-                setOtpSent(true);
-                setError("");
-              }
-            });
+        await _axios
+          .post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-mail-otp`,
+            {
+              email: loginForm.username,
+            }
+          )
+          .then((res) => {
+            if (res.data?.status === "EMAIL_OTP_SENT") {
+              setOtpSent(true);
+              setError("");
+            }
+            if (res.data?.isNewRegester) {
+              setIsNewRegester(true);
+            }
+          });
         // }
       } catch (err) {
         setError("حدث حطأ ما");
@@ -126,7 +134,7 @@ const PageLogin = () => {
                 تسجيل الدخول عبر البريد الالكتروني
               </ButtonPrimary>
             </div>
-              {/* <div>
+            {/* <div>
                 <ButtonPrimary
                   className="login-btn"
                   type="submit"
@@ -181,16 +189,67 @@ const PageLogin = () => {
                 </label>
               ) : null}
               {otpSent && (
-                <label className="block">
-                  <Input
-                    type="password"
-                    name="password"
-                    label="رمز التحقق"
-                    className="mt-1"
-                    value={loginForm.password}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </label>
+                <>
+                  {isNewRegester && (
+                    <>
+                      <span className="text-neutral-800 dark:text-neutral-200">
+                        الاسم بالكامل
+                      </span>
+                      <label className="block">
+                        <Input
+                          type="name"
+                          name="name"
+                          label="الاسم بالكامل"
+                          className="mt-1"
+                          value={loginForm.name}
+                          onChange={(e) => {
+                            handleChange(e)
+                            setError("")
+                          }}
+                          required={true}
+                          style={{
+                            border: "1px solid #e5e7eb",
+                          }}
+                        />
+                      </label>
+                      <span className="text-neutral-800 dark:text-neutral-200">
+                        رقم الجوال
+                      </span>
+                      <label className="block">
+                        <Input
+                          type="phone"
+                          name="phone"
+                          label="رقم الهاتف"
+                          className="mt-1"
+                          value={loginForm.phone}
+                          onChange={(e) => {
+                            handleChange(e)
+                            setError("")
+
+                          }}
+                          required={true}
+                          style={{
+                            border: "1px solid #e5e7eb",
+                          }}
+                        />
+                      </label>
+                      <span className="text-neutral-800 dark:text-neutral-200">
+                        رمز التحقق
+                      </span>
+                    </>
+                  )}
+
+                  <label className="block">
+                    <Input
+                      type="password"
+                      name="password"
+                      label="رمز التحقق"
+                      className="mt-1"
+                      value={loginForm.password}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </label>
+                </>
               )}
               {error.length > 0 ? (
                 <span style={{ color: "red" }}>{error}</span>
@@ -217,11 +276,6 @@ const PageLogin = () => {
               )}
             </form>
           ) : null}
-          {/* <span className="block text-center text-neutral-700 dark:text-neutral-300">
-            <Link className="text-green-600" href="/signup">
-              انشاء حساب
-            </Link>
-          </span> */}
         </div>
       </div>
     </div>

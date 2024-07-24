@@ -79,7 +79,6 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
         }
         setData_(
           data.productList
-            .reverse()
             .filter((item: { active: boolean }) => item.active)
             .map((item: any) => ({
               ...themeData[0],
@@ -181,7 +180,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
           <ul
             style={{
               direction: "rtl",
-              maxHeight: "600px",
+              maxHeight: "400px",
             }}
             className="glide__slides prouct-slide"
           >

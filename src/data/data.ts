@@ -371,7 +371,7 @@ export const SPORT_PRODUCTS: Product[] = [
 export const DummyData = [
   {
     id: "66193c476d6515a80c68e353",
-    name: "sadsadsadas with review",
+    name: "",
     description: "بوكس ورد طبيعي فاخر من البيبي روز معsada شوكولاتة",
     price: 10,
     image: {
@@ -388,7 +388,7 @@ export const DummyData = [
     variants: [
       {
         id: 1,
-        name: "Violet",
+        name: "",
         color: "bg-violet-400",
         featuredImage: {
           src: "/_next/static/media/1.d473d70f.png",
@@ -402,7 +402,7 @@ export const DummyData = [
       },
       {
         id: 2,
-        name: "Yellow",
+        name: "",
         color: "bg-yellow-400",
         featuredImage: {
           src: "/_next/static/media/2.95a88b31.png",
@@ -416,7 +416,7 @@ export const DummyData = [
       },
       {
         id: 3,
-        name: "Orange",
+        name: "",
         color: "bg-orange-400",
         featuredImage: {
           src: "/_next/static/media/3.5a7d7901.png",
@@ -430,7 +430,7 @@ export const DummyData = [
       },
       {
         id: 4,
-        name: "Sky Blue",
+        name: "",
         color: "bg-sky-400",
         featuredImage: {
           src: "/_next/static/media/4.a3e1e5fb.png",
@@ -444,7 +444,7 @@ export const DummyData = [
       },
       {
         id: 5,
-        name: "Green",
+        name: "",
         color: "bg-green-400",
         featuredImage: {
           src: "/_next/static/media/5.addcba21.png",
@@ -481,7 +481,7 @@ export const DummyData = [
   },
   {
     id: "65fb25cf92dc3cdfb19db721",
-    name: "بوكس ورد طبيعي فاخر من البيبي روز مع 4 ",
+    name: "",
     description: "4 ورد طبيعي فاخر من البيبي روز مع شوكولاتة",
     price: 200,
     image: {
@@ -591,7 +591,7 @@ export const DummyData = [
   },
   {
     id: "65fb25138f6c4f14fa7161aa",
-    name: "بوكس ورد طبيعي فاخر من البيبي روز مع شوكولاتة2 ",
+    name: "",
     description: "2بوكس ورد طبيعي فاخر من البيبي روز مع شوكولاتة",
     price: 50,
     image: {
@@ -701,7 +701,7 @@ export const DummyData = [
   },
   {
     id: "65fb24fa8f6c4f14fa7161a8",
-    name: "sadsadsadas",
+    name: "",
     description: "بوكس ورد طبيعي فاخر من البيبي روز معsada شوكولاتة",
     price: 5,
     image: {
@@ -811,7 +811,7 @@ export const DummyData = [
   },
   {
     id: "65fb201767d02754b6630689",
-    name: "ب..........وكس ورد طبيعي فاخر من البيبي روز مع شوكولاتة",
+    name: "",
     description: "بوكس ورد طبيعي فاخر من البيبي روز مع شوكولاتة",
     price: 735,
     image: {

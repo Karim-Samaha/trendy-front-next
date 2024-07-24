@@ -24,7 +24,11 @@ import Tamarra from "../Tamarra";
 
 const CheckoutPageComponent = () => {
   const { items, emptyCart } = useCart();
-
+  const getTotalQty = (list: any) => {
+    let totalQty = 0;
+    list.map((item) => totalQty += item.quantity)
+    return totalQty || 1
+  }
   const [tabActive, setTabActive] = useState<
     "ContactInfo" | "ShippingAddress" | "PaymentMethod"
   >("ShippingAddress");
@@ -966,12 +970,9 @@ const CheckoutPageComponent = () => {
                     </span>
                   </div>
                 ) : null}
-                <div className="mt-4 flex justify-between py-2.5">
-                <span>المجموع غير شامل الضريبة</span>
-                  <span
-                    style={{ minWidth: "100px" }}
-                    className="font-semibold text-slate-900 dark:text-slate-200"
-                  >
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span>المجموع الفرعي ({getTotalQty(items)} منتج)</span>
+                  <span style={{ minWidth: "100px" }}>
                     {renderTotalPrice.totalBeforeVat} ر.س
                   </span>
                 </div>
@@ -986,7 +987,7 @@ const CheckoutPageComponent = () => {
                     </span>
                   </div>
                 )}
-                <div className="mt-4 flex justify-between py-2.5">
+                {/* <div className="mt-4 flex justify-between py-2.5">
                   <span>المجموع الخاضع للضريبة</span>
                   <span
                     style={{ minWidth: "100px" }}
@@ -994,13 +995,10 @@ const CheckoutPageComponent = () => {
                   >
                     {renderTotalPrice.totalBeforeVat} ر.س
                   </span>
-                </div>
-                <div className="mt-4 flex justify-between py-2.5">
-                  <span>ضريبة القيمة المضافة (15%)</span>
-                  <span
-                    style={{ minWidth: "100px" }}
-                    className="font-semibold text-slate-900 dark:text-slate-200"
-                  >
+                </div> */}
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span>ضريبة القيمة المضافة</span>
+                  <span style={{ minWidth: "100px" }} className="">
                     {renderTotalPrice.vat} ر.س
                   </span>
                 </div>
@@ -1089,12 +1087,31 @@ const CheckoutPageComponent = () => {
                     0 ر.س
                   </span>
                 </div> */}
-
+                {+renderTotalPrice.giftCards.length > 0 && (
+                  <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                    <span style={{ fontSize: "14px" }}>
+                      مجموع اضافات الورود
+                    </span>
+                    <span style={{ minWidth: "100px" }}>
+                      {" "}
+                      {renderTotalPrice.giftCards} ر.س
+                    </span>
+                  </div>
+                )}
+                {+renderTotalPrice.cards.length > 0 && (
+                  <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                    <span style={{ fontSize: "14px" }}>مجموع نص البطاقة</span>
+                    <span style={{ minWidth: "100px" }}>
+                      {" "}
+                      {renderTotalPrice.cards} ر.س
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                  <span>مجموع المنتجات شامل ضريبة القيمة المضافة</span>
+                  <span style={{ fontSize: "14px" }}>مجموع المنتجات</span>
                   <span style={{ minWidth: "100px" }}>
                     {" "}
-                    {renderTotalPrice.fintalTotal} ر.س
+                    {renderTotalPrice.fintalTotalWithNoAdds} ر.س
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">

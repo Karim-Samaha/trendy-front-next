@@ -70,6 +70,7 @@ const AdressForm: FC<Props> = ({
     time: "",
     cardText: "",
     addressSelected: false,
+    phone: "",
     address: "",
     giftAdd: "1",
     sentFrom: "",
@@ -83,6 +84,7 @@ const AdressForm: FC<Props> = ({
       time: "",
       cardText: "",
       addressSelected: false,
+      phone: "",
       address: "",
       giftAdd: "1",
       sentFrom: "",
@@ -98,6 +100,7 @@ const AdressForm: FC<Props> = ({
     deliveryDate: false,
     address: false,
     time: false,
+    phone: false,
   });
   const handleChange = (e: any) => {
     setFormValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -123,9 +126,14 @@ const AdressForm: FC<Props> = ({
   const validate = () => {
     let deliveryDate = true;
     let address = true;
+    let phone = true;
     if (formValue.deliveryDate.length <= 0) {
       setErrors((prev: any) => ({ ...prev, deliveryDate: true }));
       deliveryDate = false;
+    }
+    if (formValue.phone.length <= 0) {
+      setErrors((prev: any) => ({ ...prev, phone: true }));
+      phone = false;
     }
     if (selectAdress && formValue.address.length <= 0) {
       setErrors((prev: any) => ({ ...prev, address: true }));
@@ -135,7 +143,7 @@ const AdressForm: FC<Props> = ({
       setErrors((prev: any) => ({ ...prev, time: true }));
       address = false;
     }
-    return deliveryDate && address;
+    return deliveryDate && phone && address;
   };
   const validateAndAddToCart = async (formValue: any) => {
     let isValid = validate();
@@ -154,7 +162,6 @@ const AdressForm: FC<Props> = ({
       }));
       setErrors((prev: any) => ({ ...prev, time: false }));
     }
-    console.log(formValue);
   }, [time_]);
   const handleSelectedGiftCard = (item: any) => {
     setSelectedCard((prev: any) => [...prev, { ...item, quantity: 1 }]);
@@ -191,9 +198,6 @@ const AdressForm: FC<Props> = ({
     setSelectedCard(newItems);
   };
 
-  useEffect(() => {
-    console.log(selectedCard);
-  }, [selectedCard]);
   return (
     <>
       <div
@@ -327,9 +331,7 @@ const AdressForm: FC<Props> = ({
           )}
           <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
             <div className="flex-1">
-              <Label className="text-sm">
-                تاريخ التوصيل (متاح من 2 الظهر الي 11م)
-              </Label>
+              <Label className="text-sm">تاريخ التوصيل</Label>
               <Input
                 className="mt-1.5"
                 placeholder=""
@@ -357,7 +359,7 @@ const AdressForm: FC<Props> = ({
           <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
             <div className="flex-1">
               <Label className="text-sm">
-                وقت التوصيل ( من 2 الظهر الي 11م)
+                وقت التوصيل ( متاح من 2 الظهر الي 11م)
               </Label>
               <div
                 id="time-picker"
@@ -454,6 +456,31 @@ const AdressForm: FC<Props> = ({
               )}
             </div>
           </div>
+          <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
+            <div className="flex-1">
+              <Label className="text-sm">رقم المستلم</Label>
+              <Input
+                className="mt-1.5"
+                placeholder="966+"
+                name="phone"
+                value={formValue.phone}
+                onChange={(e) => {
+                  if (/^\d*$/.test(e.target.value)) {
+                    handleChange(e);
+                  }
+                  setErrors((prev: { phone: boolean }) => ({
+                    ...prev,
+                    phone: false,
+                  }));
+                }}
+                defaultValue={""}
+                type={"tel"}
+              />
+            </div>
+          </div>
+          {errors.phone && (
+            <span style={{ color: "red" }}>يجب تحديد رقم المتسلم</span>
+          )}
           {orderType !== "GIFT_ORDER" && (
             <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
               <div className="flex-1">
@@ -510,6 +537,8 @@ const AdressForm: FC<Props> = ({
                 <option value="1">كروت اهداء</option>
                 <option value="2">شيكولاته بلجيكيه</option>
                 <option value="3">بالونات</option>
+                <option value="4">بدون اضافات الورود</option>
+
               </Select>
             </div>
           </div>

@@ -17,6 +17,7 @@ import _axios from "@/contains/api/axios";
 import HitRequest from "@/components/HitRequest";
 import { analytics } from "../utils/firebase";
 import Logo from "@/shared/Logo/Logo";
+import { facebookPixel, tiktokPixel } from "@/utils/pixels";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -56,10 +57,8 @@ export default function RootLayout({
         );
       })
       .catch((err) => console.log(err));
-    console.log({ analytics });
-    if (analytics) {
-      console.log("Firebase Analytics initialized");
-    }
+      facebookPixel("PageView", {})
+      tiktokPixel("Pageview", {})
   }, []);
 
   useEffect(() => {

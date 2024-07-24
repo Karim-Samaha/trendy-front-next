@@ -1,24 +1,26 @@
+'use client'
 import React, { FC } from "react";
 
 export interface PricesProps {
   className?: string;
-  price?: number;
+  price?: number | string;
   priceBefore: number;
   contentClass?: string;
 }
 
 const Prices: FC<PricesProps> = ({
   className = "",
-  price = 33,
+  price,
   priceBefore,
   contentClass = "py-1 px-2 md:py-1.5 md:px-2.5 text-sm font-medium",
 }) => {
+  console.log(price)
   return (
     <div className={`${className}`}>
       <div
         className={`flex items-center border-2  price rounded-lg ${contentClass} price-label`}
       >
-        <span className=" !leading-none" style={{ direction: "rtl", fontWeight: "bold",fontSize: "15px" }}>
+        <span className=" !leading-none" style={{ direction: "rtl", fontWeight: "bold",fontSize: "14px" }}>
           {" "}
           {String(price)} ر.س
         </span>

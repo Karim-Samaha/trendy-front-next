@@ -38,22 +38,30 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
+        name: { label: "name", type: "name" },
+        phone: { label: "phone", type: "phone" },
+
       },
+     
       async authorize(credentials) {
+        let body = {
+          email: credentials.username,
+          password: credentials.password, 
+        }
+        if (credentials?.name && credentials?.phone) {
+          body.name = credentials.name
+          body.phone = credentials.phone
+        }
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
           {
             method: "POST",
-            body: JSON.stringify({
-              email: credentials.username,
-              password: credentials.password,
-            }),
+            body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" },
           }
         );
         const user = await res.json();
         if (user?.error === "wrongCredintials") {
-          console.log("!!!!!!!!!!!!!");
           throw new Error(JSON.stringify({ user, status: false }));
         } else {
           return user;

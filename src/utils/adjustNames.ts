@@ -33,6 +33,7 @@ export const renderTotalPrice_ = (
     total += item.price * item.quantity;
     if (item.formInfo?.cardText?.length > 1) {
       cards += 6;
+      total += 6
     }
     if (item?.selectedCard?.length) {
       for (let i = 0; i < item?.selectedCard.length; i++) {
@@ -43,6 +44,7 @@ export const renderTotalPrice_ = (
     }
   });
   let totalCheckout = total + cards;
+  
   if (couponPrecent) {
     deductedAmount = (total * couponPrecent) / 100;
     let amountToApplyVat = total - deductedAmount;
@@ -69,6 +71,7 @@ export const renderTotalPrice_ = (
     giftCards: extraPurchase.toFixed(2),
     vat: vat.toFixed(2),
     fintalTotal: totalCheckout.toFixed(2),
+    fintalTotalWithNoAdds: (totalCheckout - extraPurchase - cards).toFixed(2),
     deductedAmount: deductedAmount.toFixed(2),
     amountToApplyVatInReceipt: amountToApplyVatInReceipt.toFixed(2),
   };
