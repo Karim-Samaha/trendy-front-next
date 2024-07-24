@@ -203,8 +203,8 @@ const PageLogin = () => {
                           className="mt-1"
                           value={loginForm.name}
                           onChange={(e) => {
-                            handleChange(e)
-                            setError("")
+                            handleChange(e);
+                            setError("");
                           }}
                           required={true}
                           style={{
@@ -223,9 +223,10 @@ const PageLogin = () => {
                           className="mt-1"
                           value={loginForm.phone}
                           onChange={(e) => {
-                            handleChange(e)
-                            setError("")
-
+                            if (/^\d*$/.test(e.target.value)) {
+                              handleChange(e);
+                              setError("");
+                            }
                           }}
                           required={true}
                           style={{

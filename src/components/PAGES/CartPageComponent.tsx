@@ -82,11 +82,21 @@ const CartPageComponent = () => {
       </div>
     );
   };
+  const getTotalProductPrice = (item: any) => {
+    let totalPrice = item.price * item.quantity;
+    if (item.formInfo.cardText.length > 1) {
+      totalPrice += 6 * item.quantity;
+    }
+    for (let i = 0; i < item.selectedCard.length; i++) {
+      totalPrice += item.selectedCard[i].price * item.selectedCard[i].quantity;
+    }
+    return totalPrice.toFixed()
+  };
 
   const renderProduct = (item: any, index: Key | null | undefined) => {
     const {
       image,
-      price,
+      price: price_,
       name,
       featuredImage,
       _id,
@@ -94,20 +104,8 @@ const CartPageComponent = () => {
       selectedCard,
       quantity,
     } = item;
-    const [price_, setPrice_] = useState("0");
-    const getTotalProductPrice = () => {
-      let totalPrice = price * quantity;
-      if (formInfo.cardText.length > 1) {
-        totalPrice += 6 * quantity;
-      }
-      for (let i = 0; i < selectedCard.length; i++) {
-        totalPrice += selectedCard[i].price * selectedCard[i].quantity;
-      }
-      setPrice_(totalPrice);
-    };
-    useEffect(() => {
-      getTotalProductPrice();
-    }, []);
+ 
+
     return (
       <div
         key={index}
@@ -203,7 +201,7 @@ const CartPageComponent = () => {
                   </select>
                   <Prices
                     contentClass="py-1 px-2 md:py-1.5 md:px-2.5 text-sm font-medium h-full"
-                    price={price_}
+                    price={getTotalProductPrice(item)}
                   />
                 </div>
               </div>
@@ -216,7 +214,7 @@ const CartPageComponent = () => {
                 className="hidden flex-1 sm:flex justify-end"
                 style={{ marginTop: "-12px" }}
               >
-                <Prices price={price_} className="mt-0.5" />
+                <Prices price={getTotalProductPrice(item)} className="mt-0.5" />
               </div>
             </div>
           </div>
