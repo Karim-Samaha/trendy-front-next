@@ -47,7 +47,8 @@ import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
-  const { addItem, updateItemQuantity, items, setItems } = useCart();
+  const { addItem, updateItemQuantity, items, setItems, updateItem } =
+    useCart();
   //
 
   const [qty, setQty] = useState(1);
@@ -167,7 +168,10 @@ const ProductPage: FC<any> = ({ params, product }) => {
     if (items.some((item) => item.id === itemToBeAdded.id)) {
       let item = items.find((item) => item.id === itemToBeAdded.id);
       if (!item) return;
-      updateItemQuantity(item.id, item?.quantity + qty);
+      updateItem(item.id, {
+        ...itemToBeAdded,
+        quantity: (itemToBeAdded.quantity += qty),
+      });
       itemToBeAdded = {
         ...item,
         quantity: item.quantity + qty,
