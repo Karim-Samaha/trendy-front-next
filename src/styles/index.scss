@@ -847,3 +847,18 @@ tamara-widget {
   background-color: #55a8b9 !important;
   border-radius: 11px;
 }
+.sender-name-btn button {
+  background-color: #f1f5f9 !important;
+  min-width: 130px;
+  border-radius: 11px !important;
+  margin-inline-start: 15px;
+  color: #55a8b9;
+  border: 1px solid #55a8b9;
+  &.active {
+    background-color: #55a8b9 !important;
+    color: #f1f5f9 !important;
+  }
+  @media (max-width: 968px) {
+    margin-bottom: 10px;
+  }
+}

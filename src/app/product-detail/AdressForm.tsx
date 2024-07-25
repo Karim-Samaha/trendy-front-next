@@ -64,6 +64,7 @@ const AdressForm: FC<Props> = ({
     "12",
   ];
   const minutes = ["00", "15", "30", "45"];
+  const [showSenderName, setShowSenderName] = useState(false);
   const [formValue, setFormValue] = useState({
     type: orderType,
     deliveryDate: "",
@@ -285,20 +286,39 @@ const AdressForm: FC<Props> = ({
         >
           {orderType === "GIFT_ORDER" && (
             <>
-              <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
-                <div className="flex-1">
-                  <Label className="text-sm">اسم المرسل</Label>
-                  <Input
-                    className="mt-1.5"
-                    placeholder=""
-                    name="sentFrom"
-                    value={formValue.sentFrom}
-                    onChange={(e) => handleChange(e)}
-                    defaultValue={""}
-                    type={"text"}
-                  />
-                </div>
+              <p>اظهر اسمك مع الهدية للمستلم</p>
+
+              <div className="flex flex-col sm:flex-row sender-name-btn">
+                <ButtonSecondary
+                  className={`flex-2 flex-shrink-0 ${showSenderName && "active"}`}
+                  onClick={() => setShowSenderName(true)}
+                >
+                  نعم
+                </ButtonSecondary>
+                <ButtonSecondary
+                  className={`flex-2 flex-shrink-0 ${!showSenderName && "active"}`}
+                  onClick={() => setShowSenderName(false)}
+                >
+                  لا
+                </ButtonSecondary>
               </div>
+              {showSenderName ? (
+                <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
+                  <div className="flex-1">
+                    <Label className="text-sm">اسم المرسل</Label>
+                    <Input
+                      className="mt-1.5"
+                      placeholder=""
+                      name="sentFrom"
+                      value={formValue.sentFrom}
+                      onChange={(e) => handleChange(e)}
+                      defaultValue={""}
+                      type={"text"}
+                    />
+                  </div>
+                </div>
+              ) : null}
+
               <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
                 <div className="flex-1">
                   <Label className="text-sm">اسم المرسل اليه</Label>
@@ -538,7 +558,6 @@ const AdressForm: FC<Props> = ({
                 <option value="2">شيكولاته بلجيكيه</option>
                 <option value="3">بالونات</option>
                 <option value="4">بدون اضافات الورود</option>
-
               </Select>
             </div>
           </div>
