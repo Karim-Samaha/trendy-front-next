@@ -400,10 +400,10 @@ const CartPageComponent = () => {
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                  <span>تكاليف الشحن</span>
-                  <span style={{ minWidth: "100px" }} className="">
+                  <span>تكلفه الشحن مجاناً</span>
+                  {/* <span style={{ minWidth: "100px" }} className="">
                     0 ر.س
-                  </span>
+                  </span> */}
                 </div>
                 {+renderTotalPrice.giftCards > 0 && (
                   <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">

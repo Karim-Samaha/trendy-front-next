@@ -54,7 +54,7 @@ const CheckoutPageComponent = () => {
   const [payOnDelviery, setPayOnDelviery] = useState(false);
   const [payWithTransfer, setPayWithTransfer] = useState(false);
   const [useUserPoints, setUseUserPoints] = useState<boolean>(false);
-  const { points, redeemData, allPaid, isAllPaidWithPoints, minToApply } =
+  const { points, redeemData, allPaid, isAllPaidWithPoints, minToApply, pointsActive } =
     usePoints();
   const handleChange = (e: any) => {
     setStoreDeleviryData((prev) => ({
@@ -905,7 +905,7 @@ const CheckoutPageComponent = () => {
                     </>
                   )}
                 </div>
-                {redeemData?.point && minToApply > +renderTotalPrice.total ? (
+                {pointsActive && redeemData?.point && minToApply > +renderTotalPrice.total ? (
                   <div className="mt-4 flex justify-between py-2.5">
                     <span>
                       <input
@@ -937,7 +937,7 @@ const CheckoutPageComponent = () => {
                       )
                     </span>
                   </div>
-                ) : redeemData?.point === 0 ? (
+                ) : redeemData?.point === 0 && pointsActive ? (
                   <div className="mt-4 flex justify-between py-2.5">
                     <span>
                       <input
@@ -1002,16 +1002,16 @@ const CheckoutPageComponent = () => {
                     {renderTotalPrice.vat} ر.س
                   </span>
                 </div>
-                <div className="flex justify-between py-2.5">
-                  <span>تكاليف الشحن</span>
-                  <span
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                <span>تكلفه الشحن مجاناً</span>
+                  {/* <span
                     style={{ minWidth: "100px" }}
                     className="font-semibold text-slate-900 dark:text-slate-200"
                   >
                     0 ر.س
-                  </span>
+                  </span> */}
                 </div>
-                {redeemData?.point && minToApply < +renderTotalPrice.total ? (
+                {pointsActive && redeemData?.point && minToApply < +renderTotalPrice.total ? (
                   <div className="mt-4 flex justify-between py-2.5">
                     <span>
                       <input

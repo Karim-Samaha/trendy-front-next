@@ -10,6 +10,7 @@ const usePoints = () => {
     maxUse: 0,
     amountToEarnPoint: 0,
     minToApply: 0,
+    active: true,
   });
   const [redeemData, setRedeemData] = useState({
     amount: 0,
@@ -69,6 +70,7 @@ const usePoints = () => {
     allPaid,
     isAllPaidWithPoints,
     minToApply: settings.minToApply,
+    pointsActive: settings.active,
   };
 };
 export default usePoints;
