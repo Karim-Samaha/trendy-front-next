@@ -262,11 +262,11 @@ const AdressForm: FC<Props> = ({
           <div className="sm:ml-8">
             <h3 className=" text-slate-700 dark:text-slate-300 flex ">
               {orderType === "GIFT_ORDER" ? (
-                <span className="uppercase">عنوان شحن هديتك</span>
+                <span className="uppercase">بيانات الطلب الخاص بهديتك</span>
               ) : (
-                <span className="uppercase">عنوان شحن </span>
+                <span className="uppercase">بيانات الطلب </span>
               )}
-              <svg
+              {/* <svg
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2.5"
@@ -278,10 +278,10 @@ const AdressForm: FC<Props> = ({
                   strokeLinejoin="round"
                   d="M4.5 12.75l6 6 9-13.5"
                 />
-              </svg>
+              </svg> */}
               {orderType === "GIFT_ORDER" && (
                 <span style={{ margin: "0 10px", fontWeight: "bold" }}>
-                  سنقوم بتغليف هديتك
+                  (سنقوم بتغليف هديتك)
                 </span>
               )}
             </h3>
@@ -569,8 +569,11 @@ const AdressForm: FC<Props> = ({
                 value={formValue.giftAdd}
                 name="giftAdd"
                 onChange={(e) => {
-                  handleChange(e)
-                  setErrors((prev: any) => ({...prev,withGiftRequred: false}))
+                  handleChange(e);
+                  setErrors((prev: any) => ({
+                    ...prev,
+                    withGiftRequred: false,
+                  }));
                 }}
               >
                 <option value="1">كروت اهداء</option>
@@ -579,11 +582,13 @@ const AdressForm: FC<Props> = ({
                 <option value="4">بدون اضافات الورود</option>
               </Select>
               {errors.withGiftRequred && (
-                <span style={{ color: "red", marginTop : "10px" }}>لم يتم اختيار اضافات ورود</span>
+                <span style={{ color: "red", marginTop: "10px" }}>
+                  لم يتم اختيار اضافات ورود
+                </span>
               )}
-          </div>
             </div>
-            
+          </div>
+
           {orderType === "GIFT_ORDER" ? (
             <>
               <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
