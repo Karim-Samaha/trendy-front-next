@@ -64,90 +64,86 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
     }
   }, [session]);
   useEffect(() => {
-    if (title === 'منتجات مشابهة') {
+    if (title === "منتجات مشابهة") {
       axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${order}`
-      )
-      .then((res) => res.data)
-      .then((data) => {
-        setData_(
-          data.data.productList
-            .reverse()
-            .filter((item: { active: boolean }) => item.active)
-            .map((item: any) => ({
-              ...themeData[0],
-              name: item.name,
-              id: item?._id,
-              _id: item?._id,
-              color: "bg-yellow-50",
-              featuredImage: {
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${order}`)
+        .then((res) => res.data)
+        .then((data) => {
+          setData_(
+            data.data.productList
+              .reverse()
+              .filter((item: { active: boolean }) => item.active)
+              .map((item: any) => ({
+                ...themeData[0],
+                name: item.name,
                 id: item?._id,
-                category: 1,
-                src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
-                blurHeight: 8,
-                blurWidth: 7,
-                height: 200,
-                width: 362,
-                allOfSizes: ["XS", "S"],
-                link: "product-detail",
-                numberOfReviews: 50,
-                rating: "5",
-              },
-              price: item.price,
-              isOffer: item.isOffer,
-              priceBefore: item.priceBefore,
-              description: item.description,
-              rates: item.rates,
-              purchaseCount: item.purchaseCount,
-            }))
-        );
-      });
-
+                _id: item?._id,
+                color: "bg-yellow-50",
+                featuredImage: {
+                  id: item?._id,
+                  category: 1,
+                  src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
+                  blurHeight: 8,
+                  blurWidth: 7,
+                  height: 200,
+                  width: 362,
+                  allOfSizes: ["XS", "S"],
+                  link: "product-detail",
+                  numberOfReviews: 50,
+                  rating: "5",
+                },
+                price: item.price,
+                isOffer: item.isOffer,
+                priceBefore: item.priceBefore,
+                description: item.description,
+                rates: item.rates,
+                purchaseCount: item.purchaseCount,
+              }))
+          );
+        });
     } else {
-      console.log({order})
+      console.log({ order });
       axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/homepage-sections?order=${order}`
-      )
-      .then((res) => res.data.data.subCategories[0])
-      .then((data) => {
-        setCategory({ ...data });
-        console.log({ data });
-        setData_(
-          data.productList
-            .reverse()
-            .filter((item: { active: boolean }) => item.active)
-            .map((item: any) => ({
-              ...themeData[0],
-              name: item.name,
-              id: item?._id,
-              _id: item?._id,
-              color: "bg-yellow-50",
-              featuredImage: {
+        .get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/homepage-sections?order=${order}`
+        )
+        .then((res) => res.data.data.subCategories[0])
+        .then((data) => {
+          setCategory({ ...data });
+          console.log({ data });
+          setData_(
+            data.productList
+              .reverse()
+              .filter((item: { active: boolean }) => item.active)
+              .map((item: any) => ({
+                ...themeData[0],
+                name: item.name,
                 id: item?._id,
-                category: 1,
-                src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
-                blurHeight: 8,
-                blurWidth: 7,
-                height: 200,
-                width: 362,
-                allOfSizes: ["XS", "S"],
-                link: "product-detail",
-                numberOfReviews: 50,
-                rating: "5",
-              },
-              price: item.price,
-              isOffer: item.isOffer,
-              priceBefore: item.priceBefore,
-              description: item.description,
-              rates: item.rates,
-              purchaseCount: item.purchaseCount,
-            }))
-        );
-      });
+                _id: item?._id,
+                color: "bg-yellow-50",
+                featuredImage: {
+                  id: item?._id,
+                  category: 1,
+                  src: `${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${item.image}`,
+                  blurHeight: 8,
+                  blurWidth: 7,
+                  height: 200,
+                  width: 362,
+                  allOfSizes: ["XS", "S"],
+                  link: "product-detail",
+                  numberOfReviews: 50,
+                  rating: "5",
+                },
+                price: item.price,
+                isOffer: item.isOffer,
+                priceBefore: item.priceBefore,
+                description: item.description,
+                rates: item.rates,
+                purchaseCount: item.purchaseCount,
+              }))
+          );
+        });
     }
-   
   }, []);
 
   useEffect(() => {
@@ -190,7 +186,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
     };
   }, [sliderRef]);
   if (data_.length <= 0) {
-    console.log({data_})
+    console.log({ data_ });
     return null;
   }
   // return null
@@ -220,7 +216,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
             style={{
               direction: "rtl",
               maxHeight: "450px",
-              padding: "5px 0"
+              padding: "5px 0",
             }}
             className="glide__slides prouct-slide home-slider"
           >
@@ -245,13 +241,20 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           </ul>
         </div>
       </div>
-      {!modal && (
-        <div className="show-more">
-          <Link href={`/category/${category?._id}/${category?._id}`}>
-            عرض المزيد
-          </Link>
-        </div>
-      )}
+      {!modal &&
+        (category?._id ? (
+          <div className="show-more">
+            <Link href={`/category/${category?._id}/${category?._id}`}>
+              عرض المزيد
+            </Link>
+          </div>
+        ) : (
+          <div className="show-more">
+            <Link href={`/category/${order}/${order}`}>
+              عرض المزيد
+            </Link>
+          </div>
+        ))}
     </div>
   );
 };
