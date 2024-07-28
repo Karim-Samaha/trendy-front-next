@@ -99,7 +99,7 @@ const DiscoverMoreSlider: FC<any> = ({ categories }) => {
         </ul>
       </div>
       <div className="show-more" style={{ width: "100vw" }}>
-        <Link href={`/categories  `}>عرض كل</Link>
+        <Link href={`/categories  `}>عرض الكل</Link>
       </div>
     </div>
   );
