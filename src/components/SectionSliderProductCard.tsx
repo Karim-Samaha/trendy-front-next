@@ -152,7 +152,8 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
       perView: 4,
       gap: 32,
       bound: true,
-      direction: "rtl",
+      perTouch: false,
+      direction: "rtl", 
       // diirection: "rtl",
       breakpoints: {
         1280: {
@@ -186,7 +187,6 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
     };
   }, [sliderRef]);
   if (data_.length <= 0) {
-    console.log({ data_ });
     return null;
   }
   // return null
@@ -229,7 +229,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
               >
                 <ProductCard
                   // @ts-ignore
-                  data={{ ...item, fav: fav.includes(item?._id) }}
+                  data={{ ...item, fav: fav?.includes(item?._id) }}
                   featuredImage={undefined}
                   _id={""}
                   modal={modal}

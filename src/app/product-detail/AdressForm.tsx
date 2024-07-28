@@ -12,6 +12,7 @@ import ModalCards from "@/components/ModalCards";
 import ProductNcNumber from "@/components/productNcNumber";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Checkbox from "@/shared/Checkbox/Checkbox";
+import PurchaseAdd from "./PurchaseAdd";
 interface Props {
   isActive: boolean;
   orderType: string;
@@ -170,11 +171,21 @@ const AdressForm: FC<Props> = ({
       setErrors((prev: any) => ({ ...prev, time: false }));
     }
   }, [time_]);
+
   const handleSelectedGiftCard = (item: any) => {
-    setSelectedCard((prev: any) => [...prev, { ...item, quantity: 1 }]);
+    setSelectedCard((prev: any) => [
+      ...prev,
+      {
+        ...item,
+        quantity: 1,
+        color: item?.colors?.length > 0 ? item?.colors[0] : null,
+        text: item?.textArr?.length > 0 ? item?.textArr[0] : null,
+      },
+    ]);
     setErrors((prev: any) => ({ ...prev, withGiftRequred: false }));
     setShopingCards(false);
   };
+
   const handleRemoveGiftCard = (id: string) => {
     let newList = selectedCard?.filter(
       (item: { _id: string }) => item?._id !== id
@@ -204,6 +215,21 @@ const AdressForm: FC<Props> = ({
       }
     });
     setSelectedCard(newItems);
+  };
+  const handleSlectedGiftOptions = (id, option, val) => {
+    let item = selectedCard?.find((item: { _id: string }) => item?._id === id);
+    console.log(id);
+    console.log(item);
+    item[option] = val;
+    const newItems = selectedCard?.map((prevItem: any) => {
+      if (item?._id === prevItem?._id) {
+        return item;
+      } else {
+        return prevItem;
+      }
+    });
+    setSelectedCard(newItems);
+    console.log(newItems);
   };
 
   return (
@@ -638,91 +664,14 @@ const AdressForm: FC<Props> = ({
                       quantity: number;
                     }) => {
                       return (
-                        <div
-                          className="flex flex-col sm:flex-row pt-6 gift-btn"
+                        <PurchaseAdd
                           key={item?._id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            border: "1px dashed #55a8b9",
-                            padding: "10px 5px",
-                            borderRadius: "10px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                            }}
-                          >
-                            <svg
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2.5"
-                              stroke="currentColor"
-                              className="w-5 h-5 ml-3 text-slate-900 dark:text-slate-100"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            تم اختيار{" "}
-                            <span
-                              style={{ margin: "0 10px", display: "flex" }}
-                              className="font-bold"
-                            >
-                              {item?.name}
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                            }}
-                          >
-                            <div
-                              className={`nc-NcInputNumber flex items-center justify-between space-x-5`}
-                            >
-                              <div
-                                className={`nc-NcInputNumber__content flex items-center justify-between w-[104px] sm:w-28`}
-                                style={{ direction: "rtl" }}
-                              >
-                                <button
-                                  className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
-                                  type="button"
-                                  onClick={() => handleAddQuantity(item?._id)}
-                                  // disabled={max ? max <= qty : false}
-                                >
-                                  <PlusIcon className="w-4 h-4" />
-                                </button>
-
-                                <span className="select-none block flex-1 text-center leading-none">
-                                  {item?.quantity}
-                                </span>
-                                <button
-                                  className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
-                                  type="button"
-                                  onClick={() =>
-                                    handleRemoveQuantity(item?._id)
-                                  }
-                                >
-                                  <MinusIcon className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </div>
-                            <span
-                              onClick={() => handleRemoveGiftCard(item?._id)}
-                              style={{ color: "blue", cursor: "pointer" }}
-                            >
-                              مسح
-                            </span>
-                          </div>
-                        </div>
+                          item={item}
+                          handleRemoveQuantity={handleRemoveQuantity}
+                          handleAddQuantity={handleAddQuantity}
+                          handleRemoveGiftCard={handleRemoveGiftCard}
+                          handleSlectedGiftOptions={handleSlectedGiftOptions}
+                        />
                       );
                     }
                   )
@@ -771,91 +720,14 @@ const AdressForm: FC<Props> = ({
                       quantity: number;
                     }) => {
                       return (
-                        <div
-                          className="flex flex-col sm:flex-row pt-6 gift-btn"
+                        <PurchaseAdd
                           key={item?._id}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            border: "1px dashed #55a8b9",
-                            padding: "10px 5px",
-                            borderRadius: "10px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                            }}
-                          >
-                            <svg
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2.5"
-                              stroke="currentColor"
-                              className="w-5 h-5 ml-3 text-slate-900 dark:text-slate-100"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            تم اختيار{" "}
-                            <span
-                              style={{ margin: "0 10px", display: "flex" }}
-                              className="font-bold"
-                            >
-                              {item?.name}
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                            }}
-                          >
-                            <div
-                              className={`nc-NcInputNumber flex items-center justify-between space-x-5`}
-                            >
-                              <div
-                                className={`nc-NcInputNumber__content flex items-center justify-between w-[104px] sm:w-28`}
-                                style={{ direction: "rtl" }}
-                              >
-                                <button
-                                  className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
-                                  type="button"
-                                  onClick={() => handleAddQuantity(item?._id)}
-                                  // disabled={max ? max <= qty : false}
-                                >
-                                  <PlusIcon className="w-4 h-4" />
-                                </button>
-
-                                <span className="select-none block flex-1 text-center leading-none">
-                                  {item?.quantity}
-                                </span>
-                                <button
-                                  className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
-                                  type="button"
-                                  onClick={() =>
-                                    handleRemoveQuantity(item?._id)
-                                  }
-                                >
-                                  <MinusIcon className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </div>
-                            <span
-                              onClick={() => handleRemoveGiftCard(item?._id)}
-                              style={{ color: "blue", cursor: "pointer" }}
-                            >
-                              مسح
-                            </span>
-                          </div>
-                        </div>
+                          item={item}
+                          handleRemoveQuantity={handleRemoveQuantity}
+                          handleAddQuantity={handleAddQuantity}
+                          handleRemoveGiftCard={handleRemoveGiftCard}
+                          handleSlectedGiftOptions={handleSlectedGiftOptions}
+                        />
                       );
                     }
                   )

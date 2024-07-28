@@ -863,3 +863,10 @@ tamara-widget {
     margin-bottom: 10px;
   }
 }
+.addsColor {
+  @media (max-width: 968px) {
+    width: 15px !important;
+    height: 15px !important;
+    margin-top: 10px !important;
+  }
+}

@@ -73,7 +73,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       )
       .then((res) => res.data.data)
       .then((data) => {
-        console.log({data})
+        console.log({ data });
         if (!data || data?.productList?.length === 0) {
           setNoData(true);
         }
@@ -105,6 +105,8 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
               description: item.description,
               rates: item.rates,
               purchaseCount: item.purchaseCount,
+              colors: item.colors,
+              textArr: item.textArr,
             }))
         );
         setLoaded(true);
@@ -141,7 +143,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
         },
       };
       if (!sliderRef.current) return;
-  
+
       let slider = new Glide(sliderRef.current, OPTIONS);
       slider.mount();
       setIsShow(true);
@@ -151,9 +153,12 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
     }
   }, [sliderRef, data_]);
 
-  if (noData) return <div style={{textAlign: "center", fontWeight: "bold"}}>
-    لا يوجد منتجات حاليا
-  </div>;
+  if (noData)
+    return (
+      <div style={{ textAlign: "center", fontWeight: "bold" }}>
+        لا يوجد منتجات حاليا
+      </div>
+    );
 
   return (
     <div

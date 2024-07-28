@@ -62,8 +62,8 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const [tabbyReady, setTabbyReady] = useState(false);
   const [categoryId, setCategoryId] = useState();
   const [options, setOptions] = useState({
-    color: null,
-    text: null,
+    color: productData?.colors?.length > 0 ? productData?.colors[0] : null,
+    text: productData?.textArr?.length > 0 ? productData?.textArr[0] : null,
   });
   const [isOpenModalViewAllReviews, setIsOpenModalViewAllReviews] =
     useState(false);
@@ -375,12 +375,13 @@ const ProductPage: FC<any> = ({ params, product }) => {
         ) : null}
         {productData?.textArr?.length > 0 ? (
           <>
-            <div>نص البطاقة الخاص بالمنتج :</div>
+            <div>خيارات المنتج :</div>
             <div
               style={{
                 display: "flex",
                 alignItems: "flex-start",
-                flexDirection: "column",
+                flexWrap: "wrap",
+                maxWidth: "350px"
               }}
             >
               {productData?.textArr?.map((item) => {
@@ -390,6 +391,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
                     style={{
                       marginBlockEnd: "8px",
                       padding: "2px 10px",
+                      margin: "3px 5px",
                       border:
                         options.text === item
                           ? "3px solid #55a8b9"
