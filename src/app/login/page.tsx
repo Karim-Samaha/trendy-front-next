@@ -89,27 +89,47 @@ const PageLogin = () => {
   const handleOtpRequest = async () => {
     let isEmailValid = validateEmail(loginForm.username);
     if (!isEmailValid) setError("البيانات غير صحيحه");
-    if (isEmailValid) {
-      try {
-        await _axios
-          .post(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-mail-otp`,
-            {
-              email: loginForm.username,
-            }
-          )
-          .then((res) => {
-            if (res.data?.status === "EMAIL_OTP_SENT") {
-              setOtpSent(true);
-              setError("");
-            }
-            if (res.data?.isNewRegester) {
-              setIsNewRegester(true);
-            }
-          });
-        // }
-      } catch (err) {
-        setError("حدث حطأ ما");
+    if (method === "phone") {
+      await _axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-phone-otp`,
+          {
+            phone: loginForm.username,
+          }
+        )
+        .then((res) => {
+          setOtpSent(true);
+          // if (res.data?.status === "EMAIL_OTP_SENT") {
+          //   setOtpSent(true);
+          //   setError("");
+          // }
+          // if (res.data?.isNewRegester) {
+          //   setIsNewRegester(true);
+          // }
+        });
+    } else {
+      if (isEmailValid) {
+        try {
+          await _axios
+            .post(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-mail-otp`,
+              {
+                email: loginForm.username,
+              }
+            )
+            .then((res) => {
+              if (res.data?.status === "EMAIL_OTP_SENT") {
+                setOtpSent(true);
+                setError("");
+              }
+              if (res.data?.isNewRegester) {
+                setIsNewRegester(true);
+              }
+            });
+          // }
+        } catch (err) {
+          setError("حدث حطأ ما");
+        }
       }
     }
   };
@@ -134,15 +154,15 @@ const PageLogin = () => {
                 تسجيل الدخول عبر البريد الالكتروني
               </ButtonPrimary>
             </div>
-            {/* <div>
-                <ButtonPrimary
-                  className="login-btn"
-                  type="submit"
-                  onClick={() => setMethod("phone")}
-                >
-                  تسجيل الدخول عبر رقم الهاتف
-                </ButtonPrimary>
-              </div> */}
+            <div>
+              <ButtonPrimary
+                className="login-btn"
+                type="submit"
+                onClick={() => setMethod("phone")}
+              >
+                تسجيل الدخول عبر رقم الهاتف
+              </ButtonPrimary>
+            </div>
           </div>
         )}
         <div className="max-w-md mx-auto space-y-6 dir-rtl">
@@ -180,11 +200,15 @@ const PageLogin = () => {
                   </span>
                   <Input
                     name="username"
-                    placeholder="9666666666"
+                    placeholder="966+"
                     className="mt-1"
                     label="username"
                     value={loginForm.username}
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => {
+                      if (/^\d*$/.test(e.target.value)) {
+                        handleChange(e);
+                      }
+                    }}
                   />
                 </label>
               ) : null}
