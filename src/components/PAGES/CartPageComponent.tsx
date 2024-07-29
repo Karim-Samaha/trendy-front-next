@@ -71,6 +71,20 @@ const CartPageComponent = () => {
       </div>
     );
   };
+  const colors = [
+    { val: "red", text: "احمر" },
+    { val: "white", text: "ابيض" },
+    { val: "brown", text: "بني" },
+    { val: "yellow", text: "اصفر" },
+    { val: "rgba(0,0,0,0.5", text: "شفاف" },
+    { val: "green", text: "اخضر" },
+    { val: "blue", text: "ازرق" },
+    { val: "#0066CC", text: "كحلي" },
+    { val: "#000", text: "اسود" },
+    { val: "pink", text: "زهري" },
+    { val: "silver", text: "فضي" },
+    { val: "#FFD700", text: "دهبي" },
+  ];
 
   const renderTotalPrice = renderTotalPrice_(items, couponResponse?.precent);
 
@@ -90,7 +104,7 @@ const CartPageComponent = () => {
     for (let i = 0; i < item.selectedCard.length; i++) {
       totalPrice += item.selectedCard[i].price * item.selectedCard[i].quantity;
     }
-    return totalPrice.toFixed()
+    return totalPrice.toFixed();
   };
 
   const renderProduct = (item: any, index: Key | null | undefined) => {
@@ -104,7 +118,6 @@ const CartPageComponent = () => {
       selectedCard,
       quantity,
     } = item;
- 
 
     return (
       <div
@@ -161,9 +174,12 @@ const CartPageComponent = () => {
                       return (
                         <div
                           className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
-                          key={item?._id}
+                          key={item?.cartId}
                         >
-                          <div className="order-info flex-1 font-bold">
+                          <div
+                            className="order-info flex-1 font-bold"
+                            style={{ flexWrap: "wrap", display: "flex", justifyContent: "center" }}
+                          >
                             <span style={{ margin: "0 5px" }}>
                               اضافات الورود {`:`}
                             </span>
@@ -177,6 +193,15 @@ const CartPageComponent = () => {
                             >
                               {item?.price} ر.س
                             </span>
+                            <div style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
+                              <span> الكمية : {item.quantity}</span>
+                              {item?.color && (
+                                <span> اللون : {colors.find((colorItem) => colorItem.val === item?.color)?.text}</span>
+                              )}
+                              {item?.text && (
+                                <span> اختيار : {item?.text}</span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       );

@@ -18,16 +18,31 @@ const PurchaseAdd = ({
   handleAddQuantity,
   handleRemoveGiftCard,
   handleSlectedGiftOptions,
+  handleSelectedGiftCard
 }: any) => {
   const [options, setOptions] = useState({
     color: item?.colors?.length > 0 ? item?.colors[0] : null,
     text: item?.textArr?.length > 0 ? item?.textArr[0] : null,
   });
-  console.log({ item });
+
+  const colors = [
+    { val: "red", text: "احمر" },
+    { val: "white", text: "ابيض" },
+    { val: "brown", text: "بني" },
+    { val: "yellow", text: "اصفر" },
+    { val: "rgba(0,0,0,0.5", text: "شفاف" },
+    { val: "green", text: "اخضر" },
+    { val: "blue", text: "ازرق" },
+    { val: "#0066CC", text: "كحلي" },
+    { val: "#000", text: "اسود" },
+    { val: "pink", text: "زهري" },
+    { val: "silver", text: "فضي" },
+    { val: "#FFD700", text: "دهبي" },
+  ];
   return (
     <div
       className="flex flex-col sm:flex-row pt-6 gift-btn"
-      key={item?._id}
+      key={item?.cartId}
       style={{
         display: "flex",
         alignItems: "center",
@@ -83,7 +98,10 @@ const PurchaseAdd = ({
             <button
               className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
               type="button"
-              onClick={() => handleAddQuantity(item?._id)}
+              onClick={() => {
+                console.log(item);
+                handleAddQuantity(item?.cartId);
+              }}
               // disabled={max ? max <= qty : false}
             >
               <PlusIcon className="w-4 h-4" />
@@ -95,14 +113,14 @@ const PurchaseAdd = ({
             <button
               className="w-8 h-8 rounded-full flex items-center justify-center border border-neutral-400 dark:border-neutral-500 bg-white dark:bg-neutral-900 focus:outline-none hover:border-neutral-700 dark:hover:border-neutral-400 disabled:hover:border-neutral-400 dark:disabled:hover:border-neutral-500 disabled:opacity-50 disabled:cursor-default"
               type="button"
-              onClick={() => handleRemoveQuantity(item?._id)}
+              onClick={() => handleRemoveQuantity(item?.cartId)}
             >
               <MinusIcon className="w-4 h-4" />
             </button>
           </div>
         </div>
         <span
-          onClick={() => handleRemoveGiftCard(item?._id)}
+          onClick={() => handleRemoveGiftCard(item?.cartId)}
           style={{ color: "blue", cursor: "pointer" }}
         >
           مسح
@@ -110,7 +128,7 @@ const PurchaseAdd = ({
       </div>
       {item?.colors?.length > 0 ? (
         <div style={{ width: "100%", marginTop: "10px" }}>
-          <div>اختيار لون المنتج :</div>
+          <div>اختيار لون المنتج : <span style={{fontWeight:"bold"}}> {colors.find((colorItem) => colorItem.val === item?.color)?.text}</span></div>
           <div style={{ display: "flex", alignItems: "center" }}>
             {item?.colors?.map((color: string) => {
               return (
@@ -132,7 +150,7 @@ const PurchaseAdd = ({
                   }}
                   onClick={() => {
                     setOptions((prev) => ({ ...prev, color: color }));
-                    handleSlectedGiftOptions(item?._id, "color", color);
+                    handleSlectedGiftOptions(item?.cartId, "color", color);
                   }}
                 ></p>
               );
@@ -142,45 +160,27 @@ const PurchaseAdd = ({
       ) : null}
       {item?.textArr?.length > 0 ? (
         <div style={{ width: "100%", marginTop: "10px" }}>
-          <div style={{margin: "10px 0"}}>خيارات المنتج :</div>
+          <div style={{ margin: "10px 0" }}>خيارات المنتج :</div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <select
               value={options.text}
-              onChange={(e) =>
-                {setOptions((prev) => ({ ...prev, text: e.target.value }))
-                handleSlectedGiftOptions(item?._id, "text", e.target.value);}
-
-              }
+              onChange={(e) => {
+                setOptions((prev) => ({ ...prev, text: e.target.value }));
+                handleSlectedGiftOptions(item?.cartId, "text", e.target.value);
+              }}
             >
-                {item?.textArr.map((option: string)=> {
-                    return <option key={option}>{option}</option>
-                })}
+              {item?.textArr.map((option: string) => {
+                return <option key={option}>{option}</option>;
+              })}
             </select>
-            {/* {item?.colors?.map((color: string) => {
-              return (
-                <p
-                  key={color}
-                  style={{
-                    margin: "0 5px",
-                    width: options.color === color ? "40px" : "30px",
-                    height: options.color === color ? "40px" : "30px",
-                    borderRadius: "50%",
-                    backgroundColor: color,
-                    border:
-                      options.color === color
-                        ? "3px solid #55a8b9"
-                        : "1px solid black",
-                    opacity: ".8",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setOptions((prev) => ({ ...prev, color: color }));
-                    handleSlectedGiftOptions(item?._id, 'color', color);
-                  }}
-                ></p>
-              );
-            })} */}
           </div>
+        </div>
+      ) : null}
+      {item?.textArr?.length > 0 || item?.colors?.length > 0 ? (
+        <div style={{ marginTop: "10px" }}>
+          <ButtonSecondary onClick={() => handleSelectedGiftCard(item)}>
+            اضافة المنتج باختيارات اخري
+          </ButtonSecondary>
         </div>
       ) : null}
     </div>

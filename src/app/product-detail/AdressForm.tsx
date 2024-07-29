@@ -171,13 +171,24 @@ const AdressForm: FC<Props> = ({
       setErrors((prev: any) => ({ ...prev, time: false }));
     }
   }, [time_]);
+  function generateRandom() {
+    let digits = '0123456789abcdefghijklmnopqrestuv';
+    let nums = '';
+    let len = digits.length;
+    for (let i = 0; i < 5; i++) {
+      nums += digits[Math.floor(Math.random() * len)];
+    }
+    return nums;
+  }
 
-  const handleSelectedGiftCard = (item: any) => {
+  const handleSelectedGiftCard =  (item: any) => {
+    let randomNum = generateRandom()
     setSelectedCard((prev: any) => [
       ...prev,
       {
         ...item,
         quantity: 1,
+        cartId: `${item?._id}-${randomNum}`,
         color: item?.colors?.length > 0 ? item?.colors[0] : null,
         text: item?.textArr?.length > 0 ? item?.textArr[0] : null,
       },
@@ -188,15 +199,16 @@ const AdressForm: FC<Props> = ({
 
   const handleRemoveGiftCard = (id: string) => {
     let newList = selectedCard?.filter(
-      (item: { _id: string }) => item?._id !== id
+      (item: { _id: string }) => item?.cartId !== id
     );
     setSelectedCard(newList);
   };
   const handleAddQuantity = (id: string) => {
-    let item = selectedCard?.find((item: { _id: string }) => item?._id === id);
+    console.log(id)
+    let item = selectedCard?.find((item: { _id: string }) => item?.cartId === id);
     item.quantity += 1;
     const newItems = selectedCard?.map((prevItem: any) => {
-      if (item?._id === prevItem?._id) {
+      if (item?.cartId === prevItem?.cartId) {
         return item;
       } else {
         return prevItem;
@@ -205,10 +217,10 @@ const AdressForm: FC<Props> = ({
     setSelectedCard(newItems);
   };
   const handleRemoveQuantity = (id: string) => {
-    let item = selectedCard?.find((item: { _id: string }) => item?._id === id);
+    let item = selectedCard?.find((item: { _id: string }) => item?.cartId === id);
     item.quantity -= 1;
     const newItems = selectedCard?.map((prevItem: any) => {
-      if (item?._id === prevItem?._id) {
+      if (item?.cartId === prevItem?.cartId) {
         return item;
       } else {
         return prevItem;
@@ -217,19 +229,16 @@ const AdressForm: FC<Props> = ({
     setSelectedCard(newItems);
   };
   const handleSlectedGiftOptions = (id, option, val) => {
-    let item = selectedCard?.find((item: { _id: string }) => item?._id === id);
-    console.log(id);
-    console.log(item);
+    let item = selectedCard?.find((item: { _id: string }) => item?.cartId === id);
     item[option] = val;
     const newItems = selectedCard?.map((prevItem: any) => {
-      if (item?._id === prevItem?._id) {
+      if (item?.cartId === prevItem?.cartId) {
         return item;
       } else {
         return prevItem;
       }
     });
     setSelectedCard(newItems);
-    console.log(newItems);
   };
 
   return (
@@ -665,12 +674,13 @@ const AdressForm: FC<Props> = ({
                     }) => {
                       return (
                         <PurchaseAdd
-                          key={item?._id}
+                          key={item?.cartId}
                           item={item}
                           handleRemoveQuantity={handleRemoveQuantity}
                           handleAddQuantity={handleAddQuantity}
                           handleRemoveGiftCard={handleRemoveGiftCard}
                           handleSlectedGiftOptions={handleSlectedGiftOptions}
+                          handleSelectedGiftCard={handleSelectedGiftCard}
                         />
                       );
                     }
@@ -721,12 +731,14 @@ const AdressForm: FC<Props> = ({
                     }) => {
                       return (
                         <PurchaseAdd
-                          key={item?._id}
+                          key={item?.cartId}
                           item={item}
                           handleRemoveQuantity={handleRemoveQuantity}
                           handleAddQuantity={handleAddQuantity}
                           handleRemoveGiftCard={handleRemoveGiftCard}
                           handleSlectedGiftOptions={handleSlectedGiftOptions}
+                          handleSelectedGiftCard={handleSelectedGiftCard}
+
                         />
                       );
                     }
