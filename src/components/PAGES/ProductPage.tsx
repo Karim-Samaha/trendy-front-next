@@ -551,6 +551,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
                       flexWrap: "wrap",
                       marginTop: "10px",
                     }}
+                    className="share-container"
                   >
                     <p style={{ fontWeight: "bold" }}>شارك المنتج عبر:</p>
                     <div style={{ display: "flex" }}>

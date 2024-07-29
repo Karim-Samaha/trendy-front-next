@@ -844,7 +844,7 @@ tamara-widget {
   background-color: silver !important;
   height: 8px;
 }
-.nav-ctg::-webkit-scrollbar-thumb{
+.nav-ctg::-webkit-scrollbar-thumb {
   background-color: #55a8b9 !important;
   border-radius: 11px;
 }
@@ -868,5 +868,12 @@ tamara-widget {
     width: 15px !important;
     height: 15px !important;
     margin-top: 10px !important;
+  }
+}
+.share-container img,
+.share-container svg {
+  @media (max-width: 968px) {
+    width: 30px !important;
+    height: 30px !important;
   }
 }

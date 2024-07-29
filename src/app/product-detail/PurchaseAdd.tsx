@@ -30,14 +30,14 @@ const PurchaseAdd = ({
     { val: "white", text: "ابيض" },
     { val: "brown", text: "بني" },
     { val: "yellow", text: "اصفر" },
-    { val: "rgba(0,0,0,0.5", text: "شفاف" },
+    { val: "rgba(0,0,0,0.5)", text: "شفاف" },
     { val: "green", text: "اخضر" },
     { val: "blue", text: "ازرق" },
     { val: "#0066CC", text: "كحلي" },
     { val: "#000", text: "اسود" },
     { val: "pink", text: "زهري" },
     { val: "silver", text: "فضي" },
-    { val: "#FFD700", text: "دهبي" },
+    { val: "#FFD700", text: "ذهبي" },
   ];
   return (
     <div
