@@ -44,6 +44,7 @@ import { sendEvent } from "@/utils/firebase";
 import SnapchatShareButton from "../SnapChatShareButton";
 import _axios from "@/contains/api/axios";
 import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import ImageZoom from "../ImageZoom/ImageZoom";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -381,7 +382,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
                 display: "flex",
                 alignItems: "flex-start",
                 flexWrap: "wrap",
-                maxWidth: "350px"
+                maxWidth: "350px",
               }}
             >
               {productData?.textArr?.map((item) => {
@@ -530,13 +531,17 @@ const ProductPage: FC<any> = ({ params, product }) => {
               {/* HEADING */}
               <div className="relative">
                 <div className="">
-                  <Image
+                  <ImageZoom
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`}
+                    alt={productData?.name}
+                  />
+                  {/* <Image
                     width={500}
                     height={600}
                     src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/public/imgs/${productData?.image}`}
                     className=" rounded-2xl object-cover product-img"
                     alt={productData?.name}
-                  />
+                  /> */}
                   <div
                     style={{
                       // border: "1px solid red",

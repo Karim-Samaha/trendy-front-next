@@ -651,7 +651,7 @@ const AdressForm: FC<Props> = ({
                     className="flex-2 flex-shrink-0 "
                     onClick={() => setShopingCards(true)}
                   >
-                    اختر البالونات
+                    اختر بالون
                   </ButtonSecondary>
                 ) : null}
               </div>
@@ -707,7 +707,7 @@ const AdressForm: FC<Props> = ({
                     className="flex-2 flex-shrink-0 "
                     onClick={() => setShopingCards(true)}
                   >
-                    اختر البالونات
+                    اختر بالون
                   </ButtonSecondary>
                 ) : null}
               </div>

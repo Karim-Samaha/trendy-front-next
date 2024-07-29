@@ -146,6 +146,10 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        onClick={() => {
+          router.push(`/search/${search}`);
+          onClickClose();
+        }}
       >
         <path
           d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
@@ -195,7 +199,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
 
   return (
     <div className="overflow-y-auto w-full h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">
-      <div className="py-6 px-5 dir-rtl" onClick={onClickClose}>
+      <div className="py-6 px-5 dir-rtl">
         <Logo />
 
         <span className="absolute right-2 top-2 p-1">

@@ -39,7 +39,7 @@ const DEMO_DATA = [
     id: 4,
     img: HIW4img,
     imgDark: HIW4img,
-    title: "احصل علي نقاط ترندي",
+    title: "احصل على نقاط ترندي",
     desc: "اربح نقاطك الان",
   },
 ];

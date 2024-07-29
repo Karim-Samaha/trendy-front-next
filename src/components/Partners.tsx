@@ -34,12 +34,12 @@ const Partners = () => {
         }}
       >
         <Image width={100} height={50} src={TABBY} alt={"TABBY"} />
+        <Image width={100} height={50} src={TAMARRA} alt={"TAMARRA"} />
         <Image width={100} height={50} src={AMEX} alt={"AMEX"} />
         <Image width={100} height={50} src={MASTER} alt={"MASTER"} />
         <Image width={100} height={50} src={VisaImg} alt={"VisaImg"} />
         <Image width={100} height={50} src={MadaImg} alt={"MadaImg"} />
         <Image width={100} height={50} src={Moyassar} alt={"Moyassar"} />
-        <Image width={100} height={50} src={TAMARRA} alt={"TAMARRA"} />
         <div className="bg">
           <svg
             width="214"

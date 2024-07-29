@@ -1,0 +1,19 @@
+.container {
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .normal {
+    transition: transform 0.3s ease;
+  }
+  
+  .zoomed {
+    width: 500px;
+    height: 500px; /* Keep the same width but scale up */
+    transform: scale(2); /* Adjust the scale factor as needed */
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    position: relative;
+    object-fit: cover;
+  }
+  
