@@ -179,7 +179,7 @@ const PurchaseAdd = ({
       {item?.textArr?.length > 0 || item?.colors?.length > 0 ? (
         <div style={{ marginTop: "10px" }}>
           <ButtonSecondary onClick={() => handleSelectedGiftCard(item)}>
-            اضافة المنتج باختيارات اخري
+            اضافة المنتج باختيارات اخرى
           </ButtonSecondary>
         </div>
       ) : null}
