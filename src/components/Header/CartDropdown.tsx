@@ -12,10 +12,26 @@ import { useCart } from "react-use-cart";
 import { useSession } from "next-auth/react";
 import { sendEvent } from "@/utils/firebase";
 import ProductCard from "../ProductCard";
+import { adjustNames } from "@/utils/adjustNames";
 
 export default function CartDropdown() {
   const { items, removeItem } = useCart();
   const { data: session } = useSession();
+  const colors = [
+    { val: "red", text: "احمر" },
+    { val: "white", text: "ابيض" },
+    { val: "brown", text: "بني" },
+    { val: "yellow", text: "اصفر" },
+    { val: "rgba(0,0,0,0.5)", text: "شفاف" },
+    { val: "green", text: "اخضر" },
+    { val: "blue", text: "ازرق" },
+    { val: "#0066CC", text: "كحلي" },
+    { val: "black", text: "اسود" },
+    { val: "pink", text: "زهري" },
+    { val: "silver", text: "فضي" },
+    { val: "#FFD700", text: "ذهبي" },
+  ];
+
   const totalPrice = () => {
     let total = 0;
     items.map(
@@ -24,7 +40,16 @@ export default function CartDropdown() {
     return total.toFixed(2);
   };
   const renderProduct = (item: any, index: number, close: () => void) => {
-    const { image, price, name, featuredImage, id, _id, quantity } = item;
+    const {
+      image,
+      price,
+      name,
+      featuredImage,
+      id,
+      _id,
+      quantity,
+      selectedCard,
+    } = item;
     return (
       <div key={index} className="flex py-5 last:pb-0">
         <div
@@ -47,19 +72,88 @@ export default function CartDropdown() {
         <div className="ml-4 flex flex-1 flex-col">
           <div>
             <div className="flex justify-between ">
-              <div>
+              <div style={{marginBottom: "10px"}}>
                 <h3 className="text-base font-medium ">
                   <Link onClick={close} href={`/product-detail/${_id}`}>
                     {name}
                   </Link>
                 </h3>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                {/* <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                   <span>{`طبيعي`}</span>
                   <span className="mx-2 border-l border-slate-200 dark:border-slate-700 h-4"></span>
-                  {/* <span>{"XL"}</span> */}
-                </p>
+                </p> */}
+                {selectedCard?.length
+                  ? selectedCard.map((subItem: any) => {
+                      return (
+                        <div
+                          className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
+                          key={subItem?.cartId}
+                          style={{ maxWidth: "100px" }}
+                        >
+                          <div
+                            className="order-info flex-1 font-bold"
+                            style={{
+                              flexWrap: "wrap",
+                              display: "flex",
+                              justifyContent: "center",
+                              minWidth: "280px",
+                              maxWidth: "280px",
+                            }}
+                          >
+                            <span style={{ margin: "0 5px", fontSize: "8px" }}>
+                              اضافات الورود {`:`}
+                            </span>
+                            <span
+                              className="font-bold"
+                              style={{ fontSize: "8px" }}
+                            >
+                              {` `}
+                              {adjustNames(subItem?.name)}
+                            </span>
+                            <span
+                              className="font-bold"
+                              style={{ margin: "0 10px", fontSize: "8px" }}
+                            >
+                              {subItem?.price} ر.س
+                            </span>
+                            <div
+                              style={{
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "space-around",
+                              }}
+                            >
+                              <span style={{ fontSize: "8px" }}>
+                                {" "}
+                                الكمية : {subItem.quantity}
+                              </span>
+                              {subItem?.color && (
+                                <span style={{ fontSize: "8px" }}>
+                                  {" "}
+                                  اللون :{" "}
+                                  {
+                                    colors.find(
+                                      (colorItem) =>
+                                        colorItem.val === subItem?.color
+                                    )?.text
+                                  }
+                                </span>
+                              )}
+                              {item?.text && (
+                                <span style={{ fontSize: "8px" }}>
+                                  {" "}
+                                  اختيار : {subItem?.text}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : null}
               </div>
-              <Prices price={price} className="mt-0.5" />
+                {" "}
+                <Prices price={price} className="mt-0.5" />
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
@@ -170,7 +264,6 @@ export default function CartDropdown() {
                   <div className="max-h-[60vh] p-5 overflow-y-auto hiddenScrollbar">
                     <h3 className="text-xl font-semibold">عربه التسوق</h3>
                     <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                      {console.log({ items })}
                       {items.length > 0
                         ? items.map((item, index) =>
                             renderProduct(item, index, close)

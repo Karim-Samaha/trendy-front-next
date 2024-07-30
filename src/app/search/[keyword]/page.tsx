@@ -41,7 +41,7 @@ const PageSearch = ({ params }) => {
               allOfSizes: ["XS", "S"],
               link: "product-detail",
               numberOfReviews: 50,
-              rating: "5",
+              rating: "5x",
             },
             price: item.price,
             description: item.description,
@@ -91,12 +91,14 @@ const PageSearch = ({ params }) => {
               </>
             ) : null}
           </div>
-          <div
-            className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28 justify-center"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <ButtonPrimary onClick={handleLimit}>اعرض المزيد</ButtonPrimary>
-          </div>
+          {data.length > 10 ? (
+            <div
+              className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28 justify-center"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <ButtonPrimary onClick={handleLimit}>اعرض المزيد</ButtonPrimary>
+            </div>
+          ) : null}
 
           {/* PAGINATION */}
           {/* {data.length > 10 && loaded ? (

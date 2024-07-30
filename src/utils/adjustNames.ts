@@ -32,8 +32,8 @@ export const renderTotalPrice_ = (
   items.map((item: any) => {
     total += item.price * item.quantity;
     if (item.formInfo?.cardText?.length > 1) {
-      cards += 6;
-      total += 6
+      cards += 6 * item.quantity;
+      total += 6 * item.quantity
     }
     if (item?.selectedCard?.length) {
       for (let i = 0; i < item?.selectedCard.length; i++) {
@@ -43,6 +43,7 @@ export const renderTotalPrice_ = (
       total = total + extraPurchase;
     }
   });
+
   let totalCheckout = total + cards;
   
   if (couponPrecent) {

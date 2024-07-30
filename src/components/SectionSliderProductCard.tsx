@@ -147,45 +147,47 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   }, []);
 
   useEffect(() => {
-    const OPTIONS: Partial<Glide.Options> = {
-      // direction: document.querySelector("html")?.getAttribute("dir") || "ltr",
-      perView: 4,
-      gap: 32,
-      bound: true,
-      perTouch: false,
-      direction: "rtl", 
-      // diirection: "rtl",
-      breakpoints: {
-        1280: {
-          perView: 4,
+    if (data_.length > 0) {
+      const OPTIONS: Partial<Glide.Options> = {
+        // direction: document.querySelector("html")?.getAttribute("dir") || "ltr",
+        perView: 4,
+        gap: 32,
+        bound: true,
+        perTouch: false,
+        direction: "rtl",
+        // diirection: "rtl",
+        breakpoints: {
+          1280: {
+            perView: 4,
+          },
+          1024: {
+            gap: 20,
+            perView: 4,
+          },
+          768: {
+            gap: 20,
+            perView: 4,
+          },
+          640: {
+            gap: 20,
+            perView: 1.5,
+          },
+          500: {
+            gap: 10,
+            perView: 2,
+          },
         },
-        1024: {
-          gap: 20,
-          perView: 4,
-        },
-        768: {
-          gap: 20,
-          perView: 4,
-        },
-        640: {
-          gap: 20,
-          perView: 1.5,
-        },
-        500: {
-          gap: 10,
-          perView: 2,
-        },
-      },
-    };
-    if (!sliderRef.current) return;
+      };
+      if (!sliderRef.current) return;
 
-    let slider = new Glide(sliderRef.current, OPTIONS);
-    slider.mount();
-    setIsShow(true);
-    return () => {
-      slider.destroy();
-    };
-  }, [sliderRef]);
+      let slider = new Glide(sliderRef.current, OPTIONS);
+      slider.mount();
+      setIsShow(true);
+      return () => {
+        slider.destroy();
+      };
+    }
+  }, [sliderRef, data_]);
   if (data_.length <= 0) {
     return null;
   }
@@ -250,9 +252,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           </div>
         ) : (
           <div className="show-more">
-            <Link href={`/category/${order}/${order}`}>
-              عرض المزيد
-            </Link>
+            <Link href={`/category/${order}/${order}`}>عرض المزيد</Link>
           </div>
         ))}
     </div>

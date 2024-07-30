@@ -80,7 +80,7 @@ const CartPageComponent = () => {
     { val: "green", text: "اخضر" },
     { val: "blue", text: "ازرق" },
     { val: "#0066CC", text: "كحلي" },
-    { val: "#000", text: "اسود" },
+    { val: "black", text: "اسود" },
     { val: "pink", text: "زهري" },
     { val: "silver", text: "فضي" },
     { val: "#FFD700", text: "ذهبي" },
@@ -99,6 +99,7 @@ const CartPageComponent = () => {
   const getTotalProductPrice = (item: any) => {
     let totalPrice = item.price * item.quantity;
     if (item.formInfo.cardText.length > 1) {
+      //
       totalPrice += 6 * item.quantity;
     }
     for (let i = 0; i < item.selectedCard.length; i++) {
