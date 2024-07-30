@@ -41,7 +41,7 @@ const PageSearch = ({ params }) => {
               allOfSizes: ["XS", "S"],
               link: "product-detail",
               numberOfReviews: 50,
-              rating: "5x",
+              rating: "5",
             },
             price: item.price,
             description: item.description,
