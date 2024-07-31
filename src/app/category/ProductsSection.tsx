@@ -88,6 +88,8 @@ const ProductSection = ({ products, params }: any) => {
   const priceFrom = searchParams.get("from");
   const priceTo = searchParams.get("to");
   const offer = searchParams.get("offer");
+  const [loaded, setLoaded] = useState(true);
+  const [loadedAll, setLoadedAll] = useState(false)
 
   const handleShowMoreButton = () => {
     setRequestedAmount((prev) => (prev += 10));
@@ -100,7 +102,11 @@ const ProductSection = ({ products, params }: any) => {
     } else {
       products = await getCategoryAllProducts(params?.id[0], requestedAmount);
     }
+    if (renderdData.length === products.length && renderdData.length !== 20) {
+      setLoadedAll(true)
+    }
     setRenderedData(products);
+    setLoaded(true);
   };
   const handleFilteration = async () => {
     if (!priceFrom || !priceTo) return;
@@ -122,6 +128,7 @@ const ProductSection = ({ products, params }: any) => {
   }, [priceFrom, priceTo, offer]);
   useEffect(() => {
     if (requestedAmount !== 12) {
+      setLoaded(false);
       getDataBasedOnRequest();
     }
   }, [requestedAmount]);
@@ -214,9 +221,9 @@ const ProductSection = ({ products, params }: any) => {
           className="flex"
           style={{ justifyContent: "center", marginTop: "50px" }}
         >
-          {renderdData.length >= 8 && (
+          {renderdData.length >= 8 && !loadedAll && (
             <ButtonPrimary onClick={handleShowMoreButton}>
-              عرض المزيد
+              {loaded ? "عرض المزيد" : <span className="loader"></span>}
             </ButtonPrimary>
           )}
         </div>

@@ -232,9 +232,9 @@ const CartPageComponent = () => {
                 </div>
               </div>
 
-              <div className="hidden sm:block text-center relative">
+              {/* <div className="hidden sm:block text-center relative">
                 <NcInputNumber className="relative z-10" item={item} />
-              </div>
+              </div> */}
 
               <div
                 className="hidden flex-1 sm:flex justify-end"

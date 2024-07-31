@@ -29,7 +29,7 @@ function Navigation() {
                 //   ? null
                 //   : "dropdown",
               id: item._id,
-              href: `/category/${item?._id}`,
+              href: item?.subCategories?.length === 1 ? `/category/${item?._id}/${item?.subCategories[0]?._id}` : `/category/${item?._id}`,
               name: item.name,
               image: item.image,
               desc: item.description,
