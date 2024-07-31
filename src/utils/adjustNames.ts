@@ -28,24 +28,31 @@ export const renderTotalPrice_ = (
   let deductedAmount = 0;
   let amountToApplyVatInReceipt: number = 0;
   let totalBeforeVat: number = 0;
+  let fintalTotalWithNoAdds: number = 0;
 
-  items.map((item: any) => {
+  for (let i = 0; i < items.length; i++) {
+    let item = items[i];
+
     total += item.price * item.quantity;
     if (item.formInfo?.cardText?.length > 1) {
       cards += 6 * item.quantity;
-      total += 6 * item.quantity
+      total += 6 * item.quantity;
     }
-    if (item?.selectedCard?.length) {
-      for (let i = 0; i < item?.selectedCard.length; i++) {
+
+    if (item?.selectedCard?.length > 0) {
+      for (let j = 0; j < item?.selectedCard.length; j++) {
         extraPurchase +=
-          item?.selectedCard[i]?.price * item?.selectedCard[i]?.quantity;
+          item?.selectedCard[j]?.price * item?.selectedCard[j]?.quantity;
+        total += item?.selectedCard[j]?.price * item?.selectedCard[j]?.quantity;
       }
-      total = total + extraPurchase;
+      // total = total + extraPurchase;
     }
-  });
+
+    fintalTotalWithNoAdds += item.price * item.quantity;
+  }
+  console.log({ total });
 
   let totalCheckout = total + cards;
-  
   if (couponPrecent) {
     deductedAmount = (total * couponPrecent) / 100;
     let amountToApplyVat = total - deductedAmount;
@@ -56,7 +63,7 @@ export const renderTotalPrice_ = (
   } else {
     vat = +((total * 15) / 100);
     totalBeforeVat = total - vat;
-    amountToApplyVatInReceipt = total;  
+    amountToApplyVatInReceipt = total;
     totalCheckout = amountToApplyVatInReceipt;
   }
   if (pointsAmount && useUserPoints) {

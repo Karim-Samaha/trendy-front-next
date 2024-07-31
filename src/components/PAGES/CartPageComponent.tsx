@@ -151,6 +151,13 @@ const CartPageComponent = () => {
                     {adjustNames(name)}
                   </Link>
                 </h3>
+                {formInfo?.cardText?.length > 0 || selectedCard?.length > 0 ? (
+                  <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
+                    <div className="order-info flex-1">
+                      <p>سعر المنتج الاساسي : {price_} رس</p>
+                    </div>
+                  </div>
+                ) : null}
                 {formInfo?.cardText?.length > 0 ? (
                   <div className="text-sm text-slate-600 dark:text-slate-300 mt-7">
                     <div className="order-info flex-1">
@@ -179,7 +186,11 @@ const CartPageComponent = () => {
                         >
                           <div
                             className="order-info flex-1 font-bold"
-                            style={{ flexWrap: "wrap", display: "flex", justifyContent: "center" }}
+                            style={{
+                              flexWrap: "wrap",
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
                           >
                             <span style={{ margin: "0 5px" }}>
                               اضافات الورود {`:`}
@@ -194,10 +205,25 @@ const CartPageComponent = () => {
                             >
                               {item?.price} ر.س
                             </span>
-                            <div style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
+                            <div
+                              style={{
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "space-around",
+                              }}
+                            >
                               <span> الكمية : {item.quantity}</span>
                               {item?.color && (
-                                <span> اللون : {colors.find((colorItem) => colorItem.val === item?.color)?.text}</span>
+                                <span>
+                                  {" "}
+                                  اللون :{" "}
+                                  {
+                                    colors.find(
+                                      (colorItem) =>
+                                        colorItem.val === item?.color
+                                    )?.text
+                                  }
+                                </span>
                               )}
                               {item?.text && (
                                 <span> اختيار : {item?.text}</span>
