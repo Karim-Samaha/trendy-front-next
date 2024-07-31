@@ -1136,7 +1136,7 @@ const CheckoutPageComponent = () => {
                   </span>
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                  <span>مجموع الكلي</span>
+                  <span>المجموع الكلي</span>
                   <span style={{ minWidth: "100px", color: "green" }}>
                     {" "}
                     {renderTotalPrice.fintalTotal} ر.س
