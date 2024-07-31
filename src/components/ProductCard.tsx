@@ -371,7 +371,7 @@ const ProductCard: FC<ProductCardProps> = ({
                   ? `/product-detail/${_id}/${name}?rate=true`
                   : `/product-detail/${_id}/${name}`
               }
-              style={{ zIndex: "9999" }}
+              // style={{ zIndex: "9999" }}
             >
               <div className="flex items-center mb-0.5">
                 <StarIcon className="w-5 h-5 pb-[1px] text-amber-400" />

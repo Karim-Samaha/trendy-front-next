@@ -44,7 +44,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
   const sliderRef = useRef(null);
   //
   const [isShow, setIsShow] = useState(false);
-  const [data_, setData_] = useState([...data]);
+  const [data_, setData_] = useState([]);
   const [fav, setFav] = useState([]);
   const { data: session } = useSession();
   const [imageErrorObj, setImageErrorObj] = useState<any>({});
