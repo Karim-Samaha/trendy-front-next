@@ -23,7 +23,7 @@ footer {
   color: #55a8b9;
   font-weight: bold;
   min-width: 80px;
-  min-height: 48px;
+  min-height: 37px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -896,3 +896,9 @@ tamara-widget {
       transform: rotate(360deg);
   }
   } 
+
+  .dropdown-adds {
+    &:nth-child(1) {
+      margin-top: 40px;
+    }
+  }

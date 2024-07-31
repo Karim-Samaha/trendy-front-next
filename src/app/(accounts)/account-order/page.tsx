@@ -110,7 +110,8 @@ const AccountOrder = () => {
     ShippingInfo: any,
     index: number
   ) => {
-    const { image, name, _id } = order;
+    const { image, name, _id, id } = order;
+    console.log({order: order})
     return (
       <div key={index} className="flex py-4 sm:py-7 last:pb-0 first:pt-0">
         <div
@@ -155,7 +156,7 @@ const AccountOrder = () => {
                 className="font-medium text-indigo-600 dark:text-primary-500 "
                 onClick={() => {
                   setAddReview(true);
-                  setItemToBeReviewd(_id);
+                  setItemToBeReviewd(_id || id);
                 }}
                 style={{ marginTop: "15px", marginLeft: "25px" }}
               >

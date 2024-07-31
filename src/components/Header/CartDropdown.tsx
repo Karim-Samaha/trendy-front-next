@@ -12,11 +12,13 @@ import { useCart } from "react-use-cart";
 import { useSession } from "next-auth/react";
 import { sendEvent } from "@/utils/firebase";
 import ProductCard from "../ProductCard";
-import { adjustNames } from "@/utils/adjustNames";
+import { adjustNames, renderTotalPrice_ } from "@/utils/adjustNames";
 
 export default function CartDropdown() {
   const { items, removeItem } = useCart();
   const { data: session } = useSession();
+  const cartPrices = renderTotalPrice_(items);
+
   const colors = [
     { val: "red", text: "احمر" },
     { val: "white", text: "ابيض" },
@@ -72,7 +74,7 @@ export default function CartDropdown() {
         <div className="ml-4 flex flex-1 flex-col">
           <div>
             <div className="flex justify-between ">
-              <div style={{marginBottom: "10px"}}>
+              <div style={{ marginBottom: "10px" }}>
                 <h3 className="text-base font-medium ">
                   <Link onClick={close} href={`/product-detail/${_id}`}>
                     {name}
@@ -82,78 +84,81 @@ export default function CartDropdown() {
                   <span>{`طبيعي`}</span>
                   <span className="mx-2 border-l border-slate-200 dark:border-slate-700 h-4"></span>
                 </p> */}
-                {selectedCard?.length
-                  ? selectedCard.map((subItem: any) => {
-                      return (
-                        <div
-                          className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
-                          key={subItem?.cartId}
-                          style={{ maxWidth: "100px" }}
-                        >
+                <div>
+                  {selectedCard?.length
+                    ? selectedCard.map((subItem: any) => {
+                        return (
                           <div
-                            className="order-info flex-1 font-bold"
-                            style={{
-                              flexWrap: "wrap",
-                              display: "flex",
-                              justifyContent: "center",
-                              minWidth: "280px",
-                              maxWidth: "280px",
-                            }}
+                            className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300, dropdown-adds"
+                            key={subItem?.cartId}
+                            style={{ maxWidth: "100px " }}
                           >
-                            <span style={{ margin: "0 5px", fontSize: "8px" }}>
-                              اضافات الورود {`:`}
-                            </span>
-                            <span
-                              className="font-bold"
-                              style={{ fontSize: "8px" }}
-                            >
-                              {` `}
-                              {adjustNames(subItem?.name)}
-                            </span>
-                            <span
-                              className="font-bold"
-                              style={{ margin: "0 10px", fontSize: "8px" }}
-                            >
-                              {subItem?.price} ر.س
-                            </span>
                             <div
+                              className="order-info flex-1 font-bold"
                               style={{
-                                width: "100%",
+                                flexWrap: "wrap",
                                 display: "flex",
-                                justifyContent: "space-around",
+                                justifyContent: "center",
+                                minWidth: "280px",
+                                maxWidth: "280px",
                               }}
                             >
-                              <span style={{ fontSize: "8px" }}>
-                                {" "}
-                                الكمية : {subItem.quantity}
+                              <span
+                                style={{ margin: "0 5px", fontSize: "11px" }}
+                              >
+                                اضافات الورود {`:`}
                               </span>
-                              {subItem?.color && (
+                              <span
+                                className="font-bold"
+                                style={{ fontSize: "8px" }}
+                              >
+                                {` `}
+                                {adjustNames(subItem?.name)}
+                              </span>
+                              <span
+                                className="font-bold"
+                                style={{ margin: "0 10px", fontSize: "11px" }}
+                              >
+                                {subItem?.price} ر.س
+                              </span>
+                              <div
+                                style={{
+                                  width: "100%",
+                                  display: "flex",
+                                  justifyContent: "space-around",
+                                }}
+                              >
                                 <span style={{ fontSize: "8px" }}>
                                   {" "}
-                                  اللون :{" "}
-                                  {
-                                    colors.find(
-                                      (colorItem) =>
-                                        colorItem.val === subItem?.color
-                                    )?.text
-                                  }
+                                  الكمية : {subItem.quantity}
                                 </span>
-                              )}
-                              {item?.text && (
-                                <span style={{ fontSize: "8px" }}>
-                                  {" "}
-                                  اختيار : {subItem?.text}
-                                </span>
-                              )}
+                                {subItem?.color && (
+                                  <span style={{ fontSize: "11px" }}>
+                                    {" "}
+                                    اللون :{" "}
+                                    {
+                                      colors.find(
+                                        (colorItem) =>
+                                          colorItem.val === subItem?.color
+                                      )?.text
+                                    }
+                                  </span>
+                                )}
+                                {item?.text && (
+                                  <span style={{ fontSize: "11px" }}>
+                                    {" "}
+                                    اختيار : {subItem?.text}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })
-                  : null}
-              </div>
-                {" "}
-                <Prices price={price} className="mt-0.5" />
+                        );
+                      })
+                    : null}
+                </div>
+              </div>{" "}
+              <Prices price={price} className="mt-0.5" />
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
@@ -279,7 +284,7 @@ export default function CartDropdown() {
                           Shipping and taxes calculated at checkout.
                         </span> */}
                       </span>
-                      <span className=""> {totalPrice()} ر.س </span>
+                      <span className=""> {cartPrices.fintalTotal} ر.س </span>
                     </p>
                     <div className="flex space-x-2 mt-5">
                       <ButtonSecondary
