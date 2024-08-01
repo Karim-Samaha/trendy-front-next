@@ -457,6 +457,9 @@ const CartPageComponent = () => {
                     0 ر.س
                   </span> */}
                 </div>
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span style={{color: "#55a8b9"}}>تفاصيل الفاتورة</span>
+                </div>
                 {+renderTotalPrice.giftCards > 0 && (
                   <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
                     <span style={{ fontSize: "14px" }}>

@@ -89,8 +89,8 @@ const ProductSection = ({ products, params }: any) => {
   const priceTo = searchParams.get("to");
   const offer = searchParams.get("offer");
   const [loaded, setLoaded] = useState(true);
-  const [loadedAll, setLoadedAll] = useState(false)
-
+  const [filterLoaded, setFilterLoaded] = useState(true);
+  const [loadedAll, setLoadedAll] = useState(false);
   const handleShowMoreButton = () => {
     setRequestedAmount((prev) => (prev += 10));
   };
@@ -103,14 +103,15 @@ const ProductSection = ({ products, params }: any) => {
       products = await getCategoryAllProducts(params?.id[0], requestedAmount);
     }
     if (renderdData.length === products.length && renderdData.length !== 20) {
-      setLoadedAll(true)
+      setLoadedAll(true);
     }
     setRenderedData(products);
     setLoaded(true);
   };
   const handleFilteration = async () => {
     if (!priceFrom || !priceTo) return;
-    setRequestedAmount(30);
+    setFilterLoaded(false);
+    setRequestedAmount(50);
     await getDataBasedOnRequest();
     let filteredData = products.filter(
       (item: any) => item.price >= priceFrom && item.price <= priceTo
@@ -122,7 +123,10 @@ const ProductSection = ({ products, params }: any) => {
       }
     }
     setRenderedData(filteredData);
+    setFilterLoaded(true);
+    setLoaded(true);
   };
+
   useEffect(() => {
     handleFilteration();
   }, [priceFrom, priceTo, offer]);
@@ -202,26 +206,44 @@ const ProductSection = ({ products, params }: any) => {
             )}
           </div>
         </div>
-        <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl">
-          {products?.length > 0
-            ? renderdData.map((item, index) => (
-                <ProductCard
-                  data={item}
-                  key={index}
-                  featuredImage={undefined}
-                  _id={""}
-                  modal={false}
-                  selectCard={undefined}
-                  setImageErrorObj={undefined}
-                />
-              ))
-            : null}
-        </div>
+        <span className="loader"></span>
+        {filterLoaded ? (
+          <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl">
+            {products?.length > 0
+              ? renderdData.map((item, index) => (
+                  <ProductCard
+                    data={item}
+                    key={index}
+                    featuredImage={undefined}
+                    _id={""}
+                    modal={false}
+                    selectCard={undefined}
+                    setImageErrorObj={undefined}
+                  />
+                ))
+              : null}
+          </div>
+        ) : (
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <span
+              className="loader-products"
+              style={{ margin: "0 auto" }}
+            ></span>
+          </div>
+        )}
+
         <div
           className="flex"
           style={{ justifyContent: "center", marginTop: "50px" }}
         >
-          {renderdData.length >= 8 && !loadedAll && (
+          {console.log({
+            a: renderdData.length,
+            b: loadedAll,
+            c: filterLoaded,
+          })}
+          {renderdData.length >= 8 && !loadedAll && filterLoaded && (
             <ButtonPrimary onClick={handleShowMoreButton}>
               {loaded ? "عرض المزيد" : <span className="loader"></span>}
             </ButtonPrimary>

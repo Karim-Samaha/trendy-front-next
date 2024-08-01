@@ -368,7 +368,7 @@ const CheckoutPageComponent = () => {
                 <div className="font-semibold mt-1 text-sm flex-col">
                   {deleviryMethods.length > 0
                     ? deleviryMethods?.map((item, i) => {
-                      if (!item?.active) return
+                        if (!item?.active) return;
                         return (
                           <div key={i}>
                             <button
@@ -573,7 +573,7 @@ const CheckoutPageComponent = () => {
                                   prev === "card" ? "" : "card"
                                 )
                               }
-                              style={{display: "flex"}}
+                              style={{ display: "flex" }}
                             >
                               <input
                                 type="checkbox"
@@ -1029,6 +1029,9 @@ const CheckoutPageComponent = () => {
                   >
                     0 ر.س
                   </span> */}
+                </div>
+                <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
+                  <span style={{ color: "#55a8b9" }}>تفاصيل الفاتورة</span>
                 </div>
                 {pointsActive &&
                 redeemData?.point &&

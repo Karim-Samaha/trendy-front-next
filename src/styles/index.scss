@@ -890,7 +890,19 @@ tamara-widget {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+
   }
+  .loader-products {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #55a8b9;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  
+    }
 
   @keyframes rotation {
   0% {

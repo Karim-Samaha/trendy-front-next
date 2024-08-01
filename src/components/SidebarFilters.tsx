@@ -74,6 +74,7 @@ const SidebarFilters = (
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
   const [renderWithOffer, setRenderWithOffer] = useState(false);
   const { id } = useParams();
+  const router = useRouter();
 
   //
   const handleChangeCategories = (checked: boolean, name: string) => {
@@ -191,7 +192,10 @@ const SidebarFilters = (
             >
               السعر من
             </label>
-            <div className="mt-1 relative rounded-md" style={{position:"relative"}}>
+            <div
+              className="mt-1 relative rounded-md"
+              style={{ position: "relative" }}
+            >
               <input
                 type="text"
                 name="minPrice"
@@ -200,7 +204,14 @@ const SidebarFilters = (
                 className="block w-32 pr-6 pl-2 sm:text-sm border-neutral-200 dark:border-neutral-700 rounded-full bg-transparent"
                 value={rangePrices[0]}
               />
-              <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm" style={{left: "12px", display: "flex", justifyContent:"flex-end"}}>
+              <span
+                className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm"
+                style={{
+                  left: "12px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
                 ر.س
               </span>
             </div>
@@ -214,7 +225,6 @@ const SidebarFilters = (
               السعر الي
             </label>
             <div className="mt-1 relative rounded-md">
-           
               <input
                 type="text"
                 disabled
@@ -223,7 +233,14 @@ const SidebarFilters = (
                 className="block w-32 pr-6 pl-2 sm:text-sm border-neutral-200 dark:border-neutral-700 rounded-full bg-transparent"
                 value={rangePrices[1]}
               />
-                 <span className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm" style={{left: "7px", display: "flex", justifyContent:"flex-end"}}>
+              <span
+                className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-neutral-500 sm:text-sm"
+                style={{
+                  left: "7px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
                 ر.س
               </span>
             </div>
@@ -240,11 +257,17 @@ const SidebarFilters = (
         </div>
         <div className="filter-btn block lg:w-1/3 xl:w-1/4 pr-4">
           <ButtonPrimary
-            href={
-              id.length > 1
-                ? `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}&offer=${renderWithOffer}`
-                : `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}&offer=${renderWithOffer}`
-            }
+            onClick={() => {
+              if (id.length > 1) {
+                router.push(
+                  `/category/${id[0]}/${id[1]}?from=${rangePrices[0]}&to=${rangePrices[1]}&offer=${renderWithOffer}`
+                );
+              } else {
+                router.push(
+                  `/category/${id[0]}?from=${rangePrices[0]}&to=${rangePrices[1]}&offer=${renderWithOffer}`
+                );
+              }
+            }}
           >
             تصفيه
           </ButtonPrimary>
