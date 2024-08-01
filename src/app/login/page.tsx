@@ -54,6 +54,9 @@ const PageLogin = () => {
       setError("يجد ادخال كل اليانات المطلوبة");
       return;
     }
+    if (method === 'phone' && loginForm.username.substring(0, 3) !== "966") {
+      credentials.username = `966${credentials.username}`
+    }
     await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
         if (res?.ok) {
@@ -87,8 +90,6 @@ const PageLogin = () => {
       );
   };
   const handleOtpRequest = async () => {
-    let isEmailValid = validateEmail(loginForm.username);
-    if (!isEmailValid) setError("البيانات غير صحيحه");
     if (method === "phone") {
       await _axios
         .post(
@@ -99,15 +100,12 @@ const PageLogin = () => {
         )
         .then((res) => {
           setOtpSent(true);
-          // if (res.data?.status === "EMAIL_OTP_SENT") {
-          //   setOtpSent(true);
-          //   setError("");
-          // }
-          // if (res.data?.isNewRegester) {
-          //   setIsNewRegester(true);
-          // }
+   
         });
     } else {
+      let isEmailValid = validateEmail(loginForm.username);
+      if (!isEmailValid) setError("البيانات غير صحيحه");
+
       if (isEmailValid) {
         try {
           await _axios
