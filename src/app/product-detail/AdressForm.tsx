@@ -598,7 +598,7 @@ const AdressForm: FC<Props> = ({
           )}
           <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
             <div className="flex-1">
-              <Label>اضافات الورود</Label>
+              <Label>اضافات</Label>
               <Select
                 className="mt-1.5"
                 value={formValue.giftAdd}
@@ -614,7 +614,7 @@ const AdressForm: FC<Props> = ({
                 <option value="1">كروت اهداء</option>
                 <option value="2">شيكولاته بلجيكيه</option>
                 <option value="3">بالونات</option>
-                <option value="4">بدون اضافات الورود</option>
+                <option value="4">بدون اضافات</option>
               </Select>
               {errors.withGiftRequred && (
                 <span style={{ color: "red", marginTop: "10px" }}>
@@ -749,7 +749,7 @@ const AdressForm: FC<Props> = ({
                   className="flex-1 flex-shrink-0"
                   onClick={() => validateAndAddToCart(formValue)}
                 >
-                  اضف الي السلة
+                  اضف الى السلة
                 </ButtonPrimary>
               </div>
             </>

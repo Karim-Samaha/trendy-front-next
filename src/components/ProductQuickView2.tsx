@@ -206,7 +206,7 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
               href={`/product-detail/${data?._id}`}
             >
               <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
-              <span className="ml-3">اضف الي السلة</span>
+              <span className="ml-3">اضف الى السلة</span>
             </ButtonPrimary>
           </div>
         )}

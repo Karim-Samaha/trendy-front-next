@@ -242,7 +242,7 @@ const ProductCard: FC<ProductCardProps> = ({
 
             <Link href={`/product-detail/${data?._id}/${data?._name}`}>
               {" "}
-              <span className="ms-1">اضف الي السلة</span>
+              <span className="ms-1">اضف الى السلة</span>
             </Link>
           </ButtonPrimary>
         )}
@@ -402,7 +402,7 @@ const ProductCard: FC<ProductCardProps> = ({
 
                 <Link href={`/product-detail/${data?._id}/${data?.name}`}>
                   {" "}
-                  <span className="ms-1">اضف الي السلة</span>
+                  <span className="ms-1">اضف الى السلة</span>
                 </Link>
               </ButtonPrimary>
             )}
@@ -417,7 +417,7 @@ const ProductCard: FC<ProductCardProps> = ({
               }}
             >
               <BagIcon className="w-3.5 h-3.5 mb-0.5 " />{" "}
-              <span className="ms-1">اضف الي السلة</span>
+              <span className="ms-1">اضف الى السلة</span>
             </ButtonPrimary>
           )}
         </div>

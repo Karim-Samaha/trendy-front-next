@@ -421,16 +421,16 @@ const ProductPage: FC<any> = ({ params, product }) => {
               setQty={setQty}
             />
           </div>
-          {formType !== "NORMAL_ORDER" && (
+          {formType === "" && (
             <ButtonPrimary
               className="flex-1 flex-shrink-0"
               onClick={() => setFormType("NORMAL_ORDER")}
             >
-              <span className="ml-3">اضف الي السله</span>
+              <span className="ml-3">اضف الى السله</span>
               <BagIcon className="hidden sm:inline-block w-5 h-5 mb-0.5" />
             </ButtonPrimary>
           )}
-          {formType !== "GIFT_ORDER" && (
+          {formType === "" && (
             <ButtonPrimary
               className="flex-1 flex-shrink-0"
               onClick={() => setFormType("GIFT_ORDER")}

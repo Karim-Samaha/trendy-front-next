@@ -145,7 +145,7 @@ const PurchaseAdd = ({
                       options.color === color
                         ? "3px solid #55a8b9"
                         : "1px solid black",
-                    opacity: ".8",
+                    opacity: color === 'rgba(0,0,0,0.5)'? ".1" : ".8",
                     cursor: "pointer",
                   }}
                   onClick={() => {

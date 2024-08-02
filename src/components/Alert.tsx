@@ -23,7 +23,7 @@ const Alert: FC<AlerProps> = ({ text }) => {
         textAlign: "center",
         backgroundColor: "#5C777D",
         color: "#fff",
-        height: "48px",
+        minHeight: "48px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

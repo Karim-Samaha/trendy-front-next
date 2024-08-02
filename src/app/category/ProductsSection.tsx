@@ -4,6 +4,7 @@ import ProductCard from "@/components/ProductCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+import _axios from "@/contains/api/axios";
 async function getSubCategoriesProducts(subCtgId: string, limit: number) {
   const res = await axios
     .get(
@@ -91,6 +92,7 @@ const ProductSection = ({ products, params }: any) => {
   const [loaded, setLoaded] = useState(true);
   const [filterLoaded, setFilterLoaded] = useState(true);
   const [loadedAll, setLoadedAll] = useState(false);
+  const [size, setSize] = useState(0);
   const handleShowMoreButton = () => {
     setRequestedAmount((prev) => (prev += 10));
   };
@@ -130,6 +132,26 @@ const ProductSection = ({ products, params }: any) => {
   useEffect(() => {
     handleFilteration();
   }, [priceFrom, priceTo, offer]);
+  const getSize = (id: string, type: string) => {
+    if (priceFrom || priceTo || offer) return null;
+    _axios
+      .get(
+        type === "category"
+          ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/size/${id}`
+          : `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/size/${id}?type=subCategory`
+      )
+      .then((res) => {
+        setSize(res.data?.size);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    if (params?.id[1]) {
+      getSize(params?.id[1], "");
+    } else {
+      getSize(params?.id[0], "category");
+    }
+  }, []);
   useEffect(() => {
     if (requestedAmount !== 12) {
       setLoaded(false);
@@ -179,7 +201,7 @@ const ProductSection = ({ products, params }: any) => {
           className="products-sort"
         >
           <h3 style={{ marginBottom: "30px" }}>
-            النتائج : {renderdData.length} منتج
+            النتائج : {size || renderdData.length} منتج
           </h3>
           <div className="filter">
             <p onClick={() => setSortMenu(!sortMenu)}>

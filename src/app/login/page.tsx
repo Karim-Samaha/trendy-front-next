@@ -46,6 +46,26 @@ const PageLogin = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
   const [isNewRegester, setIsNewRegester] = useState(false);
+  const [validResend, setValidResend] = useState(true);
+  const [resendTimer, setResendTimer] = useState(0);
+  const [resended, setResended] = useState(false);
+
+  useEffect(() => {
+    if (!validResend) {
+      setResendTimer(30);
+      setTimeout(() => {
+        setValidResend(true);
+        setResended(false);
+      }, 30000);
+    }
+  }, [validResend]);
+  useEffect(() => {
+    if (resendTimer > 0) {
+      setTimeout(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+  }, [resendTimer]);
   const handleSignIn = async () => {
     let credentials = loginForm;
     let newUserNotValid =
@@ -54,8 +74,8 @@ const PageLogin = () => {
       setError("يجد ادخال كل اليانات المطلوبة");
       return;
     }
-    if (method === 'phone' && loginForm.username.substring(0, 3) !== "966") {
-      credentials.username = `966${credentials.username}`
+    if (method === "phone" && loginForm.username.substring(0, 3) !== "966") {
+      credentials.username = `966${credentials.username}`;
     }
     await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
@@ -100,7 +120,6 @@ const PageLogin = () => {
         )
         .then((res) => {
           setOtpSent(true);
-   
         });
     } else {
       let isEmailValid = validateEmail(loginForm.username);
@@ -130,6 +149,16 @@ const PageLogin = () => {
         }
       }
     }
+  };
+  const resentOtp = async () => {
+    await _axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resend-phone-otp`, {
+        phone: loginForm.username,
+      })
+      .then((res) => {
+        setValidResend(false);
+        setResended(true);
+      });
   };
   return (
     <div
@@ -272,6 +301,18 @@ const PageLogin = () => {
                       onChange={(e) => handleChange(e)}
                     />
                   </label>
+                  {method === "phone" && (
+                    <p>
+                      لم يصلك رمز التحقق ؟{" "}
+                      {validResend ? (
+                        <span style={{ color: "blue", cursor: "pointer" }} onClick={resentOtp}>
+                          اعاردة الارسال
+                        </span>
+                      ) : (
+                        <span> تم اعادة ارسال رمز التحقق {resendTimer}</span>
+                      )}
+                    </p>
+                  )}
                 </>
               )}
               {error.length > 0 ? (

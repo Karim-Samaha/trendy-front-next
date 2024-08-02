@@ -634,7 +634,7 @@ const CheckoutPageComponent = () => {
                                   />
                                 </svg>
                               </span>
-                              بطافة بنكية
+                              بطاقة بنكية
                               <span
                                 style={{
                                   opacity: ".8",
