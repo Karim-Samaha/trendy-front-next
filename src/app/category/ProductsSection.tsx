@@ -110,14 +110,29 @@ const ProductSection = ({ products, params }: any) => {
     setRenderedData(products);
     setLoaded(true);
   };
+  const getData = async () => {
+    let products;
+    if (params.id.length > 1) {
+      products = await getSubCategoriesProducts(params?.id[1], 50);
+    } else {
+      products = await getCategoryAllProducts(params?.id[0], 50);
+    }
+    if (renderdData.length === products.length && renderdData.length !== 20) {
+      setLoadedAll(true);
+    }
+    setLoaded(true);
+    return products
+  };
   const handleFilteration = async () => {
     if (!priceFrom || !priceTo) return;
     setFilterLoaded(false);
     setRequestedAmount(50);
-    await getDataBasedOnRequest();
-    let filteredData = products.filter(
+    let reqProducts = await getData();
+    console.log({reqProducts})
+    let filteredData = reqProducts.filter(
       (item: any) => item.price >= priceFrom && item.price <= priceTo
     );
+    console.log({filteredData})
     if (offer) {
       let willBeWithOffer = JSON.parse(offer);
       if (willBeWithOffer) {
@@ -125,13 +140,18 @@ const ProductSection = ({ products, params }: any) => {
       }
     }
     setRenderedData(filteredData);
+    setSize(filteredData.length)
     setFilterLoaded(true);
     setLoaded(true);
   };
 
   useEffect(() => {
-    handleFilteration();
+    if (priceFrom && priceTo) {
+      setLoadedAll(true)
+      handleFilteration();
+    }
   }, [priceFrom, priceTo, offer]);
+
   const getSize = (id: string, type: string) => {
     if (priceFrom || priceTo || offer) return null;
     _axios
@@ -153,7 +173,7 @@ const ProductSection = ({ products, params }: any) => {
     }
   }, []);
   useEffect(() => {
-    if (requestedAmount !== 12) {
+    if (requestedAmount !== 12 && !priceFrom && !priceTo) {
       setLoaded(false);
       getDataBasedOnRequest();
     }
@@ -260,11 +280,7 @@ const ProductSection = ({ products, params }: any) => {
           className="flex"
           style={{ justifyContent: "center", marginTop: "50px" }}
         >
-          {console.log({
-            a: renderdData.length,
-            b: loadedAll,
-            c: filterLoaded,
-          })}
+       
           {renderdData.length >= 8 && !loadedAll && filterLoaded && (
             <ButtonPrimary onClick={handleShowMoreButton}>
               {loaded ? "عرض المزيد" : <span className="loader"></span>}
