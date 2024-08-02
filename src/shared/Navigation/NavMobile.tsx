@@ -24,7 +24,6 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
   const [searchTry, setSearchTry] = useState(0);
   useEffect(() => {
     onClickClose;
-    console.log({ searchTry });
   }, [searchTry]);
   const router = useRouter();
 
@@ -35,7 +34,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
       .then((res) => res.data.data)
       .then((items) => {
         setData(
-          items.map((item: any) => ({
+          items.filter((item) => item.active).map((item: any) => ({
             type: item.name === "الاكثر مبيعا" ? null : "dropdown",
             id: item._id,
             href: `/category/${item?._id}`,
