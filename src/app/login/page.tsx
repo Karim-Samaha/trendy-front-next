@@ -151,9 +151,13 @@ const PageLogin = () => {
     }
   };
   const resentOtp = async () => {
+    let phoneNum = loginForm.username
+    if (!phoneNum.substring(0, 3) !== '966'){
+      phoneNum = `966${phoneNum}`
+    }
     await _axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resend-phone-otp`, {
-        phone: loginForm.username,
+        phone: phoneNum,
       })
       .then((res) => {
         setValidResend(false);
