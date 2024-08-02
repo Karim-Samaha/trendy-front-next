@@ -80,7 +80,7 @@ const CartPageComponent = () => {
     { val: "green", text: "اخضر" },
     { val: "blue", text: "ازرق" },
     { val: "#0066CC", text: "كحلي" },
-    { val: "black", text: "اسود" },
+    { val: "#000", text: "اسود" },
     { val: "pink", text: "زهري" },
     { val: "silver", text: "فضي" },
     { val: "#FFD700", text: "ذهبي" },

@@ -35,7 +35,7 @@ const PurchaseAdd = ({
     { val: "green", text: "اخضر" },
     { val: "blue", text: "ازرق" },
     { val: "#0066CC", text: "كحلي" },
-    { val: "black", text: "اسود" },
+    { val: "#000", text: "اسود" },
     { val: "pink", text: "زهري" },
     { val: "silver", text: "فضي" },
     { val: "#FFD700", text: "ذهبي" },
@@ -147,18 +147,22 @@ const PurchaseAdd = ({
                     width: options.color === color ? "40px" : "30px",
                     height: options.color === color ? "40px" : "30px",
                     borderRadius: "50%",
-                    backgroundColor: color !== "rgba(0,0,0,0.5)" ? color : "",
+                    backgroundColor:
+                      color == "rgba(0,0,0,0.5)"
+                        ? ""
+                        : color === "blue"
+                        ? "#0000f9"
+                        : color === "#0066CC"
+                        ? "#0655a5"
+                        : color,
                     border:
                       options.color === color
                         ? "3px solid #55a8b9"
                         : "1px solid black",
-                    // opacity: color === 'rgba(0,0,0,0.5)'? ".1" : ".8",
                     cursor: "pointer",
                     backgroundImage:
-                      color === "rgba(0,0,0,0.5)"
-                        ? `url(${bgImage.src})`
-                        : ``,
-                        backgroundSize: "cover"
+                      color === "rgba(0,0,0,0.5)" ? `url(${bgImage.src})` : ``,
+                    backgroundSize: "cover",
                   }}
                   onClick={() => {
                     setOptions((prev) => ({ ...prev, color: color }));

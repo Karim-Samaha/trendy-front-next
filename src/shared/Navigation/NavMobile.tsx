@@ -206,7 +206,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
           <ButtonClose onClick={onClickClose} />
         </span>
 
-        <div className="mt-5">{renderSearchForm()}</div>
+        <div className="mt-1">{renderSearchForm()}</div>
       </div>
       <ul className="flex flex-col py-6 px-2 space-y-1 dir-rtl">
         {data.map(_renderItem)}

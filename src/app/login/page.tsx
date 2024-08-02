@@ -111,11 +111,15 @@ const PageLogin = () => {
   };
   const handleOtpRequest = async () => {
     if (method === "phone") {
+      let phoneNum = loginForm.username;
+      if (phoneNum.substring(0, 1) === "0") {
+        phoneNum = phoneNum.slice(1);
+      }
       await _axios
         .post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/generate-phone-otp`,
           {
-            phone: loginForm.username,
+            phone: phoneNum,
           }
         )
         .then((res) => {
@@ -155,6 +159,8 @@ const PageLogin = () => {
     let code = phoneNum.substring(0, 3);
     if (code !== "966") {
       phoneNum = `966${phoneNum}`;
+    } else if (phoneNum.substring(0, 1) === "0") {
+      phoneNum = phoneNum.slice(1);
     }
     await _axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resend-phone-otp`, {
