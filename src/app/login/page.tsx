@@ -151,9 +151,10 @@ const PageLogin = () => {
     }
   };
   const resentOtp = async () => {
-    let phoneNum = loginForm.username
-    if (!phoneNum.substring(0, 3) !== '966'){
-      phoneNum = `966${phoneNum}`
+    let phoneNum = loginForm.username;
+    let code = phoneNum.substring(0, 3);
+    if (code !== "966") {
+      phoneNum = `966${phoneNum}`;
     }
     await _axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resend-phone-otp`, {
@@ -309,7 +310,10 @@ const PageLogin = () => {
                     <p>
                       لم يصلك رمز التحقق ؟{" "}
                       {validResend ? (
-                        <span style={{ color: "blue", cursor: "pointer" }} onClick={resentOtp}>
+                        <span
+                          style={{ color: "blue", cursor: "pointer" }}
+                          onClick={resentOtp}
+                        >
                           اعاردة الارسال
                         </span>
                       ) : (
