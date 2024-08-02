@@ -74,9 +74,13 @@ const PageLogin = () => {
       setError("يجد ادخال كل اليانات المطلوبة");
       return;
     }
+    if (loginForm.username.substring(0, 1) === "0") {
+      credentials.username = credentials.username.slice(1);
+    }
     if (method === "phone" && loginForm.username.substring(0, 3) !== "966") {
       credentials.username = `966${credentials.username}`;
     }
+
     await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
         if (res?.ok) {
