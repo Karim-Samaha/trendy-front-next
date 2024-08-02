@@ -25,7 +25,7 @@ const DEMO_DATA = [
     id: 2,
     img: HIW2img,
     imgDark: HIW2img,
-    title: "لست بحاجة لمعرفة العنوان",
+    title: "لست بحاجة الى عنوان المستلم",
     desc: "فريقنا سيفعل ذلك نيابة عنك",
   },
   {

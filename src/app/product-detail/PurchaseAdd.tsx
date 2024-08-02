@@ -11,6 +11,7 @@ import ModalCards from "@/components/ModalCards";
 import ProductNcNumber from "@/components/productNcNumber";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Checkbox from "@/shared/Checkbox/Checkbox";
+import bgImage from "@/images/trnsp-bg.jpg";
 
 const PurchaseAdd = ({
   item,
@@ -18,7 +19,7 @@ const PurchaseAdd = ({
   handleAddQuantity,
   handleRemoveGiftCard,
   handleSlectedGiftOptions,
-  handleSelectedGiftCard
+  handleSelectedGiftCard,
 }: any) => {
   const [options, setOptions] = useState({
     color: item?.colors?.length > 0 ? item?.colors[0] : null,
@@ -128,7 +129,13 @@ const PurchaseAdd = ({
       </div>
       {item?.colors?.length > 0 ? (
         <div style={{ width: "100%", marginTop: "10px" }}>
-          <div>اختيار لون المنتج : <span style={{fontWeight:"bold"}}> {colors.find((colorItem) => colorItem.val === item?.color)?.text}</span></div>
+          <div>
+            اختيار لون المنتج :{" "}
+            <span style={{ fontWeight: "bold" }}>
+              {" "}
+              {colors.find((colorItem) => colorItem.val === item?.color)?.text}
+            </span>
+          </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             {item?.colors?.map((color: string) => {
               return (
@@ -140,13 +147,18 @@ const PurchaseAdd = ({
                     width: options.color === color ? "40px" : "30px",
                     height: options.color === color ? "40px" : "30px",
                     borderRadius: "50%",
-                    backgroundColor: color,
+                    backgroundColor: color !== "rgba(0,0,0,0.5)" ? color : "",
                     border:
                       options.color === color
                         ? "3px solid #55a8b9"
                         : "1px solid black",
-                    opacity: color === 'rgba(0,0,0,0.5)'? ".1" : ".8",
+                    // opacity: color === 'rgba(0,0,0,0.5)'? ".1" : ".8",
                     cursor: "pointer",
+                    backgroundImage:
+                      color === "rgba(0,0,0,0.5)"
+                        ? `url(${bgImage.src})`
+                        : ``,
+                        backgroundSize: "cover"
                   }}
                   onClick={() => {
                     setOptions((prev) => ({ ...prev, color: color }));

@@ -641,7 +641,7 @@ const CheckoutPageComponent = () => {
                                   marginInlineStart: "20px",
                                 }}
                               >
-                                (فيزا , ماستركارد , مدا)
+                                (فيزا , ماستركارد , مدى)
                               </span>
                             </button>{" "}
                           </div>

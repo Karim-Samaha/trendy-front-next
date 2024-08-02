@@ -296,7 +296,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
                   <span>5</span>
                   <span className="block mx-2">·</span>
                   <span className="text-slate-600 dark:text-slate-400 underline">
-                    {reviews.length} تقيم
+                    {reviews.length} تقييم
                   </span>
                 </div>
               </a>
@@ -485,7 +485,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
         {/* HEADING */}
         <h2 className="text-2xl font-semibold flex items-center">
           <StarIcon className="star w-7 h-7 mb-0.5" />
-          <span className="title ml-1.5"> {reviews.length} تقيم</span>
+          <span className="title ml-1.5"> {reviews.length} تقييم</span>
         </h2>
 
         {/* comment */}

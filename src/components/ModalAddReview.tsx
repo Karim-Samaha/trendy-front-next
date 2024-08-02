@@ -84,7 +84,7 @@ const ModalAddReview: FC<AddReviewModal> = ({ show, onClose, data, id }) => {
                   </div>
                   <Input
                     className="mt-1.5 rate-input"
-                    placeholder="تقيم المنتج"
+                    placeholder="تقييم المنتج"
                     name="productReview"
                     value={formValue.productReview}
                     onChange={(e) => handleChange(e)}
@@ -110,7 +110,7 @@ const ModalAddReview: FC<AddReviewModal> = ({ show, onClose, data, id }) => {
                   </div>
                   <Input
                     className="mt-1.5 rate-input"
-                    placeholder="تقيم المتجر"
+                    placeholder="تقييم المتجر"
                     name="storeReview"
                     value={formValue.storeReview}
                     onChange={(e) => handleChange(e)}
@@ -134,7 +134,7 @@ const ModalAddReview: FC<AddReviewModal> = ({ show, onClose, data, id }) => {
                   />
                   <div style={{ textAlign: "right", marginTop: "20px" }}>
                     <ButtonPrimary onClick={submitReview}>
-                      ارسال التقيم
+                      ارسال التقييم
                     </ButtonPrimary>
                   </div>
                 </>

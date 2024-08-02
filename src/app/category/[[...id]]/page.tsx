@@ -5,9 +5,6 @@ import ProductCard from "@/components/ProductCard";
 import { PRODUCTS } from "@/data/data";
 import SidebarFilters from "@/components/SidebarFilters";
 import axios from "axios";
-import { Disclosure } from "@/app/headlessui";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { useSearchParams } from "next/navigation";
 import ProductSection from "../ProductsSection";
 
 async function getCategories() {

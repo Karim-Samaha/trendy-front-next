@@ -167,7 +167,7 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
                       <span>4.9</span>
                       <span className="block mx-2">·</span>
                       <span className="text-slate-600 dark:text-slate-400 underline">
-                        {data?.rates} تقيم
+                        {data?.rates} تقييم
                       </span>
                     </div>
                   </Link>
@@ -176,7 +176,7 @@ const ProductQuickView2: FC<ProductQuickView2Props> = ({
                     <span>4.9</span>
                     <span className="block mx-2">·</span>
                     <span className="text-slate-600 dark:text-slate-400 underline">
-                      {data?.rates} تقيم
+                      {data?.rates} تقييم
                     </span>
                   </div>
                 )}
