@@ -377,10 +377,10 @@ const CartPageComponent = () => {
                   <Label className="text-sm">هل لديك كوبون خصم؟</Label>
                   {couponResponse?.redeemed ? (
                     <div className="flex mt-1.5 justify-center">
-                      <h3 className="text-lg font-semibold">
+                      <h3 className="text-lg font-semibold" style={{color: "red"}}>
                         تم تفيعل كوبون {couponResponse?.code}
                       </h3>
-                      <h3 className="text-lg font-semibold">
+                      <h3 className="text-lg font-semibold" style={{color: "red"}}>
                         خصم {couponResponse?.precent}%
                       </h3>
                     </div>
