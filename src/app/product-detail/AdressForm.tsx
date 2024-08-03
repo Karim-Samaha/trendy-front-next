@@ -490,7 +490,7 @@ const AdressForm: FC<Props> = ({
               <Label className="text-sm">رقم المستلم</Label>
               <Input
                 className="mt-1.5"
-                placeholder="966+"
+                placeholder=""
                 name="phone"
                 value={formValue.phone}
                 onChange={(e) => {

@@ -317,7 +317,7 @@ const SidebarFilters = (
     return (
       <div
         style={{ direction: "rtl" }}
-        className="relative flex flex-col py-8 space-y-4"
+        className="relative flex flex-col py-8 space-y-4 ctg-sider"
       >
         <h3 className="font-semibold mb-2.5">الفئه</h3>
         {categories.map(
@@ -399,20 +399,8 @@ const SidebarFilters = (
 
   return (
     <div className="divide-y divide-slate-200 dark:divide-slate-700">
-      {/* {renderTabsCategories()} */}
-      {/* {renderTabsColor()} */}
-      {/* {renderTabsSize()} */}
       {renderTabsPriceRage()}
       {renderTabsLinks()}
-      {/* <div className="py-8 pr-2">
-        <MySwitch
-          label="On sale!"
-          desc="Products currently on sale"
-          enabled={isOnSale}
-          onChange={setIsIsOnSale}
-        />
-      </div> */}
-      {/* {renderTabsSortOrder()} */}
     </div>
   );
 };

@@ -918,3 +918,18 @@ tamara-widget {
       margin-top: 40px;
     }
   }
+  
+  .ctgPage-filter{
+    @media (max-width: 968px) {
+      order: 1;
+      padding: 0 20px;
+      .ctg-sider {
+        display: none;
+      }
+    }
+  }
+  .ctgPage-products{
+    @media (max-width: 968px) {
+      order: 2;
+    }
+  }

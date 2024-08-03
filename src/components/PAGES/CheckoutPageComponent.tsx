@@ -364,7 +364,7 @@ const CheckoutPageComponent = () => {
           <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
             <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
               <div className="sm:ml-8">
-                <h2>شركة الشحن</h2>
+                <h2 style={{fontWeight: "bold"}}>طرق الشحن</h2>
                 <div className="font-semibold mt-1 text-sm flex-col">
                   {deleviryMethods.length > 0
                     ? deleviryMethods?.map((item, i) => {
@@ -379,13 +379,16 @@ const CheckoutPageComponent = () => {
                                   deleviryMethod === item.name
                                     ? "3px solid #55a8b9"
                                     : "",
+                                    fontWeight:"600"
                               }}
                             >
                               {item.name === "Trendy Rose" ? (
                                 <>
-                                  من خلال
-                                  {item.name}
-                                  <span>داخل الرياض</span>
+                                  {/* من خلال
+                                  <span>داخل الرياض</span> */}
+                                  الشحن بواسطة ترندي روز
+                                  {"  "}
+                                  <span style={{marginInlineStart: "5px"}}>(داخل الرياض)</span>
                                 </>
                               ) : item.name === "Bosta" ? (
                                 <>
@@ -413,7 +416,7 @@ const CheckoutPageComponent = () => {
             )}
           </div>
         </div>
-        <h2 style={{ textAlign: "right", fontWeight: "bold" }}>الدفع بواسطة</h2>
+        <h2 style={{ textAlign: "right", fontWeight: "bold" }}>طرق الدفع</h2>
         {allPaid && useUserPoints ? (
           <>
             {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
@@ -1124,7 +1127,7 @@ const CheckoutPageComponent = () => {
                 )}
                 {+renderTotalPrice.cards.length > 0 && (
                   <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                    <span style={{ fontSize: "14px" }}>مجموع نص البطاقة</span>
+                    <span style={{ fontSize: "14px" }}>تكلفة نص البطاقة</span>
                     <span style={{ minWidth: "100px" }}>
                       {" "}
                       {renderTotalPrice.cards} ر.س

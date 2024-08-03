@@ -175,7 +175,7 @@ const PageCollection2 = async ({ params }) => {
             <div className="flex flex-col lg:flex-row">
               <ProductSection products={products} params={params} />
               <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0"></div>
-              <div className="lg:w-1/3 xl:w-1/4 pr-4">
+              <div className="lg:w-1/3 xl:w-1/4 pr-4 ctgPage-filter">
                 <SidebarFilters categories={categories} params={params} />
               </div>
             </div>

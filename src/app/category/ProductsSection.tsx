@@ -211,7 +211,7 @@ const ProductSection = ({ products, params }: any) => {
   };
   return (
     <>
-      <div className="flex-1">
+      <div className="flex-1 ctgPage-products">
         <div
           style={{
             display: "flex",

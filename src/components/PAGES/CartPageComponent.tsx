@@ -473,7 +473,7 @@ const CartPageComponent = () => {
                 )}
                 {+renderTotalPrice.cards > 0 && (
                   <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                    <span style={{ fontSize: "14px" }}>مجموع نص البطاقة</span>
+                    <span style={{ fontSize: "14px" }}>تكلفة نص البطاقة</span>
                     <span style={{ minWidth: "100px" }}>
                       {" "}
                       {renderTotalPrice.cards} ر.س
