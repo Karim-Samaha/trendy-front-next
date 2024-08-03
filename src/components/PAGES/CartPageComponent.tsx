@@ -373,50 +373,60 @@ const CartPageComponent = () => {
             <div className="sticky top-28">
               <h3 className="text-lg font-semibold ">سلة المشتريات</h3>
               <div className="mt-10 pt-6 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200/70 dark:border-slate-700 ">
-                <div>
-                  <Label className="text-sm">هل لديك كوبون خصم؟</Label>
-                  {couponResponse?.redeemed ? (
-                    <div className="flex mt-1.5 justify-center">
-                      <h3 className="text-lg font-semibold" style={{color: "red"}}>
-                        تم تفيعل كوبون {couponResponse?.code}
-                      </h3>
-                      <h3 className="text-lg font-semibold" style={{color: "red"}}>
-                        خصم {couponResponse?.precent}%
-                      </h3>
+                {session?.user && (
+                  <>
+                    <div>
+                      <Label className="text-sm">هل لديك كوبون خصم؟</Label>
+                      {couponResponse?.redeemed ? (
+                        <div className="flex mt-1.5 justify-center">
+                          <h3
+                            className="text-lg font-semibold"
+                            style={{ color: "red" }}
+                          >
+                            تم تفيعل كوبون {couponResponse?.code}
+                          </h3>
+                          <h3
+                            className="text-lg font-semibold"
+                            style={{ color: "red" }}
+                          >
+                            خصم {couponResponse?.precent}%
+                          </h3>
+                        </div>
+                      ) : (
+                        <>
+                          {" "}
+                          <div className="flex mt-1.5">
+                            <Input
+                              value={coupon}
+                              onChange={(e) => {
+                                setCoupon(e.target.value);
+                                setCouponResponse({});
+                              }}
+                              sizeClass="h-10 px-4 py-3"
+                              className="flex-1 coupon-field"
+                            />
+                            <button
+                              onClick={validateCoupon}
+                              className="nc-Button coupon-btn text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
+                            >
+                              تفعيل
+                            </button>
+                          </div>
+                          {couponResponse?.valid === false &&
+                          !couponResponse?.minimumAmount ? (
+                            <span style={{ color: "red" }}>الكود خاطئ</span>
+                          ) : couponResponse?.valid === false &&
+                            couponResponse?.minimumAmount ? (
+                            <span style={{ color: "red" }}>
+                              الحد الادني لاستخدام الكوبون{" "}
+                              {couponResponse?.minimumAmount}رس
+                            </span>
+                          ) : null}
+                        </>
+                      )}
                     </div>
-                  ) : (
-                    <>
-                      {" "}
-                      <div className="flex mt-1.5">
-                        <Input
-                          value={coupon}
-                          onChange={(e) => {
-                            setCoupon(e.target.value);
-                            setCouponResponse({});
-                          }}
-                          sizeClass="h-10 px-4 py-3"
-                          className="flex-1 coupon-field"
-                        />
-                        <button
-                          onClick={validateCoupon}
-                          className="nc-Button coupon-btn text-neutral-700 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 rounded-2xl px-4 ml-3 font-medium text-sm bg-neutral-200/70 dark:bg-neutral-700 dark:hover:bg-neutral-800 w-24 flex justify-center items-center transition-colors"
-                        >
-                          تفعيل
-                        </button>
-                      </div>
-                      {couponResponse?.valid === false &&
-                      !couponResponse?.minimumAmount ? (
-                        <span style={{ color: "red" }}>الكود خاطئ</span>
-                      ) : couponResponse?.valid === false &&
-                        couponResponse?.minimumAmount ? (
-                        <span style={{ color: "red" }}>
-                          الحد الادني لاستخدام الكوبون{" "}
-                          {couponResponse?.minimumAmount}رس
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </div>
+                  </>
+                )}
               </div>
               <div className="mt-7 text-sm text-slate-500 dark:text-slate-400 divide-y divide-slate-200/70 dark:divide-slate-700/80">
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
@@ -458,7 +468,7 @@ const CartPageComponent = () => {
                   </span> */}
                 </div>
                 <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
-                  <span style={{color: "#55a8b9"}}>تفاصيل الفاتورة</span>
+                  <span style={{ color: "#55a8b9" }}>تفاصيل الفاتورة</span>
                 </div>
                 {+renderTotalPrice.giftCards > 0 && (
                   <div className="flex justify-between font-semibold text-slate-900 dark:text-slate-200 text-base pt-4">
