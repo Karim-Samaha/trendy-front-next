@@ -55,11 +55,11 @@ export const renderTotalPrice_ = (
   let totalCheckout = total + cards;
   if (couponPrecent) {
     deductedAmount = (total * couponPrecent) / 100;
-    let amountToApplyVat = total - deductedAmount;
-    vat = +((amountToApplyVat * 15) / 100);
+    // let amountToApplyVat = total - deductedAmount;
+    vat = +((total * 15) / 100);
     totalBeforeVat = total - vat;
-    amountToApplyVatInReceipt = amountToApplyVat;
-    totalCheckout = amountToApplyVatInReceipt + vat;
+    amountToApplyVatInReceipt = total;
+    totalCheckout = amountToApplyVatInReceipt - deductedAmount;
   } else {
     vat = +((total * 15) / 100);
     totalBeforeVat = total - vat;
