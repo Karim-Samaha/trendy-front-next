@@ -933,3 +933,9 @@ tamara-widget {
       order: 2;
     }
   }
+
+  .hero-section{
+    @media (max-width: 968px) {
+      height: 205px !important;
+    }
+  }

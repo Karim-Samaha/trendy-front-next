@@ -77,7 +77,7 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", data_ }) => {
     }
     return (
       <div
-        className={`nc-SectionHero2Item nc-SectionHero2Item--animation flex flex-col-reverse lg:flex-col relative overflow-hidden ${className}`}
+        className={`nc-SectionHero2Item hero-section nc-SectionHero2Item--animation flex flex-col-reverse lg:flex-col relative overflow-hidden ${className}`}
         key={index}
         style={{ height: "600px", justifyContent: "center" }}
       >
