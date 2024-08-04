@@ -96,3 +96,25 @@ export function formatDate(date: any) {
 
   return [year, month, day].join("-");
 }
+
+
+
+
+
+export function generateCustomId() {
+  function randomSegment(length: number) {
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+          result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+  }
+
+  return randomSegment(8) + '-' + 
+         randomSegment(4) + '-' + 
+         randomSegment(4) + '-' + 
+         randomSegment(4) + '-' + 
+         randomSegment(8);
+}
+

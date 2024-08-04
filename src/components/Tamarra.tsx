@@ -3,8 +3,25 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import { useSession } from "next-auth/react";
 import _axios from "@/contains/api/axios";
 import { useCart } from "react-use-cart";
+import { generateCustomId } from "@/utils/adjustNames";
 
-const Tamarra = ({ fintalTotal }: { fintalTotal: number }) => {
+const Tamarra = ({
+  fintalTotal,
+  couponResponse,
+  deleviryMethod,
+  deleviryInfo,
+  vat,
+  pointsUsed,
+  userNote,
+}: {
+  fintalTotal: number;
+  couponResponse: any;
+  deleviryMethod: string;
+  deleviryInfo: any;
+  vat: number;
+  pointsUsed: number;
+  userNote: string;
+}) => {
   const { items } = useCart();
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
@@ -13,6 +30,7 @@ const Tamarra = ({ fintalTotal }: { fintalTotal: number }) => {
     }, 300);
   }, []);
   const { data: session } = useSession();
+
   const handlePayment = async () => {
     if (!session?.user?.accessToken) return null;
     _axios
@@ -47,53 +65,102 @@ const Tamarra = ({ fintalTotal }: { fintalTotal: number }) => {
         //     failure: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`,
         //   },
         // },
+
         {
-          "total_amount": {
-            "amount": fintalTotal,
-            "currency": "SAR"
-          },
-          "shipping_amount": {
-            "amount": 0,
-            "currency": "SAR"
-          },
-          "tax_amount": {
-            "amount": 0,
-            "currency": "SAR"
-          },
-          "order_reference_id": "1231234123-abda-fdfe--afd31241",
-          "order_number": "S12356",
-          "discount": {
-            "amount": {
-              "amount": 0,
-              "currency": "SAR"
+          gatewayBody: {
+            total_amount: {
+              amount: fintalTotal,
+              currency: "SAR",
             },
-            "name": ""
+            shipping_amount: {
+              amount: 0,
+              currency: "SAR",
+            },
+            tax_amount: {
+              amount: 0,
+              currency: "SAR",
+            },
+            order_reference_id: generateCustomId(),
+            order_number: "A1232580",
+            items: items.map((item) => ({
+              name: item.name,
+              reference_id: item?._id,
+              quantity: item?.quantity,
+              type: "Digital",
+              sku: "SA-124252",
+              discount_amount: {
+                amount: 0,
+                currency: "SAR",
+              },
+              tax_amount: {
+                amount: 0,
+                currency: "SAR",
+              },
+              unit_price: {
+                amount: item.price,
+                currency: "SAR",
+              },
+              total_amount: {
+                amount: item.price,
+                currency: "SAR",
+              },
+            })),
+
+            consumer: {
+              email: "customer@email.com",
+              first_name: "aaa",
+              last_name: "aaa",
+              phone_number: "96600000",
+            },
+            country_code: "SA",
+            description: "Trendy Rose.",
+            merchant_url: {
+              cancel: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`,
+              failure: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`,
+              success: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment?gateway=tamara`,
+              notification: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`,
+            },
+            payment_type: "PAY_BY_INSTALMENTS",
+            instalments: 3,
+            shipping_address: {
+              city: "Riyadh",
+              country_code: "SA",
+              first_name: "aaa",
+              last_name: "aaa",
+              line1: "3764 Al Urubah Rd",
+              line2: "string",
+              phone_number: "96600005",
+              region: "As Sulimaniyah",
+            },
+            platform: "Trendy Rose",
+            is_mobile: false,
+            locale: "ar_SA",
           },
-          "consumer": {
-            "email": "customer@email.com",
-            "first_name": "Mona",
-            "last_name": "Lisa",
-            "phone_number": "566027755"
+
+          sessionInfo: {
+            description: items,
+            fintalTotal,
+            couponResponse,
+            deleviryMethod,
+            deleviryInfo,
+            vat,
+            pointsUsed,
+            userNote,
           },
-          "country_code": "SA",
-          "description": "الظهرة العصرية",
-          "merchant_url": {
-            "cancel": `${`${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`}`,
-            "failure": `${`${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment`}`,
-            "success": `${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment?gateway=tabby}`,
-            "notification": "https://store-demo.com/payments/tamarapay"
-          },
-          "payment_type": "PAY_BY_INSTALMENTS",
-          "instalments": 3,
         },
         { session }
       )
       .then((res) => {
-        let url =
-          res.data?.paymentSession?.configuration?.available_products
-            ?.installments[0]?.web_url;
+        let url = res.data?.paymentSession?.checkout_url;
         if (url) {
-          sessionStorage.setItem("tabbyId", res.data?.paymentSession?.id);
+          sessionStorage.setItem(
+            "tamaraId",
+            res.data?.paymentSession?.order_id
+          );
+          sessionStorage.setItem(
+            "tamaraCheckoutId",
+            res.data?.paymentSession?.checkout_id
+          );
           window.location.href = url;
           return;
         }
@@ -115,5 +182,3 @@ const Tamarra = ({ fintalTotal }: { fintalTotal: number }) => {
 };
 
 export default Tamarra;
-
-

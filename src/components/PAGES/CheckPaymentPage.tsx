@@ -25,10 +25,23 @@ const CheckoutCheck = ({ id, gateway }) => {
       console.error(err);
     }
   };
+  const handleTamara = async () => {
+    const tamaraId = sessionStorage.getItem("tamaraId");
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tamara-status/${tamaraId}`
+      );
+      setStatus(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (gateway === "tabby") {
       handleTabby();
+    } else if (gateway === "tamara") {
+      handleTamara();
     } else if (id) {
       axios
         .get(
@@ -40,7 +53,6 @@ const CheckoutCheck = ({ id, gateway }) => {
   }, [id, gateway]);
 
   useEffect(() => {
-    console.log({ status: status?.data?.status });
     let isPayed =
       status?.data?.status === "paid" ||
       status?.data?.status === "CREATED" ||

@@ -11,6 +11,8 @@ import { useCart } from "react-use-cart";
 import Moysar from "@/components/payment/Moysar";
 import Tabby from "@/app/checkout/tabby";
 import TabbyIcon from "@/images/icons/Tabby.png";
+import TamaraIcon from "@/images/icons/tamara.jpeg";
+
 import { renderTotalPrice_ } from "@/utils/adjustNames";
 import _axios from "@/contains/api/axios";
 import { useSession } from "next-auth/react";
@@ -364,7 +366,7 @@ const CheckoutPageComponent = () => {
           <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
             <div className="p-6 flex flex-col sm:flex-row items-start dir-rtl">
               <div className="sm:ml-8">
-                <h2 style={{fontWeight: "bold"}}>طرق الشحن</h2>
+                <h2 style={{ fontWeight: "bold" }}>طرق الشحن</h2>
                 <div className="font-semibold mt-1 text-sm flex-col">
                   {deleviryMethods.length > 0
                     ? deleviryMethods?.map((item, i) => {
@@ -379,7 +381,7 @@ const CheckoutPageComponent = () => {
                                   deleviryMethod === item.name
                                     ? "3px solid #55a8b9"
                                     : "",
-                                    fontWeight:"600"
+                                fontWeight: "600",
                               }}
                             >
                               {item.name === "Trendy Rose" ? (
@@ -388,7 +390,9 @@ const CheckoutPageComponent = () => {
                                   <span>داخل الرياض</span> */}
                                   الشحن بواسطة ترندي روز
                                   {"  "}
-                                  <span style={{marginInlineStart: "5px"}}>(داخل الرياض)</span>
+                                  <span style={{ marginInlineStart: "5px" }}>
+                                    (داخل الرياض)
+                                  </span>
                                 </>
                               ) : item.name === "Bosta" ? (
                                 <>
@@ -473,17 +477,6 @@ const CheckoutPageComponent = () => {
                   <div id="PaymentMethod" className="scroll-mt-24 ">
                     <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
                       <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
-                        <span
-                          className="hidden sm:block"
-                          style={{ margin: "0 20px" }}
-                        >
-                          <Image
-                            style={{ borderRadius: "10px" }}
-                            src={TabbyIcon}
-                            width={40}
-                            height={40}
-                          />
-                        </span>
                         <div className="sm:ml-8">
                           <div className="font-semibold mt-1 text-sm">
                             <button
@@ -492,7 +485,28 @@ const CheckoutPageComponent = () => {
                                   prev === "tabby" ? "" : "tabby"
                                 )
                               }
+                              style={{ display: "flex", alignItems: "center" }}
                             >
+                              <input
+                                type="checkbox"
+                                style={{
+                                  margin: "6px 10px 0 10px",
+                                  position: "relative",
+                                  zIndex: "-1",
+                                }}
+                                checked={paymentMethod === "tabby"}
+                              />
+                              <span
+                                className="sm:block"
+                                style={{ margin: "0 20px" }}
+                              >
+                                <Image
+                                  style={{ borderRadius: "10px" }}
+                                  src={TabbyIcon}
+                                  width={40}
+                                  height={40}
+                                />
+                              </span>
                               تابي
                             </button>{" "}
                           </div>
@@ -517,26 +531,14 @@ const CheckoutPageComponent = () => {
                 )}
               </>
             )}
-            {/* {paymentMethodsTag?.find(
-              (item: { active: boolean; id: number }) => item.id === 2
-            )?.active && ( */}
-            {/* {true && (
+            {paymentMethodsTag?.find(
+              (item: { active: boolean; id: number }) => item.id === 5
+            )?.active && (
               <>
                 {!(deleviryMethod === "Store" && !storeDeleviryData.valid) && (
                   <div id="PaymentMethod" className="scroll-mt-24 ">
                     <div className="border border-slate-200 dark:border-slate-700 rounded-xl ">
                       <div className="p-6 flex flex-col sm:flex-row center dir-rtl">
-                        <span
-                          className="hidden sm:block"
-                          style={{ margin: "0 20px" }}
-                        >
-                          <Image
-                            style={{ borderRadius: "10px" }}
-                            src={TabbyIcon}
-                            width={40}
-                            height={40}
-                          />
-                        </span>
                         <div className="sm:ml-8">
                           <div className="font-semibold mt-1 text-sm">
                             <button
@@ -545,7 +547,28 @@ const CheckoutPageComponent = () => {
                                   prev === "tammara" ? "" : "tammara"
                                 )
                               }
+                              style={{ display: "flex", alignItems: "center" }}
                             >
+                              <input
+                                type="checkbox"
+                                style={{
+                                  margin: "6px 10px 0 10px",
+                                  position: "relative",
+                                  zIndex: "-1",
+                                }}
+                                checked={paymentMethod === "tammara"}
+                              />
+                              <span
+                                className="sm:block"
+                                style={{ margin: "0 20px" }}
+                              >
+                                <Image
+                                  style={{ borderRadius: "10px" }}
+                                  src={TamaraIcon}
+                                  width={40}
+                                  height={40}
+                                />
+                              </span>
                               تامارا
                             </button>{" "}
                           </div>
@@ -555,10 +578,21 @@ const CheckoutPageComponent = () => {
                   </div>
                 )}
                 {paymentMethod === "tammara" && (
-                  <Tamarra fintalTotal={+renderTotalPrice.fintalTotal} />
+                  <Tamarra
+                    fintalTotal={+renderTotalPrice.fintalTotal}
+                    couponResponse={{
+                      ...couponResponse,
+                      deductedAmount: +renderTotalPrice?.deductedAmount,
+                    }}
+                    deleviryMethod={deleviryMethod}
+                    deleviryInfo={storeDeleviryData}
+                    vat={+renderTotalPrice.vat}
+                    pointsUsed={useUserPoints ? redeemData?.point : 0}
+                    userNote={userNote}
+                  />
                 )}
               </>
-            )} */}
+            )}
 
             {paymentMethodsTag?.find(
               (item: { active: boolean; id: number }) => item.id === 1
@@ -588,7 +622,7 @@ const CheckoutPageComponent = () => {
                                 checked={paymentMethod === "card"}
                               />
                               <span
-                                className="hidden sm:block"
+                                className="sm:block"
                                 style={{ margin: "0 20px" }}
                               >
                                 <svg
@@ -885,10 +919,16 @@ const CheckoutPageComponent = () => {
                   <Label className="text-sm">هل لديك كوبون خصم؟</Label>
                   {couponResponse?.redeemed ? (
                     <div className="flex mt-1.5 justify-center">
-                      <h3 className="text-lg font-semibold" style={{color: "red"}}>
+                      <h3
+                        className="text-lg font-semibold"
+                        style={{ color: "red" }}
+                      >
                         تم تفيعل كوبون {couponResponse?.code}
                       </h3>
-                      <h3 className="text-lg font-semibold" style={{color: "red"}}>
+                      <h3
+                        className="text-lg font-semibold"
+                        style={{ color: "red" }}
+                      >
                         خصم {couponResponse?.precent}%
                       </h3>
                     </div>

@@ -31,7 +31,7 @@ const Tabby = ({
       selector: '#tabbyCard', // empty div for TabbyCard.
       currency: 'SAR', // required, currency of your product. AED|SAR|KWD|BHD|QAR only supported, with no spaces or lowercase.
       lang: 'ar', // Optional, language of snippet and popups.
-      price: ${200}, // required, total price or the cart. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
+      price: ${fintalTotal}, // required, total price or the cart. 2 decimals max for AED|SAR|QAR and 3 decimals max for KWD|BHD.
       size: 'narrow', // required, can be also 'wide', depending on the width.
       theme: 'default', // required, can be also 'default'.
       header: true // if a Payment method name present already.
@@ -48,7 +48,7 @@ const Tabby = ({
         {
           tabbyPayload: {
             payment: {
-              amount: `${200}`,
+              amount: `${fintalTotal}`,
               currency: "SAR",
               description: "testing product",
 
