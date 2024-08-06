@@ -57,8 +57,8 @@ export default function RootLayout({
         );
       })
       .catch((err) => console.log(err));
-      facebookPixel("PageView", {})
-      tiktokPixel("Pageview", {})
+    facebookPixel("PageView", {});
+    tiktokPixel("Pageview", {});
   }, []);
 
   useEffect(() => {
@@ -92,6 +92,10 @@ export default function RootLayout({
                 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
               />
             </head>
+            <meta
+              name="google-site-verification"
+              content="M6yr60Rjdpx4lNhJTh8WZyFB7bjtQkdBU7SXZpS3ZAY"
+            />
             <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
               <ProgressBar
                 height="4px"
@@ -123,11 +127,10 @@ export default function RootLayout({
                     color="#4dc247"
                     style={{
                       fontSize: "10px",
-                 
+
                       backgroundColor: "#77e377",
                       borderRadius: "50%",
-                      padding: '5px',
-                      
+                      padding: "5px",
                     }}
                     className="sc-q8c6tt-1 deQKmp"
                   >
