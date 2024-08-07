@@ -42,3 +42,18 @@ export const tiktokPixel = (pixel: string, payload: any) => {
     console.log(error);
   }
 };
+
+export const snapchatPixelEvent = (pixel: string, payload: any) => {
+  try {
+    //@ts-ignore
+    import('react-snapchat-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init(`${process.env.NEXT_PUBLIC_META_SNAPCHAT_ID}`, options)
+        ReactPixel.track(pixel, payload)
+        console.log('Pixel successs')
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}

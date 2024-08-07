@@ -43,7 +43,7 @@ import {
 import { sendEvent } from "@/utils/firebase";
 import SnapchatShareButton from "../SnapChatShareButton";
 import _axios from "@/contains/api/axios";
-import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import { facebookPixel, snapchatPixelEvent, tiktokPixel, twitterPixel } from "@/utils/pixels";
 import ImageZoom from "../ImageZoom/ImageZoom";
 
 const ProductPage: FC<any> = ({ params, product }) => {
@@ -219,6 +219,9 @@ const ProductPage: FC<any> = ({ params, product }) => {
         value: itemToBeAdded.price,
         quantity: +itemToBeAdded?.quantity || 1,
       });
+      snapchatPixelEvent('ADD_CART', {
+        user_email: session?.user?.email || "",
+      })
     } else {
       addItem(itemToBeAdded, qty);
       sendEvent("add_to_cart", {

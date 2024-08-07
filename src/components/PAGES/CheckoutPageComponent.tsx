@@ -21,7 +21,12 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { useRouter } from "next/navigation";
 import usePoints from "@/app/checkout/usePoints";
 import { sendEvent } from "@/utils/firebase";
-import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import {
+  facebookPixel,
+  snapchatPixelEvent,
+  tiktokPixel,
+  twitterPixel,
+} from "@/utils/pixels";
 import Tamarra from "../Tamarra";
 
 const CheckoutPageComponent = () => {
@@ -178,6 +183,11 @@ const CheckoutPageComponent = () => {
       currency: "SAR",
       quantity: items.length,
       value: parseInt(renderTotalPrice.fintalTotal),
+    });
+    snapchatPixelEvent("START_CHECKOUT", {
+      currency: 'SAR',
+      price: parseInt(renderTotalPrice.fintalTotal),
+      user_email: session?.user?.email || "",
     });
   };
   useEffect(() => {

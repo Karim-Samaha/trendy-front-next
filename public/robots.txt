@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /login/
+Disallow: /terms/
+Disallow: /refund/
+Disallow: /shipping/
+Disallow: /complaints/
+Disallow: /license/
+
+
+Sitemap: https://www.trendyrosesa.com/sitemap.xml

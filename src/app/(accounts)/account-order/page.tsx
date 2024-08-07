@@ -11,7 +11,7 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ModalAddReview from "@/components/ModalAddReview";
 import { useSearchParams } from "next/navigation";
 import { sendEvent } from "@/utils/firebase";
-import { facebookPixel, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import { facebookPixel, snapchatPixelEvent, tiktokPixel, twitterPixel } from "@/utils/pixels";
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();
@@ -99,6 +99,12 @@ const AccountOrder = () => {
         value: data[0]?.amount / 100,
         currency: "SAR",
       });
+      snapchatPixelEvent('PURCHASE', {
+        currency: 'SAR',
+        price: data[0]?.amount / 100,
+        transaction_id: data[0]?._id,
+        user_email: session?.user?.email || "",
+      })
       setEvents(true);
     }
   }, [isFromCheckout, data.length]);

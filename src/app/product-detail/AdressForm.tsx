@@ -164,16 +164,16 @@ const AdressForm: FC<Props> = ({
     ) {
       setFormValue((prev) => ({
         ...prev,
-        time: `${time_.hour || "00"} : ${time_.minute || "00"} : ${
-          time_.day === "am" ? "ص" : time_.day === "pm" ? "م" : "--"
-        }`,
+        time: `${
+          time_.day === "am" ? "AM" : time_.day === "pm" ? "PM":"--"
+        }:${time_.hour || "00"}:${time_.minute || "00"}`,
       }));
       setErrors((prev: any) => ({ ...prev, time: false }));
     }
   }, [time_]);
   function generateRandom() {
-    let digits = '0123456789abcdefghijklmnopqrestuv';
-    let nums = '';
+    let digits = "0123456789abcdefghijklmnopqrestuv";
+    let nums = "";
     let len = digits.length;
     for (let i = 0; i < 5; i++) {
       nums += digits[Math.floor(Math.random() * len)];
@@ -181,8 +181,8 @@ const AdressForm: FC<Props> = ({
     return nums;
   }
 
-  const handleSelectedGiftCard =  (item: any) => {
-    let randomNum = generateRandom()
+  const handleSelectedGiftCard = (item: any) => {
+    let randomNum = generateRandom();
     setSelectedCard((prev: any) => [
       ...prev,
       {
@@ -204,8 +204,10 @@ const AdressForm: FC<Props> = ({
     setSelectedCard(newList);
   };
   const handleAddQuantity = (id: string) => {
-    console.log(id)
-    let item = selectedCard?.find((item: { _id: string }) => item?.cartId === id);
+    console.log(id);
+    let item = selectedCard?.find(
+      (item: { _id: string }) => item?.cartId === id
+    );
     item.quantity += 1;
     const newItems = selectedCard?.map((prevItem: any) => {
       if (item?.cartId === prevItem?.cartId) {
@@ -217,7 +219,9 @@ const AdressForm: FC<Props> = ({
     setSelectedCard(newItems);
   };
   const handleRemoveQuantity = (id: string) => {
-    let item = selectedCard?.find((item: { _id: string }) => item?.cartId === id);
+    let item = selectedCard?.find(
+      (item: { _id: string }) => item?.cartId === id
+    );
     item.quantity -= 1;
     const newItems = selectedCard?.map((prevItem: any) => {
       if (item?.cartId === prevItem?.cartId) {
@@ -229,7 +233,9 @@ const AdressForm: FC<Props> = ({
     setSelectedCard(newItems);
   };
   const handleSlectedGiftOptions = (id, option, val) => {
-    let item = selectedCard?.find((item: { _id: string }) => item?.cartId === id);
+    let item = selectedCard?.find(
+      (item: { _id: string }) => item?.cartId === id
+    );
     item[option] = val;
     const newItems = selectedCard?.map((prevItem: any) => {
       if (item?.cartId === prevItem?.cartId) {
@@ -240,6 +246,10 @@ const AdressForm: FC<Props> = ({
     });
     setSelectedCard(newItems);
   };
+  useEffect(() => {
+    console.log(formValue.time);
+    console.log(formValue.deliveryDate);
+  }, [formValue.time]);
 
   return (
     <>
@@ -399,8 +409,8 @@ const AdressForm: FC<Props> = ({
                   placeholder=""
                   defaultValue={""}
                   type={"text"}
-                  value={`${time_.hour || "00"} : ${time_.minute || "00"} : ${
-                    time_.day === "am" ? "ص" : time_.day === "pm" ? "م" : "--"
+                  value={`${time_.minute || "00"}  : ${time_.hour || "00"}: ${
+                    time_.day === "am" ? "AM" : time_.day === "pm" ? "PM" : "--"
                   }`}
                   onFocus={() => setShowTime_(true)}
                   onMouseEnter={() => setShowTime_(true)}
@@ -738,7 +748,6 @@ const AdressForm: FC<Props> = ({
                           handleRemoveGiftCard={handleRemoveGiftCard}
                           handleSlectedGiftOptions={handleSlectedGiftOptions}
                           handleSelectedGiftCard={handleSelectedGiftCard}
-
                         />
                       );
                     }
