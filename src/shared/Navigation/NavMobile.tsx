@@ -34,19 +34,21 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
       .then((res) => res.data.data)
       .then((items) => {
         setData(
-          items.filter((item) => item.active).map((item: any) => ({
-            type: item.name === "الاكثر مبيعا" ? null : "dropdown",
-            id: item._id,
-            href: `/category/${item?._id}`,
-            name: item.name,
-            image: item.image,
-            desc: item.description,
-            children: item?.subCategories.map((subCtg: any) => ({
-              id: subCtg?._id,
-              href: `/category/${item?._id}/${subCtg?._id}`,
-              name: subCtg.name,
-            })),
-          }))
+          items
+            .filter((item) => item.active)
+            .map((item: any) => ({
+              type: item.name === "الاكثر مبيعا" ? null : "dropdown",
+              id: item._id,
+              href: `/category/${item?._id}`,
+              name: item.name,
+              image: item.image,
+              desc: item.description,
+              children: item?.subCategories.map((subCtg: any) => ({
+                id: subCtg?._id,
+                href: `/category/${item?._id}/${subCtg?._id}`,
+                name: subCtg.name,
+              })),
+            }))
         );
       });
   }, []);
@@ -103,7 +105,17 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
 
   const _renderItem = (item: NavItemType, index: number) => {
     if (item.children?.length <= 1) {
-      return <Link onClick={onClickClose} href={`/category/${item?.id}/`} style={{ margin: "5px"}}> {item.name}</Link>;
+      console.log({ item });
+      return (
+        <Link
+          onClick={onClickClose}
+          href={`/category/${item?.id}/${item?.children[0]?.id}`}
+          style={{ margin: "5px" }}
+        >
+          {" "}
+          {item.name}
+        </Link>
+      );
     }
     return (
       <Disclosure
