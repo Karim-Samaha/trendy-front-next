@@ -411,7 +411,7 @@ const CheckoutPageComponent = () => {
                                   <span>خارج الرياض</span>
                                 </>
                               ) : item.name === "Store" ? (
-                                <>استلام من المتجر</>
+                                <>استلام من الفرع</>
                               ) : null}
                             </button>
                           </div>
