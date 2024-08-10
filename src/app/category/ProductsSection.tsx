@@ -93,8 +93,10 @@ const ProductSection = ({ products, params }: any) => {
   const [filterLoaded, setFilterLoaded] = useState(true);
   const [loadedAll, setLoadedAll] = useState(false);
   const [size, setSize] = useState(0);
+  const [requestedMore, setRequestedMore] = useState(false);
   const handleShowMoreButton = () => {
     setRequestedAmount((prev) => (prev += 10));
+    setRequestedMore(true);
   };
 
   const getDataBasedOnRequest = async () => {
@@ -104,7 +106,7 @@ const ProductSection = ({ products, params }: any) => {
     } else {
       products = await getCategoryAllProducts(params?.id[0], requestedAmount);
     }
-    if (renderdData.length === products.length && renderdData.length !== 20) {
+    if (renderdData.length === products.length && requestedMore) {
       setLoadedAll(true);
     }
     setRenderedData(products);
@@ -121,18 +123,16 @@ const ProductSection = ({ products, params }: any) => {
       setLoadedAll(true);
     }
     setLoaded(true);
-    return products
+    return products;
   };
   const handleFilteration = async () => {
     if (!priceFrom || !priceTo) return;
     setFilterLoaded(false);
     setRequestedAmount(50);
     let reqProducts = await getData();
-    console.log({reqProducts})
     let filteredData = reqProducts.filter(
       (item: any) => item.price >= priceFrom && item.price <= priceTo
     );
-    console.log({filteredData})
     if (offer) {
       let willBeWithOffer = JSON.parse(offer);
       if (willBeWithOffer) {
@@ -140,14 +140,14 @@ const ProductSection = ({ products, params }: any) => {
       }
     }
     setRenderedData(filteredData);
-    setSize(filteredData.length)
+    setSize(filteredData.length);
     setFilterLoaded(true);
     setLoaded(true);
   };
 
   useEffect(() => {
     if (priceFrom && priceTo) {
-      setLoadedAll(true)
+      setLoadedAll(true);
       handleFilteration();
     }
   }, [priceFrom, priceTo, offer]);
@@ -280,7 +280,6 @@ const ProductSection = ({ products, params }: any) => {
           className="flex"
           style={{ justifyContent: "center", marginTop: "50px" }}
         >
-       
           {renderdData.length >= 8 && !loadedAll && filterLoaded && (
             <ButtonPrimary onClick={handleShowMoreButton}>
               {loaded ? "عرض المزيد" : <span className="loader"></span>}
