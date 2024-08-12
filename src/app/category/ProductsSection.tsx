@@ -250,7 +250,7 @@ const ProductSection = ({ products, params }: any) => {
         </div>
         <span className="loader"></span>
         {filterLoaded ? (
-          <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl">
+          <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl category-products-section">
             {products?.length > 0
               ? renderdData.map((item, index) => (
                   <ProductCard

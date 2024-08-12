@@ -87,7 +87,7 @@ const SectionHero: FC<SectionHeroProps> = ({
               className="deleveryBtn"
               style={{ width: "100%", display: "flex" }}
             >
-              استلام من المتجر
+              استلام من الفرع
               <p style={{ margin: "0 5px" }}>
                 <span>السعر</span> : 0 رس
               </p>

@@ -268,6 +268,9 @@ const ProductPage: FC<any> = ({ params, product }) => {
       });
     }
     notifyAddTocart(itemToBeAdded);
+    setTimeout(() => {
+      router.push("/cart")
+    }, 500)
   };
 
   const renderSectionContent = () => {

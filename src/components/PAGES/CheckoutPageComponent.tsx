@@ -313,7 +313,7 @@ const CheckoutPageComponent = () => {
                   <span className="mx-4 border-l border-slate-200 dark:border-slate-700 "></span>
                 </div>
                 <div className="mt-3 flex justify-between w-full sm:hidden relative">
-                  <select
+                  {/* <select
                     name="qty"
                     id="qty"
                     className="form-select text-sm rounded-md py-1 border-slate-200 dark:border-slate-700 relative z-10 dark:bg-slate-800 "
@@ -325,7 +325,8 @@ const CheckoutPageComponent = () => {
                     <option value="5">5</option>
                     <option value="6">6</option>
                     <option value="7">7</option>
-                  </select>
+                  </select> */}
+                  <div></div>
                   <Prices
                     contentClass="py-1 px-2 md:py-1.5 md:px-2.5 text-sm font-medium h-full"
                     price={price}

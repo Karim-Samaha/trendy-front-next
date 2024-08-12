@@ -30,7 +30,6 @@ footer {
   margin: 0 10px;
   span {
     font-size: 12px !important;
-
   }
 }
 .show-more {
@@ -884,58 +883,88 @@ tamara-widget {
 .loader {
   width: 30px;
   height: 30px;
-  border: 5px solid #FFF;
+  border: 5px solid #fff;
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+}
+.loader-products {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #55a8b9;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
 
-  }
-  .loader-products {
-    width: 60px;
-    height: 60px;
-    border: 5px solid #55a8b9;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-  
-    }
-
-  @keyframes rotation {
+@keyframes rotation {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
-  } 
+}
 
-  .dropdown-adds {
-    &:nth-child(1) {
-      margin-top: 40px;
-    }
+.dropdown-adds {
+  &:nth-child(1) {
+    margin-top: 40px;
   }
-  
-  .ctgPage-filter{
-    @media (max-width: 968px) {
-      order: 1;
-      padding: 0 20px;
-      .ctg-sider {
-        display: none;
-      }
-    }
-  }
-  .ctgPage-products{
-    @media (max-width: 968px) {
-      order: 2;
-    }
-  }
+}
 
-  .hero-section{
-    @media (max-width: 968px) {
-      height: 205px !important;
+.ctgPage-filter {
+  @media (max-width: 968px) {
+    order: 1;
+    padding: 0 20px;
+    .ctg-sider {
+      display: none;
     }
   }
+}
+.ctgPage-products {
+  @media (max-width: 968px) {
+    order: 2;
+  }
+}
+
+.hero-section {
+  @media (max-width: 968px) {
+    height: 205px !important;
+  }
+}
+
+.category-products-section {
+  @media (max-width: 968px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+  }
+  button {
+    @media (max-width: 968px) {
+      display: none !important;
+    }
+   
+  }
+  h2 {
+    @media (max-width: 968px) {
+      font-size: 11px;
+      line-height: 21px;
+      font-weight: bold;
+      height: 50px !important;
+    }
+  }
+  .price {
+    @media (max-width: 968px) {
+      margin: 0;
+      margin-inline-end: 10px;
+    }
+  }
+  .rate  {
+    @media (max-width: 968px) {
+      font-size: 11px !important;
+    }
+  }
+}
