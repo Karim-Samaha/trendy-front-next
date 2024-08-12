@@ -960,12 +960,16 @@ tamara-widget {
     @media (max-width: 968px) {
       margin: 0;
       margin-inline-end: 10px;
-      min-width: 69px;
+      min-width: 55px;
     }
+  }
+  svg {
+    width: .6rem;
   }
   .rate  {
     @media (max-width: 968px) {
       font-size: 7px !important;
+      
     }
   }
 }
