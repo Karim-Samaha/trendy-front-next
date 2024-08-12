@@ -83,7 +83,7 @@ async function getCategoryAllProducts(ctgId: string, limit: number) {
 const ProductSection = ({ products, params }: any) => {
   const searchParams = useSearchParams();
   const [renderdData, setRenderedData] = useState<any>(products);
-  const [requestedAmount, setRequestedAmount] = useState<number>(20);
+  const [requestedAmount, setRequestedAmount] = useState<number>(80);
   const [currentSort, setCurrentSort] = useState("");
   const [sortMenu, setSortMenu] = useState(false);
   const priceFrom = searchParams.get("from");
@@ -276,7 +276,7 @@ const ProductSection = ({ products, params }: any) => {
           </div>
         )}
 
-        <div
+        {/* <div
           className="flex"
           style={{ justifyContent: "center", marginTop: "50px" }}
         >
@@ -285,7 +285,7 @@ const ProductSection = ({ products, params }: any) => {
               {loaded ? "عرض المزيد" : <span className="loader"></span>}
             </ButtonPrimary>
           )}
-        </div>
+        </div> */}
       </div>
       {renderdData?.length <= 0 ? (
         <h4 className="no-product">لا يوجد منتجات حاليا</h4>

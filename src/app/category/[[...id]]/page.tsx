@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: any) {
 async function getSubCategoriesProducts(subCtgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web&limit=20`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/subcategory/${subCtgId}?channel=web&limit=80`
     )
     .then((res) => res.data.data)
     .then((data) => {
@@ -105,7 +105,7 @@ async function getSubCategoriesProducts(subCtgId) {
 async function getCategoryAllProducts(ctgId) {
   const res = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web&limit=20`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${ctgId}/all-products?channel=web&limit=80`
     )
     .then((res) => res.data.data)
     .then((data) => {
