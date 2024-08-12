@@ -6,7 +6,7 @@ import Logo from "@/shared/Logo/Logo";
 import axios from "axios";
 import { useCart } from "react-use-cart";
 
-const CheckoutCheck = ({ id, gateway }) => {
+const CheckoutCheck = ({ id, gateway, tabbyId }) => {
   const router = useRouter();
   //   const searchParams = useSearchParams();
   const { emptyCart } = useCart();
@@ -15,10 +15,10 @@ const CheckoutCheck = ({ id, gateway }) => {
   const [status, setStatus] = useState({});
 
   const handleTabby = async () => {
-    const tabbyId = sessionStorage.getItem("tabbyId");
+    const tabbyPaymenId = tabbyId;
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyPaymenId}`
       );
       setStatus(response.data);
     } catch (err) {

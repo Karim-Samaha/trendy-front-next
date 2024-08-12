@@ -12,7 +12,9 @@ export const metadata: any = async () => {
 const CheckoutCheckPage = ({  searchParams }) => {
   const id = searchParams.id;
   const gateway = searchParams.gateway;
-  return <CheckoutCheck id={id} gateway={gateway} />;
+  const tabbyId = searchParams?.payment_id;
+
+  return <CheckoutCheck id={id} gateway={gateway} tabbyId={tabbyId} />;
 };
 
 export default CheckoutCheckPage;
