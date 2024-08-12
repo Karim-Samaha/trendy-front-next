@@ -16,9 +16,10 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
 
   const handleTabby = async () => {
     const tabbyPaymenId = tabbyId;
+    const tamaraSessionId = sessionStorage.getItem("tabbyId");
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyPaymenId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyPaymenId}?session=${tamaraSessionId}`
       );
       setStatus(response.data);
     } catch (err) {
