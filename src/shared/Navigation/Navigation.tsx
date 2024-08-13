@@ -21,6 +21,7 @@ function Navigation() {
         setData(
           items
             .slice(0, 16).filter((item) => item.name !== "أخري").reverse()
+            .filter((item) => item.active)
             .map((item: any) => ({
               type: item?.subCategories.length > 1 ? "dropdown": "",
                 // item.name === "ورود للتهنئة"
