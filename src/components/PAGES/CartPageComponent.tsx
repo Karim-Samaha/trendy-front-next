@@ -367,11 +367,11 @@ const CartPageComponent = () => {
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-[60%] xl:w-[55%] divide-y divide-slate-200 dark:divide-slate-700 ">
             {items.length > 0 ? items.map(renderProduct) : null}
-            <div style={{ width: "100%" }}>
+            {/* <div style={{ width: "100%" }}>
               <ButtonPrimary href={"/"} className="mt-8 w-full">
                 اكمال التسوق{" "}
               </ButtonPrimary>
-            </div>
+            </div> */}
           </div>
 
           <div className="border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 my-10 lg:my-0 lg:mx-10 xl:mx-16 2xl:mx-20 flex-shrink-0"></div>
