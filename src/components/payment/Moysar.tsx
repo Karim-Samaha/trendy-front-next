@@ -51,7 +51,7 @@ const Moysar = ({
               quantity: item.quantity,
               selectedCard: item?.selectedCard?.map((item: any) => ({
                 ...item,
-                description: '',
+                description: "",
               })),
               text: item?.text,
               image: item?.image,
@@ -81,6 +81,23 @@ const Moysar = ({
                     vat: ${vat},
                     userNote: "${userNote}",
                     pointsUsed: ${pointsUsed},
+                    description: ${JSON.stringify(
+                      items.map((item) => ({
+                        id: item.id,
+                        price: item.price,
+                        priceBefore: item.priceBefore,
+                        name: item.name,
+                        formInfo: item.formInfo,
+                        color: item.color,
+                        quantity: item.quantity,
+                        selectedCard: item?.selectedCard?.map((item: any) => ({
+                          ...item,
+                          description: "",
+                        })),
+                        text: item?.text,
+                        image: item?.image,
+                      }))
+                    )}
                   })
                }).then((res) => res).catch(err => console.log(err))
                console.log({saved: saved.status})

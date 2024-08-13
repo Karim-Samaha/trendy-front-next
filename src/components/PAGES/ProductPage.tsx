@@ -220,7 +220,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
         quantity: +itemToBeAdded?.quantity || 1,
       });
       snapchatPixelEvent('ADD_CART', {
-        user_email: session?.user?.email || "",
+        user_email: '',
       })
     } else {
       addItem(itemToBeAdded, qty);

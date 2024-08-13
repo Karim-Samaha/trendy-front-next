@@ -102,6 +102,7 @@ const AdressForm: FC<Props> = ({
     deliveryDate: false,
     address: false,
     time: false,
+    unvalidTime: false,
     phone: false,
     withGiftRequred: false,
   });
@@ -126,10 +127,38 @@ const AdressForm: FC<Props> = ({
 
   const [selectAdress, setSelectAdress] = useState<boolean>(true);
 
+  function isTimeInFuture(timeString, dateString) {
+    // Parse the time string
+    const [period, time] = timeString.split(":");
+    const [hours, minutes] = [parseInt(time, 10), parseInt(time.slice(-2), 10)];
+
+    // Parse the date string
+    const [year, month, day] = dateString.split("-").map(Number);
+
+    // Create a Date object for the provided date
+    const futureTime = new Date(year, month - 1, day);
+
+    if (period === "AM") {
+      futureTime.setHours(hours % 12, minutes, 0, 0);
+    } else if (period === "PM") {
+      futureTime.setHours((hours % 12) + 12, minutes, 0, 0);
+    }
+
+    // Get the current date and time
+    const now = new Date();
+    return futureTime > now;
+  }
+  useEffect(() => {
+    if (formValue.deliveryDate && formValue.time) {
+      console.log(isTimeInFuture(formValue.time, formValue.deliveryDate));
+    }
+    console.log(formValue.deliveryDate);
+  }, [formValue]);
   const validate = () => {
     let deliveryDate = true;
     let address = true;
     let phone = true;
+    let unvalidTime = true;
     let withGiftRequred = true;
     if (formValue.deliveryDate.length <= 0) {
       setErrors((prev: any) => ({ ...prev, deliveryDate: true }));
@@ -151,7 +180,12 @@ const AdressForm: FC<Props> = ({
       setErrors((prev: any) => ({ ...prev, withGiftRequred: true }));
       withGiftRequred = false;
     }
-    return deliveryDate && phone && address && withGiftRequred;
+    if (!isTimeInFuture(formValue.time, formValue.deliveryDate)) {
+      setErrors((prev: any) => ({ ...prev, unvalidTime: true }));
+      unvalidTime = false;
+    }
+
+    return deliveryDate && phone && address && withGiftRequred && unvalidTime;
   };
   const validateAndAddToCart = async (formValue: any) => {
     let isValid = validate();
@@ -165,10 +199,10 @@ const AdressForm: FC<Props> = ({
       setFormValue((prev) => ({
         ...prev,
         time: `${
-          time_.day === "am" ? "AM" : time_.day === "pm" ? "PM":"--"
+          time_.day === "am" ? "AM" : time_.day === "pm" ? "PM" : "--"
         }:${time_.hour || "00"}:${time_.minute || "00"}`,
       }));
-      setErrors((prev: any) => ({ ...prev, time: false }));
+      setErrors((prev: any) => ({ ...prev, time: false, unvalidTime: false }));
     }
   }, [time_]);
   function generateRandom() {
@@ -492,6 +526,11 @@ const AdressForm: FC<Props> = ({
               </div>
               {errors.time && (
                 <span style={{ color: "red" }}>يجب تحديد وقت التوصيل</span>
+              )}
+              {errors.unvalidTime && (
+                <span style={{ color: "red" }}>
+                  يجب تحديد وقت الاستلام بشكل صحيح
+                </span>
               )}
             </div>
           </div>

@@ -11,7 +11,12 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ModalAddReview from "@/components/ModalAddReview";
 import { useSearchParams } from "next/navigation";
 import { sendEvent } from "@/utils/firebase";
-import { facebookPixel, snapchatPixelEvent, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import {
+  facebookPixel,
+  snapchatPixelEvent,
+  tiktokPixel,
+  twitterPixel,
+} from "@/utils/pixels";
 const AccountOrder = () => {
   const [data, setData] = useState<any>([]);
   const { data: session }: any = useSession();
@@ -99,12 +104,12 @@ const AccountOrder = () => {
         value: data[0]?.amount / 100,
         currency: "SAR",
       });
-      snapchatPixelEvent('PURCHASE', {
-        currency: 'SAR',
+      snapchatPixelEvent("PURCHASE", {
+        currency: "SAR",
         price: data[0]?.amount / 100,
         transaction_id: data[0]?._id,
         user_email: session?.user?.email || "",
-      })
+      });
       setEvents(true);
     }
   }, [isFromCheckout, data.length]);
@@ -117,7 +122,7 @@ const AccountOrder = () => {
     index: number
   ) => {
     const { image, name, _id, id } = order;
-    console.log({order: order})
+    console.log({ order: order });
     return (
       <div key={index} className="flex py-4 sm:py-7 last:pb-0 first:pt-0">
         <div
@@ -147,7 +152,12 @@ const AccountOrder = () => {
                   <span>{"XL"}</span> */}
                 </p>
               </div>
-              <Prices className="mt-0.5 ml-2" price={amount / 100} />
+              <Prices
+                className="mt-0.5 ml-2"
+                price={
+                  ["TABBY", "TAMARA"].includes(method) ? amount : amount / 100
+                }
+              />
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
@@ -223,9 +233,13 @@ const AccountOrder = () => {
                 className="ml-2"
                 style={{ marginInlineStart: "10px", fontWeight: "bold" }}
               >
+                {console.log({ ShippingInfo })}
                 {order?.formInfo?.sentTo ||
+                  order?.formInfo?.phone ||
                   ShippingInfo?.name ||
+                  ShippingInfo?.phone ||
                   session?.user?.name ||
+                  session?.user?.phone ||
                   session?.user?.email ||
                   ""}
               </span>
@@ -357,14 +371,28 @@ const AccountOrder = () => {
         <h2 className="text-2xl sm:text-3xl font-semibold">تاريخ الطلب</h2>
       )}
       {/* {renderOrder()} */}
-      {isFromCheckout
-        ? data.slice(0, 1).map((item, i) => renderOrder(item, i))
-        : data.map((item, i) => renderOrder(item, i))}
-      {!isFromCheckout && (
-        <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-500/5">
-          <ButtonPrimary onClick={hangleShowMore}>عرض المزيد</ButtonPrimary>
+      {isFromCheckout ? (
+        data.slice(0, 1).map((item, i) => renderOrder(item, i))
+      ) : data.length === 0 ? (
+        <div className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden z-0">
+          <div className="flex p-4 sm:p-8 bg-slate-50 ">
+            <h2
+              style={{ textAlign: "center", width: "100%", fontWeight: "bold" }}
+            >
+              {" "}
+              لا يوجد طلبات سابقة
+            </h2>
+          </div>
         </div>
+      ) : (
+        data.map((item, i) => renderOrder(item, i))
       )}
+      {!isFromCheckout &&
+        (data.length === 0 ? null : (
+          <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-500/5">
+            <ButtonPrimary onClick={hangleShowMore}>عرض المزيد</ButtonPrimary>
+          </div>
+        ))}
     </div>
   );
 };

@@ -580,7 +580,7 @@ const CheckoutPageComponent = () => {
                                   height={40}
                                 />
                               </span>
-                              تامارا
+                              تمارا
                             </button>{" "}
                           </div>
                         </div>
