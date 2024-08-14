@@ -17,11 +17,11 @@ const pages: {
     link: "/account-order",
   },
   {
-    name: "قائمتي",
+    name: "المفضلة",
     link: "/account-savelists",
   },
   {
-    name: "بينات حسابي",
+    name: "بيانات الحساب",
     link: "/account",
   },
 ];
