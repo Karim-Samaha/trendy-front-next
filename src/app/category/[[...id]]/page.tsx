@@ -153,7 +153,7 @@ const PageCollection2 = async ({ params }) => {
   }
   return (
     <div className={`nc-PageCollection2`}>
-      <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 sm:space-y-20 lg:space-y-28">
+      <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 sm:space-y-20 lg:space-y-28 page-holder">
         <div className="space-y-10 lg:space-y-14">
           {/* HEADING */}
           <div className="" style={{ width: "100%", direction: "rtl" }}>
@@ -162,19 +162,27 @@ const PageCollection2 = async ({ params }) => {
               className="block text-2xl sm:text-3xl lg:text-4xl font-semibold"
             >
               {currentCategory?.name}
-
             </h1>
-            <span className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base" style={{lineHeight: "30px"}}>
+            <span
+              className="block mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base"
+              style={{ lineHeight: "30px" }}
+            >
               {currentCategory?.desc}
             </span>
           </div>
 
-          <hr className="border-slate-200 dark:border-slate-700" />
-          <main>
+          <hr className="border-slate-200 dark:border-slate-700 ctg-liner" />
+          <main className="ctg-page-main">
             {/* LOOP ITEMS */}
             <div className="flex flex-col lg:flex-row">
-              <ProductSection products={products} params={params} />
-              <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0"></div>
+              <ProductSection
+                products={products}
+                params={params}
+                category={categories.find(
+                  (item: { _id: any; }) => item?._id === params?.id[0]
+                )}
+              />
+              <div className="flex-shrink-0 mb-10 lg:mb-0 lg:mx-4 border-t lg:border-t-0 ctg-liner"></div>
               <div className="lg:w-1/3 xl:w-1/4 pr-4 ctgPage-filter">
                 <SidebarFilters categories={categories} params={params} />
               </div>

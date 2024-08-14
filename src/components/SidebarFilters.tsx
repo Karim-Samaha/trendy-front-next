@@ -163,7 +163,7 @@ const SidebarFilters = (
   // OK
   const renderTabsPriceRage = () => {
     return (
-      <div className="relative flex flex-col py-8 space-y-5 pr-3">
+      <div className="relative flex flex-col py-8 space-y-5 pr-3 filter-controller">
         <div className="space-y-5" style={{ direction: "rtl" }}>
           <span className="font-semibold">السعر</span>
           <Slider

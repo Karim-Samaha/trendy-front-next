@@ -105,7 +105,6 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
 
   const _renderItem = (item: NavItemType, index: number) => {
     if (item.children?.length <= 1) {
-      console.log({ item });
       return (
         <Link
           onClick={onClickClose}
@@ -121,6 +120,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
       <Disclosure
         key={index}
         as="li"
+        defaultOpen={true}
         className="text-slate-900 dark:text-white"
       >
         <span className={!item.children ? "block w-full" : ""}>
@@ -132,16 +132,7 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
             />
           </Disclosure.Button>
         </span>
-        {/* {item.children && (
-          <span className="block flex-grow" onClick={(e) => e.preventDefault()}>
-            <Disclosure.Button as="span" className="flex justify-end flex-grow">
-              <ChevronDownIcon
-                className="ml-2 h-4 w-4 text-neutral-500"
-                aria-hidden="true"
-              />
-            </Disclosure.Button>
-          </span>
-        )} */}
+        
         {item.children && (
           <Disclosure.Panel>{_renderMenuChild(item)}</Disclosure.Panel>
         )}

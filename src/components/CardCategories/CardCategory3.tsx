@@ -11,6 +11,8 @@ export interface CardCategory3Props {
   desc?: string;
   color?: string;
   id: string;
+  href: string
+  subCategories: [string]
 }
 
 const CardCategory3: FC<CardCategory3Props> = ({
@@ -21,12 +23,13 @@ const CardCategory3: FC<CardCategory3Props> = ({
   color = CATS_DISCOVER[2].color,
   id,
   href,
+  subCategories
 }) => {
   return (
     <Link
       // ref={`/category${id}`}
       className={`nc-CardCategory3 block ${className}`}
-      href={`/category/${id}`}
+      href={subCategories?.length > 1 ? `/category/${id}/${subCategories[0]}` : `/category/${id}`}
     >
       <div
         className={`ctg-slider relative w-full aspect-w-16 aspect-h-11 sm:aspect-h-9 h-0 rounded-2xl overflow-hidden group ${color}`}
@@ -63,8 +66,8 @@ const CardCategory3: FC<CardCategory3Props> = ({
                 sizeClass="py-3 px-4 sm:py-3.5 sm:px-6"
                 fontSize="text-sm font-medium"
                 className="nc-shadow-lg"
-                href={id.length > 1 ? `/category/${id}` : href}
-              >
+                href={subCategories?.length > 1 ? `/category/${id}/${subCategories[0]}` : `/category/${id}`}
+                >
                 عرض التفاصيل
               </ButtonSecondary>
             </div>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import _axios from "@/contains/api/axios";
+import Link from "next/link";
 async function getSubCategoriesProducts(subCtgId: string, limit: number) {
   const res = await axios
     .get(
@@ -80,7 +81,7 @@ async function getCategoryAllProducts(ctgId: string, limit: number) {
   return res;
 }
 
-const ProductSection = ({ products, params }: any) => {
+const ProductSection = ({ products, params, category }: any) => {
   const searchParams = useSearchParams();
   const [renderdData, setRenderedData] = useState<any>(products);
   const [requestedAmount, setRequestedAmount] = useState<number>(80);
@@ -98,7 +99,9 @@ const ProductSection = ({ products, params }: any) => {
     setRequestedAmount((prev) => (prev += 10));
     setRequestedMore(true);
   };
-
+  {
+    console.log(category);
+  }
   const getDataBasedOnRequest = async () => {
     let products;
     if (params.id.length > 1) {
@@ -248,7 +251,29 @@ const ProductSection = ({ products, params }: any) => {
             )}
           </div>
         </div>
-        <span className="loader"></span>
+
+        {category?.subCategories?.length > 1 ? (
+          <div className="res-subCtg">
+            {category.subCategories?.map((subItem) => {
+              return (
+                <div
+                  className="res-subCtg-item"
+                  key={subItem?._id}
+                  style={{
+                    backgroundColor:
+                      params?.id[1] === subItem?._id ? "#55a8b9" : "#fff",
+                    color: params?.id[1] === subItem?._id ? "#fff" : "#55a8b9",
+                  }}
+                >
+                  <Link href={`/category/${category?._id}/${subItem?._id}`}>
+                    {subItem?.name}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+
         {filterLoaded ? (
           <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10 dir-rtl category-products-section">
             {products?.length > 0
@@ -275,6 +300,7 @@ const ProductSection = ({ products, params }: any) => {
             ></span>
           </div>
         )}
+        <span className="loader"></span>
 
         {/* <div
           className="flex"

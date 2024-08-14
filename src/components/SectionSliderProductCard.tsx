@@ -155,7 +155,9 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
         bound: true,
         perTouch: false,
         direction: "rtl",
-        // diirection: "rtl",
+        type: 'slider',
+        rewind: false, // Prevents going back to the start when reaching the end
+        scrollLock: false,
         breakpoints: {
           1280: {
             perView: 4,

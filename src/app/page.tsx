@@ -28,6 +28,7 @@ async function getCategories() {
     .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`)
     .then((res) => res.data.data)
     .then((data) => {
+      console.log(data)
       return data
         .reverse()
         .filter((item: { active: boolean }) => item.active)
@@ -35,6 +36,7 @@ async function getCategories() {
           name: item.name,
           desc: item.name,
           _id: item._id,
+          subCategories: item?.subCategories,
           // featuredImage: CATS_DISCOVER[0].featuredImage,
           color: "bg-yellow-50",
           featuredImage: {

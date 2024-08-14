@@ -940,13 +940,11 @@ tamara-widget {
 .category-products-section {
   @media (max-width: 968px) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-
   }
   button {
     @media (max-width: 968px) {
       display: none !important;
     }
-   
   }
   h2 {
     @media (max-width: 968px) {
@@ -964,12 +962,56 @@ tamara-widget {
     }
   }
   svg {
-    width: .6rem;
+    width: 0.6rem;
   }
-  .rate  {
+  .rate {
     @media (max-width: 968px) {
       font-size: 7px !important;
-      
+    }
+  }
+}
+.ctg-liner {
+  @media (max-width: 968px) {
+    display: none;
+  }
+}
+.ctg-page-main {
+  @media (max-width: 968px) {
+    margin-top: 0;
+  }
+}
+.filter-controller {
+  @media (max-width: 968px) {
+    padding-top: 0rem;
+    padding-bottom: .5rem;
+    margin-top: -30px;
+  }
+}
+.page-holder {
+  @media (max-width: 968px) {
+    padding-top: 2rem;
+  }
+}
+.res-subCtg {
+  display: none;
+
+  @media (max-width: 968px) {
+    display: block;
+    height: 45px;
+    display: flex;
+    direction: rtl;
+    overflow-x: auto;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    .res-subCtg-item   {
+      margin: 0 10px;
+      border: 1px solid #55a8b9;
+      font-weight: bold;
+      padding: 5px;
+      border-radius: 8px;
+      min-width: 120px;
+      flex-shrink: 0;
+      text-align: center;
     }
   }
 }

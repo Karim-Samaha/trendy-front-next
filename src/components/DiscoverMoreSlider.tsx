@@ -18,7 +18,10 @@ const DiscoverMoreSlider: FC<any> = ({ categories }) => {
       perView: 3,
       gap: 32,
       bound: true,
+      perTouch: false,
       direction: "rtl",
+      type: "slider",
+      rewind: false,
       breakpoints: {
         1280: {
           gap: 28,
@@ -92,6 +95,7 @@ const DiscoverMoreSlider: FC<any> = ({ categories }) => {
                   featuredImage={item.featuredImage}
                   color={item.color}
                   id={item._id}
+                  subCategories={item.subCategories}
                 />
               </li>
             )
