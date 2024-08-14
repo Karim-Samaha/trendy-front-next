@@ -1015,3 +1015,12 @@ tamara-widget {
     }
   }
 }
+.home-cart-link.nc-Button {
+  background-color: #ffffff00 !important;
+  color: #55a8b9;
+}
+.home-ctg {
+  @media (max-width: 968px) {
+    margin-top: 3rem !important;
+  }
+}

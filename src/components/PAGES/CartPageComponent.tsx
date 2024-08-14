@@ -576,6 +576,9 @@ const CartPageComponent = () => {
               >
                 إتمام عملية الشراء{" "}
               </ButtonPrimary>
+              <ButtonPrimary href={"/"} className="mt-8 w-full home-cart-link">
+                تابع عملية التسوق{" "}
+              </ButtonPrimary>
               <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center"></div>
             </div>
           </div>

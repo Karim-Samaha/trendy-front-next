@@ -164,7 +164,7 @@ async function PageHome() {
         )}
       />
 
-      <div className="mt-24 lg:mt-24">
+      <div className="mt-24 lg:mt-24 home-ctg">
         <DiscoverMoreSlider categories={categories} />
       </div>
       <div className="container relative space-y-24 my-24 lg:space-y-24 lg:my-24 product-section">
