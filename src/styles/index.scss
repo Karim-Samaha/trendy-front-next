@@ -983,7 +983,7 @@ tamara-widget {
 .filter-controller {
   @media (max-width: 968px) {
     padding-top: 0rem;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
     margin-top: -30px;
   }
 }
@@ -991,6 +991,15 @@ tamara-widget {
   @media (max-width: 968px) {
     padding-top: 2rem;
   }
+}
+.res-subCtg::-webkit-scrollbar {
+  display: none;
+}
+.res-subCtg::-webkit-scrollbar-thumb {
+  display: none;
+}
+.res-subCtg::-webkit-scrollbar-track {
+  display: none;
 }
 .res-subCtg {
   display: none;
@@ -1003,7 +1012,8 @@ tamara-widget {
     overflow-x: auto;
     margin-bottom: 10px;
     padding-bottom: 5px;
-    .res-subCtg-item   {
+
+    .res-subCtg-item {
       margin: 0 10px;
       border: 1px solid #55a8b9;
       font-weight: bold;
@@ -1022,5 +1032,43 @@ tamara-widget {
 .home-ctg {
   @media (max-width: 968px) {
     margin-top: 3rem !important;
+  }
+}
+
+.cgt-scroll-top {
+  display: none;
+  @media (max-width: 968px) {
+    display: block;
+  }
+}
+.main-ctgItem {
+  @media (max-width: 968px) {
+    width: 45% !important;
+    display: flex !important;
+    flex: 1;
+    padding: 20px 0 !important;
+    a {
+      width: 100%;
+    }
+    img {
+      max-width: 120px !important;
+      min-height: 120px !important;
+      object-fit: contain !important;
+    }
+    h3 {
+      font-size: 14px !important;
+      padding: 0 20px;
+    }
+  }
+}
+
+.product-NcInputNumber {
+  @media (max-width: 968px) {
+    width: 120px;
+    height: 34px;
+    span {
+      padding: 0px 10px;
+    }
+ 
   }
 }

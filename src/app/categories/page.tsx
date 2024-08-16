@@ -68,7 +68,7 @@ async function PageCategories() {
         <div className="container">
           {categories.map((item: any) => {
             return (
-              <div key={item._id} className="ctg-item">
+              <div key={item._id} className="ctg-item main-ctgItem">
                 <Link
                   // ref={`/category${id}`}
                   className={`nc-CardCategory3 block`}

@@ -27,7 +27,7 @@ const Discount: React.FC<LikeButtonProps> = ({
           fontSize: "14px",
         }}
       >
-        {(100 - (price / priceBefore) * 100).toFixed(0)}% خصم
+        {(100 - (price / priceBefore) * 100).toFixed(1)}% خصم
       </button>
       {purchaseCount > 0 && (
         <button

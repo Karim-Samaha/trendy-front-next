@@ -432,7 +432,7 @@ const AdressForm: FC<Props> = ({
           <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
             <div className="flex-1">
               <Label className="text-sm">
-                وقت التوصيل ( متاح من 2 الظهر الي 11م)
+                وقت التوصيل ( متاح من 12 الظهر الي 11م)
               </Label>
               <div
                 id="time-picker"

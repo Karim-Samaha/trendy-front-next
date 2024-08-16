@@ -154,9 +154,9 @@ const PageCollection2 = async ({ params }) => {
   return (
     <div className={`nc-PageCollection2`}>
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 sm:space-y-20 lg:space-y-28 page-holder">
-        <div className="space-y-10 lg:space-y-14">
+        <div className="space-y-10 lg:space-y-14" >
           {/* HEADING */}
-          <div className="" style={{ width: "100%", direction: "rtl" }}>
+          <div className="" style={{ width: "100%", direction: "rtl" }} >
             <h1
               style={{ marginTop: "-25px" }}
               className="block text-2xl sm:text-3xl lg:text-4xl font-semibold"
@@ -171,10 +171,10 @@ const PageCollection2 = async ({ params }) => {
             </span>
           </div>
 
-          <hr className="border-slate-200 dark:border-slate-700 ctg-liner" />
-          <main className="ctg-page-main">
+          <hr className="border-slate-200 dark:border-slate-700 ctg-liner"  />
+          <main className="ctg-page-main" >
             {/* LOOP ITEMS */}
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col lg:flex-row" >
               <ProductSection
                 products={products}
                 params={params}

@@ -68,7 +68,7 @@ const ProductNcNumber: FC<NcInputNumberProps> = ({
       {label && renderLabel()}
 
       <div
-        className={`nc-NcInputNumber__content flex items-center justify-between w-[104px] sm:w-28`}
+        className={`nc-NcInputNumber__content flex items-center justify-between w-[104px] sm:w-28 product-NcInputNumber`}
         style={{ direction: "rtl" }}
       >
         <button

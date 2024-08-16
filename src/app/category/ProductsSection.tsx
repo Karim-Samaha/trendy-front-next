@@ -6,6 +6,7 @@ import axios from "axios";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import _axios from "@/contains/api/axios";
 import Link from "next/link";
+import Document from "next/document";
 async function getSubCategoriesProducts(subCtgId: string, limit: number) {
   const res = await axios
     .get(
@@ -95,6 +96,20 @@ const ProductSection = ({ products, params, category }: any) => {
   const [loadedAll, setLoadedAll] = useState(false);
   const [size, setSize] = useState(0);
   const [requestedMore, setRequestedMore] = useState(false);
+  const [windowSize, setWindowSize] = useState(0);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowSize(window.innerWidth);
+    }
+  }, []);
+  useEffect(() => {
+    if (windowSize < 700) {
+      window.scrollTo(0, 420);
+    }
+  }, [windowSize]);
+  const scrollTop = () => {
+    window.scrollTo(0, 0);
+  };
   const handleShowMoreButton = () => {
     setRequestedAmount((prev) => (prev += 10));
     setRequestedMore(true);
@@ -316,6 +331,44 @@ const ProductSection = ({ products, params, category }: any) => {
       {renderdData?.length <= 0 ? (
         <h4 className="no-product">لا يوجد منتجات حاليا</h4>
       ) : null}
+
+      <div
+        id="gb-widget-8323"
+        className="cgt-scroll-top"
+        style={{
+          bottom: "14px",
+          right: "16px",
+          boxSizing: "border-box",
+          position: "fixed",
+          zIndex: "99999999999",
+          direction: "ltr",
+          textAlign: "right",
+        }}
+      >
+        {/* <div className="text-us-msg">راسلنا</div> */}
+        <div className="sc-q8c6tt-3 hKYcqG">
+          <div
+            color="#4dc247"
+            style={{
+              fontSize: "10px",
+
+              backgroundColor: "#55a8b9",
+              borderRadius: "50%",
+              width: "60px",
+              height: "60px",
+              padding: "5px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+            }}
+            className="sc-q8c6tt-1 deQKmp"
+            onClick={scrollTop}
+          >
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>تصفية</div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
