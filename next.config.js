@@ -1,8 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/.well-known/apple-developer-merchantid-domain-association',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/json',
+          },
+          {
+            key: 'Content-Disposition',
+            value: 'inline',
+          },
+        ],
+      },
+    ];
+  },
   experimental: {
     typedRoutes: true,
   },
+
   reactStrictMode: false,
   typescript: {
     // !! WARN !!
