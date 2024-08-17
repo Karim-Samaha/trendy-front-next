@@ -47,9 +47,8 @@ const AdressForm: FC<Props> = ({
         setFormSettingInfo(settings);
       })
       .catch((err) => console.log(err));
-
   }, []);
-  console.log({formSettingInfo})
+  console.log({ formSettingInfo });
   const [time_, setTime] = useState({
     hour: "00",
     minute: "00",
@@ -89,7 +88,7 @@ const AdressForm: FC<Props> = ({
     addressSelected: false,
     phone: "",
     address: "",
-    giftAdd: "4",
+    giftAdd: "5",
     sentFrom: "",
     sentTo: "",
     giftLink: "",
@@ -103,7 +102,7 @@ const AdressForm: FC<Props> = ({
       addressSelected: false,
       phone: "",
       address: "",
-      giftAdd: "4",
+      giftAdd: "5",
       sentFrom: "",
       sentTo: "",
       giftLink: "",
@@ -191,7 +190,7 @@ const AdressForm: FC<Props> = ({
       setErrors((prev: any) => ({ ...prev, time: true }));
       address = false;
     }
-    if (formValue.giftAdd !== "4" && selectedCard.length === 0) {
+    if (formValue.giftAdd !== "5" && selectedCard.length === 0) {
       setErrors((prev: any) => ({ ...prev, withGiftRequred: true }));
       withGiftRequred = false;
     }
@@ -447,7 +446,8 @@ const AdressForm: FC<Props> = ({
           <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
             <div className="flex-1">
               <Label className="text-sm">
-               {formSettingInfo?.tag || "وقت التوصيل ( متاح من 12 الظهر الي 11م)"} 
+                {formSettingInfo?.tag ||
+                  "وقت التوصيل ( متاح من 12 الظهر الي 11م)"}
               </Label>
               <div
                 id="time-picker"
@@ -678,7 +678,8 @@ const AdressForm: FC<Props> = ({
                 <option value="1">كروت اهداء</option>
                 <option value="2">شيكولاته بلجيكيه</option>
                 <option value="3">بالونات</option>
-                <option value="4">بدون اضافات</option>
+                <option value="4">تغريسات</option>
+                <option value="5">بدون اضافات</option>
               </Select>
               {errors.withGiftRequred && (
                 <span style={{ color: "red", marginTop: "10px" }}>
@@ -725,6 +726,13 @@ const AdressForm: FC<Props> = ({
                     onClick={() => setShopingCards(true)}
                   >
                     اختر بالون
+                  </ButtonSecondary>
+                ) : formValue.giftAdd === "4" ? (
+                  <ButtonSecondary
+                    className="flex-2 flex-shrink-0 "
+                    onClick={() => setShopingCards(true)}
+                  >
+                    اختر تغريسات
                   </ButtonSecondary>
                 ) : null}
               </div>
@@ -782,6 +790,13 @@ const AdressForm: FC<Props> = ({
                     onClick={() => setShopingCards(true)}
                   >
                     اختر بالون
+                  </ButtonSecondary>
+                ) : formValue.giftAdd === "4" ? (
+                  <ButtonSecondary
+                    className="flex-2 flex-shrink-0 "
+                    onClick={() => setShopingCards(true)}
+                  >
+                    اختر تغريسات
                   </ButtonSecondary>
                 ) : null}
               </div>

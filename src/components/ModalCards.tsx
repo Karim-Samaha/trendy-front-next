@@ -77,6 +77,8 @@ const ModalCards: FC<ModalQuickViewProps> = ({
                         ? "شوكولاته بلجيكية"
                         : type === "3"
                         ? "بالونات"
+                        : type === "4"
+                        ? "تغريسات"
                         : ""
                     }
                   />
