@@ -145,6 +145,15 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
                 </g>
               </svg>
               حدث خطأ في عملية الدفع
+              <p style={{ marginTop: "10px", fontWeight: "500" }}>
+                يمكنك التواصل معنا{" "}
+                <a
+                  href="https://api.whatsapp.com/send/?phone=966539123890"
+                  style={{ color: "green" }}
+                >
+                  من خلال الواتس
+                </a>
+              </p>
             </span>
           ) : (
             <span className="block text-sm text-neutral-800 sm:text-base dark:text-neutral-200 tracking-wider font-medium dir-rtl">
