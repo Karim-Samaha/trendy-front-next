@@ -178,7 +178,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
             ? data_.map((item, index) => (
                 <ProductCard
                   // @ts-ignore
-                  data={{ ...item, fav: fav.includes(item?._id) }}
+                  data={{ ...item, fav: false }}
                   featuredImage={undefined}
                   _id={""}
                   modal={modal}
