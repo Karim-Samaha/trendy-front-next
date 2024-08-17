@@ -13,6 +13,7 @@ import ProductNcNumber from "@/components/productNcNumber";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Checkbox from "@/shared/Checkbox/Checkbox";
 import PurchaseAdd from "./PurchaseAdd";
+import _axios from "@/contains/api/axios";
 interface Props {
   isActive: boolean;
   orderType: string;
@@ -30,11 +31,25 @@ const AdressForm: FC<Props> = ({
 }) => {
   const [value, onChange] = useState<string>("");
   const [time, onTimeChange] = useState<string>("");
-
   const [showClender, setShowClender] = useState<boolean>(false);
   const [showTime_, setShowTime_] = useState<boolean>(false);
   const [shopingCards, setShopingCards] = useState(false);
+  const [formSettingInfo, setFormSettingInfo] = useState({});
 
+  useEffect(() => {
+    _axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tags`)
+      .then((res) => res.data.data)
+      .then((data) => {
+        let settings = data.find(
+          (item: { type: string }) => item.type === "DELIVER_TIME"
+        );
+        setFormSettingInfo(settings);
+      })
+      .catch((err) => console.log(err));
+
+  }, []);
+  console.log({formSettingInfo})
   const [time_, setTime] = useState({
     hour: "00",
     minute: "00",
@@ -432,7 +447,7 @@ const AdressForm: FC<Props> = ({
           <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
             <div className="flex-1">
               <Label className="text-sm">
-                وقت التوصيل ( متاح من 12 الظهر الي 11م)
+               {formSettingInfo?.tag || "وقت التوصيل ( متاح من 12 الظهر الي 11م)"} 
               </Label>
               <div
                 id="time-picker"

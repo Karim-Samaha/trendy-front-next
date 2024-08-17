@@ -13,6 +13,7 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
   //   const id = searchParams.get("id");
   //   const gateway = searchParams.get("gateway");
   const [status, setStatus] = useState({});
+  const [failed, setFailed] = useState(false);
 
   const handleTabby = async () => {
     const tabbyPaymenId = tabbyId;
@@ -22,8 +23,12 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tabby-status/${tabbyPaymenId}?session=${tamaraSessionId}`
       );
       setStatus(response.data);
+      if (response?.data?.data === "wrong") {
+        setFailed(true);
+      }
     } catch (err) {
       console.error(err);
+      setFailed(true);
     }
   };
   const handleTamara = async () => {
@@ -33,8 +38,12 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-tamara-status/${tamaraId}`
       );
       setStatus(response.data);
+      if (response?.data?.data === "wrong") {
+        setFailed(true);
+      }
     } catch (err) {
       console.error(err);
+      setFailed(true);
     }
   };
 
@@ -48,8 +57,16 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
         .get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/check-payment-status/${id}`
         )
-        .then((response) => setStatus(response.data))
-        .catch((err) => console.error(err));
+        .then((response) => {
+          setStatus(response.data);
+          if (response?.data?.data === "wrong") {
+            setFailed(true);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          setFailed(true);
+        });
     }
   }, [id, gateway]);
 
@@ -74,6 +91,60 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
           {status?.data?.status === "paid" ? (
             <span className="block text-sm text-neutral-800 sm:text-base dark:text-neutral-200 tracking-wider font-medium dir-rtl">
               تم الدفع بنجاح...
+            </span>
+          ) : failed ? (
+            <span
+              style={{ color: "#000", fontWeight: "bold" }}
+              className="block text-sm text-neutral-800 sm:text-base dark:text-neutral-200 tracking-wider font-medium dir-rtl"
+            >
+              <svg
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 50"
+                xmlSpace="preserve"
+                fill="#000000"
+                width="50px"
+                height="50px"
+                style={{ margin: "0px auto 50px auto" }}
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <circle
+                    style={{ fill: "#D75A4A" }}
+                    cx="25"
+                    cy="25"
+                    r="25"
+                  ></circle>{" "}
+                  <polyline
+                    style={{
+                      fill: "none",
+                      stroke: "#FFFFFF",
+                      strokeWidth: "2",
+                      strokeLinecap: "round",
+                      strokeMiterlimit: "10",
+                    }}
+                    points="16,34 25,25 34,16 "
+                  ></polyline>{" "}
+                  <polyline
+                    style={{
+                      fill: "none",
+                      stroke: "#FFFFFF",
+                      strokeWidth: "2",
+                      strokeLinecap: "round",
+                      strokeMiterlimit: "10",
+                    }}
+                    points="16,16 25,25 34,34 "
+                  ></polyline>{" "}
+                </g>
+              </svg>
+              حدث خطأ في عملية الدفع
             </span>
           ) : (
             <span className="block text-sm text-neutral-800 sm:text-base dark:text-neutral-200 tracking-wider font-medium dir-rtl">

@@ -13,6 +13,7 @@ const Moysar = ({
   vat,
   userNote,
   pointsUsed,
+  method,
 }: {
   fintalTotal: number;
   couponResponse: any;
@@ -21,22 +22,22 @@ const Moysar = ({
   vat: number;
   userNote: string;
   pointsUsed: number;
+  method: string;
 }) => {
   const [init, setInit] = useState(false);
   const { data: session }: any = useSession();
   const { items } = useCart();
-
+  const MOYSAR_METHODS = {
+    card: ["creditcard"],
+    applepay: ["applepay"],
+    stc: ["stcpay"],
+  };
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
     script.innerHTML = `  
         Moyasar.init({
           element: '.mysr-form',
-          // Amount in the smallest currency unit.
-          // For example:
-          // 10 SAR = 10 * 100 Halalas
-          // 10 KWD = 10 * 1000 Fils
-          // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
           amount: ${+fintalTotal * 100},
           currency: 'SAR',
           language: "ar",   
@@ -60,7 +61,7 @@ const Moysar = ({
           userId: '${session?.user?._id}',
           publishable_api_key: '${process.env.NEXT_PUBLIC_MOYASAR_KEY}',
           callback_url: '${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment',
-          methods: ['creditcard'],
+          methods: ['${MOYSAR_METHODS[method]}'],
           on_completed: function (payment) {
             return new Promise(async function (resolve, reject) {
                let saved = await fetch("${

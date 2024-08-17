@@ -936,7 +936,13 @@ tamara-widget {
     height: 205px !important;
   }
 }
-
+.category-products-section.adds {
+  button {
+    @media (max-width: 968px) {
+      display: flex !important;
+    }
+  }
+}
 .category-products-section {
   @media (max-width: 968px) {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1071,4 +1077,7 @@ tamara-widget {
     }
  
   }
+}
+.adds-products .modalSlider > div{
+  visibility: visible !important;
 }

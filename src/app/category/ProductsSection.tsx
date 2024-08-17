@@ -96,7 +96,18 @@ const ProductSection = ({ products, params, category }: any) => {
   const [loadedAll, setLoadedAll] = useState(false);
   const [size, setSize] = useState(0);
   const [requestedMore, setRequestedMore] = useState(false);
-  const [windowSize, setWindowSize] = useState(0);
+  const [windowSize, setWindowSize] = useState(1200);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollPosition]);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setWindowSize(window.innerWidth);
@@ -107,9 +118,11 @@ const ProductSection = ({ products, params, category }: any) => {
       window.scrollTo(0, 420);
     }
   }, [windowSize]);
+
   const scrollTop = () => {
     window.scrollTo(0, 0);
   };
+
   const handleShowMoreButton = () => {
     setRequestedAmount((prev) => (prev += 10));
     setRequestedMore(true);
@@ -354,18 +367,44 @@ const ProductSection = ({ products, params, category }: any) => {
 
               backgroundColor: "#55a8b9",
               borderRadius: "50%",
-              width: "60px",
-              height: "60px",
+              width: "45px",
+              height: "45px",
               padding: "5px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "#fff",
+              display: scrollPosition >= 400 ? "flex" : "none",
             }}
             className="sc-q8c6tt-1 deQKmp"
             onClick={scrollTop}
           >
-            <div style={{ fontSize: "16px", fontWeight: "bold" }}>تصفية</div>
+            <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+              <svg
+                width="32px"
+                height="32px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <path
+                    d="M12 5V19M12 5L6 11M12 5L18 11"
+                    stroke="#fff"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>{" "}
+                </g>
+              </svg>
+            </div>
           </div>
         </div>
       </div>

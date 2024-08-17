@@ -113,45 +113,45 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
       });
   }, []);
 
-  useEffect(() => {
-    if (data_.length > 0) {
-      const OPTIONS: Partial<Glide.Options> = {
-        perView: 4,
-        gap: 32,
-        bound: true,
-        direction: "rtl",
-        breakpoints: {
-          1280: {
-            perView: 4,
-          },
-          1024: {
-            gap: 20,
-            perView: 4,
-          },
-          768: {
-            gap: 20,
-            perView: 4,
-          },
-          640: {
-            gap: 20,
-            perView: 1.5,
-          },
-          500: {
-            gap: 10,
-            perView: 2,
-          },
-        },
-      };
-      if (!sliderRef.current) return;
+  // useEffect(() => {
+  //   if (data_.length > 0) {
+  //     const OPTIONS: Partial<Glide.Options> = {
+  //       perView: 4,
+  //       gap: 32,
+  //       bound: true,
+  //       direction: "rtl",
+  //       breakpoints: {
+  //         1280: {
+  //           perView: 4,
+  //         },
+  //         1024: {
+  //           gap: 20,
+  //           perView: 4,
+  //         },
+  //         768: {
+  //           gap: 20,
+  //           perView: 4,
+  //         },
+  //         640: {
+  //           gap: 20,
+  //           perView: 1.5,
+  //         },
+  //         500: {
+  //           gap: 10,
+  //           perView: 2,
+  //         },
+  //       },
+  //     };
+  //     if (!sliderRef.current) return;
 
-      let slider = new Glide(sliderRef.current, OPTIONS);
-      slider.mount();
-      setIsShow(true);
-      return () => {
-        slider.destroy();
-      };
-    }
-  }, [sliderRef, data_]);
+  //     let slider = new Glide(sliderRef.current, OPTIONS);
+  //     slider.mount();
+  //     setIsShow(true);
+  //     return () => {
+  //       slider.destroy();
+  //     };
+  //   }
+  // }, [sliderRef, data_]);
 
   if (noData)
     return (
@@ -166,18 +166,28 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
         modal && "modalSlider"
       }`}
     >
-      <div
-        ref={sliderRef}
-        className={`flow-root ${isShow ? "" : "invisible"}`}
-        style={{ direction: "rtl" }}
-      >
+      <div ref={sliderRef} className={`flow-root`} style={{ direction: "rtl" }}>
         <Heading
           className={headingClassName}
           fontClass={headingFontClassName}
           rightDescText={ctgName}
-          hasNextPrev
+          // hasNextPrev
         ></Heading>
-        <div
+        <div className="flex-1 grid sm:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-10 dir-rtl adds category-products-section ">
+          {data_?.length > 0
+            ? data_.map((item, index) => (
+                <ProductCard
+                  // @ts-ignore
+                  data={{ ...item, fav: fav.includes(item?._id) }}
+                  featuredImage={undefined}
+                  _id={""}
+                  modal={modal}
+                  selectCard={selectCard}
+                />
+              ))
+            : null}
+        </div>
+        {/* <div
           style={{ direction: "rtl" }}
           className="glide__track"
           data-glide-el="track"
@@ -202,7 +212,7 @@ const ProductAddsSliderProductCard: FC<SectionSliderProductCardProps> = ({
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
       {!modal && (
         <div className="show-more">
