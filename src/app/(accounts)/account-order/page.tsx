@@ -70,13 +70,17 @@ const AccountOrder = () => {
         }),
       });
       facebookPixel("Purchase", {
-        content_ids: data[0]?.purchaseBulk.map((item) => item?._id),
+        content_ids: data[0]?.purchaseBulk.map(
+          (subItem) => subItem?._id || subItem?.id
+        ),
         content_name: "Purchase",
         content_type: "product_group",
         contents: JSON.stringify(data[0]?.purchaseBulk),
         currency: "SAR",
         num_items: data[0]?.purchaseBulk.length,
-        value: data[0]?.amount / 100,
+        value: ["TABBY", "TAMARA"].includes(data[0]?.source)
+          ? data[0]?.amount
+          : data[0]?.amount / 100,
       });
       twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03t`, {
         value: data[0]?.amount / 100,

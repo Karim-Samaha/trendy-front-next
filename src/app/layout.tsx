@@ -18,7 +18,7 @@ import HitRequest from "@/components/HitRequest";
 import { analytics } from "../utils/firebase";
 import Logo from "@/shared/Logo/Logo";
 import { facebookPixel, snapchatPixelEvent, tiktokPixel } from "@/utils/pixels";
-
+import Script from "next/script";
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -60,7 +60,6 @@ export default function RootLayout({
     facebookPixel("PageView", {});
     tiktokPixel("Pageview", {});
     snapchatPixelEvent("Pageview", {});
-
   }, []);
 
   useEffect(() => {
@@ -93,6 +92,15 @@ export default function RootLayout({
                 name="viewport"
                 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
               />
+              <Script
+                dangerouslySetInnerHTML={{
+                  __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-M57MK393')`,
+                }}
+              />
             </head>
             <meta
               name="google-site-verification"
@@ -111,7 +119,21 @@ export default function RootLayout({
               <CommonClient />
               <Footer data={footer} />
               <div dangerouslySetInnerHTML={{ __html: tags.body }} />
-             
+              <div className="w"></div>
+              {/* <noscript
+                dangerouslySetInnerHTML={{
+                  __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M57MK393"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+                }}
+              /> */}
+              <noscript>
+                <iframe
+                  src="https://www.googletagmanager.com/ns.html?id=GTM-M57MK393"
+                  height="0"
+                  width="0"
+                  style={{ display: "none", visibility: "hidden" }}
+                ></iframe>
+              </noscript>
             </body>
           </html>
         </CartProvider>
