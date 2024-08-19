@@ -1,12 +1,8 @@
 import axios from "axios";
 
-export default async function handler(req: any, res: any) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
+export async function POST(request: any) {
 
-  const { eventName, eventData } = req.body;
-
+  const { eventName, eventData } = await request.json();
   try {
     const response = await axios.post(
       "https://business-api.tiktok.com/open_api/v1.2/pixel/track/",
@@ -17,15 +13,15 @@ export default async function handler(req: any, res: any) {
       },
       {
         headers: {
-          "Access-Token": process.env.TIKTOK_ACCESS_TOKEN,
+          "Access-Token": process.env.NEXT_PUBLIC_TIKTOK_TOKEN,
           "Content-Type": "application/json",
         },
       }
     );
-
-    res.status(200).json({ success: true, data: response.data });
+    return new Response(
+      JSON.stringify({ message: "Success", eventData: eventData })
+    );
   } catch (error) {
-    console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
 }

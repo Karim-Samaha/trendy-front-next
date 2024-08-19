@@ -15,6 +15,8 @@ import {
   facebookPixel,
   snapchatPixelEvent,
   tiktokPixel,
+  trackConversionSnapchatEvent,
+  trackTikTokConversion,
   twitterPixel,
 } from "@/utils/pixels";
 const AccountOrder = () => {
@@ -54,7 +56,9 @@ const AccountOrder = () => {
       sendEvent("purchase", {
         transaction_id: data[0]?._id,
         affiliation: "Google Merchandise Store",
-        value: data[0]?.amount / 100,
+        value: ["TABBY", "TAMARA"].includes(data[0]?.source)
+          ? data[0]?.amount
+          : data[0]?.amount / 100,
         currency: "SAR",
         items: data[0]?.purchaseBulk.map((product, i) => {
           return {
@@ -105,7 +109,9 @@ const AccountOrder = () => {
               };
             })
           ) || "[]",
-        value: data[0]?.amount / 100,
+        value: ["TABBY", "TAMARA"].includes(data[0]?.source)
+          ? data[0]?.amount
+          : data[0]?.amount / 100,
         currency: "SAR",
       });
       snapchatPixelEvent("PURCHASE", {
@@ -113,6 +119,27 @@ const AccountOrder = () => {
         price: data[0]?.amount / 100,
         transaction_id: data[0]?._id,
         user_email: session?.user?.email || "",
+      });
+      trackTikTokConversion("Purchase", {
+        value: ["TABBY", "TAMARA"].includes(data[0]?.source)
+          ? data[0]?.amount
+          : data[0]?.amount / 100,
+        currency: "SAR",
+        content_type: "product",
+      });
+      trackConversionSnapchatEvent("PURCHASE", {
+        event: {
+          currency: "SAR",
+          purchase_value: ["TABBY", "TAMARA"].includes(data[0]?.source)
+            ? data[0]?.amount
+            : data[0]?.amount / 100,
+        },
+        properties: {
+          currency: "SAR",
+          content_type: "product",
+          content_id: data[0]?._id,
+          quantity: data[0]?.purchaseBulk?.length || 1,
+        },
       });
       setEvents(true);
     }

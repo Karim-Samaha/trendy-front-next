@@ -25,6 +25,8 @@ import {
   facebookPixel,
   snapchatPixelEvent,
   tiktokPixel,
+  trackConversionSnapchatEvent,
+  trackTikTokConversion,
   twitterPixel,
 } from "@/utils/pixels";
 import Tamarra from "../Tamarra";
@@ -188,6 +190,17 @@ const CheckoutPageComponent = () => {
       currency: "SAR",
       price: parseInt(renderTotalPrice.fintalTotal),
       user_email: session?.user?.email || "",
+    });
+    trackTikTokConversion("Checkout", {
+      value: parseInt(renderTotalPrice.fintalTotal),
+      currency: "SAR",
+      content_type: "product",
+    });
+    trackConversionSnapchatEvent("START_CHECKOUT", {
+      value: parseInt(renderTotalPrice.fintalTotal),
+      currency: "SAR",
+      content_type: "product",
+      quantity: +items.length || 1,
     });
   };
   useEffect(() => {

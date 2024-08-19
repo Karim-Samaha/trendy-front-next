@@ -1,4 +1,6 @@
+import axios from "axios";
 import TwitterConvTrkr from "./twitterPixelModule";
+import _axios from "@/contains/api/axios";
 
 const options: { autoConfig: boolean; debug: boolean } = {
   autoConfig: true, // set pixel's autoConfig. More info: https://developers.facebook.com/docs/facebook-pixel/advanced/
@@ -46,14 +48,43 @@ export const tiktokPixel = (pixel: string, payload: any) => {
 export const snapchatPixelEvent = (pixel: string, payload: any) => {
   try {
     //@ts-ignore
-    import('react-snapchat-pixel')
+    import("react-snapchat-pixel")
       .then((x) => x.default)
       .then((ReactPixel) => {
-        ReactPixel.init(`${process.env.NEXT_PUBLIC_META_SNAPCHAT_ID}`, options)
-        ReactPixel.track(pixel, payload)
-        console.log('Pixel successs')
-      })
+        ReactPixel.init(`${process.env.NEXT_PUBLIC_META_SNAPCHAT_ID}`, options);
+        ReactPixel.track(pixel, payload);
+        console.log("Pixel successs");
+      });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+export const trackTikTokConversion = async (
+  eventName: string,
+  eventData: any
+) => {
+  try {
+    await _axios.post("/api/track-tiktok", {
+      eventName: eventName,
+      eventData: eventData,
+    });
+    console.log("Conversion event tracked successfully");
+  } catch (error) {
+    console.error("Error tracking conversion event:", error);
+  }
+};
+export const trackConversionSnapchatEvent = async (
+  eventType: string,
+  eventData: any
+) => {
+  try {
+    await _axios.post("/api/snapchat-track", {
+      eventType: eventType,
+      eventData: eventData,
+    });
+    console.log("Snapchat conversion event tracked successfully");
+  } catch (error) {
+    console.error("Error tracking Snapchat conversion event:", error);
+  }
+};

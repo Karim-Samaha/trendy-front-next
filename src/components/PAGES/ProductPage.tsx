@@ -43,7 +43,14 @@ import {
 import { sendEvent } from "@/utils/firebase";
 import SnapchatShareButton from "../SnapChatShareButton";
 import _axios from "@/contains/api/axios";
-import { facebookPixel, snapchatPixelEvent, tiktokPixel, twitterPixel } from "@/utils/pixels";
+import {
+  facebookPixel,
+  snapchatPixelEvent,
+  tiktokPixel,
+  trackConversionSnapchatEvent,
+  trackTikTokConversion,
+  twitterPixel,
+} from "@/utils/pixels";
 import ImageZoom from "../ImageZoom/ImageZoom";
 
 const ProductPage: FC<any> = ({ params, product }) => {
@@ -157,7 +164,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
     );
   };
 
-  const handleAddToCart = (formInfo: Object) => {
+  const handleAddToCart = async (formInfo: Object) => {
     let itemToBeAdded: any = {
       ...productData,
       id: productData?._id,
@@ -177,7 +184,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
         ...item,
         quantity: item.quantity + qty,
       };
-      sendEvent("add_to_cart", {
+      await sendEvent("add_to_cart", {
         currency: "SAR",
         value: +itemToBeAdded.price,
         items: [
@@ -191,14 +198,14 @@ const ProductPage: FC<any> = ({ params, product }) => {
           },
         ],
       });
-      facebookPixel("AddToCart", {
+      await facebookPixel("AddToCart", {
         content_ids: itemToBeAdded._id,
         content_name: itemToBeAdded.name,
         content_type: "product",
         currency: "SAR",
         value: itemToBeAdded.price,
       });
-      twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03u`, {
+      await twitterPixel(`tw-${process.env.NEXT_PUBLIC_TWITTER_ID}-oe03u`, {
         currency: "SAR",
         value: itemToBeAdded.price,
         contents: [
@@ -212,16 +219,28 @@ const ProductPage: FC<any> = ({ params, product }) => {
           },
         ],
       });
-      tiktokPixel("AddToCart", {
+      await tiktokPixel("AddToCart", {
         content_type: "product",
         content_id: `${itemToBeAdded._id}`,
         currency: "SAR",
         value: itemToBeAdded.price,
         quantity: +itemToBeAdded?.quantity || 1,
       });
-      snapchatPixelEvent('ADD_CART', {
-        user_email: '',
-      })
+      await snapchatPixelEvent("ADD_CART", {
+        user_email: "",
+      });
+      await trackTikTokConversion("AddToCart", {
+        value: itemToBeAdded.price,
+        currency: "SAR",
+        content_type: "product",
+        quantity: +itemToBeAdded?.quantity || 1,
+      });
+      await trackConversionSnapchatEvent("ADD_CART", {
+        value: itemToBeAdded.price,
+        currency: "SAR",
+        content_type: "product",
+        quantity: +itemToBeAdded?.quantity || 1,
+      });
     } else {
       addItem(itemToBeAdded, qty);
       sendEvent("add_to_cart", {
@@ -266,11 +285,23 @@ const ProductPage: FC<any> = ({ params, product }) => {
         value: itemToBeAdded.price,
         quantity: +itemToBeAdded?.quantity || 1,
       });
+      trackTikTokConversion("AddToCart", {
+        value: itemToBeAdded.price,
+        currency: "SAR",
+        content_type: "product",
+        quantity: +itemToBeAdded?.quantity || 1,
+      });
+      trackConversionSnapchatEvent("ADD_CART", {
+        value: itemToBeAdded.price,
+        currency: "SAR",
+        content_type: "product",
+        quantity: +itemToBeAdded?.quantity || 1,
+      });
     }
     notifyAddTocart(itemToBeAdded);
     setTimeout(() => {
-      router.push("/cart")
-    }, 500)
+      router.push("/cart");
+    }, 500);
   };
 
   const renderSectionContent = () => {
