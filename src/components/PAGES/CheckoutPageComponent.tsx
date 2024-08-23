@@ -927,13 +927,6 @@ const CheckoutPageComponent = () => {
                             className="font-semibold mt-1 text-sm"
                             // onClick={() => setPayOnDelviery(!payOnDelviery)}
                           >
-                            <input
-                              type="checkbox"
-                              style={{ margin: "0 10px" }}
-                              checked={paymentMethod === "payOnDelviery"}
-                              disabled={true}
-                              // onChange={(e) => setPayOnDelviery(!payOnDelviery)}
-                            />
                             <button
                               onClick={() =>
                                 setPaymentMethod((prev) =>
@@ -942,7 +935,14 @@ const CheckoutPageComponent = () => {
                                     : "payOnDelviery"
                                 )
                               }
+                              style={{ display: "flex", alignItems: "center" }}
                             >
+                              <input
+                                type="checkbox"
+                                style={{ margin: "0 10px", zIndex: "-1" }}
+                                checked={paymentMethod === "payOnDelviery"}
+                                // onChange={(e) => setPayOnDelviery(!payOnDelviery)}
+                              />
                               الدفع عند الاستلام
                             </button>{" "}
                           </div>
@@ -978,20 +978,20 @@ const CheckoutPageComponent = () => {
                             className="font-semibold mt-1 text-sm"
                             // onClick={() => setPayWithTransfer(!payWithTransfer)}
                           >
-                            <input
-                              type="checkbox"
-                              style={{ margin: "0 10px" }}
-                              checked={paymentMethod === "Transfer"}
-                              disabled={true}
-                              // onChange={(e) => setPayWithTransfer(!payWithTransfer)}
-                            />
                             <button
                               onClick={() =>
                                 setPaymentMethod((prev) =>
                                   prev === "Transfer" ? "" : "Transfer"
                                 )
                               }
+                              style={{ display: "flex", alignItems: "center" }}
                             >
+                              <input
+                                type="checkbox"
+                                style={{ margin: "0 10px", zIndex: "-1" }}
+                                checked={paymentMethod === "Transfer"}
+                                // onChange={(e) => setPayWithTransfer(!payWithTransfer)}
+                              />
                               تحويل بنكي
                             </button>{" "}
                           </div>

@@ -10,13 +10,9 @@ import CommonClient from "./CommonClient";
 import { CartProvider } from "react-use-cart";
 import { SessionProvider } from "next-auth/react";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
-import { getServerAuthSession } from "../server/auth";
-import logo from "@/images/trendy.svg";
 import { useEffect, useState } from "react";
 import _axios from "@/contains/api/axios";
 import HitRequest from "@/components/HitRequest";
-import { analytics } from "../utils/firebase";
-import Logo from "@/shared/Logo/Logo";
 import { facebookPixel, snapchatPixelEvent, tiktokPixel } from "@/utils/pixels";
 import Script from "next/script";
 const poppins = Poppins({
@@ -84,10 +80,6 @@ export default function RootLayout({
         <CartProvider id="cart">
           <html lang="en" dir="" className={cairo.className}>
             <head>
-              {/* <meta
-                name="viewport"
-                content="width=device-width, initial-scale=5"
-              /> */}
               <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -100,7 +92,9 @@ export default function RootLayout({
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 })(window,document,'script','dataLayer','GTM-M57MK393')`,
                 }}
+                
               />
+              <link rel="icon" href="/trendy.svg" />
             </head>
             <meta
               name="google-site-verification"

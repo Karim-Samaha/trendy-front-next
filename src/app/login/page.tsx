@@ -69,7 +69,8 @@ const PageLogin = () => {
   const handleSignIn = async () => {
     let credentials = loginForm;
     let newUserNotValid =
-      (isNewRegester && !loginForm.name) || (isNewRegester && !loginForm.name);
+      (isNewRegester && !credentials.name) ||
+      (isNewRegester && method !== "phone" && !credentials.phone);
     if (newUserNotValid) {
       setError("يجد ادخال كل اليانات المطلوبة");
       return;
@@ -80,7 +81,6 @@ const PageLogin = () => {
     if (method === "phone" && loginForm.username.substring(0, 3) !== "966") {
       credentials.username = `966${credentials.username}`;
     }
-
     await signIn("credentials", { ...credentials, redirect: false })
       .then(async (res: any) => {
         if (res?.ok) {
@@ -128,6 +128,9 @@ const PageLogin = () => {
         )
         .then((res) => {
           setOtpSent(true);
+          if (res.data?.isNewRegester) {
+            setIsNewRegester(true);
+          }
         });
     } else {
       let isEmailValid = validateEmail(loginForm.username);
@@ -279,34 +282,37 @@ const PageLogin = () => {
                           }}
                         />
                       </label>
-                      <span className="text-neutral-800 dark:text-neutral-200">
-                        رقم الجوال
-                      </span>
-                      <label className="block">
-                        <Input
-                          type="phone"
-                          name="phone"
-                          label="رقم الهاتف"
-                          className="mt-1"
-                          value={loginForm.phone}
-                          onChange={(e) => {
-                            if (/^\d*$/.test(e.target.value)) {
-                              handleChange(e);
-                              setError("");
-                            }
-                          }}
-                          required={true}
-                          style={{
-                            border: "1px solid #e5e7eb",
-                          }}
-                        />
-                      </label>
-                      <span className="text-neutral-800 dark:text-neutral-200">
-                        رمز التحقق
-                      </span>
+                      {method !== "phone" && (
+                        <>
+                          <span className="text-neutral-800 dark:text-neutral-200">
+                            رقم الجوال
+                          </span>
+                          <label className="block">
+                            <Input
+                              type="phone"
+                              name="phone"
+                              label="رقم الهاتف"
+                              className="mt-1"
+                              value={loginForm.phone}
+                              onChange={(e) => {
+                                if (/^\d*$/.test(e.target.value)) {
+                                  handleChange(e);
+                                  setError("");
+                                }
+                              }}
+                              required={true}
+                              style={{
+                                border: "1px solid #e5e7eb",
+                              }}
+                            />
+                          </label>
+                        </>
+                      )}
                     </>
                   )}
-
+                  <span className="text-neutral-800 dark:text-neutral-200">
+                    رمز التحقق
+                  </span>
                   <label className="block">
                     <Input
                       type="password"

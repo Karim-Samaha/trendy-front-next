@@ -213,13 +213,13 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
               </div>
             </div>
             <div className="contact" style={{marginTop: '22px'}}>
-              <Image src={Icon1} alt="Icon" className="footer-icon" />
+              {/* <Image src={Icon1} alt="Icon" className="footer-icon" /> */}
               <Image src={Icon2} alt="Icon" className="footer-icon" />
               <Image src={Icon3} alt="Icon" className="footer-icon" />
               <Image src={Icon4} alt="Icon" className="footer-icon" />
               <Image src={Icon5} alt="Icon" className="footer-icon" />
               <Image src={Icon6} alt="Icon" className="footer-icon" />
-              <Image src={Icon7} alt="Icon" className="footer-icon" />
+              {/* <Image src={Icon7} alt="Icon" className="footer-icon" /> */}
               <Image src={Icon8} alt="Icon" className="footer-icon" />
               <Image src={Icon9} alt="Icon" className="footer-icon" />
             </div>

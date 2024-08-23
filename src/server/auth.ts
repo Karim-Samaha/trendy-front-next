@@ -40,17 +40,18 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
         name: { label: "name", type: "name" },
         phone: { label: "phone", type: "phone" },
-
       },
-     
+
       async authorize(credentials) {
         let body = {
           email: credentials.username,
-          password: credentials.password, 
+          password: credentials.password,
+        };
+        if (credentials?.name) {
+          body.name = credentials.name;
         }
-        if (credentials?.name && credentials?.phone) {
-          body.name = credentials.name
-          body.phone = credentials.phone
+        if (credentials?.phone) {
+          body.phone = credentials.phone;
         }
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
