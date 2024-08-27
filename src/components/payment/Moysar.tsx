@@ -35,7 +35,89 @@ const Moysar = ({
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
-    script.innerHTML = `  
+    if (method === "applepay") {
+      script.innerHTML = `  
+        Moyasar.init({
+          element: '.mysr-form',
+          amount: ${+fintalTotal * 100},
+          currency: 'SAR',
+          language: "ar",   
+          description: '${JSON.stringify(
+            items.map((item) => ({
+              id: item.id,
+              price: item.price,
+              priceBefore: item.priceBefore,
+              name: item.name,
+              formInfo: item.formInfo,
+              color: item.color,
+              quantity: item.quantity,
+              selectedCard: item?.selectedCard?.map((item: any) => ({
+                ...item,
+                description: "",
+              })),
+              text: item?.text,
+              image: item?.image,
+            }))
+          )}',
+          userId: '${session?.user?._id}',
+          publishable_api_key: '${process.env.NEXT_PUBLIC_MOYASAR_KEY}',
+          callback_url: '${process.env.NEXT_PUBLIC_FRONTEND_URL}/check-payment',
+          methods: ['${MOYSAR_METHODS[method]}'],
+          apple_pay: {
+            country: 'SA',
+            label: 'Apple Pay',
+            validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate',
+         },
+          on_completed: function (payment) {
+            return new Promise(async function (resolve, reject) {
+               let saved = await fetch("${
+                 process.env.NEXT_PUBLIC_BACKEND_URL
+               }/create-checkout-session",
+               {
+                   headers: {
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json',
+                     'Authorization': 'Bearer ${session?.user?.accessToken}'
+                   },
+                   method: "POST",
+                   body: JSON.stringify({...payment, token: '${
+                     session?.user?.accessToken
+                   }', couponResponse: ${JSON.stringify(couponResponse)},
+                    ShippingType: "${deleviryMethod}",
+                    ShippingInfo: ${JSON.stringify(deleviryInfo)},
+                    vat: ${vat},
+                    userNote: "${userNote}",
+                    pointsUsed: ${pointsUsed},
+                    description: ${JSON.stringify(
+                      items.map((item) => ({
+                        id: item.id,
+                        price: item.price,
+                        priceBefore: item.priceBefore,
+                        name: item.name,
+                        formInfo: item.formInfo,
+                        color: item.color,
+                        quantity: item.quantity,
+                        selectedCard: item?.selectedCard?.map((item: any) => ({
+                          ...item,
+                          description: "",
+                        })),
+                        text: item?.text,
+                        image: item?.image,
+                      }))
+                    )}
+                  })
+               }).then((res) => res).catch(err => console.log(err))
+               console.log({saved: saved.status})
+               if(saved?.status === 201) {
+                resolve()
+               }
+                    reject();
+            });
+          },   
+        })
+        `;
+    } else {
+      script.innerHTML = `  
         Moyasar.init({
           element: '.mysr-form',
           amount: ${+fintalTotal * 100},
@@ -106,11 +188,11 @@ const Moysar = ({
                 resolve()
                }
                     reject();
-            
             });
           },   
         })
         `;
+    }
     setTimeout(() => {
       document.body.appendChild(script);
     }, 500);
