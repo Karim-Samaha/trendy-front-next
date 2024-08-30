@@ -25,18 +25,20 @@ import Link from "next/link";
 import ProductNcNumber from "@/components/productNcNumber";
 import Head from "next/head";
 import Discount from "@/components/Discount";
+
+import { StickyShareButtons, InlineFollowButtons } from "sharethis-reactjs";
 import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
+  TelegramShareButton,
   FacebookMessengerShareButton,
 } from "react-share";
-import { StickyShareButtons, InlineFollowButtons } from "sharethis-reactjs";
-
 import {
   FacebookIcon,
   TwitterIcon,
   WhatsappIcon,
+  TelegramIcon,
   XIcon,
   FacebookMessengerIcon,
 } from "react-share";
@@ -630,17 +632,19 @@ const ProductPage: FC<any> = ({ params, product }) => {
                         url={window && window.location.href}
                         title={"Snap Chat"}
                       />
-                      <FacebookShareButton
+
+                      <TelegramShareButton
                         style={{ margin: "0 5px" }}
                         url={window && window.location.href}
                       >
-                        <FacebookIcon borderRadius={5} />
-                      </FacebookShareButton>
+                        <TelegramIcon borderRadius={5} />
+                      </TelegramShareButton>
+
                       <TwitterShareButton
                         style={{ margin: "0 5px" }}
                         url={window && window.location.href}
                       >
-                        <TwitterIcon borderRadius={5} />
+                        <XIcon borderRadius={5} />
                       </TwitterShareButton>
                       {/* <Test /> */}
                       <WhatsappShareButton

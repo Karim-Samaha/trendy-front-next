@@ -219,6 +219,18 @@ footer {
     margin: 0 auto;
   }
 }
+.footer-container .section-two {
+  @media (max-width: 968px) {
+    min-height: 280px;
+    align-items: flex-start;
+    margin-inline-start: 20px;
+  }
+}
+.footer-container h2 {
+  @media (max-width: 968px) {
+    margin: 15px 0 30px 0 !important;
+  }
+}
 .footer-container .section-one {
   width: 40%;
   align-items: flex-start;
@@ -1075,9 +1087,8 @@ tamara-widget {
     span {
       padding: 0px 10px;
     }
- 
   }
 }
-.adds-products .modalSlider > div{
+.adds-products .modalSlider > div {
   visibility: visible !important;
 }
