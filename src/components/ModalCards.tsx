@@ -70,21 +70,7 @@ const ModalCards: FC<ModalQuickViewProps> = ({
                     selectCard={selectCard}
                     _id={""}
                     title={""}
-                    ctgName={
-                      type === "2"
-                        ? "كروت اهداء"
-                        : type === "3"
-                        ? "شوكولاته بلجيكية"
-                        : type === "4"
-                        ? "بالونات"
-                        : type === "5"
-                        ? "تغريسات"
-                        : type === "6"
-                        ? "قسائم شرائية"
-                        : type === "7"
-                        ? "شوكولاته سويسرية"
-                        : ""
-                    }
+                    ctgName={type}
                   />
                 </div>
               </div>

@@ -14,6 +14,7 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Checkbox from "@/shared/Checkbox/Checkbox";
 import PurchaseAdd from "./PurchaseAdd";
 import _axios from "@/contains/api/axios";
+import axios from "axios";
 interface Props {
   isActive: boolean;
   orderType: string;
@@ -294,10 +295,13 @@ const AdressForm: FC<Props> = ({
     });
     setSelectedCard(newItems);
   };
+  const [giftOptions, setGiftOptions] = useState([]);
   useEffect(() => {
-    console.log(formValue.time);
-    console.log(formValue.deliveryDate);
-  }, [formValue.time]);
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/gifts`)
+      .then((res) => setGiftOptions(res.data.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -676,12 +680,15 @@ const AdressForm: FC<Props> = ({
                 }}
               >
                 <option value="1">بدون اضافات</option>
-                <option value="2">كروت اهداء</option>
-                {/* <option value="3">شيكولاته بلجيكيه</option> */}
-                <option value="4">بالونات</option>
-                <option value="5">تغريسات</option>
-                <option value="6">قسائم شرائية</option>
-                <option value="7">شوكولاته سويسرية </option>
+                {giftOptions?.length > 0
+                  ? giftOptions.map((item) => {
+                      return (
+                        <option key={item.id} value={item.name}>
+                          {item.name}
+                        </option>
+                      );
+                    })
+                  : null}
               </Select>
               {errors.withGiftRequred && (
                 <span style={{ color: "red", marginTop: "10px" }}>
@@ -708,52 +715,14 @@ const AdressForm: FC<Props> = ({
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row pt-6 gift-btn">
-                {formValue.giftAdd === "2" ? (
+                {formValue.giftAdd !== "1" && (
                   <ButtonSecondary
                     className="flex-2 flex-shrink-0 "
                     onClick={() => setShopingCards(true)}
                   >
-                    اختر كروت اهداء
+                    اختر {formValue.giftAdd}
                   </ButtonSecondary>
-                )
-                //  : formValue.giftAdd === "3" ? (
-                //   <ButtonSecondary
-                //     className="flex-2 flex-shrink-0 "
-                //     onClick={() => setShopingCards(true)}
-                //   >
-                //     اختر شيكولاته بلجيكية
-                //   </ButtonSecondary>
-                // )
-                 : formValue.giftAdd === "4" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر بالون
-                  </ButtonSecondary>
-                ) : formValue.giftAdd === "5" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر تغريسات
-                  </ButtonSecondary>
-                ) : null}
-                {formValue.giftAdd === "6" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر قسائم شرائية
-                  </ButtonSecondary>
-                ) : formValue.giftAdd === "7" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر شوكولاته سويسرية
-                  </ButtonSecondary>
-                ) : null}
+                )}
               </div>
               {selectedCard?.length
                 ? selectedCard.map(
@@ -789,52 +758,14 @@ const AdressForm: FC<Props> = ({
           ) : (
             <>
               <div className="flex flex-col sm:flex-row pt-6 gift-btn">
-                {formValue.giftAdd === "2" ? (
+                {formValue.giftAdd !== "1" && (
                   <ButtonSecondary
                     className="flex-2 flex-shrink-0 "
                     onClick={() => setShopingCards(true)}
                   >
-                    اختر كروت اهداء
+                    اختر {formValue.giftAdd}
                   </ButtonSecondary>
-                ) 
-                // : formValue.giftAdd === "3" ? (
-                //   <ButtonSecondary
-                //     className="flex-2 flex-shrink-0 "
-                //     onClick={() => setShopingCards(true)}
-                //   >
-                //     اختر شيكولاته بلجيكية
-                //   </ButtonSecondary>
-                // )
-                 : formValue.giftAdd === "4" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر بالون
-                  </ButtonSecondary>
-                ) : formValue.giftAdd === "5" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر تغريسات
-                  </ButtonSecondary>
-                ) : null}
-                {formValue.giftAdd === "6" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر قسائم شرائية
-                  </ButtonSecondary>
-                ) : formValue.giftAdd === "7" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر شوكولاته سويسرية
-                  </ButtonSecondary>
-                ) : null}
+                )}
               </div>
               {selectedCard?.length
                 ? selectedCard.map(
