@@ -677,10 +677,11 @@ const AdressForm: FC<Props> = ({
               >
                 <option value="1">بدون اضافات</option>
                 <option value="2">كروت اهداء</option>
-                <option value="3">شيكولاته بلجيكيه</option>
+                {/* <option value="3">شيكولاته بلجيكيه</option> */}
                 <option value="4">بالونات</option>
                 <option value="5">تغريسات</option>
                 <option value="6">قسائم شرائية</option>
+                <option value="7">شوكولاته سويسرية </option>
               </Select>
               {errors.withGiftRequred && (
                 <span style={{ color: "red", marginTop: "10px" }}>
@@ -714,14 +715,16 @@ const AdressForm: FC<Props> = ({
                   >
                     اختر كروت اهداء
                   </ButtonSecondary>
-                ) : formValue.giftAdd === "3" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر شيكولاته بلجيكية
-                  </ButtonSecondary>
-                ) : formValue.giftAdd === "4" ? (
+                )
+                //  : formValue.giftAdd === "3" ? (
+                //   <ButtonSecondary
+                //     className="flex-2 flex-shrink-0 "
+                //     onClick={() => setShopingCards(true)}
+                //   >
+                //     اختر شيكولاته بلجيكية
+                //   </ButtonSecondary>
+                // )
+                 : formValue.giftAdd === "4" ? (
                   <ButtonSecondary
                     className="flex-2 flex-shrink-0 "
                     onClick={() => setShopingCards(true)}
@@ -742,6 +745,13 @@ const AdressForm: FC<Props> = ({
                     onClick={() => setShopingCards(true)}
                   >
                     اختر قسائم شرائية
+                  </ButtonSecondary>
+                ) : formValue.giftAdd === "7" ? (
+                  <ButtonSecondary
+                    className="flex-2 flex-shrink-0 "
+                    onClick={() => setShopingCards(true)}
+                  >
+                    اختر شوكولاته سويسرية
                   </ButtonSecondary>
                 ) : null}
               </div>
@@ -786,14 +796,16 @@ const AdressForm: FC<Props> = ({
                   >
                     اختر كروت اهداء
                   </ButtonSecondary>
-                ) : formValue.giftAdd === "3" ? (
-                  <ButtonSecondary
-                    className="flex-2 flex-shrink-0 "
-                    onClick={() => setShopingCards(true)}
-                  >
-                    اختر شيكولاته بلجيكية
-                  </ButtonSecondary>
-                ) : formValue.giftAdd === "4" ? (
+                ) 
+                // : formValue.giftAdd === "3" ? (
+                //   <ButtonSecondary
+                //     className="flex-2 flex-shrink-0 "
+                //     onClick={() => setShopingCards(true)}
+                //   >
+                //     اختر شيكولاته بلجيكية
+                //   </ButtonSecondary>
+                // )
+                 : formValue.giftAdd === "4" ? (
                   <ButtonSecondary
                     className="flex-2 flex-shrink-0 "
                     onClick={() => setShopingCards(true)}
@@ -814,6 +826,13 @@ const AdressForm: FC<Props> = ({
                     onClick={() => setShopingCards(true)}
                   >
                     اختر قسائم شرائية
+                  </ButtonSecondary>
+                ) : formValue.giftAdd === "7" ? (
+                  <ButtonSecondary
+                    className="flex-2 flex-shrink-0 "
+                    onClick={() => setShopingCards(true)}
+                  >
+                    اختر شوكولاته سويسرية
                   </ButtonSecondary>
                 ) : null}
               </div>
