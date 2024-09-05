@@ -1,47 +1,79 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+﻿<?xml version="1.0" encoding="UTF-8"?>
+		<!--	created with www.mysitemapgenerator.com	-->
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://www.trendyrosesa.com/</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>1.00</priority>
+	<loc>https://www.trendyrosesa.com/</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.2</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/login</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/login</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/category/666d6bc46118b29a173a91b0/666d6c3f6118b29a173a9230</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/category/666d6bc46118b29a173a91b0/666d6c3f6118b29a173a9230</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/terms</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/category/666d6bc56118b29a173a91ba/666d6c406118b29a173a9244</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/refund</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/terms</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/shipping</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/refund</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/complaints</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/shipping</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 <url>
-<loc>https://www.trendyrosesa.com/license</loc>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.80</priority>
+	<loc>https://www.trendyrosesa.com/complaints</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 <url>
-<lastmod>2024-07-21T13:31:37+00:00</lastmod>
-<priority>0.64</priority>
+	<loc>https://www.trendyrosesa.com/license</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://www.trendyrosesa.com/account</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://www.trendyrosesa.com/account-order</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://www.trendyrosesa.com/cart</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://www.trendyrosesa.com/checkout</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://www.trendyrosesa.com/contact</loc>
+	<lastmod>2024-09-04T13:41:59+01:00</lastmod>
+	<priority>0.1</priority>
+</url>
+<url>
+	<loc>https://www.trendyrosesa.com/account-savelists</loc>
+	<lastmod>2024-09-04T13:42:05+01:00</lastmod>
+	<priority>0.1</priority>
 </url>
 </urlset>
