@@ -88,6 +88,7 @@ const Moysar = ({
                     vat: ${vat},
                     userNote: "${userNote}",
                     pointsUsed: ${pointsUsed},
+                    method: "Apple Pay",
                     description: ${JSON.stringify(
                       items.map((item) => ({
                         id: item.id,

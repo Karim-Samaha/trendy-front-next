@@ -1092,3 +1092,9 @@ tamara-widget {
 .adds-products .modalSlider > div {
   visibility: visible !important;
 }
+
+.copyright {
+  @media (max-width: 968px) {
+    font-size: 12px;
+  }
+}

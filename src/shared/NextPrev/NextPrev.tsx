@@ -47,6 +47,7 @@ const NextPrev: FC<NextPrevProps> = ({
             className="w-5 h-5 rtl:rotate-180"
             viewBox="0 0 24 24"
             fill="none"
+            color="#55a8b9"
           >
             <path
               d="M9.57 5.92993L3.5 11.9999L9.57 18.0699"
@@ -84,6 +85,7 @@ const NextPrev: FC<NextPrevProps> = ({
             className="w-5 h-5 rtl:rotate-180"
             viewBox="0 0 24 24"
             fill="none"
+            color="#55a8b9"
           >
             <path
               d="M14.4301 5.92993L20.5001 11.9999L14.4301 18.0699"

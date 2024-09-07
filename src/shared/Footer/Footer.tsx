@@ -243,7 +243,7 @@ const Footer: React.FC<{ data: any }> = ({ data }) => {
             </div>
           </div>
         </div>
-        <p style={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}>
+        <p style={{ textAlign: "center", color: "#fff", fontWeight: "bold" }} className="copyright">
           جميع الحقوق محفوظة لمؤسسة الزهرة العصرية للهدايا
         </p>
       </div>

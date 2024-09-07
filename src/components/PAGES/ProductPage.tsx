@@ -140,10 +140,10 @@ const ProductPage: FC<any> = ({ params, product }) => {
     }
       `;
       if (tabbyReady && root) {
-        root.appendChild(tabbyCard);
+        root?.appendChild(tabbyCard);
       }
       if (tammaraReady && root) {
-        root.appendChild(tabbyCard);
+        root?.appendChild(tabbyCard);
       }
     }
   }, [productData, tabbyReady, tammaraReady]);
