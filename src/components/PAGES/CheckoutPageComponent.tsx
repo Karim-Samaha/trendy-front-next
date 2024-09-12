@@ -1128,7 +1128,7 @@ const CheckoutPageComponent = () => {
                         className="text-lg font-semibold"
                         style={{ color: "red" }}
                       >
-                        تم تفيعل كوبون {couponResponse?.code}
+                        تم تفعيل كوبون {couponResponse?.code}
                       </h3>
                       <h3
                         className="text-lg font-semibold"
