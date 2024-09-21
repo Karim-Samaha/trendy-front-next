@@ -594,62 +594,27 @@ const ProductPage: FC<any> = ({ params, product }) => {
                   >
                     <p style={{ fontWeight: "bold" }}>شارك المنتج عبر:</p>
                     <div style={{ display: "flex" }}>
-                      {/* <InlineFollowButtons
-                        config={{
-                          alignment: "right", // alignment of buttons (left, right)
-                          color: "social", // set the color of buttons (social, white)
-                          enabled: true, // show/hide buttons (true, false)
-                          font_size: 16, // font size for the buttons
-                          hide_desktop: false,// hide buttons on desktop (true, false)
-                          labels: "counts", // button labels (cta, counts, null)
-                          language: "en", // which language to use (see LANGUAGES)
-                          min_count: 0, // hide react counts less than min_count (INTEGER)
-                          networks: [
-                            // which networks to include (see SHARING NETWORKS)
-                            "facebook",
-                            "tiktok",
-                            'instagram',
-                            "twitter",
-                          ],
-
-                          // OPTIONAL PARAMETERS
-                          url: "https://www.sharethis.com", // (defaults to current url)
-                          image: "https://bit.ly/2CMhCMC", // (defaults to og:image or twitter:image)
-                          description: "custom text", // (defaults to og:description or twitter:description)
-                          // title: "custom title", // (defaults to og:title or twitter:title)
-                          // message: "custom email text", // (only for email sharing)
-                          // subject: "custom email subject", // (only for email sharing)
-                          // username: "custom twitter handle", // (only for twitter sharing)
-                        }}
-                      /> */}
-                      {/* <FacebookMessengerShareButton
-                        style={{ margin: "0 5px" }}
-                        url={window && window.location.href}
-                      >
-                        <FacebookMessengerIcon borderRadius={5} />
-                      </FacebookMessengerShareButton> */}
                       <SnapchatShareButton
-                        url={window && window.location.href}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
                         title={"Snap Chat"}
                       />
 
                       <TelegramShareButton
                         style={{ margin: "0 5px" }}
-                        url={window && window.location.href}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
                       >
                         <TelegramIcon borderRadius={5} />
                       </TelegramShareButton>
 
                       <TwitterShareButton
                         style={{ margin: "0 5px" }}
-                        url={window && window.location.href}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
                       >
                         <XIcon borderRadius={5} />
                       </TwitterShareButton>
-                      {/* <Test /> */}
                       <WhatsappShareButton
                         style={{ margin: "0 5px" }}
-                        url={window && window.location.href}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
                       >
                         <WhatsappIcon borderRadius={5} />
                       </WhatsappShareButton>

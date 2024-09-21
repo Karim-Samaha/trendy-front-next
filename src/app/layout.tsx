@@ -58,21 +58,21 @@ export default function RootLayout({
     snapchatPixelEvent("Pageview", {});
   }, []);
 
-  useEffect(() => {
-    if (tags.head.length > 0) {
-      let arrOfTags = tags.head.split(/\r?\n|\r|\n/g);
-      for (let i = 0; i < arrOfTags.length; i++) {
-        if (arrOfTags[i].length > 0) {
-          var doc = new DOMParser().parseFromString(arrOfTags[i], "text/xml");
-          console.log(doc.firstChild);
-          if (doc) {
-            //@ts-ignore
-            document.head.appendChild(doc.firstChild);
-          }
-        }
-      }
-    }
-  }, [tags.head]);
+  // useEffect(() => {
+  //   if (tags.head.length > 0) {
+  //     let arrOfTags = tags.head.split(/\r?\n|\r|\n/g);
+  //     for (let i = 0; i < arrOfTags.length; i++) {
+  //       if (arrOfTags[i].length > 0) {
+  //         var doc = new DOMParser().parseFromString(arrOfTags[i], "text/xml");
+  //         console.log(doc.firstChild);
+  //         if (doc) {
+  //           //@ts-ignore
+  //           document.head.appendChild(doc.firstChild);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }, [tags.head]);
 
   return (
     <>
