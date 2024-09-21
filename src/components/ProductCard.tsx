@@ -21,6 +21,8 @@ import { useCart } from "react-use-cart";
 import { adjustNames } from "@/utils/adjustNames";
 import { useSession } from "next-auth/react";
 import Discount from "./Discount";
+import slugify from "slugify";
+
 export interface ProductCardProps {
   className?: string;
   data?: any;
@@ -240,7 +242,7 @@ const ProductCard: FC<ProductCardProps> = ({
           >
             <BagIcon className="w-3.5 h-3.5 mb-0.5" />
 
-            <Link href={`/product-detail/${data?._id}/${data?._name}`}>
+            <Link href={`/product-detail/${data?._id}/${slugify(data?.name)}`}>
               {" "}
               <span className="ms-1">اضف الى السلة</span>
             </Link>
@@ -290,7 +292,7 @@ const ProductCard: FC<ProductCardProps> = ({
       >
         {!modal && (
           <Link
-            href={`/product-detail/${_id}/${name}`}
+            href={`/product-detail/${_id}/${slugify(name)}`}
             className="absolute inset-0"
           ></Link>
         )}
@@ -316,7 +318,7 @@ const ProductCard: FC<ProductCardProps> = ({
               }}
             />
           ) : (
-            <Link href={`/product-detail/${_id}/${name}`} className="block">
+            <Link href={`/product-detail/${_id}/${slugify(name)}`} className="block">
               <NcImage
                 containerClassName="flex aspect-w-10 aspect-h-10 w-full h-0"
                 src={featuredImage}
@@ -368,8 +370,8 @@ const ProductCard: FC<ProductCardProps> = ({
             <Link
               href={
                 data?.rates > 0
-                  ? `/product-detail/${_id}/${name}?rate=true`
-                  : `/product-detail/${_id}/${name}`
+                  ? `/product-detail/${_id}/${slugify(name)}?rate=true`
+                  : `/product-detail/${_id}/${slugify(name)}`
               }
               // style={{ zIndex: "9999" }}
             >
@@ -400,7 +402,7 @@ const ProductCard: FC<ProductCardProps> = ({
               >
                 <BagIcon className="w-3.5 h-3.5 mb-0.5" />
 
-                <Link href={`/product-detail/${data?._id}/${data?.name}`}>
+                <Link href={`/product-detail/${data?._id}/${slugify(data?.name)}`}>
                   {" "}
                   <span className="ms-1">اضف الى السلة</span>
                 </Link>
