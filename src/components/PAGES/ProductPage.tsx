@@ -54,6 +54,7 @@ import {
   twitterPixel,
 } from "@/utils/pixels";
 import ImageZoom from "../ImageZoom/ImageZoom";
+import slugify from "slugify";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -595,26 +596,26 @@ const ProductPage: FC<any> = ({ params, product }) => {
                     <p style={{ fontWeight: "bold" }}>شارك المنتج عبر:</p>
                     <div style={{ display: "flex" }}>
                       <SnapchatShareButton
-                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}${product?._id}/${slugify(product?.name)}`}
                         title={"Snap Chat"}
                       />
 
                       <TelegramShareButton
                         style={{ margin: "0 5px" }}
-                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}${product?._id}/${slugify(product?.name)}`}
                       >
                         <TelegramIcon borderRadius={5} />
                       </TelegramShareButton>
 
                       <TwitterShareButton
                         style={{ margin: "0 5px" }}
-                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}${product?._id}/${slugify(product?.name)}`}
                       >
                         <XIcon borderRadius={5} />
                       </TwitterShareButton>
                       <WhatsappShareButton
                         style={{ margin: "0 5px" }}
-                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/${product?._id}/${product?._name}`}
+                        url={`${process.env.NEXT_PUBLIC_FRONTEND_URL}${product?._id}/${slugify(product?.name)}`}
                       >
                         <WhatsappIcon borderRadius={5} />
                       </WhatsappShareButton>
