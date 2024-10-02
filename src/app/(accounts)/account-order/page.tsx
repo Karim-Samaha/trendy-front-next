@@ -150,6 +150,7 @@ const AccountOrder = () => {
         content_type: "product",
         content_id: data[0]?._id,
         quantity: data[0]?.purchaseBulk?.length || 1,
+        agent: navigator?.userAgent
       });
       setEvents(true);
     }

@@ -9,9 +9,10 @@ export async function POST(request: any) {
     };
     const hashedEmail = hashData("trendy.rose11@gmail.com");
     const hashedPhone = hashData("96666666");
-
+    const IpResponse = await axios.get('https://api.ipify.org?format=json');
     const response = await axios.post(
       `https://graph.facebook.com/v11.0/${process.env.NEXT_PUBLIC_META_PIXEL_ID}/events`,
+      
       {
         data: [
           {
@@ -20,8 +21,8 @@ export async function POST(request: any) {
             user_data: {
               em: hashedEmail,
               ph: hashedPhone,
-              client_ip_address: eventData?.user?.ip_address || null,
-              client_user_agent: eventData?.user?.user_agent || null,
+              client_ip_address: IpResponse?.data?.ip || null,
+              client_user_agent: eventData?.agent || null,
             },
             custom_data: {
               currency: "SAR",
@@ -56,6 +57,8 @@ export async function POST(request: any) {
 
           currency: "SAR",
           purchase_value: eventData?.purchase_value,
+          client_user_agent: eventData?.agent || null,
+
         },
         properties: {
           currency: "SAR",
