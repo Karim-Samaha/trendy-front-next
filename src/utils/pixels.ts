@@ -88,3 +88,17 @@ export const trackConversionSnapchatEvent = async (
     console.error("Error tracking Snapchat conversion event:", error);
   }
 };
+export const trackConversionFacebookEvent = async (
+  eventType: string,
+  eventData: any
+) => {
+  try {
+    await _axios.post("/api/track-meta", {
+      eventType: eventType,
+      eventData: eventData,
+    });
+    console.log("Facebook conversion event tracked successfully");
+  } catch (error) {
+    console.error("Error tracking Snapchat conversion event:", error);
+  }
+};

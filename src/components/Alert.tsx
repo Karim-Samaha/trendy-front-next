@@ -27,6 +27,7 @@ const Alert: FC<AlerProps> = ({ text }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        direction: "rtl"
       }}
       className="alert"
     >

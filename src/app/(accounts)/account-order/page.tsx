@@ -15,6 +15,7 @@ import {
   facebookPixel,
   snapchatPixelEvent,
   tiktokPixel,
+  trackConversionFacebookEvent,
   trackConversionSnapchatEvent,
   trackTikTokConversion,
   twitterPixel,
@@ -140,6 +141,15 @@ const AccountOrder = () => {
           content_id: data[0]?._id,
           quantity: data[0]?.purchaseBulk?.length || 1,
         },
+      });
+      trackConversionFacebookEvent("Purchase", {
+        purchase_value: ["TABBY", "TAMARA"].includes(data[0]?.source)
+          ? data[0]?.amount
+          : data[0]?.amount / 100,
+        currency: "SAR",
+        content_type: "product",
+        content_id: data[0]?._id,
+        quantity: data[0]?.purchaseBulk?.length || 1,
       });
       setEvents(true);
     }

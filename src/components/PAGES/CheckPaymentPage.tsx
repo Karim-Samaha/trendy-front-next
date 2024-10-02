@@ -31,6 +31,7 @@ const CheckoutCheck = ({ id, gateway, tabbyId }) => {
       setFailed(true);
     }
   };
+  
   const handleTamara = async () => {
     const tamaraId = sessionStorage.getItem("tamaraId");
     try {

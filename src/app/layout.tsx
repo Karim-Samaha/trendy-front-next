@@ -92,9 +92,21 @@ export default function RootLayout({
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 })(window,document,'script','dataLayer','GTM-M57MK393')`,
                 }}
-                
               />
               <link rel="icon" href="/trendy.svg" />
+
+              <meta
+                name="facebook-domain-verification"
+                content="v7j5b8lrg2yhnt8tf8u4969n9pscvh"
+              />
+
+              <meta name="robots" content="index, follow" />
+              <meta
+                http-equiv="Content-Type"
+                content="text/html; charset=utf-8"
+              />
+              <meta name="language" content="Arabic" />
+              <meta name="revisit-after" content="7 days" />
             </head>
             <meta
               name="google-site-verification"
