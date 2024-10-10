@@ -9,10 +9,10 @@ export async function POST(request: any) {
     };
     const hashedEmail = hashData("trendy.rose11@gmail.com");
     const hashedPhone = hashData("96666666");
-    const IpResponse = await axios.get('https://api.ipify.org?format=json');
+    const IpResponse = await axios.get("https://api.ipify.org?format=json");
     const response = await axios.post(
       `https://graph.facebook.com/v11.0/${process.env.NEXT_PUBLIC_META_PIXEL_ID}/events`,
-      
+
       {
         data: [
           {
@@ -23,6 +23,9 @@ export async function POST(request: any) {
               ph: hashedPhone,
               client_ip_address: IpResponse?.data?.ip || null,
               client_user_agent: eventData?.agent || null,
+              fbp: eventData?.fbp || null,
+              external_id: eventData?.external_id || null,
+              fbclid: eventData?.fbclid || null,
             },
             custom_data: {
               currency: "SAR",
@@ -54,11 +57,9 @@ export async function POST(request: any) {
         error: error.response?.data || error.message,
         event: {
           timestamp: "2023-08-15T12:34:56Z",
-
           currency: "SAR",
           purchase_value: eventData?.purchase_value,
           client_user_agent: eventData?.agent || null,
-
         },
         properties: {
           currency: "SAR",

@@ -31,7 +31,7 @@ const AccountOrder = () => {
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: 1,
-      limit: 3,
+      limit: 100,
     }
   );
   const hangleShowMore = () => {
@@ -150,7 +150,8 @@ const AccountOrder = () => {
         content_type: "product",
         content_id: data[0]?._id,
         quantity: data[0]?.purchaseBulk?.length || 1,
-        agent: navigator?.userAgent
+        agent: navigator?.userAgent,
+        external_id: session?.user?._id
       });
       setEvents(true);
     }
@@ -429,12 +430,12 @@ const AccountOrder = () => {
       ) : (
         data.map((item, i) => renderOrder(item, i))
       )}
-      {!isFromCheckout &&
+      {/* {!isFromCheckout &&
         (data.length === 0 ? null : (
           <div className="flex flex-col sm:flex-row sm:justify-center sm:items-center p-4 sm:p-8 bg-slate-50 dark:bg-slate-500/5">
             <ButtonPrimary onClick={hangleShowMore}>عرض المزيد</ButtonPrimary>
           </div>
-        ))}
+        ))} */}
     </div>
   );
 };

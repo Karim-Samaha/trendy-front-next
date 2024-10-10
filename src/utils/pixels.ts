@@ -88,14 +88,23 @@ export const trackConversionSnapchatEvent = async (
     console.error("Error tracking Snapchat conversion event:", error);
   }
 };
+const getFacebookBrowserId = () => {
+  const fbp = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("_fbp"))
+    ?.split("=")[1];
+  return fbp;
+};
 export const trackConversionFacebookEvent = async (
   eventType: string,
   eventData: any
 ) => {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fbclid = urlParams.get("fbclid");
     await _axios.post("/api/track-meta", {
       eventType: eventType,
-      eventData: eventData,
+      eventData: { ...eventData, fbp: getFacebookBrowserId(), fbclid: fbclid },
     });
     console.log("Facebook conversion event tracked successfully");
   } catch (error) {

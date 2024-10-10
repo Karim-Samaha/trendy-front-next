@@ -25,6 +25,7 @@ import {
   facebookPixel,
   snapchatPixelEvent,
   tiktokPixel,
+  trackConversionFacebookEvent,
   trackConversionSnapchatEvent,
   trackTikTokConversion,
   twitterPixel,
@@ -201,6 +202,15 @@ const CheckoutPageComponent = () => {
       currency: "SAR",
       content_type: "product",
       quantity: +items.length || 1,
+    });
+    trackConversionFacebookEvent("InitiateCheckout", {
+      purchase_value: parseInt(renderTotalPrice.fintalTotal),
+      currency: "SAR",
+      content_type: "product",
+      content_id: items[0]?._id,
+      quantity: +items.length || 1,
+      agent: navigator?.userAgent,
+      external_id: session?.user?._id,
     });
   };
   useEffect(() => {

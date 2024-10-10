@@ -49,12 +49,14 @@ import {
   facebookPixel,
   snapchatPixelEvent,
   tiktokPixel,
+  trackConversionFacebookEvent,
   trackConversionSnapchatEvent,
   trackTikTokConversion,
   twitterPixel,
 } from "@/utils/pixels";
 import ImageZoom from "../ImageZoom/ImageZoom";
 import slugify from "slugify";
+import { useSession } from "next-auth/react";
 
 const ProductPage: FC<any> = ({ params, product }) => {
   const { sizes, variants, status, allOfSizes, image } = PRODUCTS[0];
@@ -72,6 +74,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const [tammaraReady, setTamarraReady] = useState(false);
   const [tabbyReady, setTabbyReady] = useState(false);
   const [categoryId, setCategoryId] = useState();
+  const { data: session } = useSession();
   const [options, setOptions] = useState({
     color: productData?.colors?.length > 0 ? productData?.colors[0] : null,
     text: productData?.textArr?.length > 0 ? productData?.textArr[0] : null,
@@ -299,6 +302,15 @@ const ProductPage: FC<any> = ({ params, product }) => {
         currency: "SAR",
         content_type: "product",
         quantity: +itemToBeAdded?.quantity || 1,
+      });
+      trackConversionFacebookEvent("AddToCart", {
+        purchase_value: itemToBeAdded.price,
+        currency: "SAR",
+        content_type: "product",
+        content_id: itemToBeAdded?._id,
+        quantity: +items.length || 1,
+        agent: navigator?.userAgent,
+        external_id: session?.user?._id,
       });
     }
     notifyAddTocart(itemToBeAdded);
