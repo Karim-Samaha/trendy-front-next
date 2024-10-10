@@ -31,7 +31,7 @@ import {
   twitterPixel,
 } from "@/utils/pixels";
 import Tamarra from "../Tamarra";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 const CheckoutPageComponent = () => {
   const { items, emptyCart } = useCart();
@@ -73,8 +73,8 @@ const CheckoutPageComponent = () => {
     minToApply,
     pointsActive,
   } = usePoints();
-  const searchParams = useSearchParams();
-  const fbclid = searchParams?.get("fbclid")
+  // const searchParams = useSearchParams();
+  // const fbclid = searchParams?.get("fbclid")
 
   const handleChange = (e: any) => {
     setStoreDeleviryData((prev) => ({
@@ -215,7 +215,7 @@ const CheckoutPageComponent = () => {
       quantity: +items.length || 1,
       agent: navigator?.userAgent,
       external_id: session?.user?._id,
-      fbclid: fbclid
+      // fbclid: fbclid
     });
   };
   useEffect(() => {
