@@ -25,7 +25,7 @@ export async function POST(request: any) {
               client_user_agent: eventData?.agent || null,
               fbp: eventData?.fbp || null,
               external_id: eventData?.external_id || null,
-              fbclid: eventData?.fbclid || null,
+              ...(eventData?.fbclid && { fbclid: eventData.fbclid })
             },
             custom_data: {
               currency: "SAR",
@@ -34,7 +34,7 @@ export async function POST(request: any) {
               content_type: "product",
               quantity: eventData.quantity,
             },
-            event_source_url: "https://trendyrosesa.com/",
+            event_source_url: "https://www.trendyrosesa.com",
           },
         ],
         access_token: process.env.NEXT_PUBLIC_META_TOKEN,

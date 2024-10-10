@@ -27,6 +27,8 @@ const AccountOrder = () => {
   const [itemToBeReviews, setItemToBeReviewd] = useState<string>("");
   const searchParams = useSearchParams();
   const isFromCheckout = searchParams?.get("from") === "checkout";
+  const fbclid = searchParams?.get("fbclid")
+
   const [events, setEvents] = useState(false);
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
@@ -151,7 +153,8 @@ const AccountOrder = () => {
         content_id: data[0]?._id,
         quantity: data[0]?.purchaseBulk?.length || 1,
         agent: navigator?.userAgent,
-        external_id: session?.user?._id
+        external_id: session?.user?._id,
+        fbclid: fbclid
       });
       setEvents(true);
     }
@@ -306,24 +309,24 @@ const AccountOrder = () => {
           </div> */}
           {order?.selectedCard?.length > 0
             ? order?.selectedCard?.map((item: any) => {
-                return (
-                  <div
-                    className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
-                    style={{ minWidth: "205px" }}
-                    key={item?._id}
-                  >
-                    <div className="order-info flex-1">
-                      اضافات الورود :
-                      <span className="font-bold">
-                        {adjustNames(item?.name)}
-                      </span>
-                      <span className="font-bold" style={{ margin: "0 10px" }}>
-                        {item?.price} ر.س
-                      </span>
-                    </div>
+              return (
+                <div
+                  className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300"
+                  style={{ minWidth: "205px" }}
+                  key={item?._id}
+                >
+                  <div className="order-info flex-1">
+                    اضافات الورود :
+                    <span className="font-bold">
+                      {adjustNames(item?.name)}
+                    </span>
+                    <span className="font-bold" style={{ margin: "0 10px" }}>
+                      {item?.price} ر.س
+                    </span>
                   </div>
-                );
-              })
+                </div>
+              );
+            })
             : null}
 
           <div className="mt-1.5 sm:mt-2.5 flex text-sm text-slate-600 dark:text-slate-300">
@@ -360,15 +363,14 @@ const AccountOrder = () => {
               </span>
               <span className="mx-2">·</span>
               <span
-                className={`${
-                  item.orderStatus === "DELEIVERD"
-                    ? "status-deliverd"
-                    : item.orderStatus === "PROCCESSING" ||
-                      item.orderStatus === "ON_THE_WAY" ||
-                      item.orderStatus == "RETURNED"
+                className={`${item.orderStatus === "DELEIVERD"
+                  ? "status-deliverd"
+                  : item.orderStatus === "PROCCESSING" ||
+                    item.orderStatus === "ON_THE_WAY" ||
+                    item.orderStatus == "RETURNED"
                     ? "status-dilivery"
                     : null
-                } text-primary-500`}
+                  } text-primary-500`}
               >
                 {item.orderStatus === "PROCCESSING" && "قيد التنفيذ"}
                 {item.orderStatus === "DELEIVERD" && "تم التوصيل"}

@@ -100,11 +100,10 @@ export const trackConversionFacebookEvent = async (
   eventData: any
 ) => {
   try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const fbclid = urlParams.get("fbclid");
+
     await _axios.post("/api/track-meta", {
       eventType: eventType,
-      eventData: { ...eventData, fbp: getFacebookBrowserId(), fbclid: fbclid },
+      eventData: { ...eventData, fbp: getFacebookBrowserId() },
     });
     console.log("Facebook conversion event tracked successfully");
   } catch (error) {

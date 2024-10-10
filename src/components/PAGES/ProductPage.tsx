@@ -85,6 +85,7 @@ const ProductPage: FC<any> = ({ params, product }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isRateModalQuery = searchParams.get("rate");
+  const fbclid = searchParams?.get("fbclid")
 
   useEffect(() => {
     if (isRateModalQuery) {
@@ -247,6 +248,16 @@ const ProductPage: FC<any> = ({ params, product }) => {
         content_type: "product",
         quantity: +itemToBeAdded?.quantity || 1,
       });
+      trackConversionFacebookEvent("AddToCart", {
+        purchase_value: itemToBeAdded.price,
+        currency: "SAR",
+        content_type: "product",
+        content_id: itemToBeAdded?._id,
+        quantity: +itemToBeAdded?.quantity || 1,
+        agent: navigator?.userAgent,
+        external_id: session?.user?._id,
+        fbclid: fbclid
+      });
     } else {
       addItem(itemToBeAdded, qty);
       sendEvent("add_to_cart", {
@@ -308,9 +319,10 @@ const ProductPage: FC<any> = ({ params, product }) => {
         currency: "SAR",
         content_type: "product",
         content_id: itemToBeAdded?._id,
-        quantity: +items.length || 1,
+        quantity:  +itemToBeAdded?.quantity || 1,
         agent: navigator?.userAgent,
         external_id: session?.user?._id,
+        fbclid: fbclid
       });
     }
     notifyAddTocart(itemToBeAdded);
