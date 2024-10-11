@@ -51,9 +51,13 @@ export async function generateMetadata({ params }: any) {
       )
       .then((res) => res.data.data);
   } else {
-    data = await axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${params?.id[0]}`)
-      .then((res) => res.data.data);
+    try {
+      data = await axios
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${params?.id[0]}`)
+        .then((res) => res.data.data);
+    } catch (err) {
+      console.log(err )
+    }
   }
   return {
     title: data?.name,
@@ -171,7 +175,7 @@ const PageCollection2 = async ({ params }) => {
             </span>
           </div>
 
-          <hr className="border-slate-200 dark:border-slate-700 ctg-liner"  />
+          <hr className="border-slate-200 dark:border-slate-700 ctg-liner" />
           <main className="ctg-page-main" >
             {/* LOOP ITEMS */}
             <div className="flex flex-col lg:flex-row" >

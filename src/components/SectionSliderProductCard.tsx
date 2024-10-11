@@ -71,7 +71,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
         .then((data) => {
           setData_(
             data.data.productList
-              .reverse()
+              // .reverse()
               .filter((item: { active: boolean }) => item.active)
               .map((item: any) => ({
                 ...themeData[0],
@@ -113,7 +113,7 @@ const SectionSliderProductCard: FC<SectionSliderProductCardProps> = ({
           console.log({ data });
           setData_(
             data.productList
-              .reverse()
+              // .reverse()
               .filter((item: { active: boolean }) => item.active)
               .map((item: any) => ({
                 ...themeData[0],
